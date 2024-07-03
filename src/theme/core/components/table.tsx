@@ -7,6 +7,17 @@ import { varAlpha } from '../../styles';
 
 // ----------------------------------------------------------------------
 
+declare module '@mui/material/TableCell' {
+  /**
+   * @param borderbottom Gunakan no border untuk menghilangkan border
+   */
+  interface TableCellProps {
+    borderbottom?: 'noborder';
+  }
+}
+
+
+
 const MuiTableContainer: Components<Theme>['MuiTableContainer'] = {
   /** **************************************
    * STYLE
@@ -61,6 +72,10 @@ const MuiTableCell: Components<Theme>['MuiTableCell'] = {
       color: theme.vars.palette.text.secondary,
       fontWeight: theme.typography.fontWeightSemiBold,
       backgroundColor: theme.vars.palette.background.neutral,
+    }),
+    body: ({ theme, borderbottom }) => ({
+      borderBottom: borderbottom === "noborder" ? "none" : undefined,
+      padding: 8
     }),
     stickyHeader: ({ theme }) => ({
       backgroundColor: theme.vars.palette.background.paper,

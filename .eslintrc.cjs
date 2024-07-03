@@ -25,8 +25,15 @@ module.exports = {
    * 2 ~ 'error'
    */
   rules: {
-    'arrow-body-style': ['off'],
+    '*': 'off',
+    'prefer-template': 'off',
+    'arrow-body-style': 'off',
     'react/jsx-curly-brace-presence': 'off',
+    'import/order': 'off',
+    'no-multi-assign': 'off',
+    '@typescript-eslint/return-await': 'off',
+    '@typescript-eslint/no-unused-expressions': 'off',
+    'react/no-unused-prop-types': 'off',
     // general
     'no-alert': 0,
     camelcase: 0,

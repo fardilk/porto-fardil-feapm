@@ -6,11 +6,11 @@ export const stylesMode = {
 };
 
 export const mediaQueries = {
-  upXs: '@media (min-width:0px)',
-  upSm: '@media (min-width:600px)',
-  upMd: '@media (min-width:900px)',
-  upLg: '@media (min-width:1200px)',
-  upXl: '@media (min-width:1536px)',
+  upXs: '@media (minWidth:0px)',
+  upSm: '@media (minWidth:600px)',
+  upMd: '@media (minWidth:900px)',
+  upLg: '@media (minWidth:1200px)',
+  upXl: '@media (minWidth:1536px)',
 };
 
 /**

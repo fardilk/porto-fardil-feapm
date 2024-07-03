@@ -103,18 +103,18 @@ const MuiButton: Components<Theme>['MuiButton'] = {
         inheritColor: {
           ...(ownerState.color === 'inherit' &&
             !ownerState.disabled && {
-              color: theme.vars.palette.common.white,
-              backgroundColor: theme.vars.palette.grey[800],
-              '&:hover': {
-                boxShadow: theme.customShadows.z8,
-                backgroundColor: theme.vars.palette.grey[700],
-              },
-              [stylesMode.dark]: {
-                color: theme.vars.palette.grey[800],
-                backgroundColor: theme.vars.palette.common.white,
-                '&:hover': { backgroundColor: theme.vars.palette.grey[400] },
-              },
-            }),
+            color: theme.vars.palette.common.white,
+            backgroundColor: theme.vars.palette.grey[800],
+            '&:hover': {
+              boxShadow: theme.customShadows.z8,
+              backgroundColor: theme.vars.palette.grey[700],
+            },
+            [stylesMode.dark]: {
+              color: theme.vars.palette.grey[800],
+              backgroundColor: theme.vars.palette.common.white,
+              '&:hover': { backgroundColor: theme.vars.palette.grey[400] },
+            },
+          }),
         },
       };
       return { ...styled.inheritColor, ...styled.colors };
@@ -130,9 +130,9 @@ const MuiButton: Components<Theme>['MuiButton'] = {
         inheritColor: {
           ...(ownerState.color === 'inherit' &&
             !ownerState.disabled && {
-              borderColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.32),
-              '&:hover': { backgroundColor: theme.vars.palette.action.hover },
-            }),
+            borderColor: varAlpha(theme.vars.palette.grey['500Channel'], 0.32),
+            '&:hover': { backgroundColor: theme.vars.palette.action.hover },
+          }),
         },
         base: {
           '&:hover': { borderColor: 'currentColor', boxShadow: '0 0 0 0.75px currentColor' },
@@ -148,8 +148,8 @@ const MuiButton: Components<Theme>['MuiButton'] = {
         inheritColor: {
           ...(ownerState.color === 'inherit' &&
             !ownerState.disabled && {
-              '&:hover': { backgroundColor: theme.vars.palette.action.hover },
-            }),
+            '&:hover': { backgroundColor: theme.vars.palette.action.hover },
+          }),
         },
       };
       return { ...styled.inheritColor };

@@ -6655,6 +6655,11 @@ react-router@6.23.1, react-router@^6.23.1:
   dependencies:
     "@remix-run/router" "1.16.1"
 
+react-simple-keyboard@^3.7.129:
+  version "3.7.129"
+  resolved "https://registry.yarnpkg.com/react-simple-keyboard/-/react-simple-keyboard-3.7.129.tgz#8a170bbc169eb742d861963ac8757e067e40a918"
+  integrity sha512-uf8uy+wAZ/LbAphDamni5nM/5JILg3Qtc9tScWGN5Cf78zE3ZPEIbb9SPj/VSSDcA0SWo3ALCXaNKVisXAQ8qQ==
+
 react-transition-group@^4.4.5:
   version "4.4.5"
   resolved "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.5.tgz"
@@ -7011,6 +7016,11 @@ side-channel@^1.0.4, side-channel@^1.0.6:
     es-errors "^1.3.0"
     get-intrinsic "^1.2.4"
     object-inspect "^1.13.1"
+
+simple-keyboard@^3.7.87:
+  version "3.7.87"
+  resolved "https://registry.yarnpkg.com/simple-keyboard/-/simple-keyboard-3.7.87.tgz#3a80bb5338b8613d443195dc512faee7f6e166f0"
+  integrity sha512-NnO4miDY/aWQOriwAJs1aQoqcJ5J9D04vM+PswSbf6yC7mtyUawwRkJ8paXUIWymocvZQZX7MFOZ9/j4aCxb9A==
 
 simple-swizzle@^0.2.2:
   version "0.2.2"

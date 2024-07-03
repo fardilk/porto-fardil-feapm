@@ -128,3 +128,30 @@ export const merge = (target: any, ...sources: any[]): any => {
 
   return merge(target, ...sources);
 };
+
+// ----------------------------------------------------------------------
+/**
+ * Returns a string with asterisks (*) and trimmed characters based on the length of the input parameter.
+ * If the length of the input parameter is greater than 8, only the first 8 characters will be replaced with asterisks.
+ * If the length of the input parameter is greater than 6, the last 4 characters will be preserved.
+ * Otherwise, only the last character will be preserved.
+ * @author Ruby / Lasteinsa / SangpenciptaJS
+ * @param param The input string
+ * @returns The processed string with asterisks and trimmed characters
+ */
+export const fAsterisk = (param: string): string => {
+  // Generate a string of asterisks (*) based on the length of the input parameter
+  const ast = '*'.repeat(param.length > 8 ? 8 : param.length);
+
+  // Determine the number of characters to preserve based on the length of the input parameter
+  const trimVal = param.length > 6 ? 4 : 1;
+
+  // Extract the trimmed asterisks based on the determined length
+  const trimAst = ast.slice(0, param.length - trimVal);
+
+  // Extract the trimmed characters from the end of the input parameter
+  const trimParam = param.slice(-trimVal);
+
+  // Combine the trimmed asterisks and characters
+  return trimAst + trimParam;
+};
