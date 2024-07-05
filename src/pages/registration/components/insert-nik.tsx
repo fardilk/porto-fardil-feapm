@@ -1,9 +1,12 @@
-import { Box, Divider, Stack, Typography, useTheme } from "@mui/material"
 import { useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
-import { RHFSwitch, RHFTextField } from "src/components/hook-form"
-import { Keyboard } from "src/components/keyboard"
+
+import { Box, Stack, Divider, useTheme, Typography } from "@mui/material"
+
 import { typography } from "src/theme/core"
+
+import { Keyboard } from "src/components/keyboard"
+import { RHFSwitch, RHFTextField } from "src/components/hook-form"
 
 
 const InsertNIK = () => {
@@ -12,7 +15,7 @@ const InsertNIK = () => {
   const isForeign = watch("citizenship")
 
   const theme = useTheme()
-  const [elementName, setElementName] = useState("nik")
+  const [elementName, _setElementName] = useState("nik")
   const [keyboardType, setKeyboardType] = useState(isForeign ? "text" : "number")
 
   const inputRef = useRef<any>({})
@@ -36,7 +39,7 @@ const InsertNIK = () => {
           label="WNA"
           color="secondary.main"
           onClick={(event) => {
-            const checked = (event.target as any).checked
+            const { checked } = (event.target as any)
             if (checked) setKeyboardType("text"); else setKeyboardType("number")
           }}
         />
@@ -49,10 +52,6 @@ const InsertNIK = () => {
         placeholder={isForeign ? "Submit Your Passport Number" : "Masukkan 16 digit nomor NIK Anda"}
         variant="filled"
         inputRef={(ref) => { inputRef.current.nik = ref }}
-        // onClick={() => {
-        //   setElementName("nik")
-        //   setKeyboardType("number")
-        // }}
         inputProps={{
           style: {
             textAlign: "center",

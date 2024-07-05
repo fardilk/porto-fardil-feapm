@@ -1,7 +1,11 @@
-import { LoadingButton } from "@mui/lab";
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
-import React, { ReactNode, useCallback, useEffect, useState } from "react";
+import type { ReactNode} from "react";
+
 import { useFormContext } from "react-hook-form";
+import React, { useState, useCallback } from "react";
+
+import { LoadingButton } from "@mui/lab";
+import { Box, Grid, Stack, Button, Typography } from "@mui/material";
+
 import { Iconify } from "../iconify";
 
 type KeyboardType = {
@@ -204,43 +208,52 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
   }, [secondShift, shift, isSubmitting, inputType])
 
   return (
-    <Box sx={{ my: 4 }}>
-      <Grid container spacing={1}>
-        <Grid item xs={12} md={(inputType === "email") ? 10 : 12}>
-          <Grid container spacing={2}>
+    <Box sx={{ my: 2 }}>
+      {/* <Drawer anchor="bottom" open={Boolean(inputRef)} variant="persistent"> */}
+      {/* <Box sx={{ display: 'flex', placeContent: 'end' }}>
+        <IconButton onClick={() => { inputRef = null }}>
+          <CloseIcon />
+        </IconButton>
+      </Box> */}
+      <Box>
+        <Grid container spacing={1}>
+          <Grid item xs={12} md={(inputType === "email") ? 10 : 12}>
+            <Grid container spacing={2}>
 
-            {(inputType === "number" || openNumber) && NumberLayout(handleButtonClick)}
+              {(inputType === "number" || openNumber) && NumberLayout(handleButtonClick)}
 
-            {(inputType !== "number" && !openNumber) && TextLayout(handleButtonClick)}
-          </Grid>
-        </Grid>
-        {
-          inputType === "email" && (
-            <Grid item xs={12} md={2}>
-              <Stack sx={{ placeContent: "space-evenly", height: "100%", gap: 2 }}>
-                <Box sx={{ width: "100%", height: "100%" }} >
-                  <Button
-                    variant="outlined"
-                    sx={{ width: "100%", height: "100%", borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main }}
-                    onClick={() => setOpenNumber(true)}
-                  >
-                    <Typography variant="h4">123</Typography>
-                  </Button>
-                </Box>
-                <Box sx={{ width: "100%", height: "100%" }} >
-                  <Button
-                    variant="outlined"
-                    sx={{ width: "100%", height: "100%", borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main }}
-                    onClick={() => setOpenNumber(false)}
-                  >
-                    <Typography variant="h4">ABC</Typography>
-                  </Button>
-                </Box>
-              </Stack>
+              {(inputType !== "number" && !openNumber) && TextLayout(handleButtonClick)}
             </Grid>
-          )
-        }
-      </Grid>
+          </Grid>
+          {
+            inputType === "email" && (
+              <Grid item xs={12} md={2}>
+                <Stack sx={{ placeContent: "space-evenly", height: "100%", gap: 2 }}>
+                  <Box sx={{ width: "100%", height: "100%" }} >
+                    <Button
+                      variant="outlined"
+                      sx={{ width: "100%", height: "100%", borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main }}
+                      onClick={() => setOpenNumber(true)}
+                    >
+                      <Typography variant="h4">123</Typography>
+                    </Button>
+                  </Box>
+                  <Box sx={{ width: "100%", height: "100%" }} >
+                    <Button
+                      variant="outlined"
+                      sx={{ width: "100%", height: "100%", borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main }}
+                      onClick={() => setOpenNumber(false)}
+                    >
+                      <Typography variant="h4">ABC</Typography>
+                    </Button>
+                  </Box>
+                </Stack>
+              </Grid>
+            )
+          }
+        </Grid>
+      </Box>
+      {/* </Drawer>, */}
     </Box>
   )
 })

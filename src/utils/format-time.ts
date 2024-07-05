@@ -54,7 +54,7 @@ export function fDateTime(date: DatePickerFormat, format?: string) {
  */
 export function fDate(date: DatePickerFormat, format?: string) {
   if (!date) {
-    return null;
+    return '';
   }
 
   const isValid = dayjs(date).isValid();

@@ -1,13 +1,13 @@
-import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material"
-import { useState } from "react"
+import { Box } from "@mui/material"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router"
+import { AppPage } from "src/components/app-page"
 import { Form } from "src/components/hook-form"
-import { Iconify } from "src/components/iconify"
-import { CloseIcon } from "yet-another-react-lightbox"
+import { WindowContainer } from "src/components/window-container"
+import { useStepper } from "src/hooks/use-stepper"
 import { InsertEmail, InsertNIK, InsertPhone, NewPatient, PatientInformation, SuccessNewPatient } from "./components"
 import { getDummyData } from "./model/functions"
-import { RegistrationIForm } from "./model/types"
+import type { RegistrationIForm } from "./model/types"
 
 const RegistrationPage = () => {
 
@@ -16,37 +16,16 @@ const RegistrationPage = () => {
   }
 
   const navigate = useNavigate()
-  const [formSteps, setFormSteps] = useState(formStepsExistInInternal)
-  const [currentPageIndex, setCurrentPageIndex] = useState(0)
-  const [currentPage, setCurrentPage] = useState<{ label: string, value: string }>(formSteps[0])
+
+  const {
+    currentPage,
+    currentPageIndex,
+    handleChangePage
+  } = useStepper({ initialSteps: formStepsExistInInternal })
 
   const methods = useForm({ defaultValues })
   const { handleSubmit, watch } = methods
   const isForeign = watch("citizenship")
-
-  const handleChangePage = ({ action, newFormSteps, toSpecificPage }: {
-    action?: "next" | "previous",
-    newFormSteps?: { label: string, value: string }[],
-    toSpecificPage?: string
-  }) => {
-    const tempFormSteps = newFormSteps || formSteps
-    if (newFormSteps) setFormSteps(newFormSteps);
-
-
-    if (toSpecificPage) {
-      const specificPageIndex = tempFormSteps.findIndex((row) => row.value === toSpecificPage)
-
-      if (specificPageIndex) {
-        setCurrentPageIndex(specificPageIndex)
-        setCurrentPage(tempFormSteps[specificPageIndex])
-      }
-    } else if (currentPageIndex >= 0 && currentPageIndex <= tempFormSteps.length) {
-
-      const newCurrentPageIndex = currentPageIndex + (action === "next" ? 1 : -1)
-      setCurrentPageIndex(newCurrentPageIndex)
-      setCurrentPage(tempFormSteps[newCurrentPageIndex])
-    }
-  }
 
   const onSubmit = async (data: any) => {
     if (currentPageIndex === 0) {
@@ -54,7 +33,7 @@ const RegistrationPage = () => {
       if (isForeign) {
         handleChangePage({ action: "next", newFormSteps: formStepsForeign })
       } else {
-        const resp = await getDummyData()
+        const resp = await getDummyData("medrec_exit")
 
         if (resp.data === "medrec_exit") handleChangePage({ action: "next", newFormSteps: formStepsExistInInternal });
         else if (resp.data === "exist_satusehat") handleChangePage({ action: "next", newFormSteps: formStepsExistInSatuSehat });
@@ -72,77 +51,61 @@ const RegistrationPage = () => {
   }
 
   return (
-    <>
+    <AppPage>
       <Form methods={methods} onSubmit={handleSubmit(onSubmit)}>
-        <Box sx={{ display: "flex", placeContent: "center", p: 4 }}>
-          <Box sx={{ width: { xs: "90%", md: "70%", lg: "60%" }, bgcolor: (theme) => theme.palette.background.paper, borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
-            <Box>
-              <AppBar position="static" sx={{ bgcolor: (theme) => theme.palette.grey[300], borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
-                <Toolbar>
-                  <IconButton
-                    size="large"
-                    edge="start"
-                    sx={{ mr: 2 }}
-                    onClick={() => handleChangePage({ action: "previous" })}
-                  >
-                    <Iconify icon="solar:alt-arrow-left-line-duotone" />
-                  </IconButton>
-                  <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    {currentPage.label}
-                  </Typography>
-                  <IconButton onClick={() => navigate("/")}>
-                    <CloseIcon />
-                  </IconButton>
-                </Toolbar>
-              </AppBar>
 
-              <Box sx={{ p: 4 }}>
+        <WindowContainer
+          title={currentPage.label}
+          handleBackNavigation={() => handleChangePage({ action: "previous" })}
+          handleCloseNavigation={() => navigate("/", { replace: true })}
+          hideBackNavigation={currentPage.properties?.hideBack}
+          hideCloseNavigation={currentPage.properties?.hideClose}
+        >
+          <Box sx={{ p: 4 }}>
 
-                {currentPage.value === "insert_nik" && <InsertNIK />}
+            {currentPage.value === "insert_nik" && <InsertNIK />}
 
-                {
-                  currentPage.value === "information" && (
-                    <PatientInformation
-                      leftTextButton="Kembali Ke Beranda"
-                      rigthTextButton="Edit Nomor Telepon dan Email"
-                      leftButtonProps={{ onClick: () => navigate("/") }}
-                      rightButtonProps={{ onClick: () => handleChangePage({ action: "next" }) }}
-                    />
-                  )
-                }
+            {
+              currentPage.value === "information" && (
+                <PatientInformation
+                  leftTextButton="Kembali Ke Beranda"
+                  rigthTextButton="Edit Nomor Telepon dan Email"
+                  leftButtonProps={{ onClick: () => navigate("/") }}
+                  rightButtonProps={{ onClick: () => handleChangePage({ action: "next" }) }}
+                />
+              )
+            }
 
-                {currentPage.value === "insert_phone_number" && <InsertPhone />}
+            {currentPage.value === "insert_phone_number" && <InsertPhone />}
 
-                {currentPage.value === "insert_email" && <InsertEmail />}
+            {currentPage.value === "insert_email" && <InsertEmail />}
 
-                {currentPage.value === "create_new_patient" && (
-                  <NewPatient
-                    handleNextPage={() => handleChangePage({ action: "next" })}
-                    handlePreviousPage={() => handleChangePage({ action: "previous" })}
-                  />
-                )}
+            {currentPage.value === "create_new_patient" && (
+              <NewPatient
+                handleNextPage={() => handleChangePage({ action: "next" })}
+                handlePreviousPage={() => handleChangePage({ action: "previous" })}
+              />
+            )}
 
-                {
-                  currentPage.value === "confirmation_new_patient" && (
-                    <PatientInformation
-                      leftTextButton={isForeign ? "Incorrect Data, Please Re-enter Data" : "Data salah, isi ulang data"}
-                      rigthTextButton={isForeign ? "Data is Correct, Continue" : "Data sudah benar, lanjutkan"}
-                      leftButtonProps={{ onClick: () => handleChangePage({ action: "previous" }) }}
-                      rightButtonProps={{ onClick: () => handleChangePage({ action: "next" }) }}
-                    />
-                  )
-                }
+            {
+              currentPage.value === "confirmation_new_patient" && (
+                <PatientInformation
+                  leftTextButton={isForeign ? "Incorrect Data, Please Re-enter Data" : "Data salah, isi ulang data"}
+                  rigthTextButton={isForeign ? "Data is Correct, Continue" : "Data sudah benar, lanjutkan"}
+                  leftButtonProps={{ onClick: () => handleChangePage({ action: "previous" }) }}
+                  rightButtonProps={{ onClick: () => handleChangePage({ action: "next" }) }}
+                />
+              )
+            }
 
-                {currentPage.value === "success_new_patient" && (
-                  <SuccessNewPatient handleFinish={() => navigate("/")} />
-                )}
-              </Box>
-            </Box>
+            {currentPage.value === "success_new_patient" && (
+              <SuccessNewPatient handleFinish={() => navigate("/")} />
+            )}
           </Box>
-        </Box >
-      </Form>
+        </WindowContainer>
 
-    </>
+      </Form>
+    </AppPage>
   )
 }
 
@@ -155,7 +118,10 @@ const formStepsExistInInternal = [
   },
   {
     label: "Informasi Data Pasien",
-    value: "information"
+    value: "information",
+    properties: {
+      hideBack: true,
+    }
   },
   {
     label: "Masukkan Nomor Telepon",
@@ -178,11 +144,17 @@ const formStepsExistInSatuSehat = [
   },
   {
     label: "Konfirmasi Data Pasien",
-    value: "confirmation_new_patient"
+    value: "confirmation_new_patient",
+    properties: {
+      hideBack: true,
+    }
   },
   {
     label: "Pendaftaran Berhasil",
-    value: "success_new_patient"
+    value: "success_new_patient",
+    properties: {
+      hideBack: true,
+    }
   }
 ]
 
@@ -197,11 +169,17 @@ const formStepsNotExistInSatuSehat = [
   },
   {
     label: "Konfirmasi Data Pasien",
-    value: "confirmation_new_patient"
+    value: "confirmation_new_patient",
+    properties: {
+      hideBack: true,
+    }
   },
   {
     label: "Pendaftaran Berhasil",
-    value: "success_new_patient"
+    value: "success_new_patient",
+    properties: {
+      hideBack: true,
+    }
   }
 ]
 
@@ -216,10 +194,16 @@ const formStepsForeign = [
   },
   {
     label: "Patient Data Confirmation",
-    value: "confirmation_new_patient"
+    value: "confirmation_new_patient",
+    properties: {
+      hideBack: true,
+    }
   },
   {
     label: "Registration Successful",
-    value: "success_new_patient"
+    value: "success_new_patient",
+    properties: {
+      hideBack: true,
+    }
   }
 ]

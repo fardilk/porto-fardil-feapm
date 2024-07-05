@@ -1,6 +1,8 @@
-import { ButtonBase, Card, CardContent, Grid, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material"
+import { Card, List, ListItem, ButtonBase, Typography, ListItemIcon, ListItemText } from "@mui/material"
+
 import { Image } from "src/components/image"
-import { MainCardType } from "../model/types"
+
+import type { MainCardType } from "../model/types"
 
 
 const MainCard = (props: MainCardType) => {

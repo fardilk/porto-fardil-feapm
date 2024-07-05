@@ -1,16 +1,13 @@
-import { lazy } from 'react';
 import { Navigate, useRoutes } from 'react-router-dom';
 
 import appRoute from './app';
 import { authRoutes } from './auth';
-import { mainRoutes } from './main';
 import { authDemoRoutes } from './auth-demo';
-import { dashboardRoutes } from './dashboard';
 import { componentsRoutes } from './components';
+import { dashboardRoutes } from './dashboard';
+import { mainRoutes } from './main';
 
 // ----------------------------------------------------------------------
-
-const HomePage = lazy(() => import('src/pages/home'));
 
 export function Router() {
   return useRoutes([

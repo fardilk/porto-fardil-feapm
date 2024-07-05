@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-import { Box, useTheme, Typography } from "@mui/material"
+import { Box, Typography } from "@mui/material";
 
-import { Header_Height } from "src/utils/variables"
+import { Header_Height } from "src/utils/variables";
 
-import { Image } from "src/components/image"
+import { Image } from "src/components/image";
 
 const Header = () => {
 
@@ -18,7 +18,6 @@ const Header = () => {
   };
 
   /* State */
-  const theme = useTheme();
   const [time, setTime] = useState<string>('');
 
   useEffect(() => {

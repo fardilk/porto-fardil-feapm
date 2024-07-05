@@ -10,6 +10,9 @@ const HomePage = lazy(() => import("src/pages/home/home-page"))
 /** === Registration */
 const RegistrationPage = lazy(() => import("src/pages/registration/registration-page"))
 
+/** === CheckinPage */
+const CheckinPage = lazy(() => import("src/pages/checkin/checkin-page"))
+
 const appRoute = [
   {
     path: '/',
@@ -27,6 +30,10 @@ const appRoute = [
       {
         path: 'registration',
         element: <RegistrationPage />
+      },
+      {
+        path: 'checkin',
+        element: <CheckinPage />
       }
     ]
   }

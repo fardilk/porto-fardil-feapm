@@ -1,9 +1,14 @@
-import { Box, Button, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material"
-import { NewPatientProps } from "../model/types"
-import { RHFDatePicker, RHFRadioGroup, RHFTextField } from "src/components/hook-form"
-import { ReactNode, useRef, useState } from "react"
-import { Keyboard } from "src/components/keyboard"
+import type { ReactNode } from "react";
+
+import { useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
+
+import { Box, Table, Button, TableRow, TableBody, TableCell, Typography, TableContainer } from "@mui/material"
+
+import { Keyboard } from "src/components/keyboard"
+import { RHFTextField, RHFDatePicker, RHFRadioGroup } from "src/components/hook-form"
+
+import type { NewPatientProps } from "../model/types"
 
 const NewPatient = (props: NewPatientProps) => {
   const { handleNextPage, handlePreviousPage } = props
@@ -15,31 +20,6 @@ const NewPatient = (props: NewPatientProps) => {
   const { watch } = useFormContext()
   const isForeign = watch("citizenship")
 
-  const TableRowKeyboardWrapper = ({ children, name }: { children?: ReactNode, name?: string }) => {
-
-    return (
-      <>
-        <TableRow>
-          {children}
-        </TableRow>
-
-        <TableRow>
-          <TableCell colSpan={2} borderbottom="noborder">
-            {
-              elementName === name && (
-                <Keyboard
-                  ref={inputRef.current}
-                  elementName={elementName}
-                  inputType={keyboardType}
-                />
-              )
-            }
-          </TableCell>
-        </TableRow>
-      </>
-    )
-  }
-
   return (
     <>
       <TableContainer sx={{ my: 2 }}>
@@ -49,7 +29,7 @@ const NewPatient = (props: NewPatientProps) => {
             <col width="70%" />
           </colgroup>
           <TableBody>
-            <TableRowKeyboardWrapper name="nik">
+            <TableRow>
               <TableCellBody titleText={isForeign ? "Passport" : "NIK/Medrec"} />
               <TableCellBody>
                 <RHFTextField
@@ -60,8 +40,8 @@ const NewPatient = (props: NewPatientProps) => {
                   onClick={() => { setElementName("nik"); setKeyboardType("text") }}
                 />
               </TableCellBody>
-            </TableRowKeyboardWrapper>
-            <TableRowKeyboardWrapper name="name">
+            </TableRow>
+            <TableRow>
               <TableCellBody titleText={isForeign ? "FullName" : "Nama Lengkap"} />
               <TableCellBody>
                 <RHFTextField
@@ -71,8 +51,8 @@ const NewPatient = (props: NewPatientProps) => {
                   onClick={() => { setElementName("name"); setKeyboardType("text") }}
                 />
               </TableCellBody>
-            </TableRowKeyboardWrapper>
-            <TableRowKeyboardWrapper>
+            </TableRow>
+            <TableRow>
               <TableCellBody titleText={isForeign ? "Gender" : "Jenis Kelamin"} />
               <TableCellBody>
                 <RHFRadioGroup
@@ -83,8 +63,8 @@ const NewPatient = (props: NewPatientProps) => {
                   onClick={() => { setElementName(""); setKeyboardType("") }}
                 />
               </TableCellBody>
-            </TableRowKeyboardWrapper>
-            <TableRowKeyboardWrapper name="birthPlace">
+            </TableRow>
+            <TableRow>
               <TableCellBody titleText={isForeign ? "Place of Birth" : "Tempat Lahir"} />
               <TableCellBody>
                 <RHFTextField
@@ -95,8 +75,8 @@ const NewPatient = (props: NewPatientProps) => {
                   onClick={() => { setElementName("birthPlace"); setKeyboardType("text") }}
                 />
               </TableCellBody>
-            </TableRowKeyboardWrapper>
-            <TableRowKeyboardWrapper name="birthDate">
+            </TableRow>
+            <TableRow>
               <TableCellBody titleText={isForeign ? "Date of Birth" : "Tanggal Lahir"} />
               <TableCellBody>
                 <RHFDatePicker
@@ -106,8 +86,8 @@ const NewPatient = (props: NewPatientProps) => {
                   onOpen={() => { setElementName(""); setKeyboardType("") }}
                 />
               </TableCellBody>
-            </TableRowKeyboardWrapper>
-            <TableRowKeyboardWrapper name="phoneNumber">
+            </TableRow>
+            <TableRow>
               <TableCellBody titleText={isForeign ? "Phone Number" : "No Telp"} />
               <TableCellBody>
                 <RHFTextField
@@ -118,8 +98,8 @@ const NewPatient = (props: NewPatientProps) => {
                   onClick={() => { setElementName("phoneNumber"); setKeyboardType("number") }}
                 />
               </TableCellBody>
-            </TableRowKeyboardWrapper>
-            <TableRowKeyboardWrapper name="email">
+            </TableRow>
+            <TableRow>
               <TableCellBody titleText="Email" />
               <TableCellBody>
                 <RHFTextField
@@ -130,15 +110,25 @@ const NewPatient = (props: NewPatientProps) => {
                   onClick={() => { setElementName("email"); setKeyboardType("email") }}
                 />
               </TableCellBody>
-            </TableRowKeyboardWrapper>
+            </TableRow>
           </TableBody>
         </Table>
       </TableContainer >
 
       <Box sx={{ display: "flex", placeContent: "space-between", gap: 2 }}>
-        <Button variant="outlined" fullWidth color="secondary" onClick={handlePreviousPage}>{isForeign ? "Back" : "Kembali"}</Button>
-        <Button variant="contained" fullWidth color="secondary" onClick={handleNextPage}>{isForeign ? "Next" : "Selanjutnya"}</Button>
+        <Button size="large" variant="outlined" fullWidth color="secondary" onClick={handlePreviousPage}>{isForeign ? "Back" : "Kembali"}</Button>
+        <Button size="large" variant="contained" fullWidth color="secondary" onClick={handleNextPage}>{isForeign ? "Next" : "Selanjutnya"}</Button>
       </Box>
+
+      {
+        elementName && (
+          <Keyboard
+            ref={inputRef.current}
+            elementName={elementName}
+            inputType={keyboardType}
+          />
+        )
+      }
     </>
   )
 }

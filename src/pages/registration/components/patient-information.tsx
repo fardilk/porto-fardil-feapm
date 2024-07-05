@@ -1,7 +1,10 @@
-import { Alert, Box, Button, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material"
-import { fAsterisk } from "src/utils/helper"
-import { PatientInformationProps } from "../model/types"
 import { useFormContext } from "react-hook-form"
+
+import { Box, Alert, Table, Button, TableRow, TableBody, TableCell, Typography, TableContainer } from "@mui/material"
+
+import { fAsterisk } from "src/utils/helper"
+
+import type { PatientInformationProps } from "../model/types"
 
 const PatientInformation = (props: PatientInformationProps) => {
   const { leftButtonProps, rightButtonProps, leftTextButton, rigthTextButton } = props
@@ -62,8 +65,8 @@ const PatientInformation = (props: PatientInformationProps) => {
       </TableContainer>
 
       <Box sx={{ display: "flex", placeContent: "space-between", gap: 2 }}>
-        <Button variant="outlined" fullWidth color="secondary" {...leftButtonProps}>{leftTextButton}</Button>
-        <Button variant="contained" fullWidth color="secondary" {...rightButtonProps}>{rigthTextButton}</Button>
+        <Button size="large" variant="outlined" fullWidth color="secondary" {...leftButtonProps}>{leftTextButton}</Button>
+        <Button size="large" variant="contained" fullWidth color="secondary" {...rightButtonProps}>{rigthTextButton}</Button>
       </Box>
     </>
   )
