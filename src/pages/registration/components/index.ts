@@ -1,4 +1,3 @@
-export { default as InsertNIK } from './insert-nik';
 export { default as NewPatient } from './new-patient';
 export { default as InsertPhone } from './insert-phone';
 export { default as InsertEmail } from './insert-email';

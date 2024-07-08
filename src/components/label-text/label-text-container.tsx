@@ -8,11 +8,11 @@ import type { LabelTextProps } from "./types"
 
 type LabelTextContainerProps = {
   listText: LabelTextProps[]
-  row?: number
+  col?: number
   cardProps?: CardProps
 }
 
-const LabelTextContainer = ({ listText, row = 4, cardProps }: LabelTextContainerProps) => {
+const LabelTextContainer = ({ listText, col = 4, cardProps }: LabelTextContainerProps) => {
 
   const md = useMemo(() => {
     function getMappedValue(input: number) {
@@ -23,8 +23,8 @@ const LabelTextContainer = ({ listText, row = 4, cardProps }: LabelTextContainer
       return 12
     }
 
-    return getMappedValue(row)
-  }, [row])
+    return getMappedValue(col)
+  }, [col])
 
   return (
     <Card variant="outlined" {...cardProps}>

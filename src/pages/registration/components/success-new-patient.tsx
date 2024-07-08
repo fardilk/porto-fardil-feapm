@@ -1,15 +1,14 @@
 import { useState } from "react"
 
-import { Box, Stack, Button, Typography } from "@mui/material"
+import { Button, Stack, Typography } from "@mui/material"
 
-import { fAsterisk } from "src/utils/helper"
 import { fDate } from "src/utils/format-time"
+import { fAsterisk } from "src/utils/helper"
 
-import { Iconify } from "src/components/iconify"
 import { LabelTextContainer } from "src/components/label-text"
 
-import type { SuccessNewPatientProps } from "../model/types"
 import { AlertInformation } from "src/components/alert-information"
+import type { SuccessNewPatientProps } from "../model/types"
 
 const SuccessNewPatient = (props: SuccessNewPatientProps) => {
 
@@ -33,7 +32,7 @@ const SuccessNewPatient = (props: SuccessNewPatientProps) => {
 
       <Typography variant="h5" gutterBottom>Detail Pasien</Typography>
 
-      <LabelTextContainer row={3} listText={headerData} />
+      <LabelTextContainer col={3} listText={headerData} />
 
       <Button size="large" variant="outlined" color="secondary" onClick={handleFinish}>Selesai</Button>
     </Stack>

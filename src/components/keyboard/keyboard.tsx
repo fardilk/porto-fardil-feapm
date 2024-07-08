@@ -1,4 +1,4 @@
-import type { ReactNode} from "react";
+import type { ReactNode } from "react";
 
 import { useFormContext } from "react-hook-form";
 import React, { useState, useCallback } from "react";
@@ -33,10 +33,10 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
       const end = currentRef.selectionEnd ?? 0;
       let value = currentRef.value || '';
 
-      if (key === 'Backspace') {
+      if (key === 'Backspace' || 'BACKSPACE') {
         value = value.slice(0, start - 1) + value.slice(end);
         currentRef.selectionStart = currentRef.selectionEnd = start - 1;
-      } else if (key === 'Enter') {
+      } else if (key === 'Enter' || 'ENTER') {
         value = `${value.slice(0, start)}\n${value.slice(end)}`;
         currentRef.selectionStart = currentRef.selectionEnd = start + 1;
       } else {

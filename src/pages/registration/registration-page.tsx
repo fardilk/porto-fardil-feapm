@@ -5,9 +5,10 @@ import { AppPage } from "src/components/app-page"
 import { Form } from "src/components/hook-form"
 import { WindowContainer } from "src/components/window-container"
 import { useStepper } from "src/hooks/use-stepper"
-import { InsertEmail, InsertNIK, InsertPhone, NewPatient, PatientInformation, SuccessNewPatient } from "./components"
+import { InsertEmail, InsertPhone, NewPatient, PatientInformation, SuccessNewPatient } from "./components"
 import { getDummyData } from "./model/functions"
 import type { RegistrationIForm } from "./model/types"
+import { InsertIdentifier } from "src/components/insert-identifier"
 
 const RegistrationPage = () => {
 
@@ -63,7 +64,7 @@ const RegistrationPage = () => {
         >
           <Box sx={{ p: 4 }}>
 
-            {currentPage.value === "insert_nik" && <InsertNIK />}
+            {currentPage.value === "insert_nik" && <InsertIdentifier />}
 
             {
               currentPage.value === "information" && (

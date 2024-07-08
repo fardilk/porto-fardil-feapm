@@ -48,7 +48,7 @@ const InformationBookingBPJS = () => {
             <Typography variant="h5" gutterBottom>Detail Rujukan</Typography>
 
             <LabelTextContainer
-              row={1}
+              col={1}
               listText={referenceData}
             />
 

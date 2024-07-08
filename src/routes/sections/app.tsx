@@ -13,6 +13,9 @@ const RegistrationPage = lazy(() => import("src/pages/registration/registration-
 /** === CheckinPage */
 const CheckinPage = lazy(() => import("src/pages/checkin/checkin-page"))
 
+/** === EncounterPage */
+const EncounterPage = lazy(() => import("src/pages/encounter/encounter-page"))
+
 const appRoute = [
   {
     path: '/',
@@ -34,7 +37,11 @@ const appRoute = [
       {
         path: 'checkin',
         element: <CheckinPage />
-      }
+      },
+      {
+        path: 'encounter',
+        element: <EncounterPage />
+      },
     ]
   }
 ]

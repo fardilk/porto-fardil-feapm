@@ -9,7 +9,7 @@ import { Keyboard } from "src/components/keyboard"
 import { RHFSwitch, RHFTextField } from "src/components/hook-form"
 
 
-const InsertNIK = () => {
+const InsertIdentifier = () => {
 
   const { watch } = useFormContext()
   const isForeign = watch("citizenship")
@@ -75,4 +75,4 @@ const InsertNIK = () => {
   )
 }
 
-export default InsertNIK
+export default InsertIdentifier

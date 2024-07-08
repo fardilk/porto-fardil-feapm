@@ -6,7 +6,7 @@ import { Header_Height } from "src/utils/variables"
 
 import { Image } from "src/components/image"
 
-import { MainCard } from "./components"
+import { ItemCard } from "src/components/item-card"
 
 const HomePage = () => {
   const navigate = useNavigate()
@@ -22,7 +22,7 @@ const HomePage = () => {
       title: "KUNJUNGAN DOKTER",
       body: "Pendaftaran kunjungan pasien lama, siapkan nomor NIK.",
       icon: "/assets/app/icons/home-patient.svg",
-      handleClick: () => { }
+      handleClick: () => { navigate("encounter") }
     },
     {
       title: "RESERVASI",
@@ -54,7 +54,14 @@ const HomePage = () => {
             listCard.map((row, index) => {
               return (
                 <Grid item xs={12} md={3} key={index}>
-                  <MainCard {...row} />
+                  <ItemCard
+                    key={index}
+                    clickable
+                    title={row.title}
+                    body={row.body}
+                    onClick={row.handleClick}
+                    icon={row.icon}
+                  />
                 </Grid>
               )
             })
