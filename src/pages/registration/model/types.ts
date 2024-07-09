@@ -17,5 +17,6 @@ export type SuccessNewPatientProps = {
 };
 
 export type RegistrationIForm = {
+  nik: string;
   citizenship: boolean;
 };

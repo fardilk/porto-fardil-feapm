@@ -13,6 +13,7 @@ import { InsertIdentifier } from "src/components/insert-identifier"
 const RegistrationPage = () => {
 
   const defaultValues: RegistrationIForm = {
+    nik: "",
     citizenship: false
   }
 

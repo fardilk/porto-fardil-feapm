@@ -11,6 +11,7 @@ const TimePils = (props: TimePilsProps) => {
   return (
     <Button
       size="small"
+      color="secondary"
       variant={selected ? 'contained' : 'outlined'}
       sx={{ borderWidth: '1px', borderRadius: 0.7, ...buttonProps?.sx }}
       {...buttonProps}

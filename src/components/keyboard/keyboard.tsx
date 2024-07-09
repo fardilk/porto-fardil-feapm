@@ -29,10 +29,10 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
       const end = currentRef.selectionEnd ?? 0;
       let value = currentRef.value || '';
 
-      if (key === 'Backspace' || 'BACKSPACE') {
+      if (key === 'Backspace' || key === 'BACKSPACE') {
         value = value.slice(0, start - 1) + value.slice(end);
         currentRef.selectionStart = currentRef.selectionEnd = start - 1;
-      } else if (key === 'Enter' || 'ENTER') {
+      } else if (key === 'Enter' || key === 'ENTER') {
         value = `${value.slice(0, start)}\n${value.slice(end)}`;
         currentRef.selectionStart = currentRef.selectionEnd = start + 1;
       } else {
@@ -169,9 +169,7 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
               event.preventDefault()
               onButtonClick(".com")
             }}>
-            <Typography variant="h4">
-              <Typography variant="h4">{isSubmitting ? "-" : getLabel(".com")}</Typography>
-            </Typography>
+            <Typography variant="h4">{isSubmitting ? "-" : getLabel(".com")}</Typography>
           </Button>
         </Grid>
 
