@@ -1,4 +1,4 @@
-import type { TypographyProps } from '@mui/material';
+import type { CardProps, TypographyProps } from '@mui/material';
 
 export type LabelTextProps = {
   title: string;
@@ -6,4 +6,10 @@ export type LabelTextProps = {
   titleProps?: TypographyProps;
   bodyProps?: TypographyProps;
   colSpan?: number;
+};
+
+export type LabelTextContainerProps = {
+  listText: LabelTextProps[];
+  col?: number;
+  cardProps?: CardProps;
 };

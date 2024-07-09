@@ -6,6 +6,7 @@ import { authDemoRoutes } from './auth-demo';
 import { componentsRoutes } from './components';
 import { dashboardRoutes } from './dashboard';
 import { mainRoutes } from './main';
+import devRoute from './dev';
 
 // ----------------------------------------------------------------------
 
@@ -40,6 +41,9 @@ export function Router() {
 
     // Components
     ...componentsRoutes,
+
+    // Handsome Dev
+    ...devRoute,
 
     // No match
     { path: '*', element: <Navigate to="/404" replace /> },

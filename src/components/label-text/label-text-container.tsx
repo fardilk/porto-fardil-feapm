@@ -1,29 +1,15 @@
 import { useMemo } from "react"
 
-import { Card, Grid, CardContent, CardProps } from "@mui/material"
+import { Card, CardContent, Grid } from "@mui/material"
 
 import LabelText from "./label-text"
-
-import type { LabelTextProps } from "./types"
-
-type LabelTextContainerProps = {
-  listText: LabelTextProps[]
-  col?: number
-  cardProps?: CardProps
-}
+import { LabelTextContainerProps } from "./types"
+import { getGridLayoutMappedValue } from "src/utils/helper"
 
 const LabelTextContainer = ({ listText, col = 4, cardProps }: LabelTextContainerProps) => {
 
   const md = useMemo(() => {
-    function getMappedValue(input: number) {
-      if (input > 0 && input <= 12) {
-        return 12 / input;
-      }
-
-      return 12
-    }
-
-    return getMappedValue(col)
+    return getGridLayoutMappedValue(col)
   }, [col])
 
   return (

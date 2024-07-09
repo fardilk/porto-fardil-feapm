@@ -1,8 +1,8 @@
 import { Grid } from "@mui/material"
 import { useState } from "react"
 import { CardBanner } from "src/components/card-banner"
-import { CardBannerProps } from "src/components/card-banner/card-banner"
 import { PaymentMethodProps } from "../model/types"
+import { CardBannerProps } from "src/components/card-banner/types"
 
 const PaymentMethod = (props: PaymentMethodProps) => {
   const { handleNext } = props

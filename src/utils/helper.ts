@@ -155,3 +155,18 @@ export const fAsterisk = (param: string): string => {
   // Combine the trimmed asterisks and characters
   return trimAst + trimParam;
 };
+
+// ----------------------------------------------------------------------
+
+/**
+ * @author sangpenciptajs / HIS V3 Teams
+ * @param input column to grid
+ * @returns
+ */
+export const getGridLayoutMappedValue = (input: number) => {
+  if (input > 0 && input <= 12) {
+    return 12 / input;
+  }
+
+  return 12;
+};

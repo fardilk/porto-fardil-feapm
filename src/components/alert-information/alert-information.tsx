@@ -1,11 +1,6 @@
 import { Box, Typography } from "@mui/material"
 import { Iconify } from "../iconify"
-
-export type AlertInformationProps = {
-  icon?: string,
-  title?: string,
-  body?: string
-}
+import { AlertInformationProps } from "./types"
 
 const AlertInformation = (props: AlertInformationProps) => {
   const { body, icon, title } = props

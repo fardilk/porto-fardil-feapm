@@ -4,6 +4,8 @@ import { AppLayout } from "src/layouts/app"
 
 import { SplashScreen } from "src/components/loading-screen"
 
+const DevPage = lazy(() => import("src/pages/dev"))
+
 /** === HomePage */
 const HomePage = lazy(() => import("src/pages/home/home-page"))
 

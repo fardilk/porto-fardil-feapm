@@ -7,11 +7,7 @@ import { LoadingButton } from "@mui/lab";
 import { Box, Grid, Stack, Button, Typography } from "@mui/material";
 
 import { Iconify } from "../iconify";
-
-type KeyboardType = {
-  elementName: string;
-  inputType: string
-}
+import { KeyboardType } from "./types";
 
 const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
   const { elementName, inputType } = props;

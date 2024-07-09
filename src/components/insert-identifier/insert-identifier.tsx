@@ -1,12 +1,12 @@
 import { useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
-import { Box, Stack, Divider, useTheme, Typography } from "@mui/material"
+import { Box, Divider, Stack, Typography, useTheme } from "@mui/material"
 
 import { typography } from "src/theme/core"
 
-import { Keyboard } from "src/components/keyboard"
 import { RHFSwitch, RHFTextField } from "src/components/hook-form"
+import { Keyboard } from "src/components/keyboard"
 
 
 const InsertIdentifier = () => {

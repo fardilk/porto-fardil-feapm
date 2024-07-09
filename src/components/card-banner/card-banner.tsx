@@ -1,26 +1,9 @@
-import { Box, ButtonBase, Card, CardContent, CardProps, List, ListItem, ListItemIcon, ListItemText, Typography, TypographyProps } from "@mui/material";
+import { Box, ButtonBase, Card, CardContent, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import { Image } from "../image";
+import { ButtonBaseOverrideProps, CardBannerContentCardProps, CardBannerProps } from "./types";
 
-type ButtonBaseOverrideProps = {
-  clickable?: boolean;
-  onClick?: () => void
-}
-
-type CardBannerContentCardProps = {
-  icon?: string,
-  title?: string,
-  body?: string,
-  titleProps?: TypographyProps,
-  bodyProps?: TypographyProps,
-}
-
-export type CardBannerProps = ButtonBaseOverrideProps & CardBannerContentCardProps & {
-  orientation?: "horizontal" | "vertical"
-  cardProps?: CardProps,
-}
-
-const ButtonBaseOverride = ({ clickable, onClick, children }: ButtonBaseOverrideProps & { children?: ReactNode }) => {
+export const ButtonBaseOverride = ({ clickable, onClick, children }: ButtonBaseOverrideProps & { children?: ReactNode }) => {
 
   if (clickable) {
     return (
@@ -33,7 +16,7 @@ const ButtonBaseOverride = ({ clickable, onClick, children }: ButtonBaseOverride
   return children
 }
 
-const HorizontalItem = (props: CardBannerContentCardProps) => {
+export const HorizontalItem = (props: CardBannerContentCardProps) => {
   const { body, bodyProps, icon, title, titleProps } = props
   return (
     <List>
@@ -48,7 +31,7 @@ const HorizontalItem = (props: CardBannerContentCardProps) => {
   )
 }
 
-const VerticalItem = (props: CardBannerContentCardProps) => {
+export const VerticalItem = (props: CardBannerContentCardProps) => {
   const { body, bodyProps, icon, title, titleProps } = props
 
   return (

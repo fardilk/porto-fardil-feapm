@@ -76,7 +76,7 @@ const MuiButton: Components<Theme>['MuiButton'] = {
   /** **************************************
    * DEFAULT PROPS
    *************************************** */
-  defaultProps: { color: 'inherit', disableElevation: true },
+  defaultProps: { color: 'secondary', disableElevation: true },
 
   /** **************************************
    * VARIANTS

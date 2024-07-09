@@ -11,8 +11,8 @@ const SelectPractitioner = () => {
             heathcareServiceName="test"
             count="20/30"
             name="dr. Liliana Hana Sp.M"
-            // icon="healthicons:doctor"
-            slots="aaa"
+            slots="12:00 - 13:00"
+            clickable
           />
         </Grid>
       </Grid>

@@ -1,0 +1,23 @@
+import { Button, ButtonProps } from "@mui/material"
+
+export type TimePilsProps = ButtonProps & {
+  selected?: boolean
+  text?: string,
+}
+
+const TimePils = (props: TimePilsProps) => {
+  const { selected, text, ...buttonProps } = props
+
+  return (
+    <Button
+      size="small"
+      variant={selected ? 'contained' : 'outlined'}
+      sx={{ borderWidth: '1px', borderRadius: 0.7, ...buttonProps?.sx }}
+      {...buttonProps}
+    >
+      {text}
+    </Button>
+  )
+}
+
+export default TimePils
