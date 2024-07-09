@@ -37,7 +37,7 @@ export function useStepper(props: useStepperProps) {
     if (toSpecificPage) {
       const specificPageIndex = tempFormSteps.findIndex((row) => row.value === toSpecificPage);
 
-      if (specificPageIndex) {
+      if (specificPageIndex >= 0) {
         setCurrentPageIndex(specificPageIndex);
         setCurrentPage(tempFormSteps[specificPageIndex]);
       }

@@ -71,7 +71,7 @@ const RegistrationPage = () => {
                 <PatientInformation
                   leftTextButton="Kembali Ke Beranda"
                   rigthTextButton="Edit Nomor Telepon dan Email"
-                  leftButtonProps={{ onClick: () => navigate("/") }}
+                  leftButtonProps={{ onClick: () => handleChangePage({ toSpecificPage: "insert_nik" }) }}
                   rightButtonProps={{ onClick: () => handleChangePage({ action: "next" }) }}
                 />
               )
