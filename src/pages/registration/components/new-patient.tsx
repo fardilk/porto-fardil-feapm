@@ -1,14 +1,14 @@
 import type { ReactNode } from "react";
 
-import { useRef, useState } from "react"
-import { useFormContext } from "react-hook-form"
+import { useRef, useState } from "react";
+import { useFormContext } from "react-hook-form";
 
-import { Box, Table, Button, TableRow, TableBody, TableCell, Typography, TableContainer } from "@mui/material"
+import { Box, Button, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
 
-import { Keyboard } from "src/components/keyboard"
-import { RHFTextField, RHFDatePicker, RHFRadioGroup } from "src/components/hook-form"
+import { RHFDatePicker, RHFMobileDatePicker, RHFRadioGroup, RHFTextField } from "src/components/hook-form";
+import { Keyboard } from "src/components/keyboard";
 
-import type { NewPatientProps } from "../model/types"
+import type { NewPatientProps } from "../model/types";
 
 const NewPatient = (props: NewPatientProps) => {
   const { handleNextPage, handlePreviousPage } = props
@@ -79,11 +79,15 @@ const NewPatient = (props: NewPatientProps) => {
             <TableRow>
               <TableCellBody titleText={isForeign ? "Date of Birth" : "Tanggal Lahir"} />
               <TableCellBody>
-                <RHFDatePicker
+                {/* <RHFDatePicker
                   name="birthDate"
                   inputRef={(ref) => { inputRef.current.birthDate = ref }}
                   slotProps={{ textField: { fullWidth: true, onClick: () => { setElementName(""); setKeyboardType("") } } }}
                   onOpen={() => { setElementName(""); setKeyboardType("") }}
+                /> */}
+                <RHFMobileDatePicker
+                  name="birthDate"
+                  format="DD/MM/YYYY"
                 />
               </TableCellBody>
             </TableRow>

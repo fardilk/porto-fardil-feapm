@@ -35,7 +35,7 @@ const RegistrationPage = () => {
       if (isForeign) {
         handleChangePage({ action: "next", newFormSteps: formStepsForeign })
       } else {
-        const resp = await getDummyData("medrec_exit")
+        const resp = await getDummyData("not_exist_satusehat")
 
         if (resp.data === "medrec_exit") handleChangePage({ action: "next", newFormSteps: formStepsExistInInternal });
         else if (resp.data === "exist_satusehat") handleChangePage({ action: "next", newFormSteps: formStepsExistInSatuSehat });

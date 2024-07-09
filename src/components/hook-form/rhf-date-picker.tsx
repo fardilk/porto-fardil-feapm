@@ -10,6 +10,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 
 import { formatStr } from 'src/utils/format-time';
+import { MobileDatePicker, MobileDatePickerProps } from '@mui/x-date-pickers';
 
 // ----------------------------------------------------------------------
 
@@ -65,6 +66,45 @@ export function RHFMobileDateTimePicker({
       control={control}
       render={({ field, fieldState: { error } }) => (
         <MobileDateTimePicker
+          {...field}
+          value={dayjs(field.value)}
+          onChange={(newValue) => field.onChange(dayjs(newValue).format())}
+          format={formatStr.split.dateTime}
+          slotProps={{
+            textField: {
+              fullWidth: true,
+              error: !!error,
+              helperText: error?.message ?? (slotProps?.textField as TextFieldProps)?.helperText,
+              ...slotProps?.textField,
+            },
+            ...slotProps,
+          }}
+          {...other}
+        />
+      )}
+    />
+  );
+}
+
+// ----------------------------------------------------------------------
+
+type RHFMobileDatePickerProps = MobileDatePickerProps<Dayjs> & {
+  name: string;
+};
+
+export function RHFMobileDatePicker({
+  name,
+  slotProps,
+  ...other
+}: RHFMobileDatePickerProps) {
+  const { control } = useFormContext();
+
+  return (
+    <Controller
+      name={name}
+      control={control}
+      render={({ field, fieldState: { error } }) => (
+        <MobileDatePicker
           {...field}
           value={dayjs(field.value)}
           onChange={(newValue) => field.onChange(dayjs(newValue).format())}
