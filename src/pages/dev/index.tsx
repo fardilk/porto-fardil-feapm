@@ -14,6 +14,10 @@ const DevPage = () => {
       label: "Time Pils",
       value: "time-pils"
     },
+    {
+      label: "Radio Group",
+      value: "radio-group"
+    },
   ]
 
   const componentName = methods.watch("component")

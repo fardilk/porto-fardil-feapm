@@ -13,6 +13,7 @@ const SelectPractitioner = () => {
             name="dr. Liliana Hana Sp.M"
             slots="12:00 - 13:00"
             clickable
+            onClick={() => { console.log('navigate here') }}
           />
         </Grid>
       </Grid>
