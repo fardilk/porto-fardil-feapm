@@ -1,12 +1,13 @@
 import { Grid } from "@mui/material"
 import { useState } from "react"
-import ItemCard, { ItemCardProps } from "src/components/item-card/item-card"
+import { CardBanner } from "src/components/card-banner"
+import { CardBannerProps } from "src/components/card-banner/card-banner"
 import { PaymentMethodProps } from "../model/types"
 
 const PaymentMethod = (props: PaymentMethodProps) => {
   const { handleNext } = props
 
-  const [paymentMethod, _setPaymentMethod] = useState<ItemCardProps[]>([
+  const [paymentMethod, _setPaymentMethod] = useState<CardBannerProps[]>([
     {
       title: "UMUM",
       body: "Pendaftaran Pasien Umum",
@@ -28,7 +29,7 @@ const PaymentMethod = (props: PaymentMethodProps) => {
 
           return (
             <Grid item xs={12} md={6} key={index}>
-              <ItemCard {...row} cardProps={{ sx: { py: 4 }, variant: "outlined" }} clickable onClick={() => {
+              <CardBanner {...row} cardProps={{ sx: { py: 4 }, variant: "outlined" }} clickable onClick={() => {
 
                 handleNext()
               }} />

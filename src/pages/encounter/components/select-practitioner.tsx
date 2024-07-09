@@ -1,16 +1,17 @@
 import { Grid } from "@mui/material"
-import PractitionerHealthcareServiceCard from "src/components/practitioner/practitioner-healthcare-service-card"
+import { CardBannerProfile } from "src/components/card-banner"
 
 const SelectPractitioner = () => {
 
   return (
     <>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={3}>
-          <PractitionerHealthcareServiceCard
+        <Grid item xs={12} md={4}>
+          <CardBannerProfile
             heathcareServiceName="test"
-            patientTotal="test a"
-            practitionerName="name"
+            count="20/30"
+            name="dr. Liliana Hana Sp.M"
+            // icon="healthicons:doctor"
             slots="aaa"
           />
         </Grid>

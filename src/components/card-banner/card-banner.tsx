@@ -7,7 +7,7 @@ type ButtonBaseOverrideProps = {
   onClick?: () => void
 }
 
-type ItemCardContentCardProps = {
+type CardBannerContentCardProps = {
   icon?: string,
   title?: string,
   body?: string,
@@ -15,7 +15,7 @@ type ItemCardContentCardProps = {
   bodyProps?: TypographyProps,
 }
 
-export type ItemCardProps = ButtonBaseOverrideProps & ItemCardContentCardProps & {
+export type CardBannerProps = ButtonBaseOverrideProps & CardBannerContentCardProps & {
   orientation?: "horizontal" | "vertical"
   cardProps?: CardProps,
 }
@@ -33,7 +33,7 @@ const ButtonBaseOverride = ({ clickable, onClick, children }: ButtonBaseOverride
   return children
 }
 
-const HorizontalItem = (props: ItemCardContentCardProps) => {
+const HorizontalItem = (props: CardBannerContentCardProps) => {
   const { body, bodyProps, icon, title, titleProps } = props
   return (
     <List>
@@ -48,7 +48,7 @@ const HorizontalItem = (props: ItemCardContentCardProps) => {
   )
 }
 
-const VerticalItem = (props: ItemCardContentCardProps) => {
+const VerticalItem = (props: CardBannerContentCardProps) => {
   const { body, bodyProps, icon, title, titleProps } = props
 
   return (
@@ -62,7 +62,7 @@ const VerticalItem = (props: ItemCardContentCardProps) => {
   )
 }
 
-const ItemCard = (props: ItemCardProps) => {
+const CardBanner = (props: CardBannerProps) => {
   const { cardProps, clickable, onClick, orientation = "horizontal", ...contentProps } = props
 
   return (
@@ -79,4 +79,4 @@ const ItemCard = (props: ItemCardProps) => {
   )
 }
 
-export default ItemCard
+export default CardBanner

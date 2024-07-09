@@ -1,7 +1,7 @@
 import { Box, Grid, Stack, Typography } from "@mui/material"
 import { useState } from "react"
 import { AlertInformation } from "src/components/alert-information"
-import { ItemCard } from "src/components/item-card"
+import { CardBanner } from "src/components/card-banner"
 import { LabelTextContainer } from "src/components/label-text"
 import { LabelTextProps } from "src/components/label-text/types"
 import { fDate } from "src/utils/format-time"
@@ -71,7 +71,7 @@ const InformationBookingBPJS = () => {
             detailData.map((it, index) => {
               return (
                 <Grid item xs={12} md={3}>
-                  <ItemCard
+                  <CardBanner
                     key={index}
                     icon={it.icon}
                     cardProps={{ variant: "outlined" }}

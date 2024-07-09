@@ -1,8 +1,8 @@
 import { ButtonProps } from '@mui/material';
-import { ItemCardProps } from 'src/components/item-card/item-card';
+import { CardBannerProps } from 'src/components/card-banner/card-banner';
 
 export type SelectEncounterTypeProps = {
-  items: ItemCardProps[];
+  items: CardBannerProps[];
 };
 
 export type InformationProps = {

@@ -1,15 +1,15 @@
+import { Box } from "@mui/material"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router"
-import { useStepper } from "src/hooks/use-stepper"
-import { getDummyData } from "../registration/model/functions"
 import { AppPage } from "src/components/app-page"
-import { WindowContainer } from "src/components/window-container"
-import { InformationOutpatientGeneral, PaymentMethod, SelectEncounterType, SelectPractitioner } from "./components"
-import { useState } from "react"
-import { ItemCardProps } from "src/components/item-card/item-card"
+import { CardBannerProps } from "src/components/card-banner/card-banner"
 import { Form } from "src/components/hook-form"
 import { InsertIdentifier } from "src/components/insert-identifier"
-import { Box } from "@mui/material"
+import { WindowContainer } from "src/components/window-container"
+import { useStepper } from "src/hooks/use-stepper"
+import { getDummyData } from "../registration/model/functions"
+import { InformationOutpatientGeneral, PaymentMethod, SelectEncounterType, SelectPractitioner } from "./components"
 
 const EncounterPage = () => {
 
@@ -20,7 +20,7 @@ const EncounterPage = () => {
     handleChangePage
   } = useStepper({ initialSteps: formStepsOutpatientGeneral })
 
-  const [listEncounterType, _setListEncounterType] = useState<ItemCardProps[]>([
+  const [listEncounterType, _setListEncounterType] = useState<CardBannerProps[]>([
     {
       title: "PEMERIKSAAN RAWAT JALAN",
       body: "Layanan medis yang mencakup evaluasi kesehatan, diagnosis, dan perawatan tanpa memerlukan rawat inap.",

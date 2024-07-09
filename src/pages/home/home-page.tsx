@@ -4,9 +4,9 @@ import { Box, Grid, Stack } from "@mui/material"
 
 import { Header_Height } from "src/utils/variables"
 
+import { CardBanner } from "src/components/card-banner"
 import { Image } from "src/components/image"
 
-import { ItemCard } from "src/components/item-card"
 
 const HomePage = () => {
   const navigate = useNavigate()
@@ -54,7 +54,7 @@ const HomePage = () => {
             listCard.map((row, index) => {
               return (
                 <Grid item xs={12} md={3} key={index}>
-                  <ItemCard
+                  <CardBanner
                     key={index}
                     clickable
                     title={row.title}
