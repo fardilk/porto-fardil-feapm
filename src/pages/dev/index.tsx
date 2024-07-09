@@ -1,64 +1,58 @@
-import { Box, Button, Grid } from "@mui/material"
+import { Box, Divider, Typography } from "@mui/material"
+import { lazy, Suspense, useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { AppPage } from "src/components/app-page"
-import { Form, RHFTimePils } from "src/components/hook-form"
-import { TimePils } from "src/components/time-pils"
-import TimePilsContainer from "src/components/time-pils/time-pils-container"
+import { Form, RHFAutocomplete } from "src/components/hook-form"
 import { WindowContainer } from "src/components/window-container"
 
 const DevPage = () => {
 
-  const methods = useForm({ defaultValues: { timePils: null } })
+  const methods = useForm({ defaultValues: { component: null } })
 
   const options = [
     {
-      label: "10:00",
-      value: "huruf_a"
+      label: "Time Pils",
+      value: "time-pils"
     },
-    {
-      label: "11:30",
-      value: "huruf_b"
-    },
-    {
-      label: "12:45",
-      value: "huruf_c"
-    }
   ]
+
+  const componentName = methods.watch("component")
+
+  const Component = useMemo(() => {
+
+    if (componentName) {
+
+      const LazyComponent = lazy(() => import(`./components/${(componentName as any).value}`))
+
+      return (
+        <Suspense fallback={<p>Loading...</p>}>
+          <LazyComponent />
+        </Suspense>
+      )
+    }
+
+    return <Typography variant="subtitle1">Select Component First</Typography>
+  }, [componentName])
 
   return (
     <AppPage>
       <WindowContainer
         title="Development"
       >
-        <Box sx={{ m: 4 }}>
+        <Box sx={{ my: 2, mx: 4 }}>
           <Form methods={methods}>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TimePils text="TimePils Text Unselected" />
-              </Grid>
-              <Grid item xs={12}>
-                <TimePils text="TimePils Text Selected" selected />
-              </Grid>
-              <Grid item xs={12}>
-                <TimePilsContainer
-                  options={options}
-                  getIsSelected={(_opt) => false}
-                  getOptionLabel={(opt) => opt.label}
-                  onClick={(option) => console.log(option)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <RHFTimePils
-                  options={options}
-                  getOptionEqualToValue={(opt, value) => opt.value === value?.value}
-                  getOptionLabel={(opt) => opt.label}
-                  name="timePils"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <Button variant="soft" fullWidth onClick={() => methods.setError("timePils", { message: "Isi yang bener" })}>Submit</Button>
-              </Grid>
-            </Grid>
+
+            <RHFAutocomplete
+              name="component"
+              options={options}
+              size="small"
+              label="Component"
+            />
+            <Divider sx={{ my: 2 }} />
+            <Box sx={{ my: 2 }}>
+              {Component}
+            </Box>
+
           </Form>
         </Box>
       </WindowContainer>
