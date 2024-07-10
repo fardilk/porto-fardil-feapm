@@ -5,7 +5,7 @@ import { useFormContext } from "react-hook-form";
 
 import { Box, Button, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
 
-import { RHFDatePicker, RHFMobileDatePicker, RHFRadioGroup, RHFTextField } from "src/components/hook-form";
+import { RHFMobileDatePicker, RHFRadioGroup, RHFTextField } from "src/components/hook-form";
 import { Keyboard } from "src/components/keyboard";
 
 import type { NewPatientProps } from "../model/types";
@@ -127,6 +127,9 @@ const NewPatient = (props: NewPatientProps) => {
       {
         elementName && (
           <Keyboard
+            withDialog
+            open={Boolean(elementName)}
+            onClose={() => setElementName("")}
             ref={inputRef.current}
             elementName={elementName}
             inputType={keyboardType}

@@ -3,7 +3,7 @@ import { useState } from "react"
 import { AlertInformation } from "src/components/alert-information"
 import { CardBanner } from "src/components/card-banner"
 import { LabelTextContainer } from "src/components/label-text"
-import { LabelTextProps } from "src/components/label-text/types"
+import type { LabelTextProps } from "src/components/label-text/types"
 import { fDate } from "src/utils/format-time"
 import { fAsterisk } from "src/utils/helper"
 

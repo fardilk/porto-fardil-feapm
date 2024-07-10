@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material"
 import { CardBanner } from "src/components/card-banner"
-import { SelectEncounterTypeProps } from "../model/types"
+import type { SelectEncounterTypeProps } from "../model/types"
 
 const SelectEncounterType = (props: SelectEncounterTypeProps) => {
   const { items } = props

@@ -3,7 +3,7 @@ import { useMemo } from "react"
 import { Card, CardContent, Grid } from "@mui/material"
 
 import LabelText from "./label-text"
-import { LabelTextContainerProps } from "./types"
+import type { LabelTextContainerProps } from "./types"
 import { getGridLayoutMappedValue } from "src/utils/helper"
 
 const LabelTextContainer = ({ listText, col = 4, cardProps }: LabelTextContainerProps) => {

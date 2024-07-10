@@ -1,9 +1,9 @@
-import { Box, Card, CardContent, CardProps, Stack, Typography } from "@mui/material";
+import { Box, Card, CardContent, Stack, Typography } from "@mui/material";
 import { Iconify } from "../iconify";
 import { Label } from "../label";
 import { Image } from "../image";
 import { ButtonBaseOverride } from "./card-banner";
-import { CardBannerProfileProps } from "./types";
+import type { CardBannerProfileProps } from "./types";
 
 const CardBannerProfile = (props: CardBannerProfileProps) => {
   const { heathcareServiceName, count, name, slots, icon, cardProps, clickable, onClick } = props

@@ -1,4 +1,4 @@
-import { CardProps, TypographyProps } from '@mui/material';
+import type { CardProps, TypographyProps } from '@mui/material';
 
 export type ButtonBaseOverrideProps = {
   clickable?: boolean;

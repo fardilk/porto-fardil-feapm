@@ -10,7 +10,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 
 import { formatStr } from 'src/utils/format-time';
-import { MobileDatePicker, MobileDatePickerProps } from '@mui/x-date-pickers';
+import type { MobileDatePickerProps } from '@mui/x-date-pickers';
+import { MobileDatePicker } from '@mui/x-date-pickers';
 
 // ----------------------------------------------------------------------
 

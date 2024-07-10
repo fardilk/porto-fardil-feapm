@@ -1,6 +1,6 @@
 import { Box } from "@mui/material"
 import TimePils from "./time-pils"
-import { TimePilsContainerProps } from "./types"
+import type { TimePilsContainerProps } from "./types"
 
 const TimePilsContainer = <T,>(props: TimePilsContainerProps<T>) => {
   const { options, getIsSelected, getOptionLabel, onClick } = props

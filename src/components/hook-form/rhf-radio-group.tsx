@@ -1,5 +1,5 @@
 import type { RadioProps } from '@mui/material/Radio';
-import { type Theme, type SxProps, styled } from '@mui/material/styles';
+import { type Theme, type SxProps } from '@mui/material/styles';
 import type { FormLabelProps } from '@mui/material/FormLabel';
 import type { RadioGroupProps } from '@mui/material/RadioGroup';
 import type { FormHelperTextProps } from '@mui/material/FormHelperText';
@@ -13,7 +13,7 @@ import FormControl from '@mui/material/FormControl';
 import FormHelperText from '@mui/material/FormHelperText';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { Box } from '@mui/material';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 // ----------------------------------------------------------------------
 

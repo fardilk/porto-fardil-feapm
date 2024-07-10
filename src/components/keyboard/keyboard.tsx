@@ -1,48 +1,124 @@
 import type { ReactNode } from "react";
-
+import React, { memo, useCallback, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
-import React, { useState, useCallback } from "react";
 
 import { LoadingButton } from "@mui/lab";
-import { Box, Grid, Stack, Button, Typography } from "@mui/material";
+import { Box, Button, Dialog, DialogContent, Grid, Stack, TextField, Typography } from "@mui/material";
 
 import { Iconify } from "../iconify";
-import { KeyboardType } from "./types";
+import type { KeyboardType, KeyboardWrapperProps } from "./types";
+
+const KeyboardWrapper = React.forwardRef((props: KeyboardWrapperProps, inputRef: any) => {
+  const { elementName, withDialog, inputType, onClose, open } = props
+
+  const dialogInputRef = useRef<HTMLInputElement | null>(null)
+
+  const { setValue, watch } = useFormContext();
+  const values = watch(elementName)
+
+  const onInputChange = (key: string) => {
+    if (dialogInputRef) {
+      const currentInput = dialogInputRef.current?.value || '';
+      const dialogRef = dialogInputRef.current
+
+      let newInput;
+      const cursorPosition = dialogRef?.selectionStart || 0;
+      let newCursorPosition = dialogRef?.selectionStart || 0;
+
+      if (key === 'Backspace' || key === 'BACKSPACE') {
+        newInput = currentInput.slice(0, cursorPosition - 1) + currentInput.slice(cursorPosition);
+        newCursorPosition = Math.max(0, cursorPosition - 1);
+      } else if (key === 'Enter' || key === 'ENTER') {
+        setValue(elementName, currentInput)
+        onClose && onClose()
+        return;
+      } else {
+        newInput = currentInput.slice(0, cursorPosition) + key + currentInput.slice(cursorPosition);
+        newCursorPosition += key.length;
+      }
+
+      (dialogRef as any).value = newInput
+    }
+  }
+
+  if (withDialog) {
+    return (
+      <Dialog open={open || false} onClose={onClose} maxWidth="lg" fullWidth>
+        <DialogContent>
+          <Box sx={{ my: 2 }}>
+            <TextField
+              fullWidth
+              value={values}
+              inputRef={r => { dialogInputRef.current = r }}
+              autoFocus
+            />
+            <Keyboard
+              withDialog={withDialog}
+              inputType={inputType}
+              elementName={elementName}
+              onInputChange={onInputChange}
+              ref={inputRef}
+            />
+          </Box>
+        </DialogContent>
+      </Dialog>
+    )
+  }
+  return (
+    <Keyboard
+      elementName={elementName}
+      inputType={inputType}
+      ref={inputRef}
+    />
+  )
+})
 
 const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
-  const { elementName, inputType } = props;
+  const { inputType, elementName, onInputChange, withDialog } = props;
 
   const [openNumber, setOpenNumber] = useState(false)
   const [shift, setShift] = useState(false);
   const [secondShift, setSecondShift] = useState(false);
 
-  const { setFocus, setValue, formState: { isSubmitting } } = useFormContext();
+  const { setValue, formState: { isSubmitting } } = useFormContext();
 
   const handleButtonClick = (key: string) => {
     key = (shift || secondShift) ? key.toUpperCase() : key;
 
-    setFocus(elementName);
+    const currentRef = inputRef[elementName];
 
-    const currentRef = inputRef[elementName]
-    if (currentRef) {
-      const start = currentRef.selectionStart ?? 0;
-      const end = currentRef.selectionEnd ?? 0;
-      let value = currentRef.value || '';
+    if (withDialog && onInputChange) {
 
-      if (key === 'Backspace' || key === 'BACKSPACE') {
-        value = value.slice(0, start - 1) + value.slice(end);
-        currentRef.selectionStart = currentRef.selectionEnd = start - 1;
-      } else if (key === 'Enter' || key === 'ENTER') {
-        value = `${value.slice(0, start)}\n${value.slice(end)}`;
-        currentRef.selectionStart = currentRef.selectionEnd = start + 1;
-      } else {
-        value = `${value.slice(0, start)}${key}${value.slice(end)}`;
-        currentRef.selectionStart = currentRef.selectionEnd = start + key.length;
+      onInputChange(key)
+      setShift(false);
+
+    } else if (currentRef) {
+      let { selectionStart, selectionEnd, value } = currentRef as HTMLInputElement;
+
+      currentRef.focus()
+
+      if (!selectionStart) {
+        selectionStart = 0
       }
 
-      setValue(elementName, value)
-      currentRef.value = value
+      if (!selectionEnd) {
+        selectionEnd = 0
+      }
 
+      if (key === 'Backspace' || key === 'BACKSPACE') {
+        if (selectionStart > 0) {
+          value = value.substring(0, selectionStart - 1) + value.substring(selectionEnd);
+        }
+      } else if (key === 'Enter' || key === 'ENTER') {
+        value = value.substring(0, selectionStart) + '\n' + value.substring(selectionEnd);
+      } else {
+        value = value.substring(0, selectionStart) + key + value.substring(selectionEnd);
+      }
+
+      currentRef.setSelectionRange(selectionStart + (key === 'Backspace' ? -1 : 1), selectionStart + (key === 'Backspace' ? -1 : 1));
+
+      currentRef.value = value
+      setValue(elementName, value);
       setShift(false);
     }
   };
@@ -147,7 +223,7 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                   unselectable="on"
                   variant="outlined"
                   fullWidth
-                  sx={{ p: 4, borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main }}
+                  sx={{ p: 4, borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main, width: row.value === "Backspace" ? "300%" : "100%" }}
                   disabled={isSubmitting}
                   onMouseDown={(event) => {
                     event.preventDefault()
@@ -158,23 +234,23 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
               )
             })
           }
-
-          <Button
-            unselectable="on"
-            variant="outlined"
-            fullWidth
-            sx={{ p: 4, width: "200%", borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main }}
-            disabled={isSubmitting}
-            onMouseDown={(event) => {
-              event.preventDefault()
-              onButtonClick(".com")
-            }}>
-            <Typography variant="h4">{isSubmitting ? "-" : getLabel(".com")}</Typography>
-          </Button>
         </Grid>
 
 
         <Grid item xs={12} sx={{ display: 'flex', placeItems: 'center', placeContent: 'center', gap: 1 }}>
+          <LoadingButton
+            unselectable="on"
+            variant="outlined"
+            fullWidth
+            sx={{ p: 4, borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main, }}
+            disabled={isSubmitting}
+            loading={isSubmitting}
+            onMouseDown={(event) => {
+              event.preventDefault()
+              console.log('.?')
+            }}>
+            <Typography variant="h4">?123</Typography>
+          </LoadingButton>
           {
             (inputType === "email" ? keyTextFourthLineEmail : keyTextFourthLineText).map((row, index) => {
               return (
@@ -183,7 +259,7 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                   unselectable="on"
                   variant="outlined"
                   fullWidth
-                  sx={{ p: 4, borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main, width: index === 1 ? "500%" : undefined }}
+                  sx={{ p: 4, borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main, width: index === 0 ? "500%" : undefined }}
                   type={row.value === "Enter" ? "submit" : undefined}
                   disabled={isSubmitting}
                   loading={row.value === "Enter" ? isSubmitting : undefined}
@@ -201,14 +277,9 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
     )
   }, [secondShift, shift, isSubmitting, inputType])
 
+
   return (
     <Box sx={{ my: 2 }}>
-      {/* <Drawer anchor="bottom" open={Boolean(inputRef)} variant="persistent"> */}
-      {/* <Box sx={{ display: 'flex', placeContent: 'end' }}>
-        <IconButton onClick={() => { inputRef = null }}>
-          <CloseIcon />
-        </IconButton>
-      </Box> */}
       <Box>
         <Grid container spacing={1}>
           <Grid item xs={12} md={(inputType === "email") ? 10 : 12}>
@@ -247,12 +318,11 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
           }
         </Grid>
       </Box>
-      {/* </Drawer>, */}
     </Box>
   )
 })
 
-export default Keyboard
+export default memo(KeyboardWrapper)
 
 const keyNumber = [
   { label: "1", value: "1" },
@@ -307,7 +377,11 @@ const keyTextThirdLine = [
   { label: "v", value: "v" },
   { label: "b", value: "b" },
   { label: "n", value: "n" },
-  { label: "m", value: "m" }
+  { label: "m", value: "m" },
+  {
+    label: <Iconify icon="fluent:backspace-16-regular" sx={{ transform: 'scale(2)' }} color="secondary.main" />,
+    value: "Backspace"
+  },
 ]
 
 const keyTextFourthLineEmail = [
@@ -325,14 +399,10 @@ const keyTextFourthLineEmail = [
   {
     label: <Iconify icon="fluent:arrow-enter-left-20-filled" sx={{ transform: 'scale(2)' }} color="secondary.main" />,
     value: "Enter"
-  }
+  },
 ]
 
 const keyTextFourthLineText = [
-  {
-    label: <Iconify icon="fluent:backspace-16-regular" sx={{ transform: 'scale(2)' }} color="secondary.main" />,
-    value: "Backspace"
-  },
   { label: "space", value: " " },
   {
     label: <Iconify icon="fluent:arrow-enter-left-20-filled" sx={{ transform: 'scale(2)' }} color="secondary.main" />,

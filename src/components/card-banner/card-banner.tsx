@@ -1,7 +1,7 @@
 import { Box, ButtonBase, Card, CardContent, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Image } from "../image";
-import { ButtonBaseOverrideProps, CardBannerContentCardProps, CardBannerProps } from "./types";
+import type { ButtonBaseOverrideProps, CardBannerContentCardProps, CardBannerProps } from "./types";
 
 export const ButtonBaseOverride = ({ clickable, onClick, children }: ButtonBaseOverrideProps & { children?: ReactNode }) => {
 

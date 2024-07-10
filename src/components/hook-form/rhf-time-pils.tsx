@@ -1,5 +1,5 @@
 import { useController, useFormContext } from "react-hook-form";
-import { TimePilsContainerProps } from "../time-pils/types";
+import type { TimePilsContainerProps } from "../time-pils/types";
 import TimePilsContainer from "../time-pils/time-pils-container";
 import { Box, Typography } from "@mui/material";
 

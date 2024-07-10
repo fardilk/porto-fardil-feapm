@@ -4,8 +4,7 @@ import { CardBannerProfile } from "src/components/card-banner"
 const SelectPractitioner = () => {
 
   return (
-    <>
-      <Grid container spacing={2}>
+    <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <CardBannerProfile
             heathcareServiceName="test"
@@ -17,7 +16,6 @@ const SelectPractitioner = () => {
           />
         </Grid>
       </Grid>
-    </>
   )
 }
 
