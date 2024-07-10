@@ -15,3 +15,7 @@ export type InformationProps = {
 export type PaymentMethodProps = {
   handleNext: () => void;
 };
+
+export type SelectPractitionerProps = {
+  onCardSelect: () => void;
+};

@@ -5,8 +5,8 @@ import { Header_Height } from "src/utils/variables"
 const AppPage = ({ children }: { children?: ReactNode }) => {
 
   return (
-    <Box sx={{ height: `calc(100vh - ${Header_Height}px)`, py: 2, overflowY: "scroll", display: "flex", placeItems: "center", placeContent: "center" }}>
-      <Box sx={{ width: '100%' }}>
+    <Box sx={{ height: `calc(100vh - ${Header_Height}px)`, overflowY: "auto", display: "flex", placeItems: "center", placeContent: "center", }}>
+      <Box sx={{ width: '100%', }}>
         {children}
       </Box>
     </Box>

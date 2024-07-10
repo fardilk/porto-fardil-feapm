@@ -12,4 +12,6 @@ export type LabelTextContainerProps = {
   listText: LabelTextProps[];
   col?: number;
   cardProps?: CardProps;
+  disableOutline?: boolean;
+  orientation?: 'vertical' | 'horizontal';
 };

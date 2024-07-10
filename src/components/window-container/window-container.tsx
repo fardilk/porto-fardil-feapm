@@ -21,13 +21,13 @@ const WindowContainer = (props: WindowContainerProps) => {
       return { xs: "90%", md: "65%", lg: "55%" }
     }
 
-    return { xs: "90%", md: "70%", lg: "60%" }
+    return { xs: "90%", md: "70%", lg: "65%" }
   }, [size])
 
   return (
     <Box sx={{ display: "flex", placeContent: "center", px: 4, width: "100%" }}>
       <Box sx={{ width: containerWidth, bgcolor: (theme) => theme.palette.background.paper, borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
-        <AppBar position="static" sx={{ bgcolor: (theme) => theme.palette.grey[300], borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
+        <AppBar position="sticky" sx={{ bgcolor: (theme) => theme.palette.grey[300], borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
           <Toolbar>
             {
               !hideBackNavigation && (

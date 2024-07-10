@@ -9,7 +9,7 @@ import { InsertIdentifier } from "src/components/insert-identifier"
 import { WindowContainer } from "src/components/window-container"
 import { useStepper } from "src/hooks/use-stepper"
 import { getDummyData } from "../registration/model/functions"
-import { InformationOutpatientGeneral, PaymentMethod, SelectEncounterType, SelectPractitioner } from "./components"
+import { ConfirmationOutpatientGeneral, InformationOutpatientGeneral, PaymentMethod, SelectEncounterType, SelectPractitioner, SuccessOutpatientGeneral } from "./components"
 
 const EncounterPage = () => {
 
@@ -49,6 +49,10 @@ const EncounterPage = () => {
 
   const methods = useForm()
   const { handleSubmit } = methods
+
+  const onPractitionerSelect = () => {
+    handleChangePage({ action: "next" })
+  }
 
   const onSubmit = async (data: any) => {
     if (currentPageIndex === 1) {
@@ -90,7 +94,11 @@ const EncounterPage = () => {
 
             {currentPage.value === "payment_method" && <PaymentMethod handleNext={() => handleChangePage({ action: "next" })} />}
 
-            {currentPage.value === "select_healthcare_practitioner" && <SelectPractitioner />}
+            {currentPage.value === "select_healthcare_practitioner" && <SelectPractitioner onCardSelect={onPractitionerSelect} />}
+
+            {currentPage.value === "confirmation_patient_registration" && <ConfirmationOutpatientGeneral handleConfirm={() => { handleChangePage({ action: "next" }) }} />}
+
+            {currentPage.value === "registration_success" && <SuccessOutpatientGeneral />}
 
           </Box>
 
@@ -135,13 +143,6 @@ const formStepsOutpatientGeneral = [
   {
     label: "Pilih Dokter Poli",
     value: "select_healthcare_practitioner",
-    properties: {
-      disableBack: true
-    }
-  },
-  {
-    label: "Pilih Poli",
-    value: "select_healthcare_service",
     properties: {
       disableBack: true
     }

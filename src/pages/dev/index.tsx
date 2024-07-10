@@ -7,8 +7,6 @@ import { WindowContainer } from "src/components/window-container"
 
 const DevPage = () => {
 
-  const methods = useForm({ defaultValues: { component: null } })
-
   const options = [
     {
       label: "Time Pils",
@@ -18,7 +16,13 @@ const DevPage = () => {
       label: "Radio Group",
       value: "radio-group"
     },
+    {
+      label: "Handsome Card",
+      value: 'card-handsome'
+    }
   ]
+
+  const methods = useForm({ defaultValues: { component: options[2] } })
 
   const componentName = methods.watch("component")
 
