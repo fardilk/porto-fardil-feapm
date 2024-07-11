@@ -1,6 +1,6 @@
 import { Box, ButtonBase, Card, CardContent, List, ListItem, ListItemIcon, ListItemText, Typography } from "@mui/material";
 import type { ReactNode } from "react";
-import { Image } from "../image";
+import { Iconify } from "../iconify";
 import type { ButtonBaseOverrideProps, CardBannerContentCardProps, CardBannerProps } from "./types";
 
 export const ButtonBaseOverride = ({ clickable, onClick, children }: ButtonBaseOverrideProps & { children?: ReactNode }) => {
@@ -17,11 +17,11 @@ export const ButtonBaseOverride = ({ clickable, onClick, children }: ButtonBaseO
 }
 
 export const HorizontalItem = (props: CardBannerContentCardProps) => {
-  const { body, bodyProps, icon, title, titleProps } = props
+  const { body, bodyProps, icon, localIcon, title, titleProps, iconProps } = props
   return (
     <List>
       <ListItem>
-        <ListItemIcon><Image src={icon} /></ListItemIcon>
+        <ListItemIcon><Iconify icon={icon} localIcon={localIcon} sxIcon={{ width: 52, ...iconProps?.sx }}  {...iconProps} /></ListItemIcon>
         <ListItemText
           primary={<Typography variant="h5" color="secondary.dark" {...titleProps}>{title}</Typography>}
           secondary={<Typography color="grey" {...bodyProps}>{body}</Typography>}
@@ -32,12 +32,12 @@ export const HorizontalItem = (props: CardBannerContentCardProps) => {
 }
 
 export const VerticalItem = (props: CardBannerContentCardProps) => {
-  const { body, bodyProps, icon, title, titleProps } = props
+  const { body, bodyProps, icon, title, localIcon, titleProps, iconProps } = props
 
   return (
     <CardContent>
       <Box sx={{ display: "flex", placeContent: "center", mb: 2 }} >
-        <Image src={icon} />
+        <Iconify icon={icon} localIcon={localIcon} sxIcon={{ width: 52, ...iconProps?.sx }} {...iconProps} />
       </Box>
       <Typography variant="h5" color="secondary.dark" textAlign="center" {...titleProps}>{title}</Typography>
       <Typography color="grey" textAlign="center" {...bodyProps}>{body}</Typography>

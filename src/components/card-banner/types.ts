@@ -1,4 +1,5 @@
 import type { CardProps, TypographyProps } from '@mui/material';
+import { IconifyProps } from '../iconify';
 
 export type ButtonBaseOverrideProps = {
   clickable?: boolean;
@@ -7,10 +8,12 @@ export type ButtonBaseOverrideProps = {
 
 export type CardBannerContentCardProps = {
   icon?: string;
+  localIcon?: string;
   title?: string;
   body?: string;
   titleProps?: TypographyProps;
   bodyProps?: TypographyProps;
+  iconProps?: IconifyProps;
 };
 
 export type CardBannerProps = ButtonBaseOverrideProps &

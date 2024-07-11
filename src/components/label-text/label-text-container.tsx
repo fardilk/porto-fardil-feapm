@@ -18,8 +18,6 @@ const LabelTextContainer = ({ listText, col = 4, cardProps, disableOutline, orie
     ...cardProps?.sx
   }
 
-  console.log(disableOutline, styles)
-
   return (
     <Card
       variant={disableOutline ? undefined : "outlined"}

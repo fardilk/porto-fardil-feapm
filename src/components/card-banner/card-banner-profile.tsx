@@ -4,6 +4,7 @@ import { Label } from "../label";
 import { Image } from "../image";
 import { ButtonBaseOverride } from "./card-banner";
 import type { CardBannerProfileProps } from "./types";
+import { getIconsPath } from "src/utils/helper";
 
 const CardBannerProfile = (props: CardBannerProfileProps) => {
   const { heathcareServiceName, count, name, slots, icon, cardProps, clickable, onClick } = props
@@ -15,7 +16,7 @@ const CardBannerProfile = (props: CardBannerProfileProps) => {
           <Box sx={{ display: 'flex', gap: 1, placeContent: 'space-between' }}>
             <Box>
               {icon && <Iconify icon={icon} width={52} />}
-              {!icon && <Image src="/assets/app/icons/icon-doctor.svg" width={52} />}
+              {!icon && <Image src={getIconsPath("doctor")} width={52} />}
             </Box>
             <Stack sx={{ width: '100%', gap: 2, placeItems: 'start' }}>
               <Box sx={{ width: '100%' }}>

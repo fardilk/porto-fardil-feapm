@@ -21,10 +21,10 @@ const InformationBookingInsurance = () => {
   ])
 
   const [detailData, _setDetailData] = useState([
-    { title: "Tujuan Layanan", body: "Poli Mata", icon: "assets/app/icons/checkin-poli.svg" },
-    { title: "Dokter Pemeriksa", body: "dr. Inas Shabrina,Sp.M", icon: "assets/app/icons/checkin-doctor.svg" },
-    { title: "Tipe Pembayaran", body: "Perusahaan", icon: "assets/app/icons/checkin-company.svg" },
-    { title: "Waktu Pelayanan", body: "Senin, 30-01-2022 10:00-14:00", icon: "assets/app/icons/checkin-calendar.svg" },
+    { title: "Tujuan Layanan", body: "Poli Mata", localIcon: "stethoscope" },
+    { title: "Dokter Pemeriksa", body: "dr. Inas Shabrina,Sp.M", localIcon: "doctor" },
+    { title: "Tipe Pembayaran", body: "Perusahaan", localIcon: "perusahaan" },
+    { title: "Waktu Pelayanan", body: "Senin, 30-01-2022 10:00-14:00", localIcon: "jadwal" },
   ])
 
   return (
@@ -52,10 +52,8 @@ const InformationBookingInsurance = () => {
                 <Grid item xs={12} md={3}>
                   <CardBanner
                     key={index}
-                    icon={it.icon}
+                    {...it}
                     cardProps={{ variant: "outlined" }}
-                    body={it.body}
-                    title={it.title}
                     titleProps={{ variant: "subtitle2", color: "grey" }}
                     bodyProps={{ variant: "subtitle2", color: "secondary.darker" }}
                   />

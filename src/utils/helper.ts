@@ -170,3 +170,7 @@ export const getGridLayoutMappedValue = (input: number) => {
 
   return 12;
 };
+
+export const getIconsPath = (iconName: string) => {
+  return `assets/icons/apm/${iconName}.svg`;
+};

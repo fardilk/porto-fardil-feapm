@@ -15,25 +15,25 @@ const HomePage = () => {
     {
       title: "CHECK-IN",
       body: "Siapkan Kode Booking yang sudah didapat melalui website booking online.",
-      icon: "/assets/app/icons/home-registration.svg",
+      icon: "medical-checkup",
       handleClick: () => { navigate("checkin") }
     },
     {
       title: "KUNJUNGAN DOKTER",
       body: "Pendaftaran kunjungan pasien lama, siapkan nomor NIK.",
-      icon: "/assets/app/icons/home-patient.svg",
+      icon: "doctor",
       handleClick: () => { navigate("encounter") }
     },
     {
       title: "RESERVASI",
       body: "Pesan jadwal kunjungan Anda, siapkan data-data Anda.",
-      icon: "/assets/app/icons/home-reservation.svg",
+      icon: "medical-appointment",
       handleClick: () => { }
     },
     {
       title: "REGISTRASI PASIEN BARU",
       body: "Registrasi Pasien Baru, siapkan data-data Anda.",
-      icon: "/assets/app/icons/home-newuser.svg",
+      icon: "health-insurance",
       handleClick: () => { navigate("registration") }
     },
   ]
@@ -60,7 +60,7 @@ const HomePage = () => {
                     title={row.title}
                     body={row.body}
                     onClick={row.handleClick}
-                    icon={row.icon}
+                    localIcon={row.icon}
                   />
                 </Grid>
               )

@@ -12,8 +12,11 @@ export type InformationProps = {
   rightButtonProps?: ButtonProps;
 };
 
+export type Insurancetype = 'bpjs' | 'insurance' | 'company';
+
 export type PaymentMethodProps = {
-  handleNext: () => void;
+  handleGeneral: () => void;
+  handleAssurance: (param: Insurancetype) => void;
 };
 
 export type SelectPractitionerProps = {

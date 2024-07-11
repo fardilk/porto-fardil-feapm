@@ -7,7 +7,7 @@ const AlertInformation = (props: AlertInformationProps) => {
 
   return (
     <Box sx={{ display: "flex", placeItems: "center", gap: 3 }}>
-      <Iconify icon={icon ?? "icon-park-solid:check-one"} color="success.main" sx={{ width: 32, transform: 'scale(2.5)' }} />
+      <Iconify icon={icon} localIcon="check" sxIcon={{ width: 52 }} />
       <Box>
         <Typography variant="h5">{title}</Typography>
         <Typography variant="h4" color="secondary.main">{body}</Typography>

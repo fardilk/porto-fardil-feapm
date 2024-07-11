@@ -1,38 +1,70 @@
 import { Grid } from "@mui/material"
 import { useState } from "react"
 import { CardBanner } from "src/components/card-banner"
-import type { PaymentMethodProps } from "../model/types"
 import type { CardBannerProps } from "src/components/card-banner/types"
+import type { PaymentMethodProps } from "../model/types"
 
 const PaymentMethod = (props: PaymentMethodProps) => {
-  const { handleNext } = props
+  const { handleAssurance, handleGeneral } = props
+
+  const [openAssurance, setOpenAssurance] = useState(false)
 
   const [paymentMethod, _setPaymentMethod] = useState<CardBannerProps[]>([
     {
       title: "UMUM",
       body: "Pendaftaran Pasien Umum",
-      icon: "assets/app/icons/checkin-general.svg",
-      onClick: () => { }
+      localIcon: "pembayaran-umum",
+      onClick: () => { handleGeneral() }
     },
     {
       title: "JAMINAN",
       body: "Pendaftaran Pasien dengan Jaminan Asuransi, Perusahaan atau BPJS",
-      icon: "assets/app/icons/encounter-payment.svg",
-      onClick: () => { }
+      localIcon: "jaminan",
+      onClick: () => { setOpenAssurance(true) }
     }
+  ])
+
+  const [assurancePaymentMethod, _setAssurancePaymentMethod] = useState<CardBannerProps[]>([
+    {
+      title: "BPJS",
+      body: "Pendaftaran Pasien BPJS",
+      localIcon: "bpjs",
+      onClick: () => { handleAssurance("bpjs") }
+
+    },
+    {
+      title: "Asuransi",
+      body: "Pendaftaran pasien asuransi",
+      localIcon: "asuransi",
+      onClick: () => { handleAssurance("insurance") }
+    },
+    {
+      title: "Perusahaan",
+      body: "Pendaftaran pasien asuransi perusahaan",
+      localIcon: "bacteria",
+      onClick: () => { handleAssurance("company") }
+    },
   ])
 
   return (
     <Grid container spacing={2}>
       {
-        paymentMethod.map((row, index) => {
+        !openAssurance && paymentMethod.map((row, index) => {
 
           return (
             <Grid item xs={12} md={6} key={index}>
-              <CardBanner {...row} cardProps={{ sx: { py: 4 }, variant: "outlined" }} clickable onClick={() => {
+              <CardBanner {...row} cardProps={{ sx: { py: 4 }, variant: "outlined" }} clickable onClick={row.onClick} />
+            </Grid>
+          )
+        })
+      }
 
-                handleNext()
-              }} />
+      {
+        openAssurance && assurancePaymentMethod.map((row, index) => {
+
+          return (
+            <Grid item xs={12} md={4} key={index}>
+              <CardBanner {...row} cardProps={{ sx: { py: 4 }, variant: "outlined" }} clickable onClick={row.onClick} />
             </Grid>
           )
         })

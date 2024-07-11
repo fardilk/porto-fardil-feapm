@@ -9,7 +9,8 @@ import { InsertIdentifier } from "src/components/insert-identifier"
 import { WindowContainer } from "src/components/window-container"
 import { useStepper } from "src/hooks/use-stepper"
 import { getDummyData } from "../registration/model/functions"
-import { ConfirmationOutpatientGeneral, InformationOutpatientGeneral, PaymentMethod, SelectEncounterType, SelectPractitioner, SuccessOutpatientGeneral } from "./components"
+import { ConfirmationOutpatientGeneral, InformationOutpatientGeneral, PaymentMethod, SelectEncounterType, SelectInsurance, SelectPractitioner, SuccessOutpatientGeneral } from "./components"
+import { Insurancetype } from "./model/types"
 
 const EncounterPage = () => {
 
@@ -24,25 +25,25 @@ const EncounterPage = () => {
     {
       title: "PEMERIKSAAN RAWAT JALAN",
       body: "Layanan medis yang mencakup evaluasi kesehatan, diagnosis, dan perawatan tanpa memerlukan rawat inap.",
-      icon: "assets/app/icons/encounter-type-checkin.svg",
+      localIcon: "stethoscope",
       onClick: () => { handleChangePage({ action: "next", newFormSteps: formStepsOutpatientGeneral }) }
     },
     {
       title: "MEDICAL CHECK UP",
       body: "Serangkaian uji kesehatan rutin untuk memeriksa kesehatan tubuh secara keseluruhan dan mengantisipasi risiko penyakit.",
-      icon: "assets/app/icons/encounter-type-checkup.svg",
+      localIcon: "medical-checkup",
       onClick: () => { }
     },
     {
       title: "LABORATORIUM",
       body: "Fasilitas yang menyediakan uji diagnostik untuk mendukung evaluasi kesehatan, diagnosis, dan medical check up rutin tanpa perlu rawat inap.",
-      icon: "assets/app/icons/encounter-type-lab.svg",
+      localIcon: "blood-test",
       onClick: () => { }
     },
     {
       title: "RADIOLOGI",
       body: "Layanan medis yang menyediakan uji pencitraan seperti X-ray, CT scan, dan MRI untuk mendukung diagnosis dan perawatan tanpa memerlukan rawat inap.",
-      icon: "assets/app/icons/encounter-type-radiology.svg",
+      localIcon: "x-rays",
       onClick: () => { }
     },
   ])
@@ -52,6 +53,16 @@ const EncounterPage = () => {
 
   const onPractitionerSelect = () => {
     handleChangePage({ action: "next" })
+  }
+
+  const onAssuranceSelect = (type: Insurancetype) => {
+    if (type === "bpjs") {
+      console.log("bpjs")
+    } else if (type === "company") {
+      console.log("company")
+    } else if (type === "insurance") {
+      handleChangePage({ action: "next", newFormSteps: formStepsOutpatientInsurance })
+    }
   }
 
   const onSubmit = async (data: any) => {
@@ -92,13 +103,20 @@ const EncounterPage = () => {
               />
             )}
 
-            {currentPage.value === "payment_method" && <PaymentMethod handleNext={() => handleChangePage({ action: "next" })} />}
+            {currentPage.value === "payment_method" && (
+              <PaymentMethod
+                handleGeneral={() => { }}
+                handleAssurance={onAssuranceSelect}
+              />
+            )}
 
             {currentPage.value === "select_healthcare_practitioner" && <SelectPractitioner onCardSelect={onPractitionerSelect} />}
 
             {currentPage.value === "confirmation_patient_registration" && <ConfirmationOutpatientGeneral handleConfirm={() => { handleChangePage({ action: "next" }) }} />}
 
             {currentPage.value === "registration_success" && <SuccessOutpatientGeneral />}
+
+            {currentPage.value === "select_insurance" && <SelectInsurance />}
 
           </Box>
 
@@ -122,10 +140,6 @@ const initialStep = [
     label: "Masukkan NIK",
     value: "insert_nik"
   },
-]
-
-const formStepsOutpatientGeneral = [
-  ...initialStep,
   {
     label: "Informasi Data Pasien",
     value: "information_outpatient_general",
@@ -140,6 +154,10 @@ const formStepsOutpatientGeneral = [
       disableBack: true
     }
   },
+]
+
+const formStepsOutpatientGeneral = [
+  ...initialStep,
   {
     label: "Pilih Dokter Poli",
     value: "select_healthcare_practitioner",
@@ -157,6 +175,17 @@ const formStepsOutpatientGeneral = [
   {
     label: "Pendaftaran Berhasil",
     value: "registration_success",
+    properties: {
+      disableBack: true
+    }
+  }
+]
+
+const formStepsOutpatientInsurance = [
+  ...initialStep,
+  {
+    label: "Pilih Asuransi",
+    value: "select_insurance",
     properties: {
       disableBack: true
     }

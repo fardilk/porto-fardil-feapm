@@ -11,7 +11,13 @@ const SelectEncounterType = (props: SelectEncounterTypeProps) => {
         items.map((row, index) => {
           return (
             <Grid item xs={12} md={3} key={index}>
-              <CardBanner {...row} cardProps={{ variant: 'outlined' }} clickable orientation="vertical" />
+              <CardBanner
+                {...row}
+                cardProps={{ variant: 'outlined' }}
+                iconProps={{ sx: { width: 68 } }}
+                clickable
+                orientation="vertical"
+              />
             </Grid>
           )
         })
