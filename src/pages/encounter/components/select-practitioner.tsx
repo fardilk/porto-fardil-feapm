@@ -10,7 +10,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
   const [isPractitioner, setIsPractitioner] = useState(true)
   const [searchInput, setSearchInput] = useState("")
 
-  const [currentPractitionerIndex, setCurrentPractitionerIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   const listPractitioner = Array.from({ length: 60 }, (index) => ({ name: `dr.Liliana Hana Sp.M ` }))
 
@@ -31,7 +31,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
 
   const handleChangePagination = ({ action }: { action: "prev" | "next" }) => {
     const nextIndex = isPractitioner ? 6 : 16
-    setCurrentPractitionerIndex(prev => action === "prev" ? prev - nextIndex : prev + nextIndex)
+    setCurrentIndex(prev => action === "prev" ? prev - nextIndex : prev + nextIndex)
   }
 
   return (
@@ -51,7 +51,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
           />
         </Grid>
         {
-          isPractitioner && listPractitioner.slice(currentPractitionerIndex, currentPractitionerIndex + 6).map((_row, index) => {
+          isPractitioner && listPractitioner.slice(currentIndex, currentIndex + 6).map((_row, index) => {
             return (
               <Grid item xs={12} md={4} key={index}>
                 <CardBannerProfile
@@ -67,7 +67,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
           })
         }
         {
-          !isPractitioner && listPoli.slice(currentPractitionerIndex, currentPractitionerIndex + 16).map((_row, index) => {
+          !isPractitioner && listPoli.slice(currentIndex, currentIndex + 16).map((_row, index) => {
             return (
               <Grid item xs={12} md={4} key={index}>
                 <CardBanner
@@ -97,7 +97,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
           variant="outlined"
           color="secondary"
           fullWidth
-          onClick={() => { setIsPractitioner(prev => !prev); setCurrentPractitionerIndex(0) }}
+          onClick={() => { setIsPractitioner(prev => !prev); setCurrentIndex(0) }}
         >
           {
             isPractitioner ? "Belum tahu dokter? Pilih Poli & Temukan Dokter Terdekat" : "Sudah tahu dokter? Pilih dokter"

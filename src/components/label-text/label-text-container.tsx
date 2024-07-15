@@ -15,18 +15,17 @@ const LabelTextContainer = ({ listText, col = 4, cardProps, disableOutline, orie
   const styles = {
     boxShadow: disableOutline ? 0 : undefined,
     borderWidth: disableOutline ? 0 : undefined,
-    ...cardProps?.sx
   }
 
   return (
     <Card
       variant={disableOutline ? undefined : "outlined"}
       elevation={disableOutline ? 0 : undefined}
-      sx={{ ...styles }}
+      sx={{ ...styles, ...cardProps?.sx }}
       {...cardProps}
     >
       <CardContent>
-        <Grid container spacing={2}>
+        <Grid container spacing={1}>
           {
             orientation === "vertical" && listText.map((it, index) => {
               return (

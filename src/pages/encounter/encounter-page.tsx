@@ -82,7 +82,7 @@ const EncounterPage = () => {
       <Form methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <WindowContainer
           title={currentPage.label}
-          size="large"
+          size={currentPage.properties?.containerSize || "large"}
           handleBackNavigation={() => { handleChangePage({ action: "previous" }) }}
           handleCloseNavigation={() => { navigate("/", { replace: true }) }}
           hideBackNavigation={currentPage?.properties?.disableBack}
@@ -116,7 +116,7 @@ const EncounterPage = () => {
 
             {currentPage.value === "registration_success" && <SuccessOutpatientGeneral />}
 
-            {currentPage.value === "select_insurance" && <SelectInsurance />}
+            {currentPage.value === "select_insurance" && <SelectInsurance handleSelect={() => { handleChangePage({ action: "next" }) }} />}
 
           </Box>
 
@@ -186,6 +186,28 @@ const formStepsOutpatientInsurance = [
   {
     label: "Pilih Asuransi",
     value: "select_insurance",
+    properties: {
+      disableBack: true,
+      containerSize: "superLarge"
+    }
+  },
+  {
+    label: "Pilih Dokter Poli",
+    value: "select_healthcare_practitioner",
+    properties: {
+      disableBack: true
+    }
+  },
+  {
+    label: "Konfirmasi Pendaftaran Pasien",
+    value: "confirmation_patient_registration",
+    properties: {
+      disableBlack: true
+    }
+  },
+  {
+    label: "Pendaftaran Berhasil",
+    value: "registration_success",
     properties: {
       disableBack: true
     }

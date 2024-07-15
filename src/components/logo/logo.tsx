@@ -1,6 +1,6 @@
 import type { BoxProps } from '@mui/material/Box';
 
-import { useId, forwardRef } from 'react';
+import { forwardRef, useId } from 'react';
 
 import Box from '@mui/material/Box';
 import NoSsr from '@mui/material/NoSsr';
@@ -8,6 +8,7 @@ import { useTheme } from '@mui/material/styles';
 
 import { RouterLink } from 'src/routes/components';
 
+import { CONFIG } from 'src/config-global';
 import { logoClasses } from './classes';
 
 // ----------------------------------------------------------------------
@@ -33,6 +34,8 @@ export const Logo = forwardRef<HTMLDivElement, LogoProps>(
      * OR using local (public folder)
      * const logo = ( <Box alt="logo" component="img" src={`${CONFIG.site.basePath}/logo/logo-single.svg`} width={width} height={height} /> );
      */
+
+    // const logo = (<Box alt="logo" component="img" src={`${CONFIG.site.basePath}/logo/logo.png`} width="100%" />);
 
     const logo = (
       <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 512 512">

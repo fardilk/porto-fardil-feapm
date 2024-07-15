@@ -1,49 +1,161 @@
+import { Box, Button, ButtonBase, Card, CardContent, Grid, Stack, Typography } from "@mui/material"
+import { useState } from "react"
+import { Iconify } from "src/components/iconify"
 import { LabelTextContainer } from "src/components/label-text"
 import { LabelTextProps } from "src/components/label-text/types"
 import { fDate } from "src/utils/format-time"
+import { SelectInsuranceProps } from "../model/types"
 
-const SelectInsurance = () => {
+const SelectInsurance = (props: SelectInsuranceProps) => {
+  const { handleSelect } = props
 
-  const listInsuranceAvailable = [
-    {
-      "Benefit": "Mandiri Inhealth Gold",
-      "Masa Berlaku": fDate(new Date(), "DD-MM-YYYY"),
-      "No Polis": "100200",
-      "No Jaminan": "1002001",
-      "No Inhealth": "10020011",
-      "Hak Kelas Inhealth": "Gold"
-    }
-  ]
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   const listInsuranceToCard = (param: typeof listInsuranceAvailable[0]): LabelTextProps[] => {
-    return Object.keys(param).map((key, value) => {
+    const { namaAsuransi, ...rest } = param
+
+    function getLabel<K extends keyof typeof rest>(key: K) {
+      const mapFromKeyToLabel = {
+        nama: "Nama",
+        namaBenefit: "Nama Benefit",
+        masaBerlaku: "Masa Berlaku",
+        noPolis: "No Polis",
+        noJaminan: "No Jaminan",
+        noInhealth: "No Inhealth",
+        hakKelasInhealth: "Hak Kelas Inhealth"
+      }
+
+      return mapFromKeyToLabel[key]
+    }
+
+    return Object.keys(rest).map((key) => {
       return {
-        title: key,
-        body: (param as any)[key]
+        titleProps: { color: "secondary.dark", },
+        bodyProps: { color: "secondary.dark", variant: "body2" },
+        title: getLabel(key as any),
+        body: `: ${(rest as any)[key]}`
       }
     })
   }
 
+  const handleChangePagination = ({ action }: { action: "prev" | "next" }) => {
 
+    setCurrentIndex(prev => action === "prev" ? prev - 3 : prev + 3)
+  }
 
   return (
-    <>
-      {
-        listInsuranceAvailable.map((row) => {
-          const textData = listInsuranceToCard(row)
+    <Stack gap={4}>
+      <Grid container spacing={2}>
 
-          return (
-            <LabelTextContainer
-              col={1}
-              cardProps={{ variant: "elevation" }}
-              orientation="horizontal"
-              listText={textData}
-            />
-          )
-        })
-      }
-    </>
+        {
+          listInsuranceAvailable.slice(currentIndex, currentIndex + 3).map((row, index) => {
+            const textData = listInsuranceToCard(row)
+
+            return (
+              <Grid item xs={12} md={3} key={index}>
+                <Card variant="outlined">
+                  <ButtonBase sx={{ textAlign: "start" }} onClick={(handleSelect)}>
+                    <CardContent>
+                      <Box sx={{ display: "flex", gap: 2, px: 1.5, placeItems: "center" }}>
+                        <Iconify
+                          localIcon="asuransi"
+                          sxIcon={{ width: 32 }}
+                        />
+                        <Typography variant="subtitle1" color="secondary.darker">{row.namaAsuransi}</Typography>
+                      </Box>
+                      <LabelTextContainer
+                        col={1}
+                        disableOutline
+                        orientation="horizontal"
+                        listText={textData}
+                      />
+                    </CardContent>
+                  </ButtonBase>
+                </Card>
+              </Grid>
+            )
+          })
+        }
+
+        <Grid item xs={12} md={3}>
+          <Card variant="outlined" sx={{ height: "100%" }}>
+            <ButtonBase sx={{ width: "100%", height: "100%" }}>
+              <Iconify icon="fluent:add-12-regular" color="secondary.dark" sx={{ width: 32 }} />
+            </ButtonBase>
+          </Card>
+        </Grid>
+      </Grid>
+
+      <Box sx={{ width: '100%', display: 'flex', placeContent: 'space-between', gap: '10%' }}>
+        <Button
+          size="large"
+          variant="outlined"
+          color="secondary"
+          disabled={currentIndex === 0}
+          onClick={() => { handleChangePagination({ action: "prev" }) }}
+        >
+          <Iconify icon="fluent:chevron-left-12-regular" />
+        </Button>
+
+        <Button
+          size="large"
+          variant="outlined"
+          color="secondary"
+          disabled={(currentIndex + 3) >= listInsuranceAvailable.length}
+          onClick={() => { handleChangePagination({ action: "next" }) }}
+        >
+          <Iconify icon="fluent:chevron-right-12-regular" />
+        </Button>
+      </Box>
+
+    </Stack >
   )
 }
 
 export default SelectInsurance
+
+
+const listInsuranceAvailable = [
+  {
+    namaAsuransi: "Mandiri Inhealth",
+    nama: "Anisa Redina",
+    namaBenefit: "Mandiri Inhealth Gold",
+    masaBerlaku: fDate(new Date(), "DD-MM-YYYY"),
+    noPolis: "-",
+    noJaminan: "-",
+    noInhealth: "10020011",
+    hakKelasInhealth: "Gold"
+  },
+  {
+    namaAsuransi: "Allianz Life Insurance",
+    nama: "Anisa Redina",
+    namaBenefit: "AlliSya Hospital and Surgical Care +",
+    masaBerlaku: fDate(new Date(), "DD-MM-YYYY"),
+    noPolis: "100200",
+    noJaminan: "1002001",
+    noInhealth: "-",
+    hakKelasInhealth: "-"
+  },
+  {
+    namaAsuransi: "Mandiri Inhealth",
+    nama: "Anisa Redina",
+    namaBenefit: "Mandiri Inhealth Gold",
+    masaBerlaku: fDate(new Date(), "DD-MM-YYYY"),
+    noPolis: "100200",
+    noJaminan: "1002001",
+    noInhealth: "10020011",
+    hakKelasInhealth: "Gold"
+  },
+  {
+    namaAsuransi: "Mandiri Inhealth II",
+    nama: "Anisa Redina",
+    namaBenefit: "Mandiri Inhealth Gold",
+    masaBerlaku: fDate(new Date(), "DD-MM-YYYY"),
+    noPolis: "-",
+    noJaminan: "-",
+    noInhealth: "10020011",
+    hakKelasInhealth: "Gold"
+  },
+
+
+]

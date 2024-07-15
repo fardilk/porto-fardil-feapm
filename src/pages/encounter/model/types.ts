@@ -22,3 +22,7 @@ export type PaymentMethodProps = {
 export type SelectPractitionerProps = {
   onCardSelect: () => void;
 };
+
+export type SelectInsuranceProps = {
+  handleSelect: () => void;
+};

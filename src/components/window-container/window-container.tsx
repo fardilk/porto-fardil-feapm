@@ -1,7 +1,7 @@
 import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material"
 import { useMemo, type ReactNode } from "react"
 import { CloseIcon } from "yet-another-react-lightbox"
-import { Iconify } from "../iconify"
+import { Iconify } from "src/components/iconify"
 
 type WindowContainerProps = {
   title: string,
@@ -10,7 +10,7 @@ type WindowContainerProps = {
   children?: ReactNode
   hideBackNavigation?: boolean;
   hideCloseNavigation?: boolean
-  size?: "medium" | "large"
+  size?: "medium" | "large" | "superLarge"
 }
 
 const WindowContainer = (props: WindowContainerProps) => {
@@ -19,6 +19,10 @@ const WindowContainer = (props: WindowContainerProps) => {
   const containerWidth = useMemo(() => {
     if (size === "medium") {
       return { xs: "90%", md: "65%", lg: "55%" }
+    }
+
+    if (size === "superLarge") {
+      return { xs: "90%", md: "85%", lg: "75%" }
     }
 
     return { xs: "90%", md: "70%", lg: "65%" }
