@@ -2,9 +2,9 @@ import { Fragment, useMemo } from "react"
 
 import { Card, CardContent, Grid, Typography } from "@mui/material"
 
+import { getGridLayoutMappedValue } from "src/utils/helper"
 import LabelText from "./label-text"
 import type { LabelTextContainerProps } from "./types"
-import { getGridLayoutMappedValue } from "src/utils/helper"
 
 const LabelTextContainer = ({ listText, col = 4, cardProps, disableOutline, orientation = "vertical" }: LabelTextContainerProps) => {
 

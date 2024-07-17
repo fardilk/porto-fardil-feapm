@@ -1,3 +1,4 @@
+import { LoadingButtonProps } from '@mui/lab';
 import type { CardProps, TypographyProps } from '@mui/material';
 
 export type LabelTextProps = {
@@ -14,4 +15,25 @@ export type LabelTextContainerProps = {
   cardProps?: CardProps;
   disableOutline?: boolean;
   orientation?: 'vertical' | 'horizontal';
+};
+
+export type LabelTextCardActionProps = {
+  label: string;
+  action: VoidFunction;
+  buttonProps?: LoadingButtonProps;
+};
+
+export type LabelTextCardWrapperProps = {
+  clickable?: boolean;
+  onClick?: () => void;
+};
+
+export type LabelTextCardProps = LabelTextCardWrapperProps & {
+  listText: LabelTextProps[];
+  headerIcon?: string;
+  headerLocalIcon?: string;
+  headerText?: string;
+  headerProps?: TypographyProps;
+  orientation?: 'horizontal' | 'vertical';
+  buttonAction?: LabelTextCardActionProps[];
 };
