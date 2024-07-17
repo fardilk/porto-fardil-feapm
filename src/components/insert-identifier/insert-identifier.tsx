@@ -40,7 +40,7 @@ const InsertIdentifier = () => {
           color="secondary.main"
           onClick={(event) => {
             const { checked } = (event.target as any)
-            if (checked) setKeyboardType("text"); else setKeyboardType("number")
+            if (checked) setKeyboardType("text"); else setKeyboardType("numberOnly")
           }}
         />
       </Box>
