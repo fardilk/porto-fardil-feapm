@@ -1,8 +1,8 @@
-import { Box, Divider, Typography } from "@mui/material"
-import { lazy, Suspense, useMemo } from "react"
+import { Box, Divider, Grid, MenuItem, Typography } from "@mui/material"
+import { lazy, ReactNode, Suspense, useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { AppPage } from "src/components/app-page"
-import { Form, RHFAutocomplete } from "src/components/hook-form"
+import { Form, RHFAutocomplete, RHFCheckbox, RHFDatePicker, RHFSelect, RHFSwitch, RHFTextField } from "src/components/hook-form"
 import { WindowContainer } from "src/components/window-container"
 
 const DevPage = () => {
@@ -61,6 +61,39 @@ const DevPage = () => {
               {Component}
             </Box>
 
+            <Divider sx={{ mb: 4 }} />
+            <Grid container spacing={2}>
+
+              <GridChildren>
+                <RHFTextField name="textfield" label="TextField" />
+              </GridChildren>
+
+              <GridChildren>
+                <RHFAutocomplete
+                  name="autocomplete"
+                  options={options}
+                  label="Autocomplete"
+                />
+              </GridChildren>
+
+              <GridChildren>
+                <RHFSelect name="select" label="Select">
+                  <MenuItem value="time">Time</MenuItem>
+                </RHFSelect>
+              </GridChildren>
+
+              <GridChildren>
+                <RHFSwitch name="switch" label="Switch" />
+              </GridChildren>
+
+              <GridChildren>
+                <RHFCheckbox name="checkbox" label="Checbox" />
+              </GridChildren>
+
+              <GridChildren>
+                <RHFDatePicker name="datepicker" label="DatePicker" />
+              </GridChildren>
+            </Grid>
           </Form>
         </Box>
       </WindowContainer>
@@ -69,3 +102,12 @@ const DevPage = () => {
 }
 
 export default DevPage
+
+const GridChildren = ({ children }: { children?: ReactNode }) => {
+
+  return (
+    <Grid item xs={12} md={4}>
+      {children}
+    </Grid>
+  )
+}
