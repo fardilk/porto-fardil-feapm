@@ -1,0 +1,28 @@
+import type { ButtonProps } from '@mui/material';
+import type { CardBannerProps } from 'src/components/card-banner/types';
+
+export type SelectReservationTypeProps = {
+  items: CardBannerProps[];
+};
+
+export type InformationProps = {
+  leftTextButton: string;
+  rightTextButton: string;
+  leftButtonProps?: ButtonProps;
+  rightButtonProps?: ButtonProps;
+};
+
+export type Insurancetype = 'bpjs' | 'insurance' | 'company';
+
+export type PaymentMethodProps = {
+  handleGeneral: () => void;
+  handleAssurance: (param: Insurancetype) => void;
+};
+
+export type SelectPractitionerProps = {
+  onCardSelect: () => void;
+};
+
+export type SelectInsuranceProps = {
+  handleSelect: () => void;
+};

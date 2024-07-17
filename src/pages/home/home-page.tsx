@@ -28,7 +28,7 @@ const HomePage = () => {
       title: "RESERVASI",
       body: "Pesan jadwal kunjungan Anda, siapkan data-data Anda.",
       icon: "medical-appointment",
-      handleClick: () => { }
+      handleClick: () => { navigate("reservation")}
     },
     {
       title: "REGISTRASI PASIEN BARU",
