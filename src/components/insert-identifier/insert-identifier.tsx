@@ -16,7 +16,7 @@ const InsertIdentifier = () => {
 
   const theme = useTheme()
   const [elementName, _setElementName] = useState("nik")
-  const [keyboardType, setKeyboardType] = useState(isForeign ? "text" : "number")
+  const [keyboardType, setKeyboardType] = useState(isForeign ? "text" : "numberOnly")
 
   const inputRef = useRef<any>({})
 
