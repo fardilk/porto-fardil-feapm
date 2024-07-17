@@ -1,7 +1,7 @@
-import { Box, Button, ButtonBase, Card, CardContent, Grid, Stack, Typography } from "@mui/material"
+import { Box, Button, ButtonBase, Card, Grid, Stack } from "@mui/material"
 import { useState } from "react"
 import { Iconify } from "src/components/iconify"
-import { LabelTextContainer } from "src/components/label-text"
+import { LabelTextCard } from "src/components/label-text"
 import { LabelTextProps } from "src/components/label-text/types"
 import { fDate } from "src/utils/format-time"
 import { SelectInsuranceProps } from "../model/types"
@@ -33,7 +33,7 @@ const SelectInsurance = (props: SelectInsuranceProps) => {
         titleProps: { color: "secondary.dark", },
         bodyProps: { color: "secondary.dark", variant: "body2" },
         title: getLabel(key as any),
-        body: `: ${(rest as any)[key]}`
+        body: `${(rest as any)[key]}`
       }
     })
   }
@@ -53,25 +53,14 @@ const SelectInsurance = (props: SelectInsuranceProps) => {
 
             return (
               <Grid item xs={12} md={3} key={index}>
-                <Card variant="outlined">
-                  <ButtonBase sx={{ textAlign: "start" }} onClick={(handleSelect)}>
-                    <CardContent>
-                      <Box sx={{ display: "flex", gap: 2, px: 1.5, placeItems: "center" }}>
-                        <Iconify
-                          localIcon="asuransi"
-                          sxIcon={{ width: 32 }}
-                        />
-                        <Typography variant="subtitle1" color="secondary.darker">{row.namaAsuransi}</Typography>
-                      </Box>
-                      <LabelTextContainer
-                        col={1}
-                        disableOutline
-                        orientation="horizontal"
-                        listText={textData}
-                      />
-                    </CardContent>
-                  </ButtonBase>
-                </Card>
+                <LabelTextCard
+                  listText={textData}
+                  clickable
+                  orientation="horizontal"
+                  onClick={handleSelect}
+                  headerLocalIcon="asuransi"
+                  headerText={row.namaAsuransi}
+                />
               </Grid>
             )
           })
