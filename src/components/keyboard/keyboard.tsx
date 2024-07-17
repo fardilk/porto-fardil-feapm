@@ -291,7 +291,7 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                   fullWidth
                   sx={{
                     ...defaultButtonStyle,
-                    width: index === 2 ? 94 * (openNumber ? (inputType === "email" ? 6.4 : 8.6) : 6.3) : 94,
+                    width: index === (openNumber ? (inputType === "email" ? 2 : 1) : 2) ? 94 * (openNumber ? (inputType === "email" ? 6.4 : 8.6) : 6.3) : 94,
                   }}
                   type={row.value === "Enter" ? "submit" : undefined}
                   disabled={isSubmitting}
