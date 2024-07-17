@@ -72,7 +72,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
               <Grid item xs={12} md={4} key={index}>
                 <CardBanner
                   title={_row.name}
-                  icon="/assets/app/icons/icon-doctor.svg"
+                  localIcon="stethoscope"
                   cardProps={{ variant: "outlined" }}
                   clickable
                   onClick={() => { onCardSelect() }}

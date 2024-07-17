@@ -2,6 +2,6 @@ export { default as SelectEncounterType } from './select-encounter-type';
 export { default as InformationOutpatientGeneral } from './information-outpatient-general';
 export { default as PaymentMethod } from './payment-method';
 export { default as SelectPractitioner } from './select-practitioner';
-export { default as ConfirmationOutpatientGeneral } from './confirmation-outpatient-general';
-export { default as SuccessOutpatientGeneral } from './success-outpatient-general';
+export { default as ConfirmationOutpatient } from './confirmation-outpatient';
+export { default as SuccessOutpatient } from './success-outpatient';
 export { default as SelectInsurance } from './select-insurance';

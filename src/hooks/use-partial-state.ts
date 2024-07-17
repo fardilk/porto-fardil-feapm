@@ -13,7 +13,7 @@ export function usePartialState<T extends Record<string, any>>(initial: T) {
       return setState((prev) => ({ ...prev, ...value(prev) }));
     }
 
-    setState((prev) => ({ ...prev, ...value }));
+    return setState((prev) => ({ ...prev, ...value }));
   }
 
   return [state, setPartialState] as const;

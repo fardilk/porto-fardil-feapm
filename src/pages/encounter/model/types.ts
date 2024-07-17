@@ -26,3 +26,5 @@ export type SelectPractitionerProps = {
 export type SelectInsuranceProps = {
   handleSelect: () => void;
 };
+
+export type OutpatientType = 'general' | 'insurance' | 'company' | 'bpjs';
