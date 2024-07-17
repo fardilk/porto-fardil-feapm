@@ -1,12 +1,13 @@
-import type { ReactNode } from "react";
-import React, { memo, useCallback, useRef, useState } from "react";
-import { useFormContext } from "react-hook-form";
-
 import { LoadingButton } from "@mui/lab";
-import { Box, Button, Dialog, DialogContent, Grid, Stack, TextField, Typography } from "@mui/material";
-
+import { Alert, Box, Button, Dialog, DialogContent, Divider, Grid, Stack, TextField, Typography, useTheme } from "@mui/material";
+import type { ReactNode } from "react";
+import React, { memo, useCallback, useMemo, useRef, useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { typography } from "src/theme/core";
 import { Iconify } from "../iconify";
 import type { KeyboardType, KeyboardWrapperProps } from "./types";
+import { keyNumber, keyNumberFirstLine, keyNumberFourthLine, keyNumberSecondLine, keyNumberThirdLine, keyTextFirstLine, keyTextFourthLineEmail, keyTextFourthLineText, keyTextSecondLine, keyTextThirdLine } from "./variables";
+
 
 const KeyboardWrapper = React.forwardRef((props: KeyboardWrapperProps, inputRef: any) => {
   const { elementName, withDialog, inputType, onClose, open } = props
@@ -14,6 +15,7 @@ const KeyboardWrapper = React.forwardRef((props: KeyboardWrapperProps, inputRef:
   const dialogInputRef = useRef<HTMLInputElement | null>(null)
 
   const { setValue, watch } = useFormContext();
+  const theme = useTheme()
   const values = watch(elementName)
 
   const onInputChange = (key: string) => {
@@ -41,17 +43,31 @@ const KeyboardWrapper = React.forwardRef((props: KeyboardWrapperProps, inputRef:
     }
   }
 
+  const inputLabel = inputRef[elementName]?.placeholder || (inputRef[elementName]?.label || "")
+
   if (withDialog) {
     return (
       <Dialog open={open || false} onClose={onClose} maxWidth="lg" fullWidth>
         <DialogContent>
-          <Box sx={{ my: 2 }}>
+          <Stack sx={{ my: 2 }} spacing={2}>
+            <Typography variant="subtitle1" gutterBottom>{inputLabel}</Typography>
             <TextField
               fullWidth
               value={values}
+              placeholder={inputLabel}
               inputRef={r => { dialogInputRef.current = r }}
               autoFocus
+              variant="filled"
+              inputProps={{
+                style: {
+                  textAlign: "center",
+                  paddingBottom: theme.spacing(3),
+                  backgroundColor: theme.palette.background.neutral,
+                  ...typography.h3
+                }
+              }}
             />
+            <Divider />
             <Keyboard
               withDialog={withDialog}
               inputType={inputType}
@@ -59,11 +75,12 @@ const KeyboardWrapper = React.forwardRef((props: KeyboardWrapperProps, inputRef:
               onInputChange={onInputChange}
               ref={inputRef}
             />
-          </Box>
+          </Stack>
         </DialogContent>
       </Dialog>
     )
   }
+
   return (
     <Keyboard
       elementName={elementName}
@@ -76,18 +93,30 @@ const KeyboardWrapper = React.forwardRef((props: KeyboardWrapperProps, inputRef:
 const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
   const { inputType, elementName, onInputChange, withDialog } = props;
 
-  const [openNumber, setOpenNumber] = useState(false)
+  const theme = useTheme()
+  const [openNumber, setOpenNumber] = useState(props.inputType === "number")
   const [shift, setShift] = useState(false);
   const [secondShift, setSecondShift] = useState(false);
 
   const { setValue, formState: { isSubmitting } } = useFormContext();
+
+  const defaultButtonStyle = useMemo(() => {
+    return {
+      borderWidth: 2,
+      borderColor: theme.palette.secondary.main,
+      height: 94,
+      width: 94,
+    }
+  }, [theme])
 
   const handleButtonClick = (key: string) => {
     key = (shift || secondShift) ? key.toUpperCase() : key;
 
     const currentRef = inputRef[elementName];
 
-    if (withDialog && onInputChange) {
+    if (key === "TO_NUMBER_AND_CHAR") {
+      setOpenNumber((prev) => !prev)
+    } else if (withDialog && onInputChange) {
 
       onInputChange(key)
       setShift(false);
@@ -123,7 +152,7 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
     }
   };
 
-  const NumberLayout = useCallback((onButtonClick: any) => {
+  const NumberOnlyLayout = useCallback((onButtonClick: any) => {
     return keyNumber.map((row) => {
       const isEnter = row.value === "Enter"
       return (
@@ -132,7 +161,11 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
             unselectable="on"
             variant="outlined"
             fullWidth
-            sx={{ p: 4, borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main }}
+            sx={{
+              p: 4,
+              borderWidth: 2,
+              borderColor: (thm) => thm.palette.secondary.main
+            }}
             type={isEnter ? "submit" : undefined}
             disabled={isSubmitting}
             loading={isEnter ? isSubmitting : undefined}
@@ -156,37 +189,37 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
       <>
         <Grid item xs={12} sx={{ display: 'flex', placeItems: 'center', placeContent: 'center', gap: 1 }}>
           {
-            keyTextFirstLine.map((row, index) => {
+            (openNumber ? keyNumberFirstLine : keyTextFirstLine).map((row, index) => {
+
               return (
                 <LoadingButton
                   key={index}
                   unselectable="on"
                   variant="outlined"
                   fullWidth
-                  sx={{ p: 4, borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main }}
-                  disabled={isSubmitting}
-                  loading={row.value === "Enter" ? isSubmitting : undefined}
+                  sx={{ ...defaultButtonStyle }}
                   onMouseDown={(event) => {
                     event.preventDefault()
                     onButtonClick(row.value)
-                  }}>
+                  }}
+                >
                   <Typography variant="h4">{isSubmitting ? "-" : getLabel(row.label)}</Typography>
                 </LoadingButton>
               )
             })
           }
-        </Grid>
+        </Grid >
 
-        <Grid item xs={12} sx={{ display: 'flex', placeItems: 'center', placeContent: 'center', gap: 1, mx: 4 }}>
+        <Grid item xs={12} sx={{ display: 'flex', placeItems: 'center', placeContent: 'center', gap: 1 }}>
           {
-            keyTextSecondLine.map((row, index) => {
+            (openNumber ? keyNumberSecondLine : keyTextSecondLine).map((row, index) => {
               return (
                 <LoadingButton
                   key={index}
                   unselectable="on"
                   variant="outlined"
                   fullWidth
-                  sx={{ p: 4, borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main }}
+                  sx={{ ...defaultButtonStyle }}
                   disabled={isSubmitting}
                   onMouseDown={(event) => {
                     event.preventDefault()
@@ -200,30 +233,40 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
         </Grid>
 
         <Grid item xs={12} sx={{ display: 'flex', placeItems: 'center', placeContent: 'center', gap: 1 }}>
-          <Button
-            unselectable="on"
-            variant="outlined"
-            fullWidth
-            disabled={isSubmitting}
-            sx={{ p: 4, width: "200%", borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main }}
-            onDoubleClick={() => {
-              if (!secondShift) setSecondShift((prev) => !prev)
-            }}
-            onMouseDown={(event) => {
-              event.preventDefault()
-              if (secondShift) setSecondShift(false); else setShift(true)
-            }}>
-            {isSubmitting ? "-" : <Iconify icon={`fluent:keyboard-shift-uppercase-16-${isUpper ? 'filled' : 'regular'}`} sx={{ transform: 'scale(2)' }} />}
-          </Button>
           {
-            keyTextThirdLine.map((row, index) => {
+            !openNumber && (
+              <Button
+                unselectable="on"
+                variant="outlined"
+                fullWidth
+                disabled={isSubmitting}
+                sx={{
+                  ...defaultButtonStyle,
+                  width: 94 * 1.5,
+                }}
+                onDoubleClick={() => {
+                  if (!secondShift) setSecondShift((prev) => !prev)
+                }}
+                onMouseDown={(event) => {
+                  event.preventDefault()
+                  if (secondShift) setSecondShift(false); else setShift(true)
+                }}>
+                {isSubmitting ? "-" : <Iconify icon={`fluent:keyboard-shift-uppercase-16-${isUpper ? 'filled' : 'regular'}`} sx={{ width: 42 }} />}
+              </Button>
+            )
+          }
+          {
+            (openNumber ? keyNumberThirdLine : keyTextThirdLine).map((row, index) => {
               return (
                 <LoadingButton
                   key={index}
                   unselectable="on"
                   variant="outlined"
                   fullWidth
-                  sx={{ p: 4, borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main, width: row.value === "Backspace" ? "300%" : "100%" }}
+                  sx={{
+                    ...defaultButtonStyle,
+                    width: row.value === "Backspace" ? (openNumber ? 94 * 2 : 94 * 1.5) : 94,
+                  }}
                   disabled={isSubmitting}
                   onMouseDown={(event) => {
                     event.preventDefault()
@@ -238,28 +281,18 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
 
 
         <Grid item xs={12} sx={{ display: 'flex', placeItems: 'center', placeContent: 'center', gap: 1 }}>
-          <LoadingButton
-            unselectable="on"
-            variant="outlined"
-            fullWidth
-            sx={{ p: 4, borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main, }}
-            disabled={isSubmitting}
-            loading={isSubmitting}
-            onMouseDown={(event) => {
-              event.preventDefault()
-              console.log('.?')
-            }}>
-            <Typography variant="h4">?123</Typography>
-          </LoadingButton>
           {
-            (inputType === "email" ? keyTextFourthLineEmail : keyTextFourthLineText).map((row, index) => {
+            (inputType === "email" ? keyTextFourthLineEmail : (openNumber ? keyNumberFourthLine : keyTextFourthLineText)).map((row, index) => {
               return (
                 <LoadingButton
                   key={index}
                   unselectable="on"
                   variant="outlined"
                   fullWidth
-                  sx={{ p: 4, borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main, width: index === 0 ? "500%" : undefined }}
+                  sx={{
+                    ...defaultButtonStyle,
+                    width: index === 2 ? 94 * (openNumber ? (inputType === "email" ? 6.4 : 8.6) : 6.3) : 94,
+                  }}
                   type={row.value === "Enter" ? "submit" : undefined}
                   disabled={isSubmitting}
                   loading={row.value === "Enter" ? isSubmitting : undefined}
@@ -275,47 +308,31 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
         </Grid>
       </>
     )
-  }, [secondShift, shift, isSubmitting, inputType])
+  }, [secondShift, shift, isSubmitting, inputType, openNumber, defaultButtonStyle])
 
+  const renderKeyboard = () => {
+
+    if (inputType === "numberOnly") {
+      return NumberOnlyLayout(handleButtonClick)
+    }
+    if (inputType === "text" || inputType === "number" || inputType === "email") {
+      return TextLayout(handleButtonClick)
+    }
+
+    return (
+      <Box sx={{ display: "flex", placeItems: "center", placeContent: "center", flexWrap: "wrap", gap: 2 }}>
+        <Alert severity="error">Tidak Ada Keyboard. Hubungi IT</Alert>
+        <Alert severity="info">Tidak Ada Keyboard. Hubungi IT</Alert>
+        <Alert severity="warning">Tidak Ada Keyboard. Hubungi IT</Alert>
+        <Alert severity="success">Tidak Ada Keyboard. Hubungi IT</Alert>
+      </Box>)
+  }
 
   return (
     <Box sx={{ my: 2 }}>
       <Box>
         <Grid container spacing={1}>
-          <Grid item xs={12} md={(inputType === "email") ? 10 : 12}>
-            <Grid container spacing={2}>
-
-              {(inputType === "number" || openNumber) && NumberLayout(handleButtonClick)}
-
-              {(inputType !== "number" && !openNumber) && TextLayout(handleButtonClick)}
-            </Grid>
-          </Grid>
-          {
-            inputType === "email" && (
-              <Grid item xs={12} md={2}>
-                <Stack sx={{ placeContent: "space-evenly", height: "100%", gap: 2 }}>
-                  <Box sx={{ width: "100%", height: "100%" }} >
-                    <Button
-                      variant="outlined"
-                      sx={{ width: "100%", height: "100%", borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main }}
-                      onClick={() => setOpenNumber(true)}
-                    >
-                      <Typography variant="h4">123</Typography>
-                    </Button>
-                  </Box>
-                  <Box sx={{ width: "100%", height: "100%" }} >
-                    <Button
-                      variant="outlined"
-                      sx={{ width: "100%", height: "100%", borderWidth: 2, borderColor: (theme) => theme.palette.secondary.main }}
-                      onClick={() => setOpenNumber(false)}
-                    >
-                      <Typography variant="h4">ABC</Typography>
-                    </Button>
-                  </Box>
-                </Stack>
-              </Grid>
-            )
-          }
+          {renderKeyboard()}
         </Grid>
       </Box>
     </Box>
@@ -323,89 +340,3 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
 })
 
 export default memo(KeyboardWrapper)
-
-const keyNumber = [
-  { label: "1", value: "1" },
-  { label: "2", value: "2" },
-  { label: "3", value: "3" },
-  { label: "4", value: "4" },
-  { label: "5", value: "5" },
-  { label: "6", value: "6" },
-  { label: "7", value: "7" },
-  { label: "8", value: "8" },
-  { label: "9", value: "9" },
-  {
-    label: <Iconify icon="fluent:backspace-16-regular" sx={{ transform: 'scale(2)' }} color="secondary.main" />,
-    value: "Backspace"
-  },
-  { label: "0", value: "0" },
-  {
-    label: <Iconify icon="fluent:arrow-enter-left-20-filled" sx={{ transform: 'scale(2)' }} color="secondary.main" />,
-    value: "Enter"
-  }
-]
-
-const keyTextFirstLine = [
-  { label: "q", value: "q" },
-  { label: "w", value: "w" },
-  { label: "e", value: "e" },
-  { label: "r", value: "r" },
-  { label: "t", value: "t" },
-  { label: "y", value: "y" },
-  { label: "u", value: "u" },
-  { label: "i", value: "i" },
-  { label: "o", value: "o" },
-  { label: "p", value: "p" },
-];
-
-const keyTextSecondLine = [
-  { label: "a", value: "a" },
-  { label: "s", value: "s" },
-  { label: "d", value: "d" },
-  { label: "f", value: "f" },
-  { label: "g", value: "g" },
-  { label: "h", value: "h" },
-  { label: "j", value: "j" },
-  { label: "k", value: "k" },
-  { label: "l", value: "l" },
-]
-
-const keyTextThirdLine = [
-  { label: "z", value: "z" },
-  { label: "x", value: "x" },
-  { label: "c", value: "c" },
-  { label: "v", value: "v" },
-  { label: "b", value: "b" },
-  { label: "n", value: "n" },
-  { label: "m", value: "m" },
-  {
-    label: <Iconify icon="fluent:backspace-16-regular" sx={{ transform: 'scale(2)' }} color="secondary.main" />,
-    value: "Backspace"
-  },
-]
-
-const keyTextFourthLineEmail = [
-  {
-    label: <Iconify icon="fluent:backspace-16-regular" sx={{ transform: 'scale(2)' }} color="secondary.main" />,
-    value: "Backspace"
-  },
-  { label: "@", value: "@" },
-  { label: "+", value: "+" },
-  { label: ".", value: "." },
-  { label: "_", value: "_" },
-  { label: "-", value: "-" },
-  { label: "@gmail", value: "@gmail" },
-  { label: "@yahoo", value: "@yahoo" },
-  {
-    label: <Iconify icon="fluent:arrow-enter-left-20-filled" sx={{ transform: 'scale(2)' }} color="secondary.main" />,
-    value: "Enter"
-  },
-]
-
-const keyTextFourthLineText = [
-  { label: "space", value: " " },
-  {
-    label: <Iconify icon="fluent:arrow-enter-left-20-filled" sx={{ transform: 'scale(2)' }} color="secondary.main" />,
-    value: "Enter"
-  }
-]
