@@ -21,6 +21,7 @@ const CardBannerProfile = (props: CardBannerProfileProps) => {
             <Stack sx={{ width: '100%', gap: 2, placeItems: 'start' }}>
               <Box sx={{ width: '100%' }}>
                 <Typography gutterBottom variant="h5" textAlign="start">{name}</Typography>
+              </Box>
                 <Box sx={{ display: 'flex', placeContent: 'space-between', gap: 1 }}>
                   <Label
                     sx={{ width: '100%' }}
@@ -37,7 +38,6 @@ const CardBannerProfile = (props: CardBannerProfileProps) => {
                     {slots}
                   </Label>
                 </Box>
-              </Box>
 
               <Box>
                 <Typography color="grey">Jumlah Pasien</Typography>

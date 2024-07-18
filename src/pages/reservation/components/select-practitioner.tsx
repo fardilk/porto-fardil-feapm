@@ -37,9 +37,12 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
   return (
     <Stack gap={2}>
       <Grid container spacing={2}>
+        {!isPractitioner && (
         <Grid item xs={12}>
-          {!isPractitioner && <Alert severity="info" >Setelah memilih poli, dokter akan dipilihkan secara otomatis</Alert>}
+          <Alert severity="info" >Setelah memilih poli, dokter akan dipilihkan secara otomatis</Alert>
         </Grid>
+
+        )}
         <Grid item xs={12}>
           <TextField
             fullWidth
