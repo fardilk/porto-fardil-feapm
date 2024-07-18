@@ -5,3 +5,4 @@ export { default as SelectPractitioner } from './select-practitioner';
 export { default as ConfirmationOutpatient } from './confirmation-outpatient';
 export { default as SuccessOutpatient } from './success-outpatient';
 export { default as SelectInsurance } from './select-insurance';
+export { default as SelectInsuranceNew } from './select-insurance-new';

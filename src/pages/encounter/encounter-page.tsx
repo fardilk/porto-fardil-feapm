@@ -9,7 +9,7 @@ import { InsertIdentifier } from "src/components/insert-identifier"
 import { WindowContainer } from "src/components/window-container"
 import { useStepper } from "src/hooks"
 import { getDummyData } from "../registration/model/functions"
-import { ConfirmationOutpatient, InformationOutpatientGeneral, PaymentMethod, SelectEncounterType, SelectInsurance, SelectPractitioner, SuccessOutpatient } from "./components"
+import { ConfirmationOutpatient, InformationOutpatientGeneral, PaymentMethod, SelectEncounterType, SelectInsurance, SelectInsuranceNew, SelectPractitioner, SuccessOutpatient } from "./components"
 import { Insurancetype } from "./model/types"
 
 const EncounterPage = () => {
@@ -61,7 +61,7 @@ const EncounterPage = () => {
     } else if (type === "company") {
       console.log("company")
     } else if (type === "insurance") {
-      handleChangePage({ action: "next", newFormSteps: formStepsOutpatientInsurance })
+      handleChangePage({ newFormSteps: formStepsOutpatientInsurance, toSpecificPage: "select_insurance" })
     }
   }
 
@@ -130,7 +130,15 @@ const EncounterPage = () => {
 
             {currentPage.value === "registration_success_insurance" && <SuccessOutpatient type="insurance" />}
 
-            {currentPage.value === "select_insurance" && <SelectInsurance handleSelect={() => { handleChangePage({ action: "next" }) }} />}
+            {currentPage.value === "select_insurance" && (
+              <SelectInsurance
+                handleSelect={() => {
+                  handleChangePage({ toSpecificPage: "select_healthcare_practitioner" })
+                }}
+              />
+            )}
+
+            {currentPage.value === "select_insurance_new" && <SelectInsuranceNew />}
 
           </Box>
 
@@ -204,6 +212,18 @@ const formStepsOutpatientInsurance = [
       disableBack: true,
       containerSize: "superLarge"
     }
+  },
+  {
+    label: "Pilih Asuransi",
+    value: "select_insurance_new"
+  },
+  {
+    label: "Masukkan Nomor Polis Asuransi",
+    value: "insert_polis_number"
+  },
+  {
+    label: "Informasi Data Asuransi Pasien",
+    value: "information_data_patient_insurance"
   },
   {
     label: "Pilih Dokter Poli",
