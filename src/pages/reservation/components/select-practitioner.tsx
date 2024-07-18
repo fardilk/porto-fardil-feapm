@@ -37,9 +37,12 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
   return (
     <Stack gap={2}>
       <Grid container spacing={2}>
+        {!isPractitioner && (
         <Grid item xs={12}>
-          {!isPractitioner && <Alert severity="info" >Setelah memilih poli, dokter akan dipilihkan secara otomatis</Alert>}
+          <Alert severity="info" >Setelah memilih poli, dokter akan dipilihkan secara otomatis</Alert>
         </Grid>
+
+        )}
         <Grid item xs={12}>
           <TextField
             fullWidth
@@ -53,7 +56,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
         {
           isPractitioner && listPractitioner.slice(currentIndex, currentIndex + 6).map((_row, index) => {
             return (
-              <Grid item xs={12} md={4} key={index}>
+              <Grid item xs={12} md={6} lg={4} key={index}>
                 <CardBannerProfile
                   heathcareServiceName="test"
                   count="20/30"
@@ -69,7 +72,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
         {
           !isPractitioner && listPoli.slice(currentIndex, currentIndex + 16).map((_row, index) => {
             return (
-              <Grid item xs={12} md={4} key={index}>
+              <Grid item xs={12} md={6} lg={4} key={index}>
                 <CardBanner
                   title={_row.name}
                   icon="/assets/app/icons/icon-doctor.svg"
