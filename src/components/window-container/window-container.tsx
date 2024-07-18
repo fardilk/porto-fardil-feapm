@@ -25,7 +25,7 @@ const WindowContainer = (props: WindowContainerProps) => {
       return { xs: "90%", md: "95%", lg: "75%" }
     }
 
-    return { xs: "90%", md: "100%", lg: "65%" }
+    return { xs: "90%", md: "70%", lg: "65%" }
   }, [size])
 
   return (
