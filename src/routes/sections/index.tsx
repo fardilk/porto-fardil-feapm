@@ -4,9 +4,10 @@ import appRoute from './app';
 import { authRoutes } from './auth';
 import { authDemoRoutes } from './auth-demo';
 import { componentsRoutes } from './components';
+import { configRoute } from './config';
 import { dashboardRoutes } from './dashboard';
-import { mainRoutes } from './main';
 import devRoute from './dev';
+import { mainRoutes } from './main';
 
 // ----------------------------------------------------------------------
 
@@ -28,6 +29,9 @@ export function Router() {
     // },
 
     ...appRoute,
+
+    // Config
+    ...configRoute,
 
     // Auth
     ...authRoutes,
