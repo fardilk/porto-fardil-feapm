@@ -6,3 +6,5 @@ export { default as ConfirmationOutpatient } from './confirmation-outpatient';
 export { default as SuccessOutpatient } from './success-outpatient';
 export { default as SelectInsurance } from './select-insurance';
 export { default as SelectInsuranceNew } from './select-insurance-new';
+export { default as InsertPolisNumber } from './insert-polis-number';
+export { default as InformationInsurancePatientData } from './information-insurance-patient-data';

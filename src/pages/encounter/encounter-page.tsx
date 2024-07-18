@@ -9,7 +9,7 @@ import { InsertIdentifier } from "src/components/insert-identifier"
 import { WindowContainer } from "src/components/window-container"
 import { useStepper } from "src/hooks"
 import { getDummyData } from "../registration/model/functions"
-import { ConfirmationOutpatient, InformationOutpatientGeneral, PaymentMethod, SelectEncounterType, SelectInsurance, SelectInsuranceNew, SelectPractitioner, SuccessOutpatient } from "./components"
+import { ConfirmationOutpatient, InformationInsurancePatientData, InformationOutpatientGeneral, InsertPolisNumber, PaymentMethod, SelectEncounterType, SelectInsurance, SelectInsuranceNew, SelectPractitioner, SuccessOutpatient } from "./components"
 import { Insurancetype } from "./model/types"
 
 const EncounterPage = () => {
@@ -68,11 +68,15 @@ const EncounterPage = () => {
   const onSubmit = async (data: any) => {
     if (currentPageIndex === 1) {
 
-      const resp = await getDummyData("company")
+      await getDummyData("company")
 
       handleChangePage({ action: "next" })
 
     } else {
+      if (currentPage.value === "insert_polis_number") {
+        await getDummyData("")
+        handleChangePage({ action: "next" })
+      }
       console.log('hello world')
     }
   }
@@ -135,10 +139,32 @@ const EncounterPage = () => {
                 handleSelect={() => {
                   handleChangePage({ toSpecificPage: "select_healthcare_practitioner" })
                 }}
+                handleSelectNew={() => {
+                  handleChangePage({ action: "next" })
+                }}
               />
             )}
 
-            {currentPage.value === "select_insurance_new" && <SelectInsuranceNew />}
+            {currentPage.value === "select_insurance_new" && (
+              <SelectInsuranceNew
+                handleSelect={() => { handleChangePage({ action: "next" }) }}
+              />
+            )}
+
+            {
+              currentPage.value === "insert_polis_number" && (
+                <InsertPolisNumber />
+              )
+            }
+
+            {
+              currentPage.value === "information_data_patient_insurance" && (
+                <InformationInsurancePatientData
+                  handleBack={() => { handleChangePage({ action: "previous" }) }}
+                  handleNext={() => { handleChangePage({ action: "next" }) }}
+                />
+              )
+            }
 
           </Box>
 
