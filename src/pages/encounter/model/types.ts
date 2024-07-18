@@ -28,13 +28,32 @@ export type SelectInsuranceProps = {
   handleSelectNew: () => void;
 };
 
+export type SelectCompanyProps = {
+  handleSelect: () => void;
+  handleSelectNew: () => void;
+};
+
 export type OutpatientType = 'general' | 'insurance' | 'company' | 'bpjs';
 
 export type SelectInsuranceNewProps = {
   handleSelect: () => void;
 };
 
+export type SelectCompanyNewProps = {
+  handleSelect: () => void;
+};
+
 export type InformationInsurancePatientDataProps = {
   handleBack: () => void;
   handleNext: () => void;
+};
+
+export type InformationCompanyEmployeeDataProps = {
+  handleBack: () => void;
+  handleNext: () => void;
+};
+
+export type InformationBPJSPatientDataProps = {
+  handleBack: () => void;
+  handleSelect: () => void;
 };

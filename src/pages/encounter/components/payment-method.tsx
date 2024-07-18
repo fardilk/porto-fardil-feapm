@@ -41,7 +41,7 @@ const PaymentMethod = (props: PaymentMethodProps) => {
     {
       title: "Perusahaan",
       body: "Pendaftaran pasien asuransi perusahaan",
-      localIcon: "bacteria",
+      localIcon: "perusahaan",
       onClick: () => { handleAssurance("company") }
     },
   ])
