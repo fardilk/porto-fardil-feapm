@@ -1,4 +1,4 @@
-import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material"
+import { AppBar, Box, Button, IconButton, Toolbar, Typography } from "@mui/material"
 import { useMemo, type ReactNode } from "react"
 import { CloseIcon } from "yet-another-react-lightbox"
 import { Iconify } from "src/components/iconify"
@@ -35,14 +35,17 @@ const WindowContainer = (props: WindowContainerProps) => {
           <Toolbar>
             {
               !hideBackNavigation && (
-                <IconButton
-                  size="large"
-                  edge="start"
-                  sx={{ mr: 2 }}
+                <Button
+                  variant="contained"
+                  sx={{
+                    bgcolor: (theme) => theme.palette.grey[400],
+                    color: "black",
+                    mr: 2
+                  }}
                   onClick={handleBackNavigation}
                 >
-                  <Iconify icon="solar:alt-arrow-left-line-duotone" />
-                </IconButton>
+                  Kembali
+                </Button>
               )
             }
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -50,9 +53,16 @@ const WindowContainer = (props: WindowContainerProps) => {
             </Typography>
             {
               !hideCloseNavigation && (
-                <IconButton onClick={handleCloseNavigation}>
-                  <CloseIcon />
-                </IconButton>
+                <Button
+                  variant="contained"
+                  sx={{
+                    bgcolor: (theme) => theme.palette.grey[400],
+                    color: "black"
+                  }}
+                  onClick={handleCloseNavigation}
+                >
+                  Batal
+                </Button>
               )
             }
           </Toolbar>
