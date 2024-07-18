@@ -56,7 +56,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
         {
           isPractitioner && listPractitioner.slice(currentIndex, currentIndex + 6).map((_row, index) => {
             return (
-              <Grid item xs={12} md={4} key={index}>
+              <Grid item xs={12} md={6} lg={4} key={index}>
                 <CardBannerProfile
                   heathcareServiceName="test"
                   count="20/30"
@@ -72,7 +72,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
         {
           !isPractitioner && listPoli.slice(currentIndex, currentIndex + 16).map((_row, index) => {
             return (
-              <Grid item xs={12} md={4} key={index}>
+              <Grid item xs={12} md={6} lg={4} key={index}>
                 <CardBanner
                   title={_row.name}
                   icon="/assets/app/icons/icon-doctor.svg"

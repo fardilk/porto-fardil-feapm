@@ -22,7 +22,7 @@ const WindowContainer = (props: WindowContainerProps) => {
     }
 
     if (size === "superLarge") {
-      return { xs: "90%", md: "85%", lg: "75%" }
+      return { xs: "90%", md: "95%", lg: "75%" }
     }
 
     return { xs: "90%", md: "100%", lg: "65%" }
