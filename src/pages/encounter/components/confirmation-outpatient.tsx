@@ -5,8 +5,12 @@ import { LabelTextContainer } from "src/components/label-text"
 import type { LabelTextProps } from "src/components/label-text/types"
 import { ModalInfoAndAction } from "src/components/modal-info-and-action"
 import { fAsterisk } from "src/utils/helper"
+import { OutpatientType } from "../model/types"
+import { getPaymentType } from "../model/variables"
 
-const ConfirmationOutpatientGeneral = ({ handleConfirm }: { handleConfirm: () => void }) => {
+
+
+const ConfirmationOutpatient = ({ handleConfirm, type }: { handleConfirm: () => void, type: OutpatientType }) => {
 
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
   const [detailData, _setDetailData] = useState<LabelTextProps[]>([
@@ -24,22 +28,18 @@ const ConfirmationOutpatientGeneral = ({ handleConfirm }: { handleConfirm: () =>
     {
       title: "Tujuan Pelayanan",
       body: "Poli Mata",
-      icon: "/assets/app/icons/home-registration.svg",
+      localIcon: "stethoscope",
     },
     {
       title: "Dokter Pemeriksa",
       body: "dr. Inas Shabrina,Sp.M",
-      icon: "/assets/app/icons/home-patient.svg",
+      localIcon: "doctor",
     },
-    {
-      title: "Tipe Pembayaran",
-      body: "Umum",
-      icon: "/assets/app/icons/home-reservation.svg",
-    },
+    { ...getPaymentType(type) },
     {
       title: "Waktu Pelayanan",
       body: "Senin, 30-01-2022, 10:00-14:00",
-      icon: "/assets/app/icons/home-newuser.svg",
+      localIcon: "jadwal",
     },
   ]
 
@@ -111,4 +111,4 @@ const ConfirmationOutpatientGeneral = ({ handleConfirm }: { handleConfirm: () =>
   )
 }
 
-export default ConfirmationOutpatientGeneral
+export default ConfirmationOutpatient

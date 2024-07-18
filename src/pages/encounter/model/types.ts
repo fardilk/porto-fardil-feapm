@@ -25,4 +25,16 @@ export type SelectPractitionerProps = {
 
 export type SelectInsuranceProps = {
   handleSelect: () => void;
+  handleSelectNew: () => void;
+};
+
+export type OutpatientType = 'general' | 'insurance' | 'company' | 'bpjs';
+
+export type SelectInsuranceNewProps = {
+  handleSelect: () => void;
+};
+
+export type InformationInsurancePatientDataProps = {
+  handleBack: () => void;
+  handleNext: () => void;
 };

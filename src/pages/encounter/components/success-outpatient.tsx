@@ -5,8 +5,12 @@ import { CardBanner } from "src/components/card-banner"
 import { LabelTextContainer } from "src/components/label-text"
 import type { LabelTextProps } from "src/components/label-text/types"
 import { fAsterisk } from "src/utils/helper"
+import { OutpatientType } from "../model/types"
+import { getPaymentType } from "../model/variables"
 
-const SuccessOutpatientGeneral = () => {
+const SuccessOutpatient = (props: { type: OutpatientType }) => {
+
+  const { type } = props
 
   const [detailData, _setDetailData] = useState<LabelTextProps[]>([
     { title: "NIK", body: fAsterisk("100200300400") },
@@ -23,22 +27,20 @@ const SuccessOutpatientGeneral = () => {
     {
       title: "Tujuan Pelayanan",
       body: "Poli Mata",
-      icon: "/assets/app/icons/home-registration.svg",
+      localIcon: "stethoscope",
     },
     {
       title: "Dokter Pemeriksa",
       body: "dr. Inas Shabrina,Sp.M",
-      icon: "/assets/app/icons/home-patient.svg",
+      localIcon: "doctor",
     },
     {
-      title: "Tipe Pembayaran",
-      body: "Umum",
-      icon: "/assets/app/icons/home-reservation.svg",
+      ...getPaymentType(type)
     },
     {
       title: "Waktu Pelayanan",
       body: "Senin, 30-01-2022, 10:00-14:00",
-      icon: "/assets/app/icons/home-newuser.svg",
+      localIcon: "jadwal",
     },
   ]
 
@@ -82,4 +84,4 @@ const SuccessOutpatientGeneral = () => {
   )
 }
 
-export default SuccessOutpatientGeneral
+export default SuccessOutpatient

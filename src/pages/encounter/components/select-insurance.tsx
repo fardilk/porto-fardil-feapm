@@ -7,7 +7,7 @@ import { fDate } from "src/utils/format-time"
 import { SelectInsuranceProps } from "../model/types"
 
 const SelectInsurance = (props: SelectInsuranceProps) => {
-  const { handleSelect } = props
+  const { handleSelect, handleSelectNew } = props
 
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -68,7 +68,7 @@ const SelectInsurance = (props: SelectInsuranceProps) => {
 
         <Grid item xs={12} md={3}>
           <Card variant="outlined" sx={{ height: "100%" }}>
-            <ButtonBase sx={{ width: "100%", height: "100%" }}>
+            <ButtonBase sx={{ width: "100%", height: "100%" }} onClick={handleSelectNew}>
               <Iconify icon="fluent:add-12-regular" color="secondary.dark" sx={{ width: 32 }} />
             </ButtonBase>
           </Card>

@@ -9,7 +9,7 @@ import { InsertIdentifier } from "src/components/insert-identifier"
 import { WindowContainer } from "src/components/window-container"
 import { useStepper } from "src/hooks"
 import { getDummyData } from "../registration/model/functions"
-import { ConfirmationOutpatientGeneral, InformationOutpatientGeneral, PaymentMethod, SelectEncounterType, SelectInsurance, SelectPractitioner, SuccessOutpatientGeneral } from "./components"
+import { ConfirmationOutpatient, InformationInsurancePatientData, InformationOutpatientGeneral, InsertPolisNumber, PaymentMethod, SelectEncounterType, SelectInsurance, SelectInsuranceNew, SelectPractitioner, SuccessOutpatient } from "./components"
 import { Insurancetype } from "./model/types"
 
 const EncounterPage = () => {
@@ -61,18 +61,22 @@ const EncounterPage = () => {
     } else if (type === "company") {
       console.log("company")
     } else if (type === "insurance") {
-      handleChangePage({ action: "next", newFormSteps: formStepsOutpatientInsurance })
+      handleChangePage({ newFormSteps: formStepsOutpatientInsurance, toSpecificPage: "select_insurance" })
     }
   }
 
   const onSubmit = async (data: any) => {
     if (currentPageIndex === 1) {
 
-      const resp = await getDummyData("company")
+      await getDummyData("company")
 
       handleChangePage({ action: "next" })
 
     } else {
+      if (currentPage.value === "insert_polis_number") {
+        await getDummyData("")
+        handleChangePage({ action: "next" })
+      }
       console.log('hello world')
     }
   }
@@ -105,18 +109,62 @@ const EncounterPage = () => {
 
             {currentPage.value === "payment_method" && (
               <PaymentMethod
-                handleGeneral={() => { }}
+                handleGeneral={() => { handleChangePage({ action: "next" }) }}
                 handleAssurance={onAssuranceSelect}
               />
             )}
 
             {currentPage.value === "select_healthcare_practitioner" && <SelectPractitioner onCardSelect={onPractitionerSelect} />}
 
-            {currentPage.value === "confirmation_patient_registration" && <ConfirmationOutpatientGeneral handleConfirm={() => { handleChangePage({ action: "next" }) }} />}
+            {currentPage.value === "confirmation_patient_registration" && (
+              <ConfirmationOutpatient
+                handleConfirm={() => { handleChangePage({ action: "next" }) }}
+                type="general"
+              />
+            )}
 
-            {currentPage.value === "registration_success" && <SuccessOutpatientGeneral />}
+            {currentPage.value === "confirmation_patient_registration_insurance" && (
+              <ConfirmationOutpatient
+                handleConfirm={() => { handleChangePage({ action: "next" }) }}
+                type="insurance"
+              />
+            )}
 
-            {currentPage.value === "select_insurance" && <SelectInsurance handleSelect={() => { handleChangePage({ action: "next" }) }} />}
+            {currentPage.value === "registration_success" && <SuccessOutpatient type="general" />}
+
+            {currentPage.value === "registration_success_insurance" && <SuccessOutpatient type="insurance" />}
+
+            {currentPage.value === "select_insurance" && (
+              <SelectInsurance
+                handleSelect={() => {
+                  handleChangePage({ toSpecificPage: "select_healthcare_practitioner" })
+                }}
+                handleSelectNew={() => {
+                  handleChangePage({ action: "next" })
+                }}
+              />
+            )}
+
+            {currentPage.value === "select_insurance_new" && (
+              <SelectInsuranceNew
+                handleSelect={() => { handleChangePage({ action: "next" }) }}
+              />
+            )}
+
+            {
+              currentPage.value === "insert_polis_number" && (
+                <InsertPolisNumber />
+              )
+            }
+
+            {
+              currentPage.value === "information_data_patient_insurance" && (
+                <InformationInsurancePatientData
+                  handleBack={() => { handleChangePage({ action: "previous" }) }}
+                  handleNext={() => { handleChangePage({ action: "next" }) }}
+                />
+              )
+            }
 
           </Box>
 
@@ -192,6 +240,18 @@ const formStepsOutpatientInsurance = [
     }
   },
   {
+    label: "Pilih Asuransi",
+    value: "select_insurance_new"
+  },
+  {
+    label: "Masukkan Nomor Polis Asuransi",
+    value: "insert_polis_number"
+  },
+  {
+    label: "Informasi Data Asuransi Pasien",
+    value: "information_data_patient_insurance"
+  },
+  {
     label: "Pilih Dokter Poli",
     value: "select_healthcare_practitioner",
     properties: {
@@ -200,14 +260,14 @@ const formStepsOutpatientInsurance = [
   },
   {
     label: "Konfirmasi Pendaftaran Pasien",
-    value: "confirmation_patient_registration",
+    value: "confirmation_patient_registration_insurance",
     properties: {
       disableBlack: true
     }
   },
   {
     label: "Pendaftaran Berhasil",
-    value: "registration_success",
+    value: "registration_success_insurance",
     properties: {
       disableBack: true
     }
