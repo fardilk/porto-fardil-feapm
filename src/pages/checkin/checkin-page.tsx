@@ -7,6 +7,7 @@ import { useStepper } from "src/hooks"
 import { getDummyData } from "../registration/model/functions"
 import { InformationBooking, InformationBookingBPJS, InformationBookingCompany, InformationBookingInsurance, InsertBookingNumber } from "./components"
 import { useNavigate } from "react-router"
+import { toast } from "src/components/snackbar"
 
 const CheckinPage = () => {
 
@@ -21,9 +22,23 @@ const CheckinPage = () => {
   const { handleSubmit } = methods
 
   const onSubmit = async (data: any) => {
-    if (currentPageIndex === 0) {
 
-      const resp = await getDummyData("company")
+    if(!data?.nik?.replaceAll("\n","")) {
+      toast.error("Nomor Booking tidak boleh kosong")
+      return;
+    }
+
+    if (currentPageIndex === 0) {
+      const keyboardValue = data.nik.replaceAll("\n","")
+      const resp = await getDummyData(
+        keyboardValue === "123" 
+        ?  "bpjs" 
+        : keyboardValue === "456" 
+        ? "insurance" 
+        : keyboardValue === "789" 
+        ? "company" 
+        : "general"
+      )
 
       if (resp.data === "general") handleChangePage({ action: "next", newFormSteps: formStepsCheckinGeneral });
       else if (resp.data === "bpjs") handleChangePage({ action: "next", newFormSteps: formStepsCheckinBPJS });
