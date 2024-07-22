@@ -57,3 +57,14 @@ export type InformationBPJSPatientDataProps = {
   handleBack: () => void;
   handleSelect: () => void;
 };
+
+export type SelectMCUPackageProps = {
+  handleSelect: () => void
+}
+
+export type LabelListTextCardProps = {
+  listText: string[];
+  headerText: string;
+  sectionBottom: React.ReactNode
+  action: () => void
+}

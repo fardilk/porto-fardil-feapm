@@ -9,10 +9,10 @@ import { InsertIdentifier } from "src/components/insert-identifier"
 import { WindowContainer } from "src/components/window-container"
 import { useStepper } from "src/hooks"
 import { getDummyData } from "../registration/model/functions"
-import { ConfirmationOutpatient, InformationBPJSPatientData, InformationCompanyEmployeeData, InformationInsurancePatientData, InformationOutpatientGeneral, InsertBPJSNumber, InsertPolisNumber, PaymentMethod, SelectCompany, SelectCompanyNew, SelectEncounterType, SelectInsurance, SelectInsuranceNew, SelectPractitioner, SuccessOutpatient } from "./components"
-import { Insurancetype } from "./model/types"
+import { ConfirmationOutpatient, InformationBPJSPatientData, InformationCompanyEmployeeData, InformationInsurancePatientData, InformationOutpatientGeneral, InsertBPJSNumber, InsertPolisNumber, PaymentMethod, SelectCompany, SelectCompanyNew, SelectEncounterType, SelectInsurance, SelectInsuranceNew, SelectMCUPackage, SelectPractitioner, SuccessOutpatient } from "./components"
+import type { Insurancetype } from "./model/types"
 import InsertEmployeeNumber from "./components/insert-employee-number"
-import { formStepsOutpatientBPJS, formStepsOutpatientCompany, formStepsOutpatientGeneral, formStepsOutpatientInsurance } from "./model/variables"
+import { formStepsMCUGeneral, formStepsOutpatientBPJS, formStepsOutpatientCompany, formStepsOutpatientGeneral, formStepsOutpatientInsurance } from "./model/variables"
 
 const EncounterPage = () => {
 
@@ -34,7 +34,10 @@ const EncounterPage = () => {
       title: "MEDICAL CHECK UP",
       body: "Serangkaian uji kesehatan rutin untuk memeriksa kesehatan tubuh secara keseluruhan dan mengantisipasi risiko penyakit.",
       localIcon: "medical-checkup",
-      onClick: () => { }
+      onClick: () => { handleChangePage({
+        action: "next",
+        newFormSteps: formStepsMCUGeneral
+      })}
     },
     {
       title: "LABORATORIUM",
@@ -241,6 +244,15 @@ const EncounterPage = () => {
             {
               currentPage.value === "registration_success_bpjs" && (
                 <SuccessOutpatient type="bpjs" />
+              )
+            }
+
+            {
+              currentPage.value === "select_mcu_package" && (
+                <SelectMCUPackage handleSelect={() => handleChangePage({
+                  action: "next",
+                  newFormSteps: formStepsMCUGeneral
+                })}/>
               )
             }
 

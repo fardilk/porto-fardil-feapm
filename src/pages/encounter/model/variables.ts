@@ -200,3 +200,29 @@ export const formStepsOutpatientBPJS = [
     },
   },
 ];
+
+export const formStepsMCUGeneral = [
+  ...initialStep,
+  {
+    label: 'Pilih Paket MCU yang anda inginkan',
+    value: 'select_mcu_package',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'Konfirmasi Pendaftaran Pasien',
+    value: 'confirmation_patient_registration',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'Pendaftaran Berhasil',
+    value: 'registration_success',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
