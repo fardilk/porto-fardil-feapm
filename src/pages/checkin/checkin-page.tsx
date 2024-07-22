@@ -8,7 +8,10 @@ import { getDummyData } from "../registration/model/functions"
 import { InformationBooking, InformationBookingBPJS, InformationBookingCompany, InformationBookingInsurance, InsertBookingNumber } from "./components"
 import { useNavigate } from "react-router"
 import { toast } from "src/components/snackbar"
+<<<<<<< HEAD
 import { useEffect, useState } from "react"
+=======
+>>>>>>> 930c1e5 (feat: adjustment check in validation on empty and printed proof toast)
 
 const CheckinPage = () => {
 
@@ -25,11 +28,16 @@ const CheckinPage = () => {
   const { handleSubmit, watch } = methods
   const onSubmit = async (data: any) => {
 
+<<<<<<< HEAD
     if(!data?.booking_number?.replaceAll("\n","")) {
+=======
+    if(!data?.nik?.replaceAll("\n","")) {
+>>>>>>> 930c1e5 (feat: adjustment check in validation on empty and printed proof toast)
       toast.error("Nomor Booking tidak boleh kosong")
       return;
     }
 
+<<<<<<< HEAD
     if(data?.booking_number?.replaceAll("\n","")?.length < 3) {
       setErrorMessage("Nomor Booking Tidak Ditemukan. Silahkan Cek Ulang Nomor Booking")
       toast.error("Nomor Booking tidak valid")
@@ -38,6 +46,10 @@ const CheckinPage = () => {
 
     if (currentPageIndex === 0) {
       const keyboardValue = data.booking_number.replaceAll("\n","")
+=======
+    if (currentPageIndex === 0) {
+      const keyboardValue = data.nik.replaceAll("\n","")
+>>>>>>> 930c1e5 (feat: adjustment check in validation on empty and printed proof toast)
       const resp = await getDummyData(
         keyboardValue === "123" 
         ?  "bpjs" 
