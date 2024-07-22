@@ -1,13 +1,26 @@
-import { Box, Button, Grid, Stack, Typography } from "@mui/material"
+import { LoadingButton } from "@mui/lab"
+import { Box, Grid, Stack, Typography } from "@mui/material"
 import { useState } from "react"
 import { AlertInformation } from "src/components/alert-information"
 import { CardBanner } from "src/components/card-banner"
 import { LabelTextContainer } from "src/components/label-text"
 import type { LabelTextProps } from "src/components/label-text/types"
+import { useBoolean } from "src/hooks"
 import { fDate } from "src/utils/format-time"
 import { fAsterisk } from "src/utils/helper"
+import { toast } from 'src/components/snackbar';
+import { getDummyData } from "src/pages/registration/model/functions"
 
 const InformationBookingInsurance = () => {
+
+  const {
+    value: isLoadingPrint,
+    onFalse: stopLoadingPrint,
+    onTrue: startLoadingPrint,
+  } = useBoolean();
+
+
+  const { value: isPrinted, onTrue: setPrintedSuccess } = useBoolean();
 
   const [headerData, _setHeaderData] = useState<LabelTextProps[]>([
     { title: "NIK", body: fAsterisk("100200300400") },
@@ -27,6 +40,14 @@ const InformationBookingInsurance = () => {
     { title: "Waktu Pelayanan", body: "Senin, 30-01-2022 10:00-14:00", localIcon: "jadwal" },
   ])
 
+  const handleClickPrint = async () => {
+    startLoadingPrint();
+    await getDummyData('success');
+    toast.success('Bukti daftar berhasil dicetak');
+    setPrintedSuccess();
+    stopLoadingPrint();
+  };
+
   return (
     <Stack gap={4}>
       <AlertInformation
@@ -35,39 +56,47 @@ const InformationBookingInsurance = () => {
       />
 
       <Box>
-        <Typography variant="h5" gutterBottom>Detail Pasien</Typography>
+        <Typography variant="h5" gutterBottom>
+          Detail Pasien
+        </Typography>
 
-        <LabelTextContainer
-          listText={headerData}
-        />
+        <LabelTextContainer listText={headerData} />
       </Box>
 
       <Box>
-        <Typography variant="h5" gutterBottom>Detail Kunjungan</Typography>
+        <Typography variant="h5" gutterBottom>
+          Detail Kunjungan
+        </Typography>
 
         <Grid container spacing={1}>
-          {
-            detailData.map((it, index) => {
-              return (
-                <Grid item xs={12} md={3}>
-                  <CardBanner
-                    key={index}
-                    {...it}
-                    cardProps={{ variant: "outlined" }}
-                    titleProps={{ variant: "subtitle2", color: "grey" }}
-                    bodyProps={{ variant: "subtitle2", color: "secondary.darker" }}
-                  />
-                </Grid>
-              )
-            })
-          }
+          {detailData.map((it, index) => {
+            return (
+              <Grid item xs={12} md={3}>
+                <CardBanner
+                  key={index}
+                  {...it}
+                  cardProps={{ variant: 'outlined' }}
+                  titleProps={{ variant: 'subtitle2', color: 'grey' }}
+                  bodyProps={{ variant: 'subtitle2', color: 'secondary.darker' }}
+                />
+              </Grid>
+            );
+          })}
         </Grid>
-
       </Box>
 
-      <Button variant="contained" color="secondary" size="large">Cetak Bukti Daftar</Button>
+      <LoadingButton
+        loading={isLoadingPrint}
+        disabled={isPrinted}
+        onClick={handleClickPrint}
+        variant="contained"
+        color="secondary"
+        size="large"
+      >
+        Cetak Bukti Daftar
+      </LoadingButton>
     </Stack>
-  )
+  );
 }
 
 export default InformationBookingInsurance
