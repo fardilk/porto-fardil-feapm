@@ -1,14 +1,11 @@
 import { Box, Button, Checkbox, FormControlLabel, Grid, Stack, Typography } from "@mui/material"
 import { useState } from "react"
 import { CardBanner } from "src/components/card-banner"
-import { LabelTextContainer } from "src/components/label-text"
-import type { LabelTextProps } from "src/components/label-text/types"
+import { LabelTextContainer, type LabelTextProps } from "src/components/label-text"
 import { ModalInfoAndAction } from "src/components/modal-info-and-action"
 import { fAsterisk } from "src/utils/helper"
-import { OutpatientType } from "../model/types"
+import type { OutpatientType } from "../model/types"
 import { getPaymentType } from "../model/variables"
-
-
 
 const ConfirmationOutpatient = ({ handleConfirm, type }: { handleConfirm: () => void, type: OutpatientType }) => {
 
