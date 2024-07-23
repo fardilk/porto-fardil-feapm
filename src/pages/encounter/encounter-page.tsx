@@ -21,8 +21,9 @@ const EncounterPage = () => {
   const {
     currentPage,
     currentPageIndex,
-    handleChangePage,
+    handleChangePage
   } = useStepper({ initialSteps: formStepsOutpatientGeneral })
+
 
   const [listEncounterType, _setListEncounterType] = useState<CardBannerProps[]>([
     {
@@ -217,26 +218,26 @@ const EncounterPage = () => {
 
             {currentPage.value === 'select_insurance_new' && (
               <SelectInsuranceNew
-                handleSelect={() => {
-                  handleChangePage({ action: 'next' });
-                }}
+                handleSelect={() => { handleChangePage({ action: "next" }) }}
               />
             )}
 
-            {currentPage.value === 'insert_polis_number' && <InsertPolisNumber />}
+            {
+              currentPage.value === "insert_polis_number" && (
+                <InsertPolisNumber />
+              )
+            }
 
-            {currentPage.value === 'information_data_patient_insurance' && (
-              <InformationPatient
-                title="Detail Data Asuransi Pasien"
-                detailData={getListDataInsurance}
-                handleBack={() => {
-                  handleChangePage({ action: 'previous' });
-                }}
-                handleNext={() => {
-                  handleChangePage({ action: 'next' });
-                }}
-              />
-            )}
+            {
+              currentPage.value === "information_data_patient_insurance" && (
+                <InformationPatient
+                  title="Detail Data Asuransi Pasien"
+                  detailData={getListDataInsurance}
+                  handleBack={() => { handleChangePage({ action: "previous" }) }}
+                  handleNext={() => { handleChangePage({ action: "next" }) }}
+                />
+              )
+            }
 
             {currentPage.value === 'select_company' && (
               <SelectCompany
@@ -257,24 +258,28 @@ const EncounterPage = () => {
               />
             )}
 
-            {currentPage.value === 'confirmation_patient_registration_company' && (
-              <SuccessOutpatient type="company" />
-            )}
+            {
+              currentPage.value === "confirmation_patient_registration_company" && (
+                <SuccessOutpatient type="company" />
+              )
+            }
 
-            {currentPage.value === 'insert_employee_number' && <InsertEmployeeNumber />}
+            {
+              currentPage.value === "insert_employee_number" && (
+                <InsertEmployeeNumber />
+              )
+            }
 
-            {currentPage.value === 'information_data_employee' && (
-              <InformationPatient
-                title="Detail Data Karyawan"
-                detailData={getListDataEmployee}
-                handleBack={() => {
-                  handleChangePage({ action: 'previous' });
-                }}
-                handleNext={() => {
-                  handleChangePage({ action: 'next' });
-                }}
-              />
-            )}
+            {
+              currentPage.value === "information_data_employee" && (
+                <InformationPatient
+                  title="Detail Data Karyawan"
+                  detailData={getListDataEmployee}
+                  handleBack={() => { handleChangePage({ action: "previous" }) }}
+                  handleNext={() => { handleChangePage({ action: "next" }) }}
+                />
+              )
+            }
 
             {currentPage.value === 'insert_bpjs_number' && <InsertBPJSNumber />}
 
