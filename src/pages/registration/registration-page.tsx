@@ -92,8 +92,8 @@ const RegistrationPage = () => {
             {
               currentPage.value === "confirmation_new_patient" && (
                 <PatientInformation
-                  leftTextButton={isForeign ? "Incorrect Data, Please Re-enter Data" : "Data salah, isi ulang data"}
-                  rigthTextButton={isForeign ? "Data is Correct, Continue" : "Data sudah benar, lanjutkan"}
+                  leftTextButton="Data salah, isi ulang data"
+                  rigthTextButton="Data is Correct, Continue"
                   leftButtonProps={{ onClick: () => handleChangePage({ action: "previous" }) }}
                   rightButtonProps={{ onClick: () => handleChangePage({ action: "next" }) }}
                 />

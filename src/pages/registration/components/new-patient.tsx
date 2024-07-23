@@ -42,18 +42,18 @@ const NewPatient = (props: NewPatientProps) => {
               </TableCellBody>
             </TableRow>
             <TableRow>
-              <TableCellBody titleText={isForeign ? "FullName" : "Nama Lengkap"} />
+              <TableCellBody titleText="Nama Lengkap" />
               <TableCellBody>
                 <RHFTextField
                   name="name"
-                  placeholder={isForeign ? "FullName" : "Nama Lengkap"}
+                  placeholder="Nama Lengkap"
                   inputRef={(ref) => { inputRef.current.name = ref }}
                   onClick={() => { setElementName("name"); setKeyboardType("text") }}
                 />
               </TableCellBody>
             </TableRow>
             <TableRow>
-              <TableCellBody titleText={isForeign ? "Gender" : "Jenis Kelamin"} />
+              <TableCellBody titleText="Jenis Kelamin" />
               <TableCellBody>
                 <RHFRadioGroup
                   id="gender"
@@ -65,19 +65,19 @@ const NewPatient = (props: NewPatientProps) => {
               </TableCellBody>
             </TableRow>
             <TableRow>
-              <TableCellBody titleText={isForeign ? "Place of Birth" : "Tempat Lahir"} />
+              <TableCellBody titleText="Tempat Lahir" />
               <TableCellBody>
                 <RHFTextField
                   id="birthPlace"
                   name="birthPlace"
-                  placeholder={isForeign ? "Place of Birth" : "Tempat Lahir"}
+                  placeholder="Tempat Lahir"
                   inputRef={(ref) => { inputRef.current.birthPlace = ref }}
                   onClick={() => { setElementName("birthPlace"); setKeyboardType("text") }}
                 />
               </TableCellBody>
             </TableRow>
             <TableRow>
-              <TableCellBody titleText={isForeign ? "Date of Birth" : "Tanggal Lahir"} />
+              <TableCellBody titleText="Tanggal Lahir" />
               <TableCellBody>
                 {/* <RHFDatePicker
                   name="birthDate"
@@ -92,12 +92,12 @@ const NewPatient = (props: NewPatientProps) => {
               </TableCellBody>
             </TableRow>
             <TableRow>
-              <TableCellBody titleText={isForeign ? "Phone Number" : "No Telp"} />
+              <TableCellBody titleText="No Telp" />
               <TableCellBody>
                 <RHFTextField
                   id="phoneNumber"
                   name="phoneNumber"
-                  placeholder={isForeign ? "Phone Number" : "No Telp"}
+                  placeholder="No Telp"
                   inputRef={(ref) => { inputRef.current.phoneNumber = ref }}
                   onClick={() => { setElementName("phoneNumber"); setKeyboardType("number") }}
                 />
@@ -120,8 +120,8 @@ const NewPatient = (props: NewPatientProps) => {
       </TableContainer >
 
       <Box sx={{ display: "flex", placeContent: "space-between", gap: 2 }}>
-        <Button size="large" variant="outlined" fullWidth color="secondary" onClick={handlePreviousPage}>{isForeign ? "Back" : "Kembali"}</Button>
-        <Button size="large" variant="contained" fullWidth color="secondary" onClick={handleNextPage}>{isForeign ? "Next" : "Selanjutnya"}</Button>
+        <Button size="large" variant="outlined" fullWidth color="secondary" onClick={handlePreviousPage}>Kembali</Button>
+        <Button size="large" variant="contained" fullWidth color="secondary" onClick={handleNextPage}>Selanjutnya</Button>
       </Box>
 
       {

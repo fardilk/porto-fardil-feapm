@@ -5,6 +5,8 @@ import { Box, Alert, Table, Button, TableRow, TableBody, TableCell, Typography, 
 import { fAsterisk } from "src/utils/helper"
 
 import type { InformationProps } from "../model/types"
+import { LabelTextContainer, LabelTextProps } from "src/components/label-text"
+import { useState } from "react"
 
 const InformationOutpatientGeneral = (props: InformationProps) => {
   const { leftButtonProps, rightButtonProps, leftTextButton, rightTextButton } = props
@@ -12,56 +14,27 @@ const InformationOutpatientGeneral = (props: InformationProps) => {
   const { watch } = useFormContext()
   const isForeign = watch("citizenship")
 
+  const [detailData, _setDetailData] = useState<LabelTextProps[]>([
+    { title: isForeign ? "Passport" : "NIK/Medrec", body: fAsterisk("100200300400") },
+    { title: "Nama Lengkap", body: "Anisa Redina" },
+    { title: "Tempat, Tanggal Lahir", body: "Malaysia, 11-04-2000" },
+    { title: "Golongan Darah", body: "B" },
+    { title: "Rhesus", body: "Negatif" },
+    { title: "Alamat", body: "Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan" },
+    { title: "No Telpon", body: fAsterisk("085157902550") },
+    { title: "Email", body: "anisa@gmail.com" },
+  ])
+
   return (
     <>
       <Alert severity="info">Untuk update data Anda, silahkan ke counter medical record.</Alert>
       <TableContainer sx={{ my: 2 }}>
-        <Table>
-          <colgroup>
-            <col width="30%" />
-            <col width="70%" />
-          </colgroup>
-          <TableBody>
-            <TableRow>
-              <TableCellBody titleText={isForeign ? "Passport" : "NIK/Medrec"} />
-              <TableCellBody bodyText={fAsterisk("1002003004005006008")} />
-            </TableRow>
-            <TableRow>
-              <TableCellBody titleText={isForeign ? "FullName" : "Nama Lengkap"} />
-              <TableCellBody bodyText="Anisa Redina" />
-            </TableRow>
-            <TableRow>
-              <TableCellBody titleText={isForeign ? "Place and Date of Birth" : "Tempat, Tanggal Lahir"} />
-              <TableCellBody bodyText="Malaysia, 11-04-2000" />
-            </TableRow>
-            {
-              !isForeign && (
-                <>
-                  <TableRow>
-                    <TableCellBody titleText="Golongan Darah" />
-                    <TableCellBody bodyText="B" />
-                  </TableRow>
-                  <TableRow>
-                    <TableCellBody titleText="Rhesus" />
-                    <TableCellBody bodyText="Negatif" />
-                  </TableRow>
-                </>
-              )
-            }
-            <TableRow>
-              <TableCellBody titleText={isForeign ? "Address" : "Alamat"} />
-              <TableCellBody bodyText="Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan" />
-            </TableRow>
-            <TableRow>
-              <TableCellBody titleText={isForeign ? "Phone Number" : "No Telpon"} />
-              <TableCellBody bodyText={fAsterisk("085157902550")} />
-            </TableRow>
-            <TableRow>
-              <TableCellBody titleText="Email" />
-              <TableCellBody bodyText="anisa@gmail.com" />
-            </TableRow>
-          </TableBody>
-        </Table>
+        <LabelTextContainer
+          disableOutline
+          orientation="horizontal"
+          listText={detailData}
+          col={1}
+        />
       </TableContainer>
 
       <Box sx={{ display: "flex", placeContent: "space-between", gap: 2 }}>
