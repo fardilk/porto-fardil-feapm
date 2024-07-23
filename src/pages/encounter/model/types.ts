@@ -68,3 +68,13 @@ export type LabelListTextCardProps = {
   sectionBottom: React.ReactNode
   action: () => void
 }
+
+export type InformationPatientProps = {
+  title: string;
+  handleBack: () => void;
+  handleNext: () => void;
+  detailData: {
+    title: string
+    body: string
+  }[]
+}

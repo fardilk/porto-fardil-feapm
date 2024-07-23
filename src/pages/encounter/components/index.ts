@@ -7,11 +7,10 @@ export { default as SuccessOutpatient } from './success-outpatient';
 export { default as SelectInsurance } from './select-insurance';
 export { default as SelectInsuranceNew } from './select-insurance-new';
 export { default as InsertPolisNumber } from './insert-polis-number';
-export { default as InformationInsurancePatientData } from './information-insurance-patient-data';
 export { default as SelectCompany } from './select-company';
 export { default as SelectCompanyNew } from './select-company-new';
-export { default as InformationCompanyEmployeeData } from './information-company-employee-data';
 export { default as InsertBPJSNumber } from './insert-bpjs-number';
 export { default as InformationBPJSPatientData } from './information-bpjs-patient-data';
 export { default as SelectMCUPackage} from './select-mcu-package';
 export { default as LabelListTextCard } from './label-list-text-card';
+export { default as InformationPatient } from './information-patient'
