@@ -34,4 +34,3 @@ const InformationCompanyEmployeeData = (props: InformationCompanyEmployeeDataPro
 }
 
 export default InformationCompanyEmployeeData
-
