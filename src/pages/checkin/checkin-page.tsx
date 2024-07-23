@@ -8,6 +8,7 @@ import { getDummyData } from "../registration/model/functions"
 import { InformationBooking, InformationBookingBPJS, InformationBookingCompany, InformationBookingInsurance, InsertBookingNumber } from "./components"
 import { useNavigate } from "react-router"
 import { toast } from "src/components/snackbar"
+import { useEffect, useState } from "react"
 
 const CheckinPage = () => {
 
@@ -18,18 +19,25 @@ const CheckinPage = () => {
     handleChangePage
   } = useStepper({ initialSteps: formStepsCheckinGeneral })
 
-  const methods = useForm()
-  const { handleSubmit } = methods
+  const [errorMessage, setErrorMessage] = useState("")
 
+  const methods = useForm()
+  const { handleSubmit, watch } = methods
   const onSubmit = async (data: any) => {
 
-    if(!data?.nik?.replaceAll("\n","")) {
+    if(!data?.booking_number?.replaceAll("\n","")) {
       toast.error("Nomor Booking tidak boleh kosong")
       return;
     }
 
+    if(data?.booking_number?.replaceAll("\n","")?.length < 3) {
+      setErrorMessage("Nomor Booking Tidak Ditemukan. Silahkan Cek Ulang Nomor Booking")
+      toast.error("Nomor Booking tidak valid")
+      return;
+    }
+
     if (currentPageIndex === 0) {
-      const keyboardValue = data.nik.replaceAll("\n","")
+      const keyboardValue = data.booking_number.replaceAll("\n","")
       const resp = await getDummyData(
         keyboardValue === "123" 
         ?  "bpjs" 
@@ -50,6 +58,12 @@ const CheckinPage = () => {
     }
   }
 
+  const watchBookingNumnber = watch("booking_number")
+
+  useEffect(() => {
+    setErrorMessage("")
+  },[watchBookingNumnber])
+
   return (
     <AppPage>
       <Form methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -63,7 +77,7 @@ const CheckinPage = () => {
 
           <Box sx={{ p: 4 }}>
 
-            {currentPage.value === "insert_booking_number" && <InsertBookingNumber />}
+            {currentPage.value === "insert_booking_number" && <InsertBookingNumber errorMessage={errorMessage} />}
 
             {currentPage.value === "booking_information" && <InformationBooking />}
 
