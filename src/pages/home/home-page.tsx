@@ -18,7 +18,7 @@ const HomePage = () => {
     {
       id: "check_in",
       show: config.checkin,
-      title: "CHECK-IN",
+      title: "LAPOR KEHADIRAN",
       body: "Siapkan Kode Booking yang sudah didapat melalui website booking online.",
       icon: "medical-checkup",
       handleClick: () => { navigate("checkin") }
