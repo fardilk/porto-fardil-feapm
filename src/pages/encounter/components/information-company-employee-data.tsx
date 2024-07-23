@@ -35,6 +35,9 @@ const InformationCompanyEmployeeData = (props: InformationCompanyEmployeeDataPro
 
 export default InformationCompanyEmployeeData
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> edd438e (feature: error alert on form booking)
+=======
+>>>>>>> 0a88b18 (feature: error alert on form booking)
