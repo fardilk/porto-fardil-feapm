@@ -21,9 +21,8 @@ const EncounterPage = () => {
   const {
     currentPage,
     currentPageIndex,
-    handleChangePage
+    handleChangePage,
   } = useStepper({ initialSteps: formStepsOutpatientGeneral })
-
 
   const [listEncounterType, _setListEncounterType] = useState<CardBannerProps[]>([
     {
@@ -228,16 +227,18 @@ const EncounterPage = () => {
               )
             }
 
-            {
-              currentPage.value === "information_data_patient_insurance" && (
-                <InformationPatient
-                  title="Detail Data Asuransi Pasien"
-                  detailData={getListDataInsurance}
-                  handleBack={() => { handleChangePage({ action: "previous" }) }}
-                  handleNext={() => { handleChangePage({ action: "next" }) }}
-                />
-              )
-            }
+            {currentPage.value === 'information_data_patient_insurance' && (
+              <InformationPatient
+                title="Detail Data Asuransi Pasien"
+                detailData={getListDataInsurance}
+                handleBack={() => {
+                  handleChangePage({ action: 'previous' });
+                }}
+                handleNext={() => {
+                  handleChangePage({ action: 'next' });
+                }}
+              />
+            )}
 
             {currentPage.value === 'select_company' && (
               <SelectCompany
@@ -270,16 +271,18 @@ const EncounterPage = () => {
               )
             }
 
-            {
-              currentPage.value === "information_data_employee" && (
-                <InformationPatient
-                  title="Detail Data Karyawan"
-                  detailData={getListDataEmployee}
-                  handleBack={() => { handleChangePage({ action: "previous" }) }}
-                  handleNext={() => { handleChangePage({ action: "next" }) }}
-                />
-              )
-            }
+            {currentPage.value === 'information_data_employee' && (
+              <InformationPatient
+                title="Detail Data Karyawan"
+                detailData={getListDataEmployee}
+                handleBack={() => {
+                  handleChangePage({ action: 'previous' });
+                }}
+                handleNext={() => {
+                  handleChangePage({ action: 'next' });
+                }}
+              />
+            )}
 
             {currentPage.value === 'insert_bpjs_number' && <InsertBPJSNumber />}
 
