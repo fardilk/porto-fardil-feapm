@@ -1,8 +1,8 @@
 import { Box, Button, Stack, Typography } from "@mui/material"
 import { useState } from "react"
-import { LabelTextContainer, LabelTextProps } from "src/components/label-text"
+import { LabelTextContainer, type LabelTextProps } from "src/components/label-text"
 import { fAsterisk } from "src/utils/helper"
-import { InformationCompanyEmployeeDataProps } from "../model/types"
+import { type InformationCompanyEmployeeDataProps } from "../model/types"
 
 const InformationCompanyEmployeeData = (props: InformationCompanyEmployeeDataProps) => {
 
