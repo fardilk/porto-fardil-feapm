@@ -1,5 +1,5 @@
 import { Box } from "@mui/material"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router"
 import { AppPage } from "src/components/app-page"
@@ -22,11 +22,7 @@ const EncounterPage = () => {
     currentPage,
     currentPageIndex,
     handleChangePage,
-    formSteps
   } = useStepper({ initialSteps: formStepsOutpatientGeneral })
-
-  console.log(formSteps, 'form steps')
-  console.log(currentPage, 'current page')
 
   const [listEncounterType, _setListEncounterType] = useState<CardBannerProps[]>([
     {
@@ -57,6 +53,38 @@ const EncounterPage = () => {
       onClick: () => { }
     },
   ])
+
+  const getListDataEmployee = useMemo(
+    () => [
+      { title: 'Nomor Karyawan', body: fAsterisk('100200300400') },
+      { title: 'Nama Pemegang Polis', body: 'Anisa Redina' },
+      { title: 'Jenis Penjamin', body: 'Asuransi Kesehatan' },
+      { title: 'Perusahaan Asuransi', body: 'Allianz Life Insurance' },
+      {
+        title: 'Alamat',
+        body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
+      },
+      { title: 'Tempat, Tanggal Lahir', body: 'Malaysia, 11-04-2000' },
+      { title: 'No Telpon', body: fAsterisk('085157902550') },
+    ],
+    []
+  );
+
+  const getListDataInsurance = useMemo(
+    () => [
+      { title: 'Nomor Polis', body: fAsterisk('100200300400') },
+      { title: 'Nama Pemegang Polis', body: 'Anisa Redina' },
+      { title: 'Jenis Penjamin', body: 'Asuransi Kesehatan' },
+      { title: 'Perusahaan Asuransi', body: 'Allianz Life Insurance' },
+      {
+        title: 'Alamat',
+        body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
+      },
+      { title: 'Tempat, Tanggal Lahir', body: 'Malaysia, 11-04-2000' },
+      { title: 'No Telpon', body: fAsterisk('085157902550') },
+    ],
+    []
+  );
 
   const methods = useForm()
   const { handleSubmit } = methods
@@ -200,18 +228,7 @@ const EncounterPage = () => {
             {currentPage.value === 'information_data_patient_insurance' && (
               <InformationPatient
                 title="Detail Data Asuransi Pasien"
-                detailData={[
-                  { title: 'Nomor Polis', body: fAsterisk('100200300400') },
-                  { title: 'Nama Pemegang Polis', body: 'Anisa Redina' },
-                  { title: 'Jenis Penjamin', body: 'Asuransi Kesehatan' },
-                  { title: 'Perusahaan Asuransi', body: 'Allianz Life Insurance' },
-                  {
-                    title: 'Alamat',
-                    body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
-                  },
-                  { title: 'Tempat, Tanggal Lahir', body: 'Malaysia, 11-04-2000' },
-                  { title: 'No Telpon', body: fAsterisk('085157902550') },
-                ]}
+                detailData={getListDataInsurance}
                 handleBack={() => {
                   handleChangePage({ action: 'previous' });
                 }}
@@ -249,18 +266,7 @@ const EncounterPage = () => {
             {currentPage.value === 'information_data_employee' && (
               <InformationPatient
                 title="Detail Data Karyawan"
-                detailData={[
-                  { title: 'Nomor Karyawan', body: fAsterisk('100200300400') },
-                  { title: 'Nama Pemegang Polis', body: 'Anisa Redina' },
-                  { title: 'Jenis Penjamin', body: 'Asuransi Kesehatan' },
-                  { title: 'Perusahaan Asuransi', body: 'Allianz Life Insurance' },
-                  {
-                    title: 'Alamat',
-                    body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
-                  },
-                  { title: 'Tempat, Tanggal Lahir', body: 'Malaysia, 11-04-2000' },
-                  { title: 'No Telpon', body: fAsterisk('085157902550') },
-                ]}
+                detailData={getListDataEmployee}
                 handleBack={() => {
                   handleChangePage({ action: 'previous' });
                 }}
