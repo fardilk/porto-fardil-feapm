@@ -34,3 +34,7 @@ const InformationCompanyEmployeeData = (props: InformationCompanyEmployeeDataPro
 }
 
 export default InformationCompanyEmployeeData
+<<<<<<< HEAD
+=======
+
+>>>>>>> edd438e (feature: error alert on form booking)

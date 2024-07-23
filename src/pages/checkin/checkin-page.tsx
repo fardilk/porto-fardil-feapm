@@ -9,9 +9,13 @@ import { InformationBooking, InformationBookingBPJS, InformationBookingCompany, 
 import { useNavigate } from "react-router"
 import { toast } from "src/components/snackbar"
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useEffect, useState } from "react"
 =======
 >>>>>>> 930c1e5 (feat: adjustment check in validation on empty and printed proof toast)
+=======
+import { useEffect, useState } from "react"
+>>>>>>> edd438e (feature: error alert on form booking)
 
 const CheckinPage = () => {
 
@@ -29,27 +33,39 @@ const CheckinPage = () => {
   const onSubmit = async (data: any) => {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     if(!data?.booking_number?.replaceAll("\n","")) {
 =======
     if(!data?.nik?.replaceAll("\n","")) {
 >>>>>>> 930c1e5 (feat: adjustment check in validation on empty and printed proof toast)
+=======
+    if(!data?.booking_number?.replaceAll("\n","")) {
+>>>>>>> edd438e (feature: error alert on form booking)
       toast.error("Nomor Booking tidak boleh kosong")
       return;
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> edd438e (feature: error alert on form booking)
     if(data?.booking_number?.replaceAll("\n","")?.length < 3) {
       setErrorMessage("Nomor Booking Tidak Ditemukan. Silahkan Cek Ulang Nomor Booking")
       toast.error("Nomor Booking tidak valid")
       return;
     }
 
+<<<<<<< HEAD
     if (currentPageIndex === 0) {
       const keyboardValue = data.booking_number.replaceAll("\n","")
 =======
     if (currentPageIndex === 0) {
       const keyboardValue = data.nik.replaceAll("\n","")
 >>>>>>> 930c1e5 (feat: adjustment check in validation on empty and printed proof toast)
+=======
+    if (currentPageIndex === 0) {
+      const keyboardValue = data.booking_number.replaceAll("\n","")
+>>>>>>> edd438e (feature: error alert on form booking)
       const resp = await getDummyData(
         keyboardValue === "123" 
         ?  "bpjs" 
