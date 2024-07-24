@@ -1,3 +1,10 @@
+export const buttonStyle: any = {
+  fullWidth: true,
+  size: 'large',
+  variant: 'contained',
+  color: 'secondary',
+};
+
 export const getPaymentType = (type: string) => {
   switch (type) {
     case 'general':
