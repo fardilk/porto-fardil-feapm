@@ -40,13 +40,3 @@ const InformationOutpatientGeneral = (props: InformationProps) => {
 }
 
 export default InformationOutpatientGeneral
-
-const TableCellBody = ({ titleText, bodyText }: { titleText?: string, bodyText?: string }) => {
-  return (
-    <TableCell borderbottom="noborder">
-      <Typography variant={titleText ? "subtitle1" : undefined} color={titleText ? "grey.600" : undefined}>
-        {titleText} {bodyText}
-      </Typography>
-    </TableCell>
-  )
-}
