@@ -162,7 +162,7 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
             variant="outlined"
             fullWidth
             sx={{
-              p: 4,
+              p: 3,
               borderWidth: 2,
               borderColor: (thm) => thm.palette.secondary.main
             }}
