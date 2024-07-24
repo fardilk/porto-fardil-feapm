@@ -1,13 +1,18 @@
 import type { LoadingButtonProps } from '@mui/lab';
-import type { ButtonProps, DialogProps, SxProps } from '@mui/material';
+import type { ButtonProps, DialogProps, SxProps, TypographyProps } from '@mui/material';
 import type { Theme } from '@mui/material/styles';
+import { ReactNode } from 'react';
 
 export type ModalInfoAndActionProp = {
   disableHeader?: boolean;
+  disableClose?: boolean;
   open: boolean;
   child?: ModalInfoAndActionChildProp[];
   title: string;
+  titleProps?: TypographyProps;
   subtitle?: string;
+  children?: ReactNode;
+  header?: ReactNode;
   mode?: 'buttonOnly' | 'buttonAndText';
   dialogProps?: Omit<DialogProps, 'open'>;
   handleClose: VoidFunction;

@@ -1,17 +1,18 @@
 import { Box, Button, Grid, Stack, Typography } from "@mui/material"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { AlertInformation } from "src/components/alert-information"
 import { CardBanner } from "src/components/card-banner"
-import { LabelTextContainer } from "src/components/label-text"
-import type { LabelTextProps } from "src/components/label-text/types"
+import { LabelTextContainer, LabelTextProps } from "src/components/label-text"
+import { ModalInfoAndAction } from "src/components/modal-info-and-action"
 import { fAsterisk } from "src/utils/helper"
 import { OutpatientType } from "../model/types"
-import { getPaymentType } from "../model/variables"
+import { buttonStyle, getPaymentType } from "../model/variables"
 
 const SuccessOutpatient = (props: { type: OutpatientType }) => {
 
   const { type } = props
 
+  const [openPrint, setOpenPrint] = useState(false)
   const [detailData, _setDetailData] = useState<LabelTextProps[]>([
     { title: "NIK", body: fAsterisk("100200300400") },
     { title: "Nama Lengkap", body: "Anisa Redina" },
@@ -41,6 +42,29 @@ const SuccessOutpatient = (props: { type: OutpatientType }) => {
       title: "Waktu Pelayanan",
       body: "Senin, 30-01-2022, 10:00-14:00",
       localIcon: "jadwal",
+    },
+  ]
+
+  const HeaderPrint = useCallback(() => {
+
+    return (
+      <Box sx={{ display: 'flex', gap: 1, placeContent: 'end' }}>
+        <Typography variant="button">Kembali ke dashboard dalam : </Typography>
+        <Typography variant="button" color="grey">02:00</Typography>
+      </Box>
+    )
+  }, [])
+
+  const actionList = [
+    {
+      label: "Kembali Ke Dashboard",
+      buttonProps: { ...buttonStyle },
+      action: () => { }
+    },
+    {
+      label: "Cetak Ulang",
+      buttonProps: { ...buttonStyle, variant: "outlined" },
+      action: () => { }
     },
   ]
 
@@ -78,8 +102,33 @@ const SuccessOutpatient = (props: { type: OutpatientType }) => {
       </Box>
 
       <Box>
-        <Button variant="contained" size="large" fullWidth color="secondary">Cetak Bukti Daftar</Button>
+        <Button variant="contained" size="large" fullWidth color="secondary" onClick={() => { setOpenPrint(true) }}>Cetak Bukti Daftar</Button>
       </Box>
+
+      <ModalInfoAndAction
+        open={openPrint}
+        handleClose={() => { setOpenPrint(false) }}
+        title="Bukti Daftar Cetak"
+        titleProps={{ variant: "h3" }}
+        dialogProps={{ maxWidth: "sm" }}
+        disableClose
+        header={<HeaderPrint />}
+        child={actionList}
+      >
+        <Stack gap={2}>
+          <Typography textAlign="center">
+            Simpan bukti daftar dan scan barcode yang tertera sebagai panduan Anda selama berada di rumah sakit kami
+          </Typography>
+          <Box>
+            <Typography variant="subtitle1" textAlign="center">
+              Bukti daftar tidak tercetak ?
+            </Typography>
+            <Typography textAlign="center">
+              00:15
+            </Typography>
+          </Box>
+        </Stack>
+      </ModalInfoAndAction>
     </Stack>
   )
 }
