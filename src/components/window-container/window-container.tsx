@@ -29,7 +29,7 @@ const WindowContainer = (props: WindowContainerProps) => {
   }, [size])
 
   return (
-    <Box sx={{ display: "flex", placeContent: "center", px: 4, width: "100%", maxHeight: "80vh" }}>
+    <Box sx={{ display: "flex", placeContent: "center", px: 4, width: "100%" }}>
       <Box sx={{ width: containerWidth, overflowY: "auto", bgcolor: (theme) => theme.palette.background.paper, borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
         <AppBar position="sticky" sx={{ bgcolor: (theme) => theme.palette.grey[300], borderTopLeftRadius: 8, borderTopRightRadius: 8, top: 0 }}>
           <Toolbar>
