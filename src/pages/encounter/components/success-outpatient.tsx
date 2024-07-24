@@ -62,7 +62,7 @@ const SuccessOutpatient = (props: { type: OutpatientType }) => {
           {
             listCard.map((row, index) => {
               return (
-                <Grid item xs={12} md={3} key={index}>
+                <Grid item xs={12} md={12/listCard.length} key={index}>
                   <CardBanner
                     key={index}
                     {...row}

@@ -9,7 +9,7 @@ import { InsertIdentifier } from "src/components/insert-identifier"
 import { WindowContainer } from "src/components/window-container"
 import { useStepper } from "src/hooks"
 import { getDummyData } from "../registration/model/functions"
-import { ConfirmationOutpatient, InformationBPJSPatientData, InformationOutpatientGeneral, InformationPatient, InsertBPJSNumber, InsertPolisNumber, PaymentMethod, SelectCompany, SelectCompanyNew, SelectEncounterType, SelectInsurance, SelectInsuranceNew, SelectMCUPackage, SelectPractitioner, SuccessOutpatient } from "./components"
+import { ConfirmationOutpatient, ConfirmationOutpatientMCU, InformationBPJSPatientData, InformationOutpatientGeneral, InformationPatient, InsertBPJSNumber, InsertPolisNumber, PaymentMethod, SelectCompany, SelectCompanyNew, SelectEncounterType, SelectInsurance, SelectInsuranceNew, SelectMCUPackage, SelectPractitioner, SuccessOutpatient } from "./components"
 import type { Insurancetype } from "./model/types"
 import InsertEmployeeNumber from "./components/insert-employee-number"
 import { formStepsMCUGeneral, formStepsOutpatientBPJS, formStepsOutpatientCompany, formStepsOutpatientGeneral, formStepsOutpatientInsurance } from "./model/variables"
@@ -186,6 +186,14 @@ const EncounterPage = () => {
                   handleChangePage({ action: 'next' });
                 }}
                 type="general"
+              />
+            )}
+
+            {currentPage.value === 'confirmation_patient_registration_mcu' && (
+              <ConfirmationOutpatientMCU
+                handleConfirm={() => {
+                  handleChangePage({ action: 'next' });
+                }}
               />
             )}
 
