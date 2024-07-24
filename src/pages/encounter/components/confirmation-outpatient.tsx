@@ -10,6 +10,8 @@ import { getPaymentType } from "../model/variables"
 const ConfirmationOutpatient = ({ handleConfirm, type }: { handleConfirm: () => void, type: OutpatientType }) => {
 
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
+  const [acceptedTerm, setAcceptedTerm] = useState(false)
+
   const [detailData, _setDetailData] = useState<LabelTextProps[]>([
     { title: "NIK", body: fAsterisk("100200300400") },
     { title: "Nama Lengkap", body: "Anisa Redina" },
@@ -76,7 +78,7 @@ const ConfirmationOutpatient = ({ handleConfirm, type }: { handleConfirm: () => 
 
         <Grid item xs={12}>
           <FormControlLabel
-            control={<Checkbox size="medium" color="secondary" />}
+            control={<Checkbox checked={acceptedTerm} onChange={(event) => setAcceptedTerm(event.target.checked)} size="medium" color="secondary" />}
             label="Saya menyatakan bahwa apa yang telah saya beritahukan di atas adalah benar dan lengkap"
           />
         </Grid>
@@ -89,6 +91,7 @@ const ConfirmationOutpatient = ({ handleConfirm, type }: { handleConfirm: () => 
           color="secondary"
           variant="contained"
           size="large"
+          disabled={!acceptedTerm}
           onClick={() => setOpenConfirmDialog(true)}
         >
           Konfirmasi Daftar
