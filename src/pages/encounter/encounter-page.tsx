@@ -38,6 +38,8 @@ import {
   formStepsLabGeneral,
   formStepsLabCompany,
   formStepsLabInsurance,
+  formStepsMCUAssurance,
+  formStepsMCUCompany,
 } from './model/variables';
 import { fAsterisk } from 'src/utils/helper';
 import SelectLabPackage from './components/select-lab-package';
@@ -85,7 +87,7 @@ const EncounterPage = () => {
       title: 'RADIOLOGI',
       body: 'Layanan medis yang menyediakan uji pencitraan seperti X-ray, CT scan, dan MRI untuk mendukung diagnosis dan perawatan tanpa memerlukan rawat inap.',
       localIcon: 'x-rays',
-      onClick: () => {},
+      onClick: () => { },
     },
   ]);
 
@@ -133,25 +135,31 @@ const EncounterPage = () => {
   };
 
   const onAssuranceSelect = (type: Insurancetype) => {
-    if (encounterType === 'RJ' && type === 'bpjs') {
-      handleChangePage({
-        newFormSteps: formStepsOutpatientBPJS,
-        toSpecificPage: 'insert_bpjs_number',
-      });
+
+    if (encounterType === "RJ" && type === "bpjs") {
+      handleChangePage({ newFormSteps: formStepsOutpatientBPJS, toSpecificPage: "insert_bpjs_number" })
     }
 
-    if (encounterType === 'RJ' && type === 'company') {
-      handleChangePage({
-        newFormSteps: formStepsOutpatientCompany,
-        toSpecificPage: 'select_company',
-      });
+    if (encounterType === "RJ" && type === "company") {
+      handleChangePage({ newFormSteps: formStepsOutpatientCompany, toSpecificPage: "select_company" })
     }
 
-    if (encounterType === 'RJ' && type === 'insurance') {
+    if (encounterType === "RJ" && type === "insurance") {
+      handleChangePage({ newFormSteps: formStepsOutpatientInsurance, toSpecificPage: "select_insurance" })
+    }
+
+    if (encounterType === "MCU" && type === "insurance") {
       handleChangePage({
-        newFormSteps: formStepsOutpatientInsurance,
-        toSpecificPage: 'select_insurance',
-      });
+        newFormSteps: formStepsMCUAssurance,
+        toSpecificPage: "select_insurance"
+      })
+    }
+
+    if (encounterType === "MCU" && type === "company") {
+      handleChangePage({
+        newFormSteps: formStepsMCUCompany,
+        toSpecificPage: "select_company"
+      })
     }
 
     if (encounterType === 'LAB' && type === 'company') {
@@ -271,19 +279,25 @@ const EncounterPage = () => {
               />
             )}
 
-            {currentPage.value === 'registration_success' && <SuccessOutpatient type="general" />}
+            {currentPage.value === 'registration_success' && <SuccessOutpatient encounterType={encounterType} type="general" />}
 
             {currentPage.value === 'registration_success_insurance' && (
-              <SuccessOutpatient type="insurance" />
+              <SuccessOutpatient encounterType={encounterType} type="insurance" />
             )}
 
             {currentPage.value === 'select_insurance' && (
               <SelectInsurance
                 handleSelect={() => {
-                  if (encounterType === 'RJ')
+                  if (encounterType === 'RJ') {
                     handleChangePage({ toSpecificPage: 'select_healthcare_practitioner' });
-                  else if (encounterType === 'LAB')
+                  } else if (encounterType === 'LAB') {
                     handleChangePage({ toSpecificPage: 'select_lab_package' });
+                  }
+                  else if (encounterType === "MCU") {
+                    handleChangePage({
+                      action: "next"
+                    })
+                  }
                 }}
                 handleSelectNew={() => {
                   handleChangePage({ action: 'next' });
@@ -317,10 +331,16 @@ const EncounterPage = () => {
             {currentPage.value === 'select_company' && (
               <SelectCompany
                 handleSelect={() => {
-                  if (encounterType === 'RJ')
+                  if (encounterType === 'RJ') {
                     handleChangePage({ toSpecificPage: 'select_healthcare_practitioner' });
-                  else if (encounterType === 'LAB')
+                  }
+                  else if (encounterType === 'LAB') {
+
                     handleChangePage({ toSpecificPage: 'select_lab_package' });
+                  }
+                  else if (encounterType === "MCU") {
+                    handleChangePage({ action: 'next' })
+                  }
                 }}
                 handleSelectNew={() => {
                   handleChangePage({ action: 'next' });
@@ -336,67 +356,78 @@ const EncounterPage = () => {
               />
             )}
 
-            {currentPage.value === 'confirmation_patient_registration_company' && (
-              <SuccessOutpatient type="company" />
-            )}
+            {
+              currentPage.value === "confirmation_patient_registration_company" && (
+                <SuccessOutpatient encounterType={encounterType} type="company" />
+              )
+            }
 
             {currentPage.value === 'insert_employee_number' && <InsertEmployeeNumber />}
 
-            {currentPage.value === 'information_data_employee' && (
-              <InformationPatient
-                title="Detail Data Karyawan"
-                detailData={getListDataEmployee}
-                handleBack={() => {
-                  handleChangePage({ action: 'previous' });
-                }}
-                handleNext={() => {
-                  handleChangePage({ action: 'next' });
-                }}
-              />
-            )}
+            {
+              currentPage.value === 'information_data_employee' && (
+                <InformationPatient
+                  title="Detail Data Karyawan"
+                  detailData={getListDataEmployee}
+                  handleBack={() => {
+                    handleChangePage({ action: 'previous' });
+                  }}
+                  handleNext={() => {
+                    handleChangePage({ action: 'next' });
+                  }}
+                />
+              )
+            }
 
             {currentPage.value === 'insert_bpjs_number' && <InsertBPJSNumber />}
 
-            {currentPage.value === 'information_patient_data_bpjs' && (
-              <InformationBPJSPatientData
-                handleBack={() => {
-                  handleChangePage({ action: 'previous' });
-                }}
-                handleSelect={() => {
-                  handleChangePage({ action: 'next' });
-                }}
-              />
-            )}
+            {
+              currentPage.value === 'information_patient_data_bpjs' && (
+                <InformationBPJSPatientData
+                  handleBack={() => {
+                    handleChangePage({ action: 'previous' });
+                  }}
+                  handleSelect={() => {
+                    handleChangePage({ action: 'next' });
+                  }}
+                />
+              )
+            }
 
-            {currentPage.value === 'confirmation_patient_registration_bpjs' && (
-              <ConfirmationOutpatient
-                type="bpjs"
-                handleConfirm={() => {
-                  handleChangePage({ action: 'next' });
-                }}
-              />
-            )}
+            {
+              currentPage.value === 'confirmation_patient_registration_bpjs' && (
+                <ConfirmationOutpatient
+                  type="bpjs"
+                  handleConfirm={() => {
+                    handleChangePage({ action: 'next' });
+                  }}
+                />
+              )
+            }
 
-            {currentPage.value === 'registration_success_bpjs' && <SuccessOutpatient type="bpjs" />}
+            {currentPage.value === 'registration_success_bpjs' && <SuccessOutpatient encounterType={encounterType} type="bpjs" />}
 
-            {currentPage.value === 'select_mcu_package' && (
-              <SelectMCUPackage
-                handleSelect={() =>
-                  handleChangePage({
-                    action: 'next',
-                    newFormSteps: formStepsMCUGeneral,
-                  })
-                }
-              />
-            )}
+            {
+              currentPage.value === 'select_mcu_package' && (
+                <SelectMCUPackage
+                  handleSelect={() =>
+                    handleChangePage({
+                      action: 'next'
+                    })
+                  }
+                />
+              )
+            }
 
-            {currentPage.value === 'select_lab_package' && (
-              <SelectLabPackage onCardSelect={onLabPakckageSelect} />
-            )}
-          </Box>
-        </WindowContainer>
-      </Form>
-    </AppPage>
+            {
+              currentPage.value === 'select_lab_package' && (
+                <SelectLabPackage onCardSelect={onLabPakckageSelect} />
+              )
+            }
+          </Box >
+        </WindowContainer >
+      </Form >
+    </AppPage >
   );
 };
 

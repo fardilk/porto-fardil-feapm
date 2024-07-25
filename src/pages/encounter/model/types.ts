@@ -39,6 +39,11 @@ export type SelectCompanyProps = {
 
 export type OutpatientType = 'general' | 'insurance' | 'company' | 'bpjs';
 
+export type SuccessOutpatientType = {
+  type: OutpatientType
+  encounterType: EncounterType
+}
+
 export type SelectInsuranceNewProps = {
   handleSelect: () => void;
 };
