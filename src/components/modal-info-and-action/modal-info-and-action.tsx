@@ -20,35 +20,46 @@ import type { ModalInfoAndActionProp } from './types';
  * @see {@link https://github.com/dev-system-2022/his-frontend/issues/12} - Read More For Documentation
  */
 
-const ModalInfoAndAction = ({
-  child,
-  open,
-  title,
-  subtitle,
-  mode = "buttonAndText",
-  dialogProps,
-  disableHeader,
-  handleClose,
-}: ModalInfoAndActionProp) => {
+const ModalInfoAndAction = (props: ModalInfoAndActionProp) => {
+
+  const { child,
+    open,
+    title,
+    titleProps,
+    children,
+    header,
+    disableClose,
+    subtitle,
+    mode = "buttonAndText",
+    dialogProps,
+    disableHeader,
+    handleClose, } = props
+
   return (
     <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth {...dialogProps}>
       {
         !disableHeader && (
-          <DialogTitle>
-            <Box sx={{ display: 'flex', placeContent: 'end', placeItems: 'center' }}>
-              <IconButton onClick={handleClose}>
-                <CloseIcon />
-              </IconButton>
+          <DialogTitle sx={{ display: 'flex', placeContent: 'space-between', placeItems: 'center', pt: 3 }}>
+            <Box sx={{ width: '100%' }}>
+              {header}
+
             </Box>
+            {
+              !disableClose && (
+                <IconButton size='small' onClick={handleClose}>
+                  <CloseIcon />
+                </IconButton>
+              )
+            }
           </DialogTitle>
         )
       }
       <DialogContent>
-        <Box mt={4}>
+        <Box sx={{ mt: 4 }}>
           {mode === 'buttonOnly' && (
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <Typography variant="h6" align="center">
+                <Typography variant="h6" align="center" {...titleProps}>
                   {title}
                 </Typography>
               </Grid>
@@ -69,10 +80,14 @@ const ModalInfoAndAction = ({
           )}
           {mode === 'buttonAndText' && (
             <>
-              <Typography variant="h6" align="center" gutterBottom>
+              <Typography variant="h6" align="center" {...titleProps} gutterBottom>
                 {title}
               </Typography>
-              <Typography align="center">{subtitle}</Typography>
+              {
+                !children ? (
+                  <Typography align="center">{subtitle}</Typography>
+                ) : children
+              }
             </>
           )}
         </Box>

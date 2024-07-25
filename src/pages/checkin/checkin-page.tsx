@@ -29,7 +29,6 @@ const CheckinPage = () => {
       toast.error("Nomor Booking tidak boleh kosong")
       return;
     }
-
     if(data?.booking_number?.replaceAll("\n","")?.length < 3) {
       setErrorMessage("Nomor Booking Tidak Ditemukan. Silahkan Cek Ulang Nomor Booking")
       toast.error("Nomor Booking tidak valid")

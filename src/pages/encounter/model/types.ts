@@ -3,6 +3,7 @@ import type { CardBannerProps } from 'src/components/card-banner/types';
 
 export type SelectEncounterTypeProps = {
   items: CardBannerProps[];
+  handleResetEncounterType: () => void
 };
 
 export type InformationProps = {
@@ -14,9 +15,12 @@ export type InformationProps = {
 
 export type Insurancetype = 'bpjs' | 'insurance' | 'company';
 
+export type EncounterType = null | "RJ" | "MCU" | "LAB" | "RAD"
+
 export type PaymentMethodProps = {
   handleGeneral: () => void;
   handleAssurance: (param: Insurancetype) => void;
+  encounterType: EncounterType
 };
 
 export type SelectPractitionerProps = {

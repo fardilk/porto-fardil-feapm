@@ -1,3 +1,10 @@
+export const buttonStyle: any = {
+  fullWidth: true,
+  size: 'large',
+  variant: 'contained',
+  color: 'secondary',
+};
+
 export const getPaymentType = (type: string) => {
   switch (type) {
     case 'general':
@@ -213,7 +220,7 @@ export const formStepsMCUGeneral = [
   },
   {
     label: 'Konfirmasi Pendaftaran Pasien',
-    value: 'confirmation_patient_registration',
+    value: 'confirmation_patient_registration_mcu',
     properties: {
       disableBlack: true,
     },

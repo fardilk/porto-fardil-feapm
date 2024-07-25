@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "vite",
     "start": "yarn install && node --max_old_space_size=16384 ./node_modules/vite/bin/vite.js && vite",
-    "xbun": "yarn install && node --max_old_space_size=16384 ./node_modules/vite/bin/vite.js && bunx --bun vite",
+    "bun": "yarn install && node --max_old_space_size=16384 ./node_modules/vite/bin/vite.js && bunx --bun vite",
     "build": "tsc && vite build",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
@@ -108,7 +108,7 @@
     "stylis-plugin-rtl": "^2.1.1",
     "swr": "^2.2.5",
     "turndown": "^7.2.0",
-    "yet-another-react-lightbox": "^3.20.0",
+    "yet-another-react-lightbox": "^3.21.1",
     "zod": "^3.23.8",
     "zustand": "^4.5.4"
   },
