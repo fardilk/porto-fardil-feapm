@@ -5,14 +5,14 @@ import { CardBanner } from 'src/components/card-banner';
 import { LabelTextContainer, type LabelTextProps } from 'src/components/label-text';
 import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
 import { fAsterisk } from 'src/utils/helper';
-import type { OutpatientType } from '../model/types';
+import type { SuccessOutpatientType } from '../model/types';
 import { buttonStyle, getPaymentType } from '../model/variables';
 import { useCountdownSeconds } from 'src/hooks';
 import { useNavigate } from 'react-router';
 
-const SuccessOutpatient = (props: { type: OutpatientType }) => {
+const SuccessOutpatient = (props: SuccessOutpatientType) => {
   const navigate = useNavigate();
-  const { type } = props;
+  const { type, encounterType } = props;
   const {
     startCountdown: startCountdown15,
     countdown: countdown15,
@@ -41,16 +41,24 @@ const SuccessOutpatient = (props: { type: OutpatientType }) => {
   ]);
 
   const listCard = [
-    {
-      title: 'Tujuan Pelayanan',
-      body: 'Poli Mata',
-      localIcon: 'stethoscope',
-    },
-    {
-      title: 'Dokter Pemeriksa',
-      body: 'dr. Inas Shabrina,Sp.M',
-      localIcon: 'doctor',
-    },
+    ... encounterType === "RJ" ? [
+      {
+        title: 'Tujuan Pelayanan',
+        body: 'Poli Mata',
+        localIcon: 'stethoscope',
+      },
+      {
+        title: 'Dokter Pemeriksa',
+        body: 'dr. Inas Shabrina,Sp.M',
+        localIcon: 'doctor',
+      }
+    ] : encounterType === "MCU" ? [
+      {
+        title: "Tipe Layanan",
+        body: "Paket Perimetal Wanita",
+        localIcon: "medical-checkup"
+      }
+    ] : [],
     {
       ...getPaymentType(type),
     },
