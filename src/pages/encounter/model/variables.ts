@@ -348,32 +348,3 @@ export const formStepsLabCompany = [
     },
   },
 ];
-
-export const formStepsLabBPJS = [
-  {
-    label: 'Masukan / Scan Nomor Kartu BPJS',
-    value: 'insert_bpjs_number',
-  },
-  {
-    label: 'Informasi Data Pasien BPJS',
-    value: 'information_patient_data_bpjs',
-  },
-  {
-    label: 'Pilih Paket Laboratorium yang Anda Inginkan',
-    value: 'select_lab_package',
-  },
-  {
-    label: 'Konfirmasi Pendaftaran Pasien',
-    value: 'confirmation_patient_registration_bpjs',
-    properties: {
-      disableBlack: true,
-    },
-  },
-  {
-    label: 'Pendaftaran Berhasil',
-    value: 'registration_success_bpjs',
-    properties: {
-      disableBack: true,
-    },
-  },
-];
