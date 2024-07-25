@@ -220,7 +220,7 @@ export const formStepsMCUGeneral = [
   },
   {
     label: 'Konfirmasi Pendaftaran Pasien',
-    value: 'confirmation_patient_registration',
+    value: 'confirmation_patient_registration_mcu',
     properties: {
       disableBlack: true,
     },

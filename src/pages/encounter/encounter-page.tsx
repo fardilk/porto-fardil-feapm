@@ -9,8 +9,8 @@ import { InsertIdentifier } from "src/components/insert-identifier"
 import { WindowContainer } from "src/components/window-container"
 import { useStepper } from "src/hooks"
 import { getDummyData } from "../registration/model/functions"
-import { ConfirmationOutpatient, InformationBPJSPatientData, InformationOutpatientGeneral, InformationPatient, InsertBPJSNumber, InsertPolisNumber, PaymentMethod, SelectCompany, SelectCompanyNew, SelectEncounterType, SelectInsurance, SelectInsuranceNew, SelectMCUPackage, SelectPractitioner, SuccessOutpatient } from "./components"
-import type { Insurancetype } from "./model/types"
+import { ConfirmationOutpatient, ConfirmationOutpatientMCU, InformationBPJSPatientData, InformationOutpatientGeneral, InformationPatient, InsertBPJSNumber, InsertPolisNumber, PaymentMethod, SelectCompany, SelectCompanyNew, SelectEncounterType, SelectInsurance, SelectInsuranceNew, SelectMCUPackage, SelectPractitioner, SuccessOutpatient } from "./components"
+import type { EncounterType, Insurancetype } from "./model/types"
 import InsertEmployeeNumber from "./components/insert-employee-number"
 import { formStepsMCUGeneral, formStepsOutpatientBPJS, formStepsOutpatientCompany, formStepsOutpatientGeneral, formStepsOutpatientInsurance } from "./model/variables"
 import { fAsterisk } from "src/utils/helper"
@@ -24,18 +24,25 @@ const EncounterPage = () => {
     handleChangePage,
   } = useStepper({ initialSteps: formStepsOutpatientGeneral })
 
+  const [encounterType, setEncounterType] = useState<EncounterType>(null)
+
   const [listEncounterType, _setListEncounterType] = useState<CardBannerProps[]>([
     {
       title: "PEMERIKSAAN RAWAT JALAN",
       body: "Layanan medis yang mencakup evaluasi kesehatan, diagnosis, dan perawatan tanpa memerlukan rawat inap.",
       localIcon: "stethoscope",
-      onClick: () => { handleChangePage({ action: "next", newFormSteps: formStepsOutpatientGeneral }) }
+      onClick: () => { 
+        setEncounterType("RJ")
+        handleChangePage({ action: "next", newFormSteps: formStepsOutpatientGeneral })
+      }
     },
     {
       title: "MEDICAL CHECK UP",
       body: "Serangkaian uji kesehatan rutin untuk memeriksa kesehatan tubuh secara keseluruhan dan mengantisipasi risiko penyakit.",
       localIcon: "medical-checkup",
-      onClick: () => { handleChangePage({
+      onClick: () => { 
+        setEncounterType("MCU")
+        handleChangePage({
         action: "next",
         newFormSteps: formStepsMCUGeneral
       })}
@@ -94,12 +101,17 @@ const EncounterPage = () => {
   }
 
   const onAssuranceSelect = (type: Insurancetype) => {
-    if (type === "bpjs") {
-      handleChangePage({ newFormSteps: formStepsOutpatientBPJS, toSpecificPage: "insert_bpjs_number" })
-    } else if (type === "company") {
-      handleChangePage({ newFormSteps: formStepsOutpatientCompany, toSpecificPage: "select_company" })
-    } else if (type === "insurance") {
-      handleChangePage({ newFormSteps: formStepsOutpatientInsurance, toSpecificPage: "select_insurance" })
+
+    if(encounterType === "RJ" && type === "bpjs"){
+      handleChangePage({ newFormSteps: formStepsOutpatientBPJS, toSpecificPage: "insert_bpjs_number"})
+    }
+
+    if(encounterType === "RJ" && type === "company"){
+      handleChangePage({ newFormSteps: formStepsOutpatientCompany, toSpecificPage: "select_company"})
+    }
+
+    if(encounterType === "RJ" && type === "insurance"){
+      handleChangePage({ newFormSteps: formStepsOutpatientInsurance, toSpecificPage: "select_insurance"})
     }
   }
 
@@ -145,7 +157,7 @@ const EncounterPage = () => {
         >
           <Box sx={{ p: 4 }}>
             {currentPage.value === 'select_encounter_type' && (
-              <SelectEncounterType items={listEncounterType} />
+              <SelectEncounterType items={listEncounterType} handleResetEncounterType={() => setEncounterType(null)} />
             )}
 
             {currentPage.value === 'insert_nik' && <InsertIdentifier />}
@@ -172,6 +184,7 @@ const EncounterPage = () => {
                 handleGeneral={() => {
                   handleChangePage({ action: 'next' });
                 }}
+                encounterType={encounterType}
                 handleAssurance={onAssuranceSelect}
               />
             )}
@@ -186,6 +199,14 @@ const EncounterPage = () => {
                   handleChangePage({ action: 'next' });
                 }}
                 type="general"
+              />
+            )}
+
+            {currentPage.value === 'confirmation_patient_registration_mcu' && (
+              <ConfirmationOutpatientMCU
+                handleConfirm={() => {
+                  handleChangePage({ action: 'next' });
+                }}
               />
             )}
 

@@ -14,3 +14,4 @@ export { default as InformationBPJSPatientData } from './information-bpjs-patien
 export { default as SelectMCUPackage} from './select-mcu-package';
 export { default as LabelListTextCard } from './label-list-text-card';
 export { default as InformationPatient } from './information-patient'
+export { default as ConfirmationOutpatientMCU} from './confirmation-outpatient-mcu'
