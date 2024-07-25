@@ -1,67 +1,95 @@
-import { Box } from "@mui/material"
-import { useMemo, useState } from "react"
-import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router"
-import { AppPage } from "src/components/app-page"
-import type { CardBannerProps } from "src/components/card-banner/types"
-import { Form } from "src/components/hook-form"
-import { InsertIdentifier } from "src/components/insert-identifier"
-import { WindowContainer } from "src/components/window-container"
-import { useStepper } from "src/hooks"
-import { getDummyData } from "../registration/model/functions"
-import { ConfirmationOutpatient, ConfirmationOutpatientMCU, InformationBPJSPatientData, InformationOutpatientGeneral, InformationPatient, InsertBPJSNumber, InsertPolisNumber, PaymentMethod, SelectCompany, SelectCompanyNew, SelectEncounterType, SelectInsurance, SelectInsuranceNew, SelectMCUPackage, SelectPractitioner, SuccessOutpatient } from "./components"
-import type { EncounterType, Insurancetype } from "./model/types"
-import InsertEmployeeNumber from "./components/insert-employee-number"
-import { formStepsMCUAssurance, formStepsMCUCompany, formStepsMCUGeneral, formStepsOutpatientBPJS, formStepsOutpatientCompany, formStepsOutpatientGeneral, formStepsOutpatientInsurance } from "./model/variables"
-import { fAsterisk } from "src/utils/helper"
+import { Box } from '@mui/material';
+import { useMemo, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
+import { AppPage } from 'src/components/app-page';
+import type { CardBannerProps } from 'src/components/card-banner/types';
+import { Form } from 'src/components/hook-form';
+import { InsertIdentifier } from 'src/components/insert-identifier';
+import { WindowContainer } from 'src/components/window-container';
+import { useStepper } from 'src/hooks';
+import { getDummyData } from '../registration/model/functions';
+import {
+  ConfirmationOutpatient,
+  ConfirmationOutpatientMCU,
+  InformationBPJSPatientData,
+  InformationOutpatientGeneral,
+  InformationPatient,
+  InsertBPJSNumber,
+  InsertPolisNumber,
+  PaymentMethod,
+  SelectCompany,
+  SelectCompanyNew,
+  SelectEncounterType,
+  SelectInsurance,
+  SelectInsuranceNew,
+  SelectMCUPackage,
+  SelectPractitioner,
+  SuccessOutpatient,
+} from './components';
+import type { EncounterType, Insurancetype } from './model/types';
+import InsertEmployeeNumber from './components/insert-employee-number';
+import {
+  formStepsMCUGeneral,
+  formStepsOutpatientBPJS,
+  formStepsOutpatientCompany,
+  formStepsOutpatientGeneral,
+  formStepsOutpatientInsurance,
+  formStepsLabGeneral,
+  formStepsLabCompany,
+  formStepsLabInsurance,
+  formStepsMCUAssurance,
+  formStepsMCUCompany,
+} from './model/variables';
+import { fAsterisk } from 'src/utils/helper';
+import SelectLabPackage from './components/select-lab-package';
 
 const EncounterPage = () => {
+  const navigate = useNavigate();
+  const { currentPage, currentPageIndex, handleChangePage } = useStepper({
+    initialSteps: formStepsOutpatientGeneral,
+  });
 
-  const navigate = useNavigate()
-  const {
-    currentPage,
-    currentPageIndex,
-    handleChangePage,
-    formSteps
-  } = useStepper({ initialSteps: formStepsOutpatientGeneral })
-
-  const [encounterType, setEncounterType] = useState<EncounterType>(null)
+  const [encounterType, setEncounterType] = useState<EncounterType>(null);
 
   const [listEncounterType, _setListEncounterType] = useState<CardBannerProps[]>([
     {
-      title: "PEMERIKSAAN RAWAT JALAN",
-      body: "Layanan medis yang mencakup evaluasi kesehatan, diagnosis, dan perawatan tanpa memerlukan rawat inap.",
-      localIcon: "stethoscope",
+      title: 'PEMERIKSAAN RAWAT JALAN',
+      body: 'Layanan medis yang mencakup evaluasi kesehatan, diagnosis, dan perawatan tanpa memerlukan rawat inap.',
+      localIcon: 'stethoscope',
       onClick: () => {
-        setEncounterType("RJ")
-        handleChangePage({ action: "next", newFormSteps: formStepsOutpatientGeneral })
-      }
+        setEncounterType('RJ');
+        handleChangePage({ action: 'next', newFormSteps: formStepsOutpatientGeneral });
+      },
     },
     {
-      title: "MEDICAL CHECK UP",
-      body: "Serangkaian uji kesehatan rutin untuk memeriksa kesehatan tubuh secara keseluruhan dan mengantisipasi risiko penyakit.",
-      localIcon: "medical-checkup",
+      title: 'MEDICAL CHECK UP',
+      body: 'Serangkaian uji kesehatan rutin untuk memeriksa kesehatan tubuh secara keseluruhan dan mengantisipasi risiko penyakit.',
+      localIcon: 'medical-checkup',
       onClick: () => {
-        setEncounterType("MCU")
+        setEncounterType('MCU');
         handleChangePage({
-          action: "next",
-          newFormSteps: formStepsMCUGeneral
-        })
-      }
+          action: 'next',
+          newFormSteps: formStepsMCUGeneral,
+        });
+      },
     },
     {
-      title: "LABORATORIUM",
-      body: "Fasilitas yang menyediakan uji diagnostik untuk mendukung evaluasi kesehatan, diagnosis, dan medical check up rutin tanpa perlu rawat inap.",
-      localIcon: "blood-test",
-      onClick: () => { }
+      title: 'LABORATORIUM',
+      body: 'Fasilitas yang menyediakan uji diagnostik untuk mendukung evaluasi kesehatan, diagnosis, dan medical check up rutin tanpa perlu rawat inap.',
+      localIcon: 'blood-test',
+      onClick: () => {
+        setEncounterType('LAB');
+        handleChangePage({ action: 'next', newFormSteps: formStepsLabGeneral });
+      },
     },
     {
-      title: "RADIOLOGI",
-      body: "Layanan medis yang menyediakan uji pencitraan seperti X-ray, CT scan, dan MRI untuk mendukung diagnosis dan perawatan tanpa memerlukan rawat inap.",
-      localIcon: "x-rays",
-      onClick: () => { }
+      title: 'RADIOLOGI',
+      body: 'Layanan medis yang menyediakan uji pencitraan seperti X-ray, CT scan, dan MRI untuk mendukung diagnosis dan perawatan tanpa memerlukan rawat inap.',
+      localIcon: 'x-rays',
+      onClick: () => { },
     },
-  ])
+  ]);
 
   const getListDataEmployee = useMemo(
     () => [
@@ -95,12 +123,16 @@ const EncounterPage = () => {
     []
   );
 
-  const methods = useForm()
-  const { handleSubmit } = methods
+  const methods = useForm();
+  const { handleSubmit } = methods;
 
   const onPractitionerSelect = () => {
-    handleChangePage({ action: "next" })
-  }
+    handleChangePage({ action: 'next' });
+  };
+
+  const onLabPakckageSelect = () => {
+    handleChangePage({ action: 'next' });
+  };
 
   const onAssuranceSelect = (type: Insurancetype) => {
 
@@ -116,45 +148,54 @@ const EncounterPage = () => {
       handleChangePage({ newFormSteps: formStepsOutpatientInsurance, toSpecificPage: "select_insurance" })
     }
 
-    if(encounterType === "MCU" && type === "insurance"){
+    if (encounterType === "MCU" && type === "insurance") {
       handleChangePage({
         newFormSteps: formStepsMCUAssurance,
         toSpecificPage: "select_insurance"
       })
     }
 
-    if(encounterType === "MCU" && type === "company"){
+    if (encounterType === "MCU" && type === "company") {
       handleChangePage({
         newFormSteps: formStepsMCUCompany,
         toSpecificPage: "select_company"
       })
     }
-  }
+
+    if (encounterType === 'LAB' && type === 'company') {
+      handleChangePage({ newFormSteps: formStepsLabCompany, toSpecificPage: 'select_company' });
+    }
+
+    if (encounterType === 'LAB' && type === 'insurance') {
+      handleChangePage({
+        newFormSteps: formStepsLabInsurance,
+        toSpecificPage: 'select_insurance',
+      });
+    }
+  };
 
   const onSubmit = async (data: any) => {
     if (currentPageIndex === 1) {
+      await getDummyData('company');
 
-      await getDummyData("company")
-
-      handleChangePage({ action: "next" })
-
+      handleChangePage({ action: 'next' });
     } else {
-      if (currentPage.value === "insert_polis_number") {
-        await getDummyData("")
-        handleChangePage({ action: "next" })
+      if (currentPage.value === 'insert_polis_number') {
+        await getDummyData('');
+        handleChangePage({ action: 'next' });
       }
 
-      if (currentPage.value === "insert_employee_number") {
-        await getDummyData("")
-        handleChangePage({ action: "next" })
+      if (currentPage.value === 'insert_employee_number') {
+        await getDummyData('');
+        handleChangePage({ action: 'next' });
       }
 
-      if (currentPage.value === "insert_bpjs_number") {
-        await getDummyData("")
-        handleChangePage({ action: "next" })
+      if (currentPage.value === 'insert_bpjs_number') {
+        await getDummyData('');
+        handleChangePage({ action: 'next' });
       }
     }
-  }
+  };
 
   return (
     <AppPage>
@@ -173,7 +214,10 @@ const EncounterPage = () => {
         >
           <Box sx={{ p: 4 }}>
             {currentPage.value === 'select_encounter_type' && (
-              <SelectEncounterType items={listEncounterType} handleResetEncounterType={() => setEncounterType(null)} />
+              <SelectEncounterType
+                items={listEncounterType}
+                handleResetEncounterType={() => setEncounterType(null)}
+              />
             )}
 
             {currentPage.value === 'insert_nik' && <InsertIdentifier />}
@@ -244,11 +288,12 @@ const EncounterPage = () => {
             {currentPage.value === 'select_insurance' && (
               <SelectInsurance
                 handleSelect={() => {
-                  if(encounterType === "RJ"){
+                  if (encounterType === 'RJ') {
                     handleChangePage({ toSpecificPage: 'select_healthcare_practitioner' });
+                  } else if (encounterType === 'LAB') {
+                    handleChangePage({ toSpecificPage: 'select_lab_package' });
                   }
-
-                  if(encounterType === "MCU"){
+                  else if (encounterType === "MCU") {
                     handleChangePage({
                       action: "next"
                     })
@@ -262,15 +307,13 @@ const EncounterPage = () => {
 
             {currentPage.value === 'select_insurance_new' && (
               <SelectInsuranceNew
-                handleSelect={() => { handleChangePage({ action: "next" }) }}
+                handleSelect={() => {
+                  handleChangePage({ action: 'next' });
+                }}
               />
             )}
 
-            {
-              currentPage.value === "insert_polis_number" && (
-                <InsertPolisNumber />
-              )
-            }
+            {currentPage.value === 'insert_polis_number' && <InsertPolisNumber />}
 
             {currentPage.value === 'information_data_patient_insurance' && (
               <InformationPatient
@@ -288,12 +331,15 @@ const EncounterPage = () => {
             {currentPage.value === 'select_company' && (
               <SelectCompany
                 handleSelect={() => {
-                  if(encounterType === "RJ"){
+                  if (encounterType === 'RJ') {
                     handleChangePage({ toSpecificPage: 'select_healthcare_practitioner' });
                   }
+                  else if (encounterType === 'LAB') {
 
-                  if(encounterType === "MCU"){
-                    handleChangePage({ action: 'next'})
+                    handleChangePage({ toSpecificPage: 'select_lab_package' });
+                  }
+                  else if (encounterType === "MCU") {
+                    handleChangePage({ action: 'next' })
                   }
                 }}
                 handleSelectNew={() => {
@@ -316,63 +362,73 @@ const EncounterPage = () => {
               )
             }
 
+            {currentPage.value === 'insert_employee_number' && <InsertEmployeeNumber />}
+
             {
-              currentPage.value === "insert_employee_number" && (
-                <InsertEmployeeNumber />
+              currentPage.value === 'information_data_employee' && (
+                <InformationPatient
+                  title="Detail Data Karyawan"
+                  detailData={getListDataEmployee}
+                  handleBack={() => {
+                    handleChangePage({ action: 'previous' });
+                  }}
+                  handleNext={() => {
+                    handleChangePage({ action: 'next' });
+                  }}
+                />
               )
             }
 
-            {currentPage.value === 'information_data_employee' && (
-              <InformationPatient
-                title="Detail Data Karyawan"
-                detailData={getListDataEmployee}
-                handleBack={() => {
-                  handleChangePage({ action: 'previous' });
-                }}
-                handleNext={() => {
-                  handleChangePage({ action: 'next' });
-                }}
-              />
-            )}
-
             {currentPage.value === 'insert_bpjs_number' && <InsertBPJSNumber />}
 
-            {currentPage.value === 'information_patient_data_bpjs' && (
-              <InformationBPJSPatientData
-                handleBack={() => {
-                  handleChangePage({ action: 'previous' });
-                }}
-                handleSelect={() => {
-                  handleChangePage({ action: 'next' });
-                }}
-              />
-            )}
+            {
+              currentPage.value === 'information_patient_data_bpjs' && (
+                <InformationBPJSPatientData
+                  handleBack={() => {
+                    handleChangePage({ action: 'previous' });
+                  }}
+                  handleSelect={() => {
+                    handleChangePage({ action: 'next' });
+                  }}
+                />
+              )
+            }
 
-            {currentPage.value === 'confirmation_patient_registration_bpjs' && (
-              <ConfirmationOutpatient
-                type="bpjs"
-                handleConfirm={() => {
-                  handleChangePage({ action: 'next' });
-                }}
-              />
-            )}
+            {
+              currentPage.value === 'confirmation_patient_registration_bpjs' && (
+                <ConfirmationOutpatient
+                  type="bpjs"
+                  handleConfirm={() => {
+                    handleChangePage({ action: 'next' });
+                  }}
+                />
+              )
+            }
 
             {currentPage.value === 'registration_success_bpjs' && <SuccessOutpatient encounterType={encounterType} type="bpjs" />}
 
-            {currentPage.value === 'select_mcu_package' && (
-              <SelectMCUPackage
-                handleSelect={() =>
-                  handleChangePage({
-                    action: 'next'
-                  })
-                }
-              />
-            )}
-          </Box>
-        </WindowContainer>
-      </Form>
-    </AppPage>
-  );
-}
+            {
+              currentPage.value === 'select_mcu_package' && (
+                <SelectMCUPackage
+                  handleSelect={() =>
+                    handleChangePage({
+                      action: 'next'
+                    })
+                  }
+                />
+              )
+            }
 
-export default EncounterPage
+            {
+              currentPage.value === 'select_lab_package' && (
+                <SelectLabPackage onCardSelect={onLabPakckageSelect} />
+              )
+            }
+          </Box >
+        </WindowContainer >
+      </Form >
+    </AppPage >
+  );
+};
+
+export default EncounterPage;
