@@ -1,10 +1,14 @@
 import { Grid } from "@mui/material"
 import { CardBanner } from "src/components/card-banner"
 import type { SelectEncounterTypeProps } from "../model/types"
+import { useEffect } from "react"
 
 const SelectEncounterType = (props: SelectEncounterTypeProps) => {
-  const { items } = props
+  const { items, handleResetEncounterType } = props
 
+  useEffect(() => {
+    handleResetEncounterType()
+  },[])
   return (
     <Grid container spacing={2}>
       {

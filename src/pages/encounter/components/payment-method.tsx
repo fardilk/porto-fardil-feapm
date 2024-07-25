@@ -5,7 +5,7 @@ import type { CardBannerProps } from "src/components/card-banner/types"
 import type { PaymentMethodProps } from "../model/types"
 
 const PaymentMethod = (props: PaymentMethodProps) => {
-  const { handleAssurance, handleGeneral } = props
+  const { handleAssurance, handleGeneral, encounterType } = props
 
   const [openAssurance, setOpenAssurance] = useState(false)
 
@@ -25,13 +25,12 @@ const PaymentMethod = (props: PaymentMethodProps) => {
   ])
 
   const [assurancePaymentMethod, _setAssurancePaymentMethod] = useState<CardBannerProps[]>([
-    {
+    ... encounterType === "RJ" ? [{
       title: "BPJS",
       body: "Pendaftaran Pasien BPJS",
       localIcon: "bpjs",
       onClick: () => { handleAssurance("bpjs") }
-
-    },
+    }] : [],
     {
       title: "Asuransi",
       body: "Pendaftaran pasien asuransi",
@@ -63,7 +62,7 @@ const PaymentMethod = (props: PaymentMethodProps) => {
         openAssurance && assurancePaymentMethod.map((row, index) => {
 
           return (
-            <Grid item xs={12} md={4} key={index}>
+            <Grid item xs={12} md={12/assurancePaymentMethod.length} key={index}>
               <CardBanner {...row} cardProps={{ sx: { py: 4 }, variant: "outlined" }} clickable onClick={row.onClick} />
             </Grid>
           )
