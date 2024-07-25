@@ -31,7 +31,7 @@ const EncounterPage = () => {
       title: "PEMERIKSAAN RAWAT JALAN",
       body: "Layanan medis yang mencakup evaluasi kesehatan, diagnosis, dan perawatan tanpa memerlukan rawat inap.",
       localIcon: "stethoscope",
-      onClick: () => { 
+      onClick: () => {
         setEncounterType("RJ")
         handleChangePage({ action: "next", newFormSteps: formStepsOutpatientGeneral })
       }
@@ -40,12 +40,13 @@ const EncounterPage = () => {
       title: "MEDICAL CHECK UP",
       body: "Serangkaian uji kesehatan rutin untuk memeriksa kesehatan tubuh secara keseluruhan dan mengantisipasi risiko penyakit.",
       localIcon: "medical-checkup",
-      onClick: () => { 
+      onClick: () => {
         setEncounterType("MCU")
         handleChangePage({
-        action: "next",
-        newFormSteps: formStepsMCUGeneral
-      })}
+          action: "next",
+          newFormSteps: formStepsMCUGeneral
+        })
+      }
     },
     {
       title: "LABORATORIUM",
@@ -102,16 +103,16 @@ const EncounterPage = () => {
 
   const onAssuranceSelect = (type: Insurancetype) => {
 
-    if(encounterType === "RJ" && type === "bpjs"){
-      handleChangePage({ newFormSteps: formStepsOutpatientBPJS, toSpecificPage: "insert_bpjs_number"})
+    if (encounterType === "RJ" && type === "bpjs") {
+      handleChangePage({ newFormSteps: formStepsOutpatientBPJS, toSpecificPage: "insert_bpjs_number" })
     }
 
-    if(encounterType === "RJ" && type === "company"){
-      handleChangePage({ newFormSteps: formStepsOutpatientCompany, toSpecificPage: "select_company"})
+    if (encounterType === "RJ" && type === "company") {
+      handleChangePage({ newFormSteps: formStepsOutpatientCompany, toSpecificPage: "select_company" })
     }
 
-    if(encounterType === "RJ" && type === "insurance"){
-      handleChangePage({ newFormSteps: formStepsOutpatientInsurance, toSpecificPage: "select_insurance"})
+    if (encounterType === "RJ" && type === "insurance") {
+      handleChangePage({ newFormSteps: formStepsOutpatientInsurance, toSpecificPage: "select_insurance" })
     }
   }
 
