@@ -8,7 +8,7 @@ const SelectEncounterType = (props: SelectEncounterTypeProps) => {
 
   useEffect(() => {
     handleResetEncounterType()
-  },[])
+  },[handleResetEncounterType])
   return (
     <Grid container spacing={2}>
       {

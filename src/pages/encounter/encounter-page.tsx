@@ -12,7 +12,7 @@ import { getDummyData } from "../registration/model/functions"
 import { ConfirmationOutpatient, ConfirmationOutpatientMCU, InformationBPJSPatientData, InformationOutpatientGeneral, InformationPatient, InsertBPJSNumber, InsertPolisNumber, PaymentMethod, SelectCompany, SelectCompanyNew, SelectEncounterType, SelectInsurance, SelectInsuranceNew, SelectMCUPackage, SelectPractitioner, SuccessOutpatient } from "./components"
 import type { EncounterType, Insurancetype } from "./model/types"
 import InsertEmployeeNumber from "./components/insert-employee-number"
-import { formStepsMCUGeneral, formStepsOutpatientBPJS, formStepsOutpatientCompany, formStepsOutpatientGeneral, formStepsOutpatientInsurance } from "./model/variables"
+import { formStepsMCUAssurance, formStepsMCUCompany, formStepsMCUGeneral, formStepsOutpatientBPJS, formStepsOutpatientCompany, formStepsOutpatientGeneral, formStepsOutpatientInsurance } from "./model/variables"
 import { fAsterisk } from "src/utils/helper"
 
 const EncounterPage = () => {
@@ -22,6 +22,7 @@ const EncounterPage = () => {
     currentPage,
     currentPageIndex,
     handleChangePage,
+    formSteps
   } = useStepper({ initialSteps: formStepsOutpatientGeneral })
 
   const [encounterType, setEncounterType] = useState<EncounterType>(null)
@@ -112,6 +113,20 @@ const EncounterPage = () => {
 
     if(encounterType === "RJ" && type === "insurance"){
       handleChangePage({ newFormSteps: formStepsOutpatientInsurance, toSpecificPage: "select_insurance"})
+    }
+
+    if(encounterType === "MCU" && type === "insurance"){
+      handleChangePage({
+        newFormSteps: formStepsMCUAssurance,
+        toSpecificPage: "select_insurance"
+      })
+    }
+
+    if(encounterType === "MCU" && type === "company"){
+      handleChangePage({
+        newFormSteps: formStepsMCUCompany,
+        toSpecificPage: "select_company"
+      })
     }
   }
 
@@ -219,16 +234,24 @@ const EncounterPage = () => {
               />
             )}
 
-            {currentPage.value === 'registration_success' && <SuccessOutpatient type="general" />}
+            {currentPage.value === 'registration_success' && <SuccessOutpatient encounterType={encounterType} type="general" />}
 
             {currentPage.value === 'registration_success_insurance' && (
-              <SuccessOutpatient type="insurance" />
+              <SuccessOutpatient encounterType={encounterType} type="insurance" />
             )}
 
             {currentPage.value === 'select_insurance' && (
               <SelectInsurance
                 handleSelect={() => {
-                  handleChangePage({ toSpecificPage: 'select_healthcare_practitioner' });
+                  if(encounterType === "RJ"){
+                    handleChangePage({ toSpecificPage: 'select_healthcare_practitioner' });
+                  }
+
+                  if(encounterType === "MCU"){
+                    handleChangePage({
+                      action: "next"
+                    })
+                  }
                 }}
                 handleSelectNew={() => {
                   handleChangePage({ action: 'next' });
@@ -264,7 +287,13 @@ const EncounterPage = () => {
             {currentPage.value === 'select_company' && (
               <SelectCompany
                 handleSelect={() => {
-                  handleChangePage({ toSpecificPage: 'select_healthcare_practitioner' });
+                  if(encounterType === "RJ"){
+                    handleChangePage({ toSpecificPage: 'select_healthcare_practitioner' });
+                  }
+
+                  if(encounterType === "MCU"){
+                    handleChangePage({ action: 'next'})
+                  }
                 }}
                 handleSelectNew={() => {
                   handleChangePage({ action: 'next' });
@@ -282,7 +311,7 @@ const EncounterPage = () => {
 
             {
               currentPage.value === "confirmation_patient_registration_company" && (
-                <SuccessOutpatient type="company" />
+                <SuccessOutpatient encounterType={encounterType} type="company" />
               )
             }
 
@@ -327,14 +356,13 @@ const EncounterPage = () => {
               />
             )}
 
-            {currentPage.value === 'registration_success_bpjs' && <SuccessOutpatient type="bpjs" />}
+            {currentPage.value === 'registration_success_bpjs' && <SuccessOutpatient encounterType={encounterType} type="bpjs" />}
 
             {currentPage.value === 'select_mcu_package' && (
               <SelectMCUPackage
                 handleSelect={() =>
                   handleChangePage({
-                    action: 'next',
-                    newFormSteps: formStepsMCUGeneral,
+                    action: 'next'
                   })
                 }
               />
