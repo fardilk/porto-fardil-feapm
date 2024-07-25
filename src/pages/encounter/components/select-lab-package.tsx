@@ -29,7 +29,7 @@ const SelectLabPackage = (props: SelectLabPackageProps) => {
             value={searchInput}
             autoComplete="off"
             placeholder="Cari Paket Lab"
-            InputProps={{ startAdornment: <Iconify icon="fluent:search-12-regular" /> }}
+            InputProps={{ startAdornment: <Iconify icon="fluent:search-12-regular" color="gray" marginRight={1} /> }}
           />
         </Grid>
         {
