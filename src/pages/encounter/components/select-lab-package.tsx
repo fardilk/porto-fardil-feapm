@@ -3,7 +3,7 @@ import { useState } from "react"
 import { CardBanner, CardBannerProfile } from "src/components/card-banner"
 import { Iconify } from "src/components/iconify"
 import type { SelectLabPackageProps } from "../model/types"
-import formatToRupiah from "./to-rupiah"
+import { fCurrency } from "src/utils/format-number"
 
 const SelectLabPackage = (props: SelectLabPackageProps) => {
   const { onCardSelect } = props
@@ -40,9 +40,9 @@ const SelectLabPackage = (props: SelectLabPackageProps) => {
                     key={index}
                     localIcon= "blood-test"
                     cardProps={{ variant: "outlined" }}
-                    body={formatToRupiah(50000)}
+                    body={fCurrency(50000)}
                     title={"Paket Cek Kesehatan Umum"}
-                    titleProps={{ variant: "h5", color: "secondary.dark" }}
+                    titleProps={{ variant: "subtitle1", color: "secondary.dark" }}
                     bodyProps={{ variant: "body2", color: "secondary.dark" }}
                     clickable
                     onClick={onCardSelect}
