@@ -5,6 +5,9 @@ import packageJson from '../package.json';
 // ----------------------------------------------------------------------
 
 export type ConfigValue = {
+  app: {
+    graphqlPath: string;
+  };
   site: {
     name: string;
     serverUrl: string;
@@ -37,6 +40,9 @@ export type ConfigValue = {
 // ----------------------------------------------------------------------
 
 export const CONFIG: ConfigValue = {
+  app: {
+    graphqlPath: `${import.meta.env.VITE_APP_API_HOST}:${import.meta.env.VITE_APP_API_PORT}`,
+  },
   site: {
     name: 'Minimals',
     serverUrl: import.meta.env.VITE_SERVER_URL ?? '',

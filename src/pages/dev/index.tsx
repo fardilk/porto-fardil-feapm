@@ -1,9 +1,13 @@
 import { Box, Divider, Grid, MenuItem, Typography } from "@mui/material"
-import { lazy, ReactNode, Suspense, useMemo } from "react"
+import { lazy, ReactNode, Suspense, useEffect, useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { AppPage } from "src/components/app-page"
 import { Form, RHFAutocomplete, RHFCheckbox, RHFDatePicker, RHFSelect, RHFSwitch, RHFTextField } from "src/components/hook-form"
 import { WindowContainer } from "src/components/window-container"
+import { getUser } from "./model/functions"
+import { toast } from "sonner"
+import { LoadingButton } from "@mui/lab"
+import { timeout } from "src/utils/timeout"
 
 const DevPage = () => {
 
@@ -41,6 +45,21 @@ const DevPage = () => {
 
     return <Typography variant="subtitle1">Select Component First</Typography>
   }, [componentName])
+
+  const handleGetUser = async () => {
+    try {
+      const resp = await getUser({ userID: "7" })
+
+      toast.info(`User Name : ${resp?.[0]?.userName}`, { position: "top-center" })
+      await timeout(200)
+      toast.info(`User Start Page : ${resp?.[0]?.startPage}`, { position: "top-left" })
+      await timeout(200)
+      toast.info(`User Status : ${resp?.[0]?.status}`)
+
+    } catch (error) {
+      toast.error(`Error : ${error?.message}`)
+    }
+  }
 
   return (
     <AppPage>
@@ -93,6 +112,17 @@ const DevPage = () => {
               <GridChildren>
                 <RHFDatePicker name="datepicker" label="DatePicker" />
               </GridChildren>
+            </Grid>
+
+            <Grid item xs={12}>
+              <LoadingButton
+                sx={{ mt: 2 }}
+                color="primary"
+                variant="contained"
+                onClick={() => { handleGetUser() }}
+              >
+                Get User
+              </LoadingButton>
             </Grid>
           </Form>
         </Box>
