@@ -78,3 +78,7 @@ export type InformationPatientProps = {
     body: string
   }[]
 }
+
+export type SelectLabPackageProps = {
+  onCardSelect: () => void;
+};

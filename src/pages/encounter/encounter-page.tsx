@@ -12,8 +12,9 @@ import { getDummyData } from "../registration/model/functions"
 import { ConfirmationOutpatient, InformationBPJSPatientData, InformationOutpatientGeneral, InformationPatient, InsertBPJSNumber, InsertPolisNumber, PaymentMethod, SelectCompany, SelectCompanyNew, SelectEncounterType, SelectInsurance, SelectInsuranceNew, SelectMCUPackage, SelectPractitioner, SuccessOutpatient } from "./components"
 import type { Insurancetype } from "./model/types"
 import InsertEmployeeNumber from "./components/insert-employee-number"
-import { formStepsMCUGeneral, formStepsOutpatientBPJS, formStepsOutpatientCompany, formStepsOutpatientGeneral, formStepsOutpatientInsurance } from "./model/variables"
+import { formStepsMCUGeneral, formStepsOutpatientBPJS, formStepsOutpatientCompany, formStepsOutpatientGeneral, formStepsOutpatientInsurance, formStepsLabGeneral } from "./model/variables"
 import { fAsterisk } from "src/utils/helper"
+import SelectLabPackage from "./components/select-lab-package"
 
 const EncounterPage = () => {
 
@@ -44,7 +45,7 @@ const EncounterPage = () => {
       title: "LABORATORIUM",
       body: "Fasilitas yang menyediakan uji diagnostik untuk mendukung evaluasi kesehatan, diagnosis, dan medical check up rutin tanpa perlu rawat inap.",
       localIcon: "blood-test",
-      onClick: () => { }
+      onClick: () => { handleChangePage({ action: "next", newFormSteps: formStepsLabGeneral })}
     },
     {
       title: "RADIOLOGI",
@@ -90,6 +91,10 @@ const EncounterPage = () => {
   const { handleSubmit } = methods
 
   const onPractitionerSelect = () => {
+    handleChangePage({ action: "next" })
+  }
+
+  const onLabPakckageSelect = () => {
     handleChangePage({ action: "next" })
   }
 
@@ -317,6 +322,10 @@ const EncounterPage = () => {
                   })
                 }
               />
+            )}
+
+            {currentPage.value === 'select_lab_package' && (
+              <SelectLabPackage onCardSelect={onLabPakckageSelect} />
             )}
           </Box>
         </WindowContainer>
