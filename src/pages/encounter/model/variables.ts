@@ -234,6 +234,74 @@ export const formStepsMCUGeneral = [
   },
 ];
 
+export const formStepsMCUAssurance = [
+  ...initialStep,
+  {
+    label: 'Pilih Asuransi',
+    value: 'select_insurance',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'Pilih Paket MCU yang anda inginkan',
+    value: 'select_mcu_package',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'Konfirmasi Pendaftaran Pasien',
+    value: 'confirmation_patient_registration_mcu',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'Pendaftaran Berhasil',
+    value: 'registration_success_insurance',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
+
+export const formStepsMCUCompany = [
+  ...initialStep,
+  {
+    label: 'Pilih Perusahaan',
+    value: 'select_company',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'Pilih Paket MCU yang anda inginkan',
+    value: 'select_mcu_package',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'Konfirmasi Pendaftaran Pasien',
+    value: 'confirmation_patient_registration_mcu',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'Pendaftaran Berhasil',
+    value: 'confirmation_patient_registration_company',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
+
 export const formStepsLabGeneral = [
   ...initialStep,
   {

@@ -1,9 +1,9 @@
-import { Alert, Box, Button, Grid, InputAdornment, Stack, TextField } from '@mui/material';
+import { Box, Button, Grid, InputAdornment, Stack, TextField } from '@mui/material';
 import { useState } from 'react';
-import { CardBanner, CardBannerProfile } from 'src/components/card-banner';
+import { CardBanner } from 'src/components/card-banner';
 import { Iconify } from 'src/components/iconify';
-import type { SelectLabPackageProps } from '../model/types';
 import { fCurrency } from 'src/utils/format-number';
+import type { SelectLabPackageProps } from '../model/types';
 
 const SelectLabPackage = (props: SelectLabPackageProps) => {
   const { onCardSelect } = props;
@@ -83,7 +83,7 @@ const SelectLabPackage = (props: SelectLabPackageProps) => {
           <Iconify icon="fluent:chevron-right-12-regular" />
         </Button>
       </Box>
-    </Stack>
+    </Stack >
   );
 };
 
