@@ -1,4 +1,4 @@
-import { Alert, Box, Button, Grid, Stack, TextField } from "@mui/material"
+import { Alert, Box, Button, Grid, InputAdornment, Stack, TextField } from "@mui/material"
 import { useState } from "react"
 import { CardBanner, CardBannerProfile } from "src/components/card-banner"
 import { Iconify } from "src/components/iconify"
@@ -29,7 +29,7 @@ const SelectLabPackage = (props: SelectLabPackageProps) => {
             value={searchInput}
             autoComplete="off"
             placeholder="Cari Paket Lab"
-            InputProps={{ startAdornment: <Iconify icon="fluent:search-12-regular" color="gray" marginRight={1} /> }}
+            InputProps={{ startAdornment: <InputAdornment position='start'><Iconify icon="fluent:search-12-regular" /></InputAdornment>}}
           />
         </Grid>
         {
