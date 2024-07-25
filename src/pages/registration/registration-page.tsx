@@ -93,7 +93,7 @@ const RegistrationPage = () => {
               currentPage.value === "confirmation_new_patient" && (
                 <PatientInformation
                   leftTextButton="Data salah, isi ulang data"
-                  rigthTextButton="Data is Correct, Continue"
+                  rigthTextButton="Data sudah benar, lanjutkan"
                   leftButtonProps={{ onClick: () => handleChangePage({ action: "previous" }) }}
                   rightButtonProps={{ onClick: () => handleChangePage({ action: "next" }) }}
                 />
