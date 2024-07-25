@@ -3,6 +3,7 @@ import { lazy, Suspense } from "react"
 import { AppLayout } from "src/layouts/app"
 
 import { SplashScreen } from "src/components/loading-screen"
+import { timeout } from "src/utils/timeout"
 
 const DevPage = lazy(() => import("src/pages/dev"))
 

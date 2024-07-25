@@ -25,7 +25,7 @@ const SuccessOutpatient = (props: { type: OutpatientType }) => {
     counting: counting2min,
   } = useCountdownSeconds(2*60);
 
-  const [openPrint, setOpenPrint] = useState(false);
+  const [openPrint, setOpenPrint] = useState(false)
   const [detailData, _setDetailData] = useState<LabelTextProps[]>([
     { title: 'NIK', body: fAsterisk('100200300400') },
     { title: 'Nama Lengkap', body: 'Anisa Redina' },
