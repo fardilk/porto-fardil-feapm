@@ -38,11 +38,15 @@ import {
   formStepsLabGeneral,
   formStepsLabCompany,
   formStepsLabInsurance,
+  formStepsRadGeneral,
+  formStepsRadCompany,
+  formStepsRadInsurance,
   formStepsMCUAssurance,
   formStepsMCUCompany,
 } from './model/variables';
 import { fAsterisk } from 'src/utils/helper';
 import SelectLabPackage from './components/select-lab-package';
+import SelectRadService from './components/select-rad-service';
 
 const EncounterPage = () => {
   const navigate = useNavigate();
@@ -87,7 +91,10 @@ const EncounterPage = () => {
       title: 'RADIOLOGI',
       body: 'Layanan medis yang menyediakan uji pencitraan seperti X-ray, CT scan, dan MRI untuk mendukung diagnosis dan perawatan tanpa memerlukan rawat inap.',
       localIcon: 'x-rays',
-      onClick: () => { },
+      onClick: () => {
+        setEncounterType('RAD');
+        handleChangePage({ action: 'next', newFormSteps: formStepsRadGeneral });
+      },
     },
   ]);
 
@@ -134,6 +141,10 @@ const EncounterPage = () => {
     handleChangePage({ action: 'next' });
   };
 
+  const onRadServiceSelect = () => {
+    handleChangePage({ action: 'next' });
+  };
+
   const onAssuranceSelect = (type: Insurancetype) => {
 
     if (encounterType === "RJ" && type === "bpjs") {
@@ -169,6 +180,17 @@ const EncounterPage = () => {
     if (encounterType === 'LAB' && type === 'insurance') {
       handleChangePage({
         newFormSteps: formStepsLabInsurance,
+        toSpecificPage: 'select_insurance',
+      });
+    }
+
+    if (encounterType === 'RAD' && type === 'company') {
+      handleChangePage({ newFormSteps: formStepsRadCompany, toSpecificPage: 'select_company' });
+    }
+
+    if (encounterType === 'RAD' && type === 'insurance') {
+      handleChangePage({
+        newFormSteps: formStepsRadInsurance,
         toSpecificPage: 'select_insurance',
       });
     }
@@ -293,6 +315,9 @@ const EncounterPage = () => {
                   } else if (encounterType === 'LAB') {
                     handleChangePage({ toSpecificPage: 'select_lab_package' });
                   }
+                  else if (encounterType === 'RAD') {
+                    handleChangePage({ toSpecificPage: 'select_rad_service' })
+                  }
                   else if (encounterType === "MCU") {
                     handleChangePage({
                       action: "next"
@@ -335,8 +360,10 @@ const EncounterPage = () => {
                     handleChangePage({ toSpecificPage: 'select_healthcare_practitioner' });
                   }
                   else if (encounterType === 'LAB') {
-
                     handleChangePage({ toSpecificPage: 'select_lab_package' });
+                  }
+                  else if (encounterType === 'RAD') {
+                    handleChangePage({ toSpecificPage: 'select_rad_service' })
                   }
                   else if (encounterType === "MCU") {
                     handleChangePage({ action: 'next' })
@@ -422,6 +449,12 @@ const EncounterPage = () => {
             {
               currentPage.value === 'select_lab_package' && (
                 <SelectLabPackage onCardSelect={onLabPakckageSelect} />
+              )
+            }
+
+            {
+              currentPage.value === 'select_rad_service' && (
+                <SelectRadService onCardSelect={onRadServiceSelect} />
               )
             }
           </Box >

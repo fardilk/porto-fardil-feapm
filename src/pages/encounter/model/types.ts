@@ -91,3 +91,7 @@ export type InformationPatientProps = {
 export type SelectLabPackageProps = {
   onCardSelect: () => void;
 };
+
+export type SelectRadServiceProps = {
+  onCardSelect: () => void;
+};
