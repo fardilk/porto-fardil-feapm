@@ -55,7 +55,7 @@ export function AnimateLogo1({ logo, sx, ...other }: AnimateLogoProps) {
           position: 'absolute',
           width: 'calc(100% - 20px)',
           height: 'calc(100% - 20px)',
-          border: (theme) => `solid 3px ${varAlpha(theme.vars.palette.primary.darkChannel, 0.24)}`,
+          border: (theme) => `solid 3px ${varAlpha(theme.vars.palette.secondary.darkChannel, 0.24)}`,
         }}
       />
 
@@ -72,7 +72,7 @@ export function AnimateLogo1({ logo, sx, ...other }: AnimateLogoProps) {
           width: 1,
           height: 1,
           position: 'absolute',
-          border: (theme) => `solid 8px ${varAlpha(theme.vars.palette.primary.darkChannel, 0.24)}`,
+          border: (theme) => `solid 8px ${varAlpha(theme.vars.palette.secondary.darkChannel, 0.24)}`,
         }}
       />
     </Box>
@@ -115,7 +115,7 @@ export function AnimateLogo2({ logo, sx, ...other }: AnimateLogoProps) {
               duration: theme.transitions.duration.shorter,
             }),
           background: (theme) =>
-            `linear-gradient(135deg, ${varAlpha(theme.vars.palette.primary.mainChannel, 0)} 50%, ${theme.vars.palette.primary.main} 100%)`,
+            `linear-gradient(135deg, ${varAlpha(theme.vars.palette.secondary.mainChannel, 0)} 50%, ${theme.vars.palette.secondary.main} 100%)`,
         }}
       />
     </Box>

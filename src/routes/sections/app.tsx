@@ -3,6 +3,7 @@ import { lazy, Suspense } from "react"
 import { AppLayout } from "src/layouts/app"
 
 import { SplashScreen } from "src/components/loading-screen"
+import { timeout } from "src/utils/timeout"
 
 const DevPage = lazy(() => import("src/pages/dev"))
 
@@ -16,7 +17,7 @@ const RegistrationPage = lazy(() => import("src/pages/registration/registration-
 const CheckinPage = lazy(() => import("src/pages/checkin/checkin-page"))
 
 /** === EncounterPage */
-const EncounterPage = lazy(() => import("src/pages/encounter/encounter-page"))
+const EncounterPage = lazy(async () => { await timeout(500000); return import("src/pages/encounter/encounter-page") })
 
 /** === ReservationPage */
 const ReservationPage = lazy(() => import("src/pages/reservation/reservation-page"))
