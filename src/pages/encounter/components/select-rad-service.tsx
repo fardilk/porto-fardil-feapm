@@ -2,20 +2,20 @@ import { Alert, Box, Button, Grid, Stack, TextField } from "@mui/material"
 import { useState } from "react"
 import { CardBanner, CardBannerProfile } from "src/components/card-banner"
 import { Iconify } from "src/components/iconify"
-import type { SelectLabPackageProps } from "../model/types"
+import type { SelectRadServiceProps } from "../model/types"
 import { fCurrency } from "src/utils/format-number"
 
-const SelectLabPackage = (props: SelectLabPackageProps) => {
+const SelectRadService = (props: SelectRadServiceProps) => {
   const { onCardSelect } = props
 
   const [searchInput, setSearchInput] = useState("")
 
   const [currentIndex, setCurrentIndex] = useState(0)
 
-  const listLabPackage = Array.from({ length: 60 }, (index) => ({ name: `Paket Cek Kesehatan Umum` }))
+  const listRadService = Array.from({ length: 60 }, (index) => ({ name: `CT Scan Kepala` }))
 
   const handleChangePagination = ({ action }: { action: "prev" | "next" }) => {
-    const nextIndex = listLabPackage ? 6 : 16
+    const nextIndex = listRadService ? 6 : 16
     setCurrentIndex(prev => action === "prev" ? prev - nextIndex : prev + nextIndex)
   }
 
@@ -28,12 +28,12 @@ const SelectLabPackage = (props: SelectLabPackageProps) => {
             onChange={(event) => { setSearchInput(event.target.value) }}
             value={searchInput}
             autoComplete="off"
-            placeholder="Cari Paket Lab"
+            placeholder="Cari Radiologi"
             InputProps={{ startAdornment: <Iconify icon="fluent:search-12-regular" color="gray" marginRight={1} /> }}
           />
         </Grid>
         {
-          listLabPackage.slice(currentIndex, currentIndex + 6).map((_row, index) => {
+          listRadService.slice(currentIndex, currentIndex + 6).map((_row, index) => {
             return (
               <Grid item xs={12} md={3} key={index}>
                 <CardBanner
@@ -41,7 +41,7 @@ const SelectLabPackage = (props: SelectLabPackageProps) => {
                     localIcon= "blood-test"
                     cardProps={{ variant: "outlined" }}
                     body={fCurrency(50000)}
-                    title={"Paket Cek Kesehatan Umum"}
+                    title={"CT Scan Kepala"}
                     titleProps={{ variant: "subtitle1", color: "secondary.dark" }}
                     bodyProps={{ variant: "body2", color: "secondary.dark" }}
                     clickable
@@ -75,4 +75,4 @@ const SelectLabPackage = (props: SelectLabPackageProps) => {
   )
 }
 
-export default SelectLabPackage
+export default SelectRadService

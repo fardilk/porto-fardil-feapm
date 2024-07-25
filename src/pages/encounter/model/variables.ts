@@ -348,3 +348,119 @@ export const formStepsLabCompany = [
     },
   },
 ];
+
+
+export const formStepsRadGeneral = [
+  ...initialStep,
+  {
+    label: 'Pilih Layanan Radiologi yang Anda Inginkan',
+    value: 'select_rad_service',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'Konfirmasi Pendaftaran Pasien',
+    value: 'confirmation_patient_registration',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'Pendaftaran Berhasil',
+    value: 'registration_success',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
+
+export const formStepsRadInsurance = [
+  ...initialStep,
+  {
+    label: 'Pilih Asuransi',
+    value: 'select_insurance',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'Pilih Asuransi',
+    value: 'select_insurance_new',
+  },
+  {
+    label: 'Masukkan Nomor Polis Asuransi',
+    value: 'insert_polis_number',
+  },
+  {
+    label: 'Informasi Data Asuransi Pasien',
+    value: 'information_data_patient_insurance',
+  },
+  {
+    label: 'Pilih Layanan Radiologi yang Anda Inginkan',
+    value: 'select_rad_service',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'Konfirmasi Pendaftaran Pasien',
+    value: 'confirmation_patient_registration_insurance',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'Pendaftaran Berhasil',
+    value: 'registration_success_insurance',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
+
+export const formStepsRadCompany = [
+  ...initialStep,
+  {
+    label: 'Pilih Perusahaan',
+    value: 'select_company',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'Pilih Perusahaan',
+    value: 'select_company_new',
+  },
+  {
+    label: 'Masukkan Nomor Karyawan',
+    value: 'insert_employee_number',
+  },
+  {
+    label: 'Informasi Data Karyawan',
+    value: 'information_data_employee',
+  },
+  {
+    label: 'Pilih Layanan Radiologi yang Anda Inginkan',
+    value: 'select_rad_service',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'Konfirmasi Pendaftaran Pasien',
+    value: 'confirmation_patient_registration_company',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'Pendaftaran Berhasil',
+    value: 'registration_success_company',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
