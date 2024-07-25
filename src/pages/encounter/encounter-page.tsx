@@ -269,6 +269,9 @@ const EncounterPage = () => {
 
             {currentPage.value === 'confirmation_patient_registration' && (
               <ConfirmationOutpatient
+                handleBack={() => {
+                  handleChangePage({ action: 'previous' });
+                }}
                 handleConfirm={() => {
                   handleChangePage({ action: 'next' });
                 }}
@@ -278,6 +281,9 @@ const EncounterPage = () => {
 
             {currentPage.value === 'confirmation_patient_registration_mcu' && (
               <ConfirmationOutpatientMCU
+                handleBack={() => {
+                  handleChangePage({ action: 'previous' });
+                }}
                 handleConfirm={() => {
                   handleChangePage({ action: 'next' });
                 }}
@@ -286,6 +292,9 @@ const EncounterPage = () => {
 
             {currentPage.value === 'confirmation_patient_registration_insurance' && (
               <ConfirmationOutpatient
+                handleBack={() => {
+                  handleChangePage({ action: 'previous' });
+                }}
                 handleConfirm={() => {
                   handleChangePage({ action: 'next' });
                 }}
@@ -306,8 +315,8 @@ const EncounterPage = () => {
                     handleChangePage({ toSpecificPage: 'select_healthcare_practitioner' });
                   else if (encounterType === 'LAB')
                     handleChangePage({ toSpecificPage: 'select_lab_package' });
-                  else if (encounterType==='RAD')
-                    handleChangePage({toSpecificPage:'select_rad_service'})
+                  else if (encounterType === 'RAD')
+                    handleChangePage({ toSpecificPage: 'select_rad_service' });
                 }}
                 handleSelectNew={() => {
                   handleChangePage({ action: 'next' });
@@ -345,8 +354,8 @@ const EncounterPage = () => {
                     handleChangePage({ toSpecificPage: 'select_healthcare_practitioner' });
                   else if (encounterType === 'LAB')
                     handleChangePage({ toSpecificPage: 'select_lab_package' });
-                  else if (encounterType==='RAD')
-                    handleChangePage({toSpecificPage:'select_rad_service'})
+                  else if (encounterType === 'RAD')
+                    handleChangePage({ toSpecificPage: 'select_rad_service' });
                 }}
                 handleSelectNew={() => {
                   handleChangePage({ action: 'next' });
@@ -396,6 +405,9 @@ const EncounterPage = () => {
 
             {currentPage.value === 'confirmation_patient_registration_bpjs' && (
               <ConfirmationOutpatient
+                handleBack={() => {
+                  handleChangePage({ action: 'previous' });
+                }}
                 type="bpjs"
                 handleConfirm={() => {
                   handleChangePage({ action: 'next' });

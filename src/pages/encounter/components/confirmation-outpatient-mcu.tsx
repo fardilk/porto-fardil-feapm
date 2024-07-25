@@ -7,8 +7,10 @@ import { fAsterisk } from 'src/utils/helper';
 import type { OutpatientType } from '../model/types';
 
 const ConfirmationOutpatientMCU = ({
+  handleBack,
   handleConfirm,
 }: {
+  handleBack: () => void;
   handleConfirm: () => void;
 }) => {
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
@@ -79,7 +81,7 @@ const ConfirmationOutpatientMCU = ({
               <CardBanner
                 title="Tipe Pelayanan"
                 body={tipeLayanan}
-                localIcon='medical-checkup'
+                localIcon="medical-checkup"
                 cardProps={{ variant: 'outlined' }}
                 titleProps={{ variant: 'subtitle2', sx: { color: 'grey' } }}
                 bodyProps={{ variant: 'subtitle2', sx: { color: 'primary.darker' } }}
@@ -117,7 +119,13 @@ const ConfirmationOutpatientMCU = ({
       </Grid>
 
       <Box sx={{ display: 'flex', placeContent: 'space-between', gap: 2 }}>
-        <Button color="secondary" fullWidth variant="outlined" size="large">
+        <Button
+          color="secondary"
+          fullWidth
+          variant="outlined"
+          size="large"
+          onClick={() => handleBack()}
+        >
           Ubah Pendaftaran
         </Button>
         <Button
