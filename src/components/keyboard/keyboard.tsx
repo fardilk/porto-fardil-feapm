@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Alert, Box, Button, Dialog, DialogContent, Divider, Grid, Stack, TextField, Typography, useTheme } from "@mui/material";
+import { Alert, Box, Button, CircularProgress, Dialog, DialogContent, Divider, Grid, Stack, TextField, Typography, useTheme } from "@mui/material";
 import type { ReactNode } from "react";
 import React, { memo, useCallback, useMemo, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
@@ -155,6 +155,7 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
   const NumberOnlyLayout = useCallback((onButtonClick: any) => {
     return keyNumber.map((row) => {
       const isEnter = row.value === "Enter"
+      const isBackspace = row.value === "Backspace"
       return (
         <Grid item xs={12} md={4} key={row.value}>
           <LoadingButton
@@ -162,18 +163,35 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
             variant="outlined"
             fullWidth
             sx={{
-              p: 3,
+              p: isEnter && isSubmitting ? 2 : 3,
               borderWidth: 2,
               borderColor: (thm) => thm.palette.secondary.main
             }}
             type={isEnter ? "submit" : undefined}
             disabled={isSubmitting}
-            loading={isEnter ? isSubmitting : undefined}
             onMouseDown={(event) => {
               event.preventDefault()
               onButtonClick(row.value)
             }}>
-            <Typography variant="h4">{isSubmitting ? "-" : row.label}</Typography>
+            <Typography variant="h4">
+              {
+                isEnter && (
+                  isSubmitting ? (
+                    <CircularProgress size={38} color="secondary" />
+                  ) : <>{row.label}</>
+                )
+              }
+              {
+                isBackspace && (
+                  isSubmitting ? (
+                    <Iconify icon="fluent:backspace-16-regular" sx={{ transform: 'scale(2)' }} />
+                  ) : <>{row.label}</>
+                )
+              }
+              {
+                !isEnter && row.value !== "Backspace" && row.label
+              }
+            </Typography>
           </LoadingButton>
         </Grid>
       )
@@ -198,12 +216,13 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                   variant="outlined"
                   fullWidth
                   sx={{ ...defaultButtonStyle }}
+                  disabled={isSubmitting}
                   onMouseDown={(event) => {
                     event.preventDefault()
                     onButtonClick(row.value)
                   }}
                 >
-                  <Typography variant="h4">{isSubmitting ? "-" : getLabel(row.label)}</Typography>
+                  <Typography variant="h4">{getLabel(row.label)}</Typography>
                 </LoadingButton>
               )
             })
@@ -225,7 +244,7 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                     event.preventDefault()
                     onButtonClick(row.value)
                   }}>
-                  <Typography variant="h4">{isSubmitting ? "-" : getLabel(row.label)}</Typography>
+                  <Typography variant="h4">{getLabel(row.label)}</Typography>
                 </LoadingButton>
               )
             })
@@ -251,12 +270,13 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                   event.preventDefault()
                   if (secondShift) setSecondShift(false); else setShift(true)
                 }}>
-                {isSubmitting ? "-" : <Iconify icon={`fluent:keyboard-shift-uppercase-16-${isUpper ? 'filled' : 'regular'}`} sx={{ width: 42 }} />}
+                {<Iconify icon={`fluent:keyboard-shift-uppercase-16-${isUpper ? 'filled' : 'regular'}`} sx={{ width: 42 }} />}
               </Button>
             )
           }
           {
             (openNumber ? keyNumberThirdLine : keyTextThirdLine).map((row, index) => {
+              const isBackspace = row.value === "Backspace"
               return (
                 <LoadingButton
                   key={index}
@@ -265,14 +285,25 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                   fullWidth
                   sx={{
                     ...defaultButtonStyle,
-                    width: row.value === "Backspace" ? (openNumber ? 94 * 2 : 94 * 1.5) : 94,
+                    width: isBackspace ? (openNumber ? 94 * 2 : 94 * 1.5) : 94,
                   }}
                   disabled={isSubmitting}
                   onMouseDown={(event) => {
                     event.preventDefault()
                     onButtonClick(row.value)
                   }}>
-                  <Typography variant="h4">{isSubmitting ? "-" : getLabel(row.label)}</Typography>
+                  <Typography variant="h4">
+                    {
+                      isBackspace && (
+                        isSubmitting ? (
+                          <Iconify icon="fluent:backspace-16-regular" sx={{ transform: 'scale(2)' }} />
+                        ) : <>{row.label}</>
+                      )
+                    }
+                    {
+                      !isBackspace && getLabel(row.label)
+                    }
+                  </Typography>
                 </LoadingButton>
               )
             })
@@ -283,6 +314,7 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
         <Grid item xs={12} sx={{ display: 'flex', placeItems: 'center', placeContent: 'center', gap: 1 }}>
           {
             (inputType === "email" ? keyTextFourthLineEmail : (openNumber ? keyNumberFourthLine : keyTextFourthLineText)).map((row, index) => {
+              const isEnter = row.value === "Enter"
               return (
                 <LoadingButton
                   key={index}
@@ -293,14 +325,24 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                     ...defaultButtonStyle,
                     width: index === (openNumber ? (inputType === "email" ? 2 : 1) : 2) ? 94 * (openNumber ? (inputType === "email" ? 6.4 : 8.6) : 6.3) : 94,
                   }}
-                  type={row.value === "Enter" ? "submit" : undefined}
+                  type={isEnter ? "submit" : undefined}
                   disabled={isSubmitting}
-                  loading={row.value === "Enter" ? isSubmitting : undefined}
                   onMouseDown={(event) => {
                     event.preventDefault()
                     onButtonClick(row.value)
                   }}>
-                  <Typography variant="h4">{isSubmitting ? "-" : getLabel(row.label)}</Typography>
+                  <Typography variant="h4">
+                    {
+                      row.value === "Enter" && (
+                        isSubmitting ? (
+                          <CircularProgress size={38} color="secondary" />
+                        ) : <>{row.label}</>
+                      )
+                    }
+                    {
+                      row.value !== "Enter" && getLabel(row.label)
+                    }
+                  </Typography>
                 </LoadingButton>
               )
             })
