@@ -11,12 +11,14 @@ const LabelListTextCard: FC<LabelListTextCardProps> = ({
 }) => {
   const theme = useTheme()
   return (
-    <Card variant="outlined">
-      <ButtonBase
-        sx={{
-          textAlign: 'start',
-        }}
-        onClick={action}
+    <ButtonBase 
+    sx={{
+      textAlign: 'start',
+      width: "100%", height: "100%"
+    }}
+    onClick={action}>
+      <Card variant='outlined'
+      sx={{width:"100%"}}
       >
         <Box
           sx={{
@@ -62,8 +64,8 @@ const LabelListTextCard: FC<LabelListTextCardProps> = ({
             {sectionBottom}
           </Box>
         </Box>
+        </Card>
       </ButtonBase>
-    </Card>
   );
 };
 

@@ -53,7 +53,7 @@ const SelectRadService = (props: SelectRadServiceProps) => {
               <Grid item xs={12} md={3} key={index}>
                 <CardBanner
                   key={index}
-                  localIcon="blood-test"
+                  localIcon="x-rays"
                   cardProps={{ variant: 'outlined' }}
                   body={fCurrency(50000)}
                   title={'CT Scan Kepala'}
