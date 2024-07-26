@@ -1,13 +1,16 @@
+import { yupResolver } from "@hookform/resolvers/yup"
+import { LoadingButton } from "@mui/lab"
 import { Box, Divider, Grid, MenuItem, Typography } from "@mui/material"
-import { lazy, ReactNode, Suspense, useEffect, useMemo } from "react"
+import { lazy, ReactNode, Suspense, useMemo } from "react"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import { AppPage } from "src/components/app-page"
 import { Form, RHFAutocomplete, RHFCheckbox, RHFDatePicker, RHFSelect, RHFSwitch, RHFTextField } from "src/components/hook-form"
 import { WindowContainer } from "src/components/window-container"
-import { getUser } from "./model/functions"
-import { toast } from "sonner"
-import { LoadingButton } from "@mui/lab"
 import { timeout } from "src/utils/timeout"
+import { getUser } from "./model/functions"
+import { DevIForm } from "./model/model"
+import { devSchema } from "./model/schema"
 
 const DevPage = () => {
 
@@ -26,9 +29,16 @@ const DevPage = () => {
     }
   ]
 
-  const methods = useForm({ defaultValues: { component: options[2] } })
+  const defaultValues: DevIForm = {
+    textfield: "",
+    component: null,
+    autocomplete: null
+  }
 
-  const componentName = methods.watch("component")
+  const methods = useForm({ defaultValues, resolver: yupResolver(devSchema) })
+  const { watch, handleSubmit } = methods
+
+  const componentName = watch("component")
 
   const Component = useMemo(() => {
 
@@ -61,13 +71,17 @@ const DevPage = () => {
     }
   }
 
+  const onSubmit = async (data: DevIForm) => {
+    console.log(data)
+  }
+
   return (
     <AppPage>
       <WindowContainer
         title="Development"
       >
         <Box sx={{ my: 2, mx: 4 }}>
-          <Form methods={methods}>
+          <Form methods={methods} onSubmit={handleSubmit((onSubmit as any))}>
 
             <RHFAutocomplete
               name="component"
@@ -122,6 +136,18 @@ const DevPage = () => {
                 onClick={() => { handleGetUser() }}
               >
                 Get User
+              </LoadingButton>
+            </Grid>
+
+            <Grid item xs={12}>
+              <LoadingButton
+                sx={{ mt: 2 }}
+                fullWidth
+                color="secondary"
+                variant="contained"
+                type="submit"
+              >
+                Submit
               </LoadingButton>
             </Grid>
           </Form>
