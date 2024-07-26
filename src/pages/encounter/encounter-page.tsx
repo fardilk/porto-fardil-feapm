@@ -50,10 +50,10 @@ import SelectRadService from './components/select-rad-service';
 
 const EncounterPage = () => {
   const navigate = useNavigate();
-  const { currentPage, currentPageIndex, handleChangePage, formSteps } = useStepper({
+  const { currentPage, currentPageIndex, handleChangePage } = useStepper({
     initialSteps: formStepsOutpatientGeneral,
   });
-  console.log(formSteps, currentPage);
+  
   const [encounterType, setEncounterType] = useState<EncounterType>(null);
 
   const [listEncounterType, _setListEncounterType] = useState<CardBannerProps[]>([
