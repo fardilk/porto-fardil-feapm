@@ -4,6 +4,7 @@ import {
   viVN as viVNCore,
   zhCN as zhCNCore,
   arSA as arSACore,
+  idID as idIDCore
 } from '@mui/material/locale';
 // date pickers (MUI)
 import {
@@ -33,6 +34,18 @@ export const allLangs = [
     systemValue: {
       components: { ...enUSDate.components, ...enUSDataGrid.components },
     },
+  },
+  {
+    value: "id",
+    label: "Indonesia",
+    countryCode: "ID",
+    adapterLocale: "id",
+    numberFormat: {
+      code: "id-ID", currency: "IDR"
+    },
+    systemValue: {
+      components:{...idIDCore.components}
+    }
   },
   {
     value: 'fr',

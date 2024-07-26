@@ -1,9 +1,9 @@
 // ----------------------------------------------------------------------
 
-export type LanguageValue = 'en' | 'fr' | 'vi' | 'cn' | 'ar';
+export type LanguageValue = 'en' | 'fr' | 'vi' | 'cn' | 'ar' | 'id';
 
-export const fallbackLng = 'en';
-export const languages = ['en', 'fr', 'vi', 'cn', 'ar'];
+export const fallbackLng = 'id';
+export const languages = ['en', 'id', 'fr', 'vi', 'cn', 'ar'];
 export const defaultNS = 'common';
 export const cookieName = 'i18next';
 
@@ -11,7 +11,7 @@ export const cookieName = 'i18next';
 
 export function i18nOptions(lng = fallbackLng, ns = defaultNS) {
   return {
-    // debug: true,
+    debug: true,
     lng,
     fallbackLng,
     ns,
@@ -31,6 +31,11 @@ export const changeLangMessages: Record<
     success: 'Language has been changed!',
     error: 'Error changing language!',
     loading: 'Loading...',
+  },
+  id: {
+    success: "Bahasa berhasil diubah",
+    error: "Kegagalan merubah bahasa",
+    loading: "Memuat..."
   },
   vi: {
     success: 'Ngôn ngữ đã được thay đổi!',

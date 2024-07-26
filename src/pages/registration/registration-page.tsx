@@ -10,6 +10,8 @@ import { getDummyData } from "./model/functions"
 import type { RegistrationIForm } from "./model/types"
 import { InsertIdentifier } from "src/components/insert-identifier"
 import { formStepsExistInInternal, formStepsExistInSatuSehat, formStepsForeign, formStepsNotExistInSatuSehat, formStepsNotExistInternal, formStepsRegistrationMethodByPhone } from "./model/variables"
+import { useTranslate } from "src/locales"
+import { useMemo } from "react"
 
 const RegistrationPage = () => {
 
@@ -17,6 +19,8 @@ const RegistrationPage = () => {
     nik: "",
     citizenship: false
   }
+
+  const {t} = useTranslate()
 
   const navigate = useNavigate()
 
@@ -58,12 +62,14 @@ const RegistrationPage = () => {
     }
   }
 
+  const getTitle = useMemo(() => currentPage.properties?.i18n ? t(currentPage.properties?.i18n) : currentPage.label, [currentPage,t])
+
   return (
     <AppPage>
       <Form methods={methods} onSubmit={handleSubmit(onSubmit)}>
 
         <WindowContainer
-          title={currentPage.label}
+          title={getTitle}
           handleBackNavigation={() => handleChangePage({ action: "previous" })}
           handleCloseNavigation={() => navigate("/", { replace: true })}
           hideBackNavigation={currentPage.properties?.hideBack}
