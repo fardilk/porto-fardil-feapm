@@ -295,7 +295,7 @@ export const formStepsMCUCompany = [
   },
   {
     label: 'Pendaftaran Berhasil',
-    value: 'confirmation_patient_registration_company',
+    value: 'registration_success_company',
     properties: {
       disableBack: true,
     },
