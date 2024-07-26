@@ -245,6 +245,10 @@ export const formStepsMCUAssurance = [
     },
   },
   {
+    label: 'Pilih Asuransi',
+    value: 'select_insurance_new',
+  },
+  {
     label: 'Pilih Paket MCU yang anda inginkan',
     value: 'select_mcu_package',
     properties: {
@@ -277,6 +281,10 @@ export const formStepsMCUCompany = [
       disableBack: true,
       containerSize: 'superLarge',
     },
+  },
+  {
+    label: 'Pilih Perusahaan',
+    value: 'select_company_new',
   },
   {
     label: 'Pilih Paket MCU yang anda inginkan',
