@@ -1,21 +1,14 @@
-import { useFormContext } from "react-hook-form"
-
-import { Box, Alert, Table, Button, TableRow, TableBody, TableCell, Typography, TableContainer } from "@mui/material"
-
-import { fAsterisk } from "src/utils/helper"
-
-import type { InformationProps } from "../model/types"
-import { LabelTextContainer, LabelTextProps } from "src/components/label-text"
+import { Alert, Box, Button, TableCell, TableContainer, Typography } from "@mui/material"
 import { useState } from "react"
+import { LabelTextContainer, LabelTextProps } from "src/components/label-text"
+import { fAsterisk } from "src/utils/helper"
+import type { InformationProps } from "../model/types"
 
 const InformationOutpatientGeneral = (props: InformationProps) => {
   const { leftButtonProps, rightButtonProps, leftTextButton, rightTextButton } = props
 
-  const { watch } = useFormContext()
-  const isForeign = watch("citizenship")
-
   const [detailData, _setDetailData] = useState<LabelTextProps[]>([
-    { title: isForeign ? "Passport" : "NIK/Medrec", body: fAsterisk("100200300400") },
+    { title: "NIK", body: fAsterisk("100200300400") },
     { title: "Nama Lengkap", body: "Anisa Redina" },
     { title: "Tempat, Tanggal Lahir", body: "Malaysia, 11-04-2000" },
     { title: "Golongan Darah", body: "B" },
@@ -24,6 +17,7 @@ const InformationOutpatientGeneral = (props: InformationProps) => {
     { title: "No Telpon", body: fAsterisk("085157902550") },
     { title: "Email", body: "anisa@gmail.com" },
   ])
+
 
   return (
     <>
@@ -46,13 +40,3 @@ const InformationOutpatientGeneral = (props: InformationProps) => {
 }
 
 export default InformationOutpatientGeneral
-
-const TableCellBody = ({ titleText, bodyText }: { titleText?: string, bodyText?: string }) => {
-  return (
-    <TableCell borderbottom="noborder">
-      <Typography variant={titleText ? "subtitle1" : undefined} color={titleText ? "grey.600" : undefined}>
-        {titleText} {bodyText}
-      </Typography>
-    </TableCell>
-  )
-}
