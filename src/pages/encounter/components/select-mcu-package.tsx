@@ -1,14 +1,18 @@
-import { Box, Grid, Typography, TextField, Button } from '@mui/material';
-import { useState, type FC } from 'react';
+import { Box, Grid, Typography, TextField, Button, InputAdornment } from '@mui/material';
+import { useRef, useState, type FC } from 'react';
 import { Iconify } from 'src/components/iconify';
 import { type SelectMCUPackageProps } from '../model/types';
 import LabelListTextCard from './label-list-text-card';
+import { RHFTextField } from 'src/components/hook-form';
+import { Keyboard } from 'src/components/keyboard';
 
-const SelectMCUPackage: FC<SelectMCUPackageProps> = ({handleSelect}) => {
-  const [searchInput, setSearchInput] = useState('');
+const SelectMCUPackage: FC<SelectMCUPackageProps> = ({ handleSelect }) => {
+  const [elementName, setElementName] = useState('');
+
+  const searchRef = useRef<any>({});
 
   const handleChangePagination = ({ action }: { action: 'prev' | 'next' }) => {
-    console.log(action)
+    console.log(action);
   };
 
   const listPackage = [
@@ -25,7 +29,7 @@ const SelectMCUPackage: FC<SelectMCUPackageProps> = ({handleSelect}) => {
         'CMV IgG',
       ],
       price: 'Rp 720.000',
-      action: handleSelect
+      action: handleSelect,
     },
     {
       name: 'Paket Prematerial Wanita',
@@ -40,7 +44,7 @@ const SelectMCUPackage: FC<SelectMCUPackageProps> = ({handleSelect}) => {
         'CMV IgG',
       ],
       price: 'Rp 720.000',
-      action: handleSelect
+      action: handleSelect,
     },
     {
       name: 'Paket Prematerial Wanita',
@@ -55,7 +59,7 @@ const SelectMCUPackage: FC<SelectMCUPackageProps> = ({handleSelect}) => {
         'CMV IgG',
       ],
       price: 'Rp 720.000',
-      action: handleSelect
+      action: handleSelect,
     },
     {
       name: 'Paket Prematerial Wanita',
@@ -70,21 +74,30 @@ const SelectMCUPackage: FC<SelectMCUPackageProps> = ({handleSelect}) => {
         'CMV IgG',
       ],
       price: 'Rp 720.000',
-      action: handleSelect
+      action: handleSelect,
     },
   ];
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <TextField
+        <RHFTextField
+          name="searchMCUPackage"
           fullWidth
-          onChange={(event) => {
-            setSearchInput(event.target.value);
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <Iconify icon="fluent:search-12-regular" />
+              </InputAdornment>
+            ),
           }}
-          value={searchInput}
           autoComplete="off"
           placeholder="Cari MCU"
-          InputProps={{ startAdornment: <Iconify icon="fluent:search-12-regular" /> }}
+          inputRef={(ref) => {
+            searchRef.current.searchMCUPackage = ref;
+          }}
+          onClick={() => {
+            setElementName('searchMCUPackage');
+          }}
         />
       </Grid>
       {listPackage.map((item, index) => (
@@ -111,31 +124,40 @@ const SelectMCUPackage: FC<SelectMCUPackageProps> = ({handleSelect}) => {
         </Grid>
       ))}
       <Grid item xs={12}>
+        <Box sx={{ width: '100%', display: 'flex', placeContent: 'space-between', gap: '10%' }}>
+          <Button
+            size="large"
+            variant="outlined"
+            color="secondary"
+            onClick={() => {
+              handleChangePagination({ action: 'prev' });
+            }}
+          >
+            <Iconify icon="fluent:chevron-left-12-regular" />
+          </Button>
 
-      <Box sx={{ width: '100%', display: 'flex', placeContent: 'space-between', gap: '10%' }}>
-        <Button
-          size="large"
-          variant="outlined"
-          color="secondary"
-          onClick={() => {
-            handleChangePagination({ action: 'prev' });
-          }}
-        >
-          <Iconify icon="fluent:chevron-left-12-regular" />
-        </Button>
-
-        <Button
-          size="large"
-          variant="outlined"
-          color="secondary"
-          onClick={() => {
-            handleChangePagination({ action: 'next' });
-          }}
-        >
-          <Iconify icon="fluent:chevron-right-12-regular" />
-        </Button>
-      </Box>
+          <Button
+            size="large"
+            variant="outlined"
+            color="secondary"
+            onClick={() => {
+              handleChangePagination({ action: 'next' });
+            }}
+          >
+            <Iconify icon="fluent:chevron-right-12-regular" />
+          </Button>
+        </Box>
       </Grid>
+      {elementName && (
+        <Keyboard
+          withDialog
+          elementName={elementName}
+          open={Boolean(elementName)}
+          onClose={() => setElementName('')}
+          ref={searchRef.current}
+          inputType="text"
+        />
+      )}
     </Grid>
   );
 };
