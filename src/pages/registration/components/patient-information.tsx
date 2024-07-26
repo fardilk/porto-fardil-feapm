@@ -14,12 +14,17 @@ const PatientInformation = (props: PatientInformationProps) => {
   const [detailData, _setDetailData] = useState<LabelTextProps[]>([
     { title: isForeign ? "Passport" : "NIK/Medrec", body: fAsterisk("100200300400") },
     { title: "Nama Lengkap", body: "Anisa Redina" },
+    { title: "Jenis Kelamin", body: "Perempuan" },
     { title: "Tempat, Tanggal Lahir", body: "Malaysia, 11-04-2000" },
-    { title: "Golongan Darah", body: "B" },
-    { title: "Rhesus", body: "Negatif" },
     { title: "Alamat", body: "Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan" },
     { title: "No Telpon", body: fAsterisk("085157902550") },
     { title: "Email", body: "anisa@gmail.com" },
+    { title: "Golongan Darah", body: "B" },
+    { title: "Agama", body: "Islam" },
+    { title: "Pendidikan", body: "Sarjana" },
+    { title: "Status Perkawinan", body: "Belum menikah" },
+    { title: "Pekerjaan", body: "Karyawan Swasta" },
+    { title: "Bahasa Sehari-hari", body: "Bahasa Indonesia" },
   ])
 
   return (

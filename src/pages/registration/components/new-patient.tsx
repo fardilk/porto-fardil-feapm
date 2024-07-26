@@ -1,14 +1,15 @@
 import type { ReactNode } from "react";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 import { Box, Button, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
 
-import { RHFMobileDatePicker, RHFRadioGroup, RHFTextField } from "src/components/hook-form";
+import { RHFMobileDatePicker, RHFRadioGroup, RHFTextField, RHFTimePils } from "src/components/hook-form";
 import { Keyboard } from "src/components/keyboard";
 
 import type { NewPatientProps } from "../model/types";
+import { label } from "yet-another-react-lightbox";
 
 const NewPatient = (props: NewPatientProps) => {
   const { handleNextPage, handlePreviousPage } = props
@@ -19,6 +20,63 @@ const NewPatient = (props: NewPatientProps) => {
 
   const { watch } = useFormContext()
   const isForeign = watch("citizenship")
+
+  const listReligion = useMemo(() => [
+    {
+      label: "Islam",
+      value: "islam"
+    },
+    {
+      label: "Kristen Protestan",
+      value: "kristen_protestan"
+    },
+    {
+      label: "Katholik",
+      value: "katholik"
+    },
+    {
+      label: "Hindu",
+      value: "hindu"
+    },
+    {
+      label: "Budha",
+      value: "budha"
+    },
+    {
+      label: "Konghucu",
+      value: "konghucu"
+    },
+    {
+      label: "Lainnya",
+      value: "lainnya"
+    },
+  ],[])
+
+  const listGender = useMemo(() => [
+    {
+      label: "Laki-laki",
+      value: "laki-laki"
+    },
+    {
+      label: "Perempuan",
+      value: "perempuan"
+    }
+  ],[])
+
+  const listMarriage = useMemo(() => [
+    {
+      label: "Cerai",
+      value: "cerai"
+    },
+    {
+      label: "Menikah",
+      value: "menikah"
+    },
+    {
+      label: "Belum Menikah",
+      value: "belum_menikah"
+    }
+  ],[])
 
   return (
     <>
@@ -55,12 +113,11 @@ const NewPatient = (props: NewPatientProps) => {
             <TableRow>
               <TableCellBody titleText="Jenis Kelamin" />
               <TableCellBody>
-                <RHFRadioGroup
-                  id="gender"
+                <RHFTimePils
                   name="gender"
-                  row
-                  options={[{ label: "Laki - Laki", value: "male" }, { label: "Perempuan", value: "female" }]}
-                  onClick={() => { setElementName(""); setKeyboardType("") }}
+                  options={listGender}
+                  getOptionLabel={opt => opt.label}
+                  getOptionEqualToValue={(opt, value) => opt.value === value?.value}
                 />
               </TableCellBody>
             </TableRow>
@@ -88,6 +145,28 @@ const NewPatient = (props: NewPatientProps) => {
                 <RHFMobileDatePicker
                   name="birthDate"
                   format="DD/MM/YYYY"
+                />
+              </TableCellBody>
+            </TableRow>
+            <TableRow>
+              <TableCellBody titleText="Agama"/>
+              <TableCellBody>
+                <RHFTimePils
+                  name="agama"
+                  options={listReligion}
+                  getOptionLabel={opt => opt.label}
+                  getOptionEqualToValue={(opt, value) => opt.value === value?.value}
+                />
+              </TableCellBody>
+            </TableRow>
+            <TableRow>
+              <TableCellBody titleText="Status Perkawinan"/>
+              <TableCellBody>
+                <RHFTimePils
+                  name="marriage"
+                  options={listMarriage}
+                  getOptionLabel={opt => opt.label}
+                  getOptionEqualToValue={(opt, value) => opt.value === value?.value}
                 />
               </TableCellBody>
             </TableRow>

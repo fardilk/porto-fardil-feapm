@@ -5,10 +5,11 @@ import { AppPage } from "src/components/app-page"
 import { Form } from "src/components/hook-form"
 import { WindowContainer } from "src/components/window-container"
 import { useStepper } from "src/hooks"
-import { InsertEmail, InsertPhone, NewPatient, PatientInformation, SuccessNewPatient } from "./components"
+import { BarcodePhone, DetailNewPatient, InsertEmail, InsertPhone, NewPatient, PatientInformation, SelectRegistrationMethod, SuccessNewPatient } from "./components"
 import { getDummyData } from "./model/functions"
 import type { RegistrationIForm } from "./model/types"
 import { InsertIdentifier } from "src/components/insert-identifier"
+import { formStepsExistInInternal, formStepsExistInSatuSehat, formStepsForeign, formStepsNotExistInSatuSehat, formStepsNotExistInternal, formStepsRegistrationMethodByPhone } from "./model/variables"
 
 const RegistrationPage = () => {
 
@@ -31,23 +32,28 @@ const RegistrationPage = () => {
 
   const onSubmit = async (data: any) => {
     if (currentPageIndex === 0) {
-
       if (isForeign) {
         handleChangePage({ action: "next", newFormSteps: formStepsForeign })
       } else {
-        const resp = await getDummyData("not_exist_satusehat")
 
-        if (resp.data === "medrec_exit") handleChangePage({ action: "next", newFormSteps: formStepsExistInInternal });
-        else if (resp.data === "exist_satusehat") handleChangePage({ action: "next", newFormSteps: formStepsExistInSatuSehat });
-        else if (resp.data === "not_exist_satusehat") handleChangePage({ action: "next", newFormSteps: formStepsNotExistInSatuSehat })
+        const dataNIK = data.nik.replace("\n","")
+        console.log(dataNIK, 'data form')
+        const resp = await getDummyData(dataNIK === "123" ? "medrec_exist" : "medrec_not_exist")
+
+        if(resp.data === "medrec_exist"){
+          handleChangePage({ action: "next", newFormSteps: formStepsExistInInternal })
+        } else {
+          handleChangePage({ action: "next", newFormSteps: formStepsNotExistInternal })
+        }
       }
     } else {
       switch (currentPage.value) {
         case "insert_email":
           handleChangePage({ toSpecificPage: "information" })
           break;
-        default:
-          handleChangePage({ action: "next" });
+        default: {
+          handleChangePage({ action: "next" })
+        }
       }
     }
   }
@@ -78,9 +84,40 @@ const RegistrationPage = () => {
               )
             }
 
+            {currentPage.value === "select_registration_method" && (
+              <SelectRegistrationMethod
+                handleByPhone={() => handleChangePage({
+                  action: "next",
+                  newFormSteps: formStepsRegistrationMethodByPhone
+                })}
+                handleByAnjungan={() => {
+                  if(watch("nik").trim() === "12"){
+                    handleChangePage({
+                      action: "next",
+                      newFormSteps: formStepsExistInSatuSehat
+                    })
+                  } else {
+                    handleChangePage({
+                      action: "next",
+                      newFormSteps: formStepsNotExistInSatuSehat
+                    })
+                  }
+                }}
+              />
+            )}
+
             {currentPage.value === "insert_phone_number" && <InsertPhone />}
 
+            {currentPage.value === "barcode_phone" && <BarcodePhone />}
+
             {currentPage.value === "insert_email" && <InsertEmail />}
+
+            {currentPage.value === "create_detail_new_patient" && (
+              <DetailNewPatient
+                handleNextPage={() => handleChangePage({ action: "next" })}
+                handlePreviousPage={() => handleChangePage({ action: "previous" })}
+              />
+            )}
 
             {currentPage.value === "create_new_patient" && (
               <NewPatient
@@ -112,100 +149,3 @@ const RegistrationPage = () => {
 }
 
 export default RegistrationPage
-
-const formStepsExistInInternal = [
-  {
-    label: "Masukkan NIK",
-    value: "insert_nik"
-  },
-  {
-    label: "Informasi Data Pasien",
-    value: "information",
-    properties: {
-      hideBack: true,
-    }
-  },
-  {
-    label: "Masukkan Nomor Telepon",
-    value: "insert_phone_number"
-  },
-  {
-    label: "Masukkan Email",
-    value: "insert_email"
-  }
-]
-
-const formStepsExistInSatuSehat = [
-  {
-    label: "Masukkan NIK",
-    value: "insert_nik"
-  },
-  {
-    label: "Isi Data Pasien Baru",
-    value: "create_new_patient"
-  },
-  {
-    label: "Konfirmasi Data Pasien",
-    value: "confirmation_new_patient",
-    properties: {
-      hideBack: true,
-    }
-  },
-  {
-    label: "Pendaftaran Berhasil",
-    value: "success_new_patient",
-    properties: {
-      hideBack: true,
-    }
-  }
-]
-
-const formStepsNotExistInSatuSehat = [
-  {
-    label: "Masukkan NIK",
-    value: "insert_nik"
-  },
-  {
-    label: "Isi Data Pasien Baru",
-    value: "create_new_patient"
-  },
-  {
-    label: "Konfirmasi Data Pasien",
-    value: "confirmation_new_patient",
-    properties: {
-      hideBack: true,
-    }
-  },
-  {
-    label: "Pendaftaran Berhasil",
-    value: "success_new_patient",
-    properties: {
-      hideBack: true,
-    }
-  }
-]
-
-const formStepsForeign = [
-  {
-    label: "Submit Passport",
-    value: "insert_nik"
-  },
-  {
-    label: "Entry New Data Patient",
-    value: "create_new_patient"
-  },
-  {
-    label: "Patient Data Confirmation",
-    value: "confirmation_new_patient",
-    properties: {
-      hideBack: true,
-    }
-  },
-  {
-    label: "Registration Successful",
-    value: "success_new_patient",
-    properties: {
-      hideBack: true,
-    }
-  }
-]

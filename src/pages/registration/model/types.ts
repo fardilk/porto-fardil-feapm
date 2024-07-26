@@ -20,3 +20,8 @@ export type RegistrationIForm = {
   nik: string;
   citizenship: boolean;
 };
+
+export type SelectRegistrationMethodProps = {
+  handleByPhone: () => void;
+  handleByAnjungan: () => void;
+}
