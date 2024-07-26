@@ -1,10 +1,14 @@
 import { Grid } from "@mui/material"
 import { CardBanner } from "src/components/card-banner"
 import type { SelectReservationTypeProps } from "../model/types"
+import { useEffect } from "react"
 
 const SelectReservationType = (props: SelectReservationTypeProps) => {
-  const { items } = props
+  const { items, handleResetReservationType } = props
 
+  useEffect(() => {
+    handleResetReservationType()
+  },[handleResetReservationType])
   return (
     <Grid container spacing={2}>
       {
