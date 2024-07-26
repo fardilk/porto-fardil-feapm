@@ -47,6 +47,7 @@ import {
 import { fAsterisk } from 'src/utils/helper';
 import SelectLabPackage from './components/select-lab-package';
 import SelectRadService from './components/select-rad-service';
+import SelectTime from './components/select-time';
 
 const ReservationPage = () => {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ const ReservationPage = () => {
     initialSteps: formStepsOutpatientGeneral,
   });
 
-  console.log(formSteps)
+  console.log(formSteps, currentPage)
   
   const [reservationType, SetReservationType] = useState<ReservationType>(null);
 
@@ -279,6 +280,18 @@ const ReservationPage = () => {
                 }}
                 reservationType={reservationType}
                 handleAssurance={onAssuranceSelect}
+              />
+            )}
+
+            {currentPage.value === 'select_time' && (
+              <SelectTime
+                handleBack={() => {
+                  handleChangePage({ action: 'previous' });
+                }}
+                handleConfirm={() => {
+                  handleChangePage({ action: 'next' });
+                }}
+                reservationType={reservationType}
               />
             )}
 

@@ -74,6 +74,13 @@ export const buttonStyle: any = {
       },
     },
     {
+      label: 'Pilih Waktu Kunjungan',
+      value: 'select_time',
+      properties: {
+        disableBack: true,
+      },
+    },
+    {
       label: 'Konfirmasi Pendaftaran Pasien',
       value: 'confirmation_patient_registration',
       properties: {
@@ -114,6 +121,13 @@ export const buttonStyle: any = {
     {
       label: 'Pilih Dokter Poli',
       value: 'select_healthcare_practitioner',
+      properties: {
+        disableBack: true,
+      },
+    },
+    {
+      label: 'Pilih Waktu Kunjungan',
+      value: 'select_time',
       properties: {
         disableBack: true,
       },
@@ -164,6 +178,13 @@ export const buttonStyle: any = {
       },
     },
     {
+      label: 'Pilih Waktu Kunjungan',
+      value: 'select_time',
+      properties: {
+        disableBack: true,
+      },
+    },
+    {
       label: 'Konfirmasi Pendaftaran Pasien',
       value: 'confirmation_patient_registration_company',
       properties: {
@@ -193,6 +214,13 @@ export const buttonStyle: any = {
       value: 'select_healthcare_practitioner',
     },
     {
+      label: 'Pilih Waktu Kunjungan',
+      value: 'select_time',
+      properties: {
+        disableBack: true,
+      },
+    },
+    {
       label: 'Konfirmasi Pendaftaran Pasien',
       value: 'confirmation_patient_registration_bpjs',
       properties: {
@@ -216,6 +244,13 @@ export const buttonStyle: any = {
       properties: {
         disableBack: true,
         containerSize: 'superLarge',
+      },
+    },
+    {
+      label: 'Pilih Waktu Kunjungan',
+      value: 'select_time',
+      properties: {
+        disableBack: true,
       },
     },
     {
@@ -257,6 +292,13 @@ export const buttonStyle: any = {
       },
     },
     {
+      label: 'Pilih Waktu Kunjungan',
+      value: 'select_time',
+      properties: {
+        disableBack: true,
+      },
+    },
+    {
       label: 'Konfirmasi Pendaftaran Pasien',
       value: 'confirmation_patient_registration_mcu',
       properties: {
@@ -295,6 +337,13 @@ export const buttonStyle: any = {
       },
     },
     {
+      label: 'Pilih Waktu Kunjungan',
+      value: 'select_time',
+      properties: {
+        disableBack: true,
+      },
+    },
+    {
       label: 'Konfirmasi Pendaftaran Pasien',
       value: 'confirmation_patient_registration_mcu',
       properties: {
@@ -315,6 +364,13 @@ export const buttonStyle: any = {
     {
       label: 'Pilih Paket Laboratorium yang Anda Inginkan',
       value: 'select_lab_package',
+      properties: {
+        disableBack: true,
+      },
+    },
+    {
+      label: 'Pilih Waktu Kunjungan',
+      value: 'select_time',
       properties: {
         disableBack: true,
       },
@@ -365,6 +421,13 @@ export const buttonStyle: any = {
       },
     },
     {
+      label: 'Pilih Waktu Kunjungan',
+      value: 'select_time',
+      properties: {
+        disableBack: true,
+      },
+    },
+    {
       label: 'Konfirmasi Pendaftaran Pasien',
       value: 'confirmation_patient_registration_insurance',
       properties: {
@@ -410,6 +473,13 @@ export const buttonStyle: any = {
       },
     },
     {
+      label: 'Pilih Waktu Kunjungan',
+      value: 'select_time',
+      properties: {
+        disableBack: true,
+      },
+    },
+    {
       label: 'Konfirmasi Pendaftaran Pasien',
       value: 'confirmation_patient_registration_company',
       properties: {
@@ -431,6 +501,13 @@ export const buttonStyle: any = {
     {
       label: 'Pilih Layanan Radiologi yang Anda Inginkan',
       value: 'select_rad_service',
+      properties: {
+        disableBack: true,
+      },
+    },
+    {
+      label: 'Pilih Waktu Kunjungan',
+      value: 'select_time',
       properties: {
         disableBack: true,
       },
@@ -481,6 +558,13 @@ export const buttonStyle: any = {
       },
     },
     {
+      label: 'Pilih Waktu Kunjungan',
+      value: 'select_time',
+      properties: {
+        disableBack: true,
+      },
+    },
+    {
       label: 'Konfirmasi Pendaftaran Pasien',
       value: 'confirmation_patient_registration_insurance',
       properties: {
@@ -521,6 +605,13 @@ export const buttonStyle: any = {
     {
       label: 'Pilih Layanan Radiologi yang Anda Inginkan',
       value: 'select_rad_service',
+      properties: {
+        disableBack: true,
+      },
+    },
+    {
+      label: 'Pilih Waktu Kunjungan',
+      value: 'select_time',
       properties: {
         disableBack: true,
       },

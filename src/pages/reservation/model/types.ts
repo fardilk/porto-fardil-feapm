@@ -95,3 +95,9 @@ export type SelectLabPackageProps = {
 export type SelectRadServiceProps = {
   onCardSelect: () => void;
 };
+
+export type SelectTimeProps = {
+  handleBack: () => void;
+  handleConfirm: () => void;
+  reservationType: ReservationType
+}
