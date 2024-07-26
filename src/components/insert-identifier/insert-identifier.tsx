@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useFormContext } from "react-hook-form"
 
 import { Box, Divider, Stack, Typography, useTheme } from "@mui/material"
@@ -7,12 +7,13 @@ import { typography } from "src/theme/core"
 
 import { RHFSwitch, RHFTextField } from "src/components/hook-form"
 import { Keyboard } from "src/components/keyboard"
-
+import { useTranslate } from "src/locales"
 
 const InsertIdentifier = () => {
 
   const { watch } = useFormContext()
   const isForeign = watch("citizenship")
+  const { t, currentLang, onChangeLang } = useTranslate()
 
   const theme = useTheme()
   const [elementName, _setElementName] = useState("nik")
@@ -40,12 +41,19 @@ const InsertIdentifier = () => {
           color="secondary.main"
           onClick={(event) => {
             const { checked } = (event.target as any)
-            if (checked) setKeyboardType("text"); else setKeyboardType("numberOnly")
+            if (checked) {
+              setKeyboardType("text")
+              onChangeLang("en")
+            }
+            else {
+              setKeyboardType("numberOnly")
+              onChangeLang("id")
+            }
           }}
         />
       </Box>
 
-      <Typography variant="h4" textAlign="center">{isForeign ? "Submit Your Passport" : "Masukkan NIK Anda"}</Typography>
+      <Typography variant="h4" textAlign="center">{t('doctor_visit.input_your_passport')}</Typography>
       <RHFTextField
         id="nik"
         name="nik"
