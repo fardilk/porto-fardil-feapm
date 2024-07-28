@@ -1,10 +1,9 @@
 import { AppPage } from 'src/components/app-page';
 import { ReactNode, useState } from 'react';
-import { SelectTimeProps } from '../model/types';
+import { FormValues, SelectTimeProps } from '../model/types';
 import { Form, RHFMobileDatePicker, RHFTimePils } from 'src/components/hook-form';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import { getDummyData } from '../../registration/model/functions';
 import {
   Button,
@@ -19,44 +18,28 @@ import {
   TableRow,
 } from '@mui/material';
 import { LabelTextContainer, LabelTextProps } from 'src/components/label-text';
-
-// interface FormValues {
-//   date: Date;
-//   unable: 'Pindah Jadwal' | 'Batal Kunjungan';
-//   bookTime: number[];
-// }
+import { reservationSchema } from '../model/schema';
 
 const SelectTime = (props: SelectTimeProps) => {
   const { reservationType, handleBack, handleConfirm } = props;
-  // const schema = yup.object().shape({
-  //   date: yup.date().required('Field Date is Required'),
-  //   unable: yup
-  //     .string()
-  //     .oneOf(['Pindah Jadwal', 'Batal Kunjungan'])
-  //     .required('This Field is Required'),
-  //   bookTime: yup.array().of(yup.number()).min(1).required('At least one time slot is required'),
-  // });
 
-  // const [defaultValues, setDefaultVal] = useState<FormValues>({
-  //   date: new Date(),
-  //   unable: 'Pindah Jadwal',
-  //   bookTime: [],
-  // });
+  const [defaultValues, setDefaultVal] = useState<FormValues>({
+    date: new Date(),
+    unable: 'Pindah Jadwal',
+    bookTime: [],
+  });
 
-  // const methods = useForm({
-  //   resolver: yupResolver(schema),
-  //   defaultValues,
-  // });
+  const methods = useForm({
+    resolver: yupResolver(reservationSchema),
+    defaultValues,
+  });
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  //   control,
-  // } = methods;
+  const { register, handleSubmit, setError, formState: { errors } } = methods;
 
-  const onSubmitForm = (data: any) => {
+  const onSubmitForm = (data: FormValues) => {
+    console.log(data)
     // handleConfirm()
+    // onClick={() => methods.setError("timePils", { message: "Isi yang bener" })}
   };
 
   const [headerData, _setHeaderData] = useState<LabelTextProps[]>([
@@ -120,7 +103,7 @@ const SelectTime = (props: SelectTimeProps) => {
               <TableCellBody titleText="Tanggal Kunjungan" />
               <TableCellBody>
                 <RHFMobileDatePicker
-                  name="birthDate"
+                  name="date"
                   format="DD/MM/YYYY"
                   // {...register('date')}
                 />
@@ -133,7 +116,7 @@ const SelectTime = (props: SelectTimeProps) => {
                   options={timeOpt}
                   getOptionEqualToValue={(opt, value) => opt.value === value?.value}
                   getOptionLabel={(opt) => opt.label}
-                  name="timePils"
+                  name='visitHour'
                 />
               </TableCellBody>
             </TableRow>
@@ -144,7 +127,7 @@ const SelectTime = (props: SelectTimeProps) => {
                   options={unableOpt}
                   getOptionEqualToValue={(opt, value) => opt.value === value?.value}
                   getOptionLabel={(opt) => opt.label}
-                  name="timePils2"
+                  name="unable"
                 />
               </TableCellBody>
             </TableRow>

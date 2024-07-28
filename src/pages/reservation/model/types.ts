@@ -101,3 +101,9 @@ export type SelectTimeProps = {
   handleConfirm: () => void;
   reservationType: ReservationType
 }
+
+export type FormValues = {
+  date: Date;
+  unable: 'Pindah Jadwal' | 'Batal Kunjungan';
+  bookTime: number[];
+}
