@@ -61,6 +61,7 @@
     "service_destination": "Tujuan Layanan",
     "examining_doctor": "Dokter Pemeriksa",
     "patient": {
+      "title": "Detail Pasien",
       "nik": "NIK",
       "passport": "No Paspor",
       "fullname": "Nama Lengkap",
@@ -75,6 +76,23 @@
         "invalid_button": "Data salah, isi ulang NIK",
         "valid_button": "Data sudah benar, lanjutkan"
       }
+    },
+    "encounter": {
+      "title": "Detail Kunjungan",
+      "healthcare_service": "Tujuan Pelayanan",
+      "service_type": "Tipe Pelayanan",
+      "practitioner": "Dokter Pemeriksa",
+      "payplan": "Tipe Pembayaran",
+      "schedule": "Waktu Pelayanan"
+    },
+    "data_statement": "Saya menyatakan bahwa apa yang telah saya beritahukan di atas adalah benar dan lengkap",
+    "change_registration": "Ubah Pendaftaran",
+    "confirm_registration": "Konfirmasi Daftar",
+    "confirmation": {
+      "title": "Konfirmasi Pendaftaran?",
+      "subtitle": "Pastikan seluruh data Anda telah benar dan lengkap.",
+      "recheck": "Periksa Kembali",
+      "confirm": "Konfirmasi Pendaftaran"
     },
     "payment": {
       "general": {
@@ -105,19 +123,26 @@
   "encounter": {
     "outpatient": {
       "title": "PEMERIKSAAN RAWAT JALAN",
-      "description": "Layanan medis yang mencakup evaluasi kesehatan, diagnosis, dan perawatan tanpa memerlukan rawat inap."
+      "description": "Layanan medis yang mencakup evaluasi kesehatan, diagnosis, dan perawatan tanpa memerlukan rawat inap.",
+      "doctor_find": "Cari Dokter",
+      "doctor_unknown": "Belum tahu dokter? Pilih Poli & Temukan Dokter Terdekat",
+      "doctor_known": "Sudah tahu dokter? Pilih dokter",
+      "department_find": "Cari Poli"
     },
     "mcu": {
       "title": "MEDICAL CHECK UP",
-      "description": "Serangkaian uji kesehatan rutin untuk memeriksa kesehatan tubuh secara keseluruhan dan mengantisipasi risiko penyakit."
+      "description": "Serangkaian uji kesehatan rutin untuk memeriksa kesehatan tubuh secara keseluruhan dan mengantisipasi risiko penyakit.",
+      "package_find": "Cari MCU"
     },
     "laboratory": {
       "title": "LABORATORIUM",
-      "description": "Fasilitas yang menyediakan uji diagnostik untuk mendukung evaluasi kesehatan, diagnosis, dan medical check up rutin tanpa perlu rawat inap."
+      "description": "Fasilitas yang menyediakan uji diagnostik untuk mendukung evaluasi kesehatan, diagnosis, dan medical check up rutin tanpa perlu rawat inap.",
+      "package_find": "Cari Paket Lab"
     },
     "radiology": {
       "title": "RADIOLOGI",
-      "description": "Layanan medis yang menyediakan uji pencitraan seperti X-ray, CT scan, dan MRI untuk mendukung diagnosis dan perawatan tanpa memerlukan rawat inap."
+      "description": "Layanan medis yang menyediakan uji pencitraan seperti X-ray, CT scan, dan MRI untuk mendukung diagnosis dan perawatan tanpa memerlukan rawat inap.",
+      "package_find": "Cari Radiologi"
     }
   }
 }

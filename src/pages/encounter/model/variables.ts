@@ -1,3 +1,5 @@
+import { useTranslate } from "src/locales";
+
 export const buttonStyle: any = {
   fullWidth: true,
   size: 'large',
@@ -6,30 +8,32 @@ export const buttonStyle: any = {
 };
 
 export const getPaymentType = (type: string) => {
+  const { t } = useTranslate();
+
   switch (type) {
     case 'general':
       return {
-        title: 'Tipe Pembayaran',
+        title: t('appointment.encounter.payplan'),
         body: 'Umum',
         localIcon: 'pembayaran-umum',
       };
     case 'insurance':
       return {
-        title: 'Tipe Pembayaran',
+        title: t('appointment.encounter.payplan'),
         body: 'Asuransi',
         localIcon: 'asuransi',
       };
 
     case 'company':
       return {
-        title: 'Tipe Pembayaran',
+        title: t('appointment.encounter.payplan'),
         body: 'Perusahaan',
         localIcon: 'perusahaan',
       };
 
     default:
       return {
-        title: 'Tipe Pembayaran',
+        title: t('appointment.encounter.payplan'),
         body: 'BPJS',
         localIcon: 'bpjs',
       };

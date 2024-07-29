@@ -6,6 +6,7 @@ import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
 import { fAsterisk } from 'src/utils/helper';
 import type { OutpatientType } from '../model/types';
 import { getPaymentType } from '../model/variables';
+import { useTranslate } from 'src/locales';
 
 const ConfirmationOutpatient = ({
   handleBack,
@@ -16,37 +17,39 @@ const ConfirmationOutpatient = ({
   handleConfirm: () => void;
   type: OutpatientType;
 }) => {
+  const { t } = useTranslate();
+
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [acceptedTerm, setAcceptedTerm] = useState(false);
 
-  const [detailData, _setDetailData] = useState<LabelTextProps[]>([
-    { title: 'NIK', body: fAsterisk('100200300400') },
-    { title: 'Nama Lengkap', body: 'Anisa Redina' },
-    { title: 'Tempat, Tanggal Lahir', body: 'Malaysia, 11-04-2000' },
-    { title: 'Golongan Darah', body: 'B' },
-    { title: 'Rhesus', body: 'Negatif' },
+  const detailData: LabelTextProps[] = [
+    { title: t('appointment.patient.nik'), body: fAsterisk('100200300400') },
+    { title: t('appointment.patient.fullname'), body: 'Anisa Redina' },
+    { title: t('appointment.patient.birthdateplace'), body: 'Malaysia, 11-04-2000' },
+    { title: t('appointment.patient.blood_type'), body: 'B' },
+    { title: t('appointment.patient.blood_rhesus'), body: 'Negatif' },
     {
-      title: 'Alamat',
+      title: t('appointment.patient.address'),
       body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
     },
-    { title: 'No Telpon', body: fAsterisk('085157902550') },
-    { title: 'Email', body: 'anisa@gmail.com' },
-  ]);
+    { title: t('appointment.patient.phone'), body: fAsterisk('085157902550') },
+    { title: t('appointment.patient.email'), body: 'anisa@gmail.com' },
+  ];
 
   const listCard = [
     {
-      title: 'Tujuan Pelayanan',
+      title: t('appointment.encounter.healthcare_service'),
       body: 'Poli Mata',
       localIcon: 'stethoscope',
     },
     {
-      title: 'Dokter Pemeriksa',
+      title: t('appointment.encounter.practitioner'),
       body: 'dr. Inas Shabrina,Sp.M',
       localIcon: 'doctor',
     },
     { ...getPaymentType(type) },
     {
-      title: 'Waktu Pelayanan',
+      title: t('appointment.encounter.schedule'),
       body: 'Senin, 30-01-2022, 10:00-14:00',
       localIcon: 'jadwal',
     },
@@ -57,14 +60,14 @@ const ConfirmationOutpatient = ({
       action: () => {
         setOpenConfirmDialog(false);
       },
-      label: 'Periksa Kembali',
+      label: t('appointment.confirmation.recheck'),
       buttonProps: { variant: 'outlined', size: 'large', color: 'secondary', fullWidth: true },
     },
     {
       action: () => {
         handleConfirm();
       },
-      label: 'Konfirmasi Pendaftaran',
+      label: t('appointment.confirmation.confirm'),
       buttonProps: { variant: 'contained', size: 'large', color: 'secondary', fullWidth: true },
     },
   ];
@@ -74,14 +77,14 @@ const ConfirmationOutpatient = ({
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <Typography gutterBottom variant="h5" color="secondary.darker">
-            Detail Pasien
+            {t('appointment.patient.title')}
           </Typography>
           <LabelTextContainer listText={detailData} orientation="horizontal" />
         </Grid>
 
         <Grid item xs={12} md={6}>
           <Typography gutterBottom variant="h5" color="secondary.darker">
-            Detail Kunjungan
+            {t('appointment.encounter.title')}
           </Typography>
           <Grid container spacing={2}>
             {listCard.map((row, index) => {
@@ -110,7 +113,7 @@ const ConfirmationOutpatient = ({
                 color="secondary"
               />
             }
-            label="Saya menyatakan bahwa apa yang telah saya beritahukan di atas adalah benar dan lengkap"
+            label={t('appointment.data_statement')}
           />
         </Grid>
       </Grid>
@@ -123,7 +126,7 @@ const ConfirmationOutpatient = ({
           size="large"
           onClick={() => handleBack()}
         >
-          Ubah Pendaftaran
+          {t('appointment.change_registration')}
         </Button>
         <Button
           fullWidth
@@ -133,7 +136,7 @@ const ConfirmationOutpatient = ({
           disabled={!acceptedTerm}
           onClick={() => setOpenConfirmDialog(true)}
         >
-          Konfirmasi Daftar
+          {t('appointment.confirm_registration')}
         </Button>
       </Box>
 
@@ -142,8 +145,8 @@ const ConfirmationOutpatient = ({
         dialogProps={{ maxWidth: 'sm' }}
         open={openConfirmDialog}
         handleClose={() => setOpenConfirmDialog(false)}
-        title="Konfirmasi Pendaftaran?"
-        subtitle="Pastikan seluruh data Anda telah benar dan lengkap."
+        title={t('appointment.confirmation.title')}
+        subtitle={t('appointment.confirmation.subtitle')}
         child={buttonAction as any}
       />
     </Stack>

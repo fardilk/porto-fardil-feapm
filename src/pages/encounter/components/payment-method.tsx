@@ -12,7 +12,7 @@ const PaymentMethod = (props: PaymentMethodProps) => {
 
   const [openAssurance, setOpenAssurance] = useState(false)
 
-  const [paymentMethod, _setPaymentMethod] = useState<CardBannerProps[]>([
+  const paymentMethod: CardBannerProps[] = [
     {
       title: t("appointment.payment.general.title"),
       body: t("appointment.payment.general.description"),
@@ -25,9 +25,9 @@ const PaymentMethod = (props: PaymentMethodProps) => {
       localIcon: "jaminan",
       onClick: () => { setOpenAssurance(true) }
     }
-  ])
+  ]
 
-  const [assurancePaymentMethod, _setAssurancePaymentMethod] = useState<CardBannerProps[]>([
+  const assurancePaymentMethod: CardBannerProps[] = [
     ... encounterType === "RJ" ? [{
       title: t("appointment.payment.assurance.bpjs.title"),
       body: t("appointment.payment.assurance.bpjs.description"),
@@ -46,7 +46,7 @@ const PaymentMethod = (props: PaymentMethodProps) => {
       localIcon: "perusahaan",
       onClick: () => { handleAssurance("company") }
     },
-  ])
+  ]
 
   return (
     <Grid container spacing={2}>
