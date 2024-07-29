@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 
-import { Box, Typography } from "@mui/material";
+import { Box, MenuItem, Select, Switch, Typography, useTheme } from "@mui/material";
 
 import { Header_Height } from "src/utils/variables";
 
 import { Image } from "src/components/image";
+import { RHFSelect, RHFSwitch } from "src/components/hook-form";
+import { Iconify } from "src/components/iconify";
+import { useTranslate } from "src/locales";
 
 const Header = () => {
 
@@ -16,6 +19,10 @@ const Header = () => {
     const year = date.toLocaleString('id-ID', { year: 'numeric' });
     return `${day} ${month.toUpperCase()} ${year}`;
   };
+
+  const { onChangeLang, currentLang } = useTranslate()
+
+  const theme = useTheme()
 
   /* State */
   const [time, setTime] = useState<string>('');
@@ -34,6 +41,8 @@ const Header = () => {
     return () => clearInterval(timerId);
   }, []);
 
+  console.log(currentLang.value)
+
 
   return (
     <Box sx={{
@@ -51,7 +60,33 @@ const Header = () => {
         <Typography variant="body2" noWrap textOverflow="ellipsis">{import.meta.env.VITE_APP_ADDRESS} Telp: {import.meta.env.VITE_APP_TELECOM}</Typography>
       </Box>
 
-      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'end', width: 'fit-content' }}>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 1.5,
+          placeItems: "center",
+          width: "fit-content",
+          pl: 2,
+          pr: 2,
+          borderRadius: 1,
+          bgcolor: theme.palette.secondary.light,
+        }}
+      >
+        <Iconify icon="flagpack:id" />
+        <Switch
+          checked={currentLang.value === "en"}
+          onChange={(event) => {
+            if(event.target.checked){
+              onChangeLang("en")
+            } else {
+              onChangeLang("id")
+            }
+          }}
+        />
+        <Iconify icon="flagpack:gb-ukm"/>
+      </Box>
+
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'end', width: 120 }}>
         <Typography variant="body2">{getCurrentDate()}</Typography>
         <Typography variant="h3">{time}</Typography>
       </Box>

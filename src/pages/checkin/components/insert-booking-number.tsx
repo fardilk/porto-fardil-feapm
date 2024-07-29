@@ -5,10 +5,12 @@ import { Keyboard } from 'src/components/keyboard';
 import { typography } from 'src/theme/core';
 import { ErrorAlert } from 'src/components/error-alert';
 import { type InsertBookingProps } from '../model/types';
+import { useTranslate } from 'src/locales';
 
 const InsertBookingNumber: FC<InsertBookingProps> = ({ errorMessage }) => {
   const theme = useTheme();
   const [elementName, _setElementName] = useState('booking_number');
+  const {t} = useTranslate()
 
   const inputRef = useRef<any>({});
 
@@ -16,14 +18,14 @@ const InsertBookingNumber: FC<InsertBookingProps> = ({ errorMessage }) => {
     <Stack gap={2}>
       <Box>
         <Typography variant="h4" textAlign="center">
-          Masukkan/Scan Nomor Booking Anda
+          {t("checkin.title_input_scan")}
         </Typography>
         {errorMessage && <ErrorAlert message={errorMessage} />}
       </Box>
       <RHFTextField
         id="nik"
         name="nik"
-        placeholder={'Masukkan Nomor Booking Anda'}
+        placeholder={t("checkin.placeholder_input_number")}
         variant="filled"
         inputRef={(ref) => {
           inputRef.current.booking_number = ref;

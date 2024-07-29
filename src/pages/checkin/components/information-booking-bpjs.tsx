@@ -10,6 +10,7 @@ import { fAsterisk } from 'src/utils/helper';
 import { toast } from 'src/components/snackbar';
 import { useBoolean, useCountdownSeconds } from 'src/hooks';
 import { LoadingButton } from '@mui/lab';
+import { useTranslate } from 'src/locales';
 import { useNavigate } from 'react-router';
 import { buttonStyle } from '../model/variables';
 import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
@@ -17,6 +18,8 @@ import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
 const InformationBookingBPJS = () => {
   const navigate = useNavigate();
 
+  const { value: isPrinted, onTrue: setPrintedSuccess } = useBoolean();
+  const {t} = useTranslate()
   const {
     startCountdown: startCountdown15,
     countdown: countdown15,
@@ -31,30 +34,30 @@ const InformationBookingBPJS = () => {
 
   const [openPrint, setOpenPrint] = useState(false);
 
-  const [headerData, _setHeaderData] = useState<LabelTextProps[]>([
-    { title: 'Nama Lengkap', body: 'Hello World' },
+  const headerData : LabelTextProps[] = [
+    { title: t("global.complete_name"), body: 'Hello World' },
     { title: 'NIK', body: fAsterisk('100200300400') },
-    { title: 'Jenis Kelamin', body: 'Perempuan' },
-    { title: 'Tempat, Tanggal Lahir', body: `Malaysia, ${fDate('04-05-2001', 'DD-MM-YYYY')}` },
-    { title: 'Nomor Kartu', body: '1001010101001010' },
-    { title: 'Kelas', body: 'Kelas III' },
-    { title: 'Faskes Pertama', body: 'Klinik Surya Medika' },
-    { title: 'Jenis Peserta', body: 'Pekerja Mandiri' },
-    { title: 'Status Peserta', body: 'Aktif' },
-  ]);
+    { title: t("global.gender"), body: 'Perempuan' },
+    { title: `${t("global.location")}, ${t("global.birthdate")}`, body: `Malaysia, ${fDate('04-05-2001', 'DD-MM-YYYY')}` },
+    { title: t("global.card_number"), body: '1001010101001010' },
+    { title: t("global.class"), body: 'Kelas III' },
+    { title: t("global.first_faskes"), body: 'Klinik Surya Medika' },
+    { title: t("global.user_type"), body: 'Pekerja Mandiri' },
+    { title: t("global.user_status"), body: 'Aktif' },
+  ]
 
-  const [referenceData, _setReferenceData] = useState<LabelTextProps[]>([
-    { title: 'No Rujukan', body: fAsterisk('50040503009874') },
-    { title: 'Tgl Rujukan', body: fDate('04-05-2001', 'DD-MM-YYYY') },
-    { title: 'Poliklinik', body: 'Poli Saraf' },
-  ]);
+  const referenceData : LabelTextProps[] = [
+    { title: t("global.referral_num"), body: fAsterisk('50040503009874') },
+    { title: t("global.referral_date"), body: fDate('04-05-2001', 'DD-MM-YYYY') },
+    { title: t("global.poli"), body: 'Poli Saraf' },
+  ]
 
-  const [detailData, _setDetailData] = useState([
-    { title: 'Tujuan Layanan', body: 'Poli Mata', localIcon: 'stethoscope' },
-    { title: 'Dokter Pemeriksa', body: 'dr. Inas Shabrina,Sp.M', localIcon: 'doctor' },
-    { title: 'Tipe Pembayaran', body: 'BPJS', localIcon: 'bpjs' },
-    { title: 'Waktu Pelayanan', body: 'Senin, 30-01-2022 10:00-14:00', localIcon: 'jadwal' },
-  ]);
+  const detailData = [
+    { title: t("doctor_visit.service_destination"), body: 'Poli Mata', localIcon: 'stethoscope' },
+    { title: t("doctor_visit.examining_doctor"), body: 'dr. Inas Shabrina,Sp.M', localIcon: 'doctor' },
+    { title: t("global.payment_type"), body: 'BPJS', localIcon: 'bpjs' },
+    { title: t("global.service_time"), body: 'Senin, 30-01-2022 10:00-14:00', localIcon: 'jadwal' },
+  ]
 
   const getCountdown15 = useMemo(() => {
     if (!counting15) return '00:00';
@@ -112,14 +115,14 @@ const InformationBookingBPJS = () => {
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
             <Typography variant="h5" gutterBottom>
-              Detail Rujukan
+              {t("global.referral_detail")}
             </Typography>
 
             <LabelTextContainer col={1} listText={referenceData} />
           </Grid>
           <Grid item xs={12} md={8}>
             <Typography variant="h5" gutterBottom>
-              Detail Pasien
+              {t("global.patient_detail")}
             </Typography>
 
             <LabelTextContainer listText={headerData} />
@@ -129,7 +132,7 @@ const InformationBookingBPJS = () => {
 
       <Box>
         <Typography variant="h5" gutterBottom>
-          Detail Kunjungan
+          {t("doctor_visit.visit_detail")}
         </Typography>
 
         <Grid container spacing={1}>
@@ -148,7 +151,7 @@ const InformationBookingBPJS = () => {
           })}
         </Grid>
       </Box>
-      <Button
+      <LoadingButton
         variant="contained"
         size="large"
         fullWidth
@@ -159,8 +162,8 @@ const InformationBookingBPJS = () => {
           startCountdown2min();
         }}
       >
-        Cetak Bukti Daftar
-      </Button>
+        {t("global.print_registration")}
+      </LoadingButton>
 
       <ModalInfoAndAction
         open={openPrint}

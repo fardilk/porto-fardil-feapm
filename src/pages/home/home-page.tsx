@@ -7,47 +7,54 @@ import { Header_Height } from "src/utils/variables"
 import { CardBanner } from "src/components/card-banner"
 import { Image } from "src/components/image"
 import { useSelector } from "src/store/store"
+import { useTranslate } from "src/locales"
+import { useEffect } from "react"
 
 
 const HomePage = () => {
 
   const navigate = useNavigate()
   const config = useSelector((root) => root.config)
+  const {t, onChangeLang} = useTranslate()
 
   const listCard = [
     {
       id: "check_in",
       show: config.checkin,
-      title: "LAPOR KEHADIRAN",
-      body: "Siapkan Kode Booking yang sudah didapat melalui website booking online.",
+      title: t("home.menu.checkin.title")?.toUpperCase(),
+      body: t("home.menu.checkin.description"),
       icon: "medical-checkup",
       handleClick: () => { navigate("checkin") }
     },
     {
       id: "kunjungan_dokter",
       show: config.encounter,
-      title: "KUNJUNGAN DOKTER",
-      body: "Pendaftaran kunjungan pasien lama, siapkan nomor NIK.",
+      title: t("home.menu.doctor_visit.title")?.toUpperCase(),
+      body: t("home.menu.doctor_visit.description"),
       icon: "doctor",
       handleClick: () => { navigate("encounter") }
     },
     {
       id: "reservasi",
       show: config.reservation,
-      title: "RESERVASI",
-      body: "Pesan jadwal kunjungan Anda, siapkan data-data Anda.",
+      title: t("home.menu.reservation.title")?.toUpperCase(),
+      body: t("home.menu.reservation.description"),
       icon: "medical-appointment",
       handleClick: () => { navigate("reservation") }
     },
     {
       id: "registrasi_pasien_baru",
       show: config.registration,
-      title: "REGISTRASI PASIEN BARU",
-      body: "Registrasi Pasien Baru, siapkan data-data Anda.",
+      title: t("home.menu.registration.title")?.toUpperCase(),
+      body: t("home.menu.registration.description"),
       icon: "health-insurance",
       handleClick: () => { navigate("registration") }
     },
   ]
+
+  useEffect(() => {
+    onChangeLang("id")
+  },[]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Stack sx={{ px: 8, gap: 2, height: `calc(100vh - ${Header_Height}px)`, pb: 2 }}>
