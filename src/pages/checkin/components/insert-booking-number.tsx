@@ -4,7 +4,7 @@ import { RHFTextField } from 'src/components/hook-form';
 import { Keyboard } from 'src/components/keyboard';
 import { typography } from 'src/theme/core';
 import { ErrorAlert } from 'src/components/error-alert';
-import { type InsertBookingProps } from './types';
+import { type InsertBookingProps } from '../model/types';
 import { useTranslate } from 'src/locales';
 
 const InsertBookingNumber: FC<InsertBookingProps> = ({ errorMessage }) => {

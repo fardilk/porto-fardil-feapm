@@ -1,22 +1,12 @@
 /* eslint-disable */
 
 import { gql } from 'graphql-request';
-import gqlClient from 'src/utils/gql';
-
-const UserQuery = `
-  userName
-  startPage
-  status
-`;
-
-type UserType = {
-  userName: string;
-  startPage: string;
-  status: string;
-};
+import GqlClient from 'src/utils/gql';
+import { UserType } from './types';
+import { UserQuery } from './query';
 
 export const getUser = async ({ userID }: { userID: string }): Promise<UserType[] | undefined> => {
-  const be = new gqlClient();
+  const be = new GqlClient();
 
   const res = await be.request(
     gql`

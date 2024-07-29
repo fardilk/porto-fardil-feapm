@@ -1,11 +1,7 @@
 import { AppPage } from 'src/components/app-page';
 import { ReactNode, useState } from 'react';
 import { SelectTimeProps } from '../model/types';
-import {
-  Form,
-  RHFMobileDatePicker,
-  RHFTimePils,
-} from 'src/components/hook-form';
+import { Form, RHFMobileDatePicker, RHFTimePils } from 'src/components/hook-form';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -105,76 +101,76 @@ const SelectTime = (props: SelectTimeProps) => {
   return (
     <Stack gap={4}>
       {/* <Form methods={methods} onSubmit={handleSubmit(onSubmitForm)}> */}
-        <Box>
-          <Grid item xs={12} md={6}>
-            <Typography gutterBottom variant="h5" color="secondary.darker">
-              Detail Dokter
-            </Typography>
-            <LabelTextContainer listText={headerData} orientation="vertical" />
-          </Grid>
-        </Box>
-        <TableContainer sx={{ my: 2 }}>
-          <Table>
-            <colgroup>
-              <col width="30%" />
-              <col width="70%" />
-            </colgroup>
-            <TableBody>
-              <TableRow>
-                <TableCellBody titleText="Tanggal Kunjungan" />
-                <TableCellBody>
-                  <RHFMobileDatePicker
-                    name="birthDate"
-                    format="DD/MM/YYYY"
-                    // {...register('date')}
-                  />
-                </TableCellBody>
-              </TableRow>
-              <TableRow>
-                <TableCellBody titleText="Jam Kunjungan" />
-                <TableCellBody>
-                  <RHFTimePils
-                    options={timeOpt}
-                    getOptionEqualToValue={(opt, value) => opt.value === value?.value}
-                    getOptionLabel={(opt) => opt.label}
-                    name="timePils"
-                  />
-                </TableCellBody>
-              </TableRow>
-              <TableRow>
-                <TableCellBody titleText="Jika Dokter Berhalangan Hadir di Jam Tersebut" />
-                <TableCellBody>
-                  <RHFTimePils
-                    options={unableOpt}
-                    getOptionEqualToValue={(opt, value) => opt.value === value?.value}
-                    getOptionLabel={(opt) => opt.label}
-                    name="timePils"
-                  />
-                </TableCellBody>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <Box sx={{ display: 'flex', placeContent: 'space-between', gap: 2 }}>
-          <Button
-            color="secondary"
-            fullWidth
-            variant="outlined"
-            size="large"
-            onClick={() => handleBack()}
-          >
-            Ulang Pilih {getButtonText()}
-          </Button>
-          <Button
-            fullWidth
-            color="secondary"
-            variant="contained"
-            size="large"
-            onClick={() => handleConfirm()}
-          >
-            Konfirmasi Daftar
-          </Button>
-        </Box>
+      <Box>
+        <Grid item xs={12} md={6}>
+          <Typography gutterBottom variant="h5" color="secondary.darker">
+            Detail Dokter
+          </Typography>
+          <LabelTextContainer listText={headerData} orientation="vertical" />
+        </Grid>
+      </Box>
+      <TableContainer sx={{ my: 2 }}>
+        <Table>
+          <colgroup>
+            <col width="30%" />
+            <col width="70%" />
+          </colgroup>
+          <TableBody>
+            <TableRow>
+              <TableCellBody titleText="Tanggal Kunjungan" />
+              <TableCellBody>
+                <RHFMobileDatePicker
+                  name="birthDate"
+                  format="DD/MM/YYYY"
+                  // {...register('date')}
+                />
+              </TableCellBody>
+            </TableRow>
+            <TableRow>
+              <TableCellBody titleText="Jam Kunjungan" />
+              <TableCellBody>
+                <RHFTimePils
+                  options={timeOpt}
+                  getOptionEqualToValue={(opt, value) => opt.value === value?.value}
+                  getOptionLabel={(opt) => opt.label}
+                  name="timePils"
+                />
+              </TableCellBody>
+            </TableRow>
+            <TableRow>
+              <TableCellBody titleText="Jika Dokter Berhalangan Hadir di Jam Tersebut" />
+              <TableCellBody>
+                <RHFTimePils
+                  options={unableOpt}
+                  getOptionEqualToValue={(opt, value) => opt.value === value?.value}
+                  getOptionLabel={(opt) => opt.label}
+                  name="timePils2"
+                />
+              </TableCellBody>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Box sx={{ display: 'flex', placeContent: 'space-between', gap: 2 }}>
+        <Button
+          color="secondary"
+          fullWidth
+          variant="outlined"
+          size="large"
+          onClick={() => handleBack()}
+        >
+          Ulang Pilih {getButtonText()}
+        </Button>
+        <Button
+          fullWidth
+          color="secondary"
+          variant="contained"
+          size="large"
+          onClick={() => handleConfirm()}
+        >
+          Konfirmasi Daftar
+        </Button>
+      </Box>
       {/* </Form> */}
     </Stack>
   );
