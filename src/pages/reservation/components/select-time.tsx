@@ -1,10 +1,6 @@
-import { AppPage } from 'src/components/app-page';
 import { ReactNode, useRef, useState } from 'react';
-import { FormValues, SelectTimeProps } from '../model/types';
-import { Form, RHFMobileDatePicker, RHFTimePils } from 'src/components/hook-form';
-import { useForm, FormProvider } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { getDummyData } from '../../registration/model/functions';
+import { SelectTimeProps } from '../model/types';
+import { RHFMobileDatePicker, RHFTimePils } from 'src/components/hook-form';
 import {
   Button,
   Grid,
@@ -18,10 +14,6 @@ import {
   TableRow,
 } from '@mui/material';
 import { LabelTextContainer, LabelTextProps } from 'src/components/label-text';
-import { reservationSchema } from '../model/schema';
-import TimePilsContainer from 'src/components/time-pils/time-pils-container';
-import { ErrorAlert } from 'src/components/error-alert';
-import { red } from '@mui/material/colors';
 
 const SelectTime = (props: SelectTimeProps) => {
   const { reservationType, handleBack, handleConfirm, errorMessage } = props;
@@ -69,7 +61,6 @@ const SelectTime = (props: SelectTimeProps) => {
 
   return (
     <Stack gap={4}>
-      {/* <Form methods={methods} onSubmit={handleSubmit(onSubmitForm as any)}> */}
       <Box>
         <Grid item xs={12} md={6}>
           <Typography gutterBottom variant="h5" color="secondary.darker">
@@ -144,7 +135,6 @@ const SelectTime = (props: SelectTimeProps) => {
           Konfirmasi Daftar
         </Button>
       </Box>
-      {/* </Form> */}
     </Stack>
   );
 };

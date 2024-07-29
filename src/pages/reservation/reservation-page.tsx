@@ -48,15 +48,12 @@ import { fAsterisk } from 'src/utils/helper';
 import SelectLabPackage from './components/select-lab-package';
 import SelectRadService from './components/select-rad-service';
 import SelectTime from './components/select-time';
-import { toast } from 'sonner';
 
 const ReservationPage = () => {
   const navigate = useNavigate();
   const { currentPage, currentPageIndex, handleChangePage, formSteps } = useStepper({
     initialSteps: formStepsOutpatientGeneral,
   });
-
-  // console.log(currentPage.value);
 
   const [errorMessage, setErrorMessage] = useState({ dateErr: '', bookTimeErr: '', unableErr: '' });
 
