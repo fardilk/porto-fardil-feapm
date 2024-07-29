@@ -17,9 +17,6 @@ import { LabelTextContainer, LabelTextProps } from 'src/components/label-text';
 
 const SelectTime = (props: SelectTimeProps) => {
   const { reservationType, handleBack, handleConfirm, errorMessage } = props;
-  const inputRef = useRef<any>({});
-
-  const dateRef = useRef<any>();
   const [headerData, _setHeaderData] = useState<LabelTextProps[]>([
     { title: 'Nama Dokter', body: "dr. Inas Shabrina Sp.M'", colSpan: 2 },
     { title: 'Keahlian', body: 'Spesialis Mata', colSpan: 2 },
