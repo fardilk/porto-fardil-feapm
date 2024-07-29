@@ -4,7 +4,7 @@ import { GraphQLClient } from 'graphql-request';
 import { GetAccessToken, isValidToken, setSession } from './auth';
 import { CONFIG } from 'src/config-global';
 
-class gqlClient extends GraphQLClient {
+class GqlClient extends GraphQLClient {
   auth: boolean;
 
   constructor(auth: boolean = true) {
@@ -46,4 +46,4 @@ class gqlClient extends GraphQLClient {
   };
 }
 
-export default gqlClient;
+export default GqlClient;
