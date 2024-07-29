@@ -51,7 +51,7 @@ import SelectTime from './components/select-time';
 
 const ReservationPage = () => {
   const navigate = useNavigate();
-  const { currentPage, currentPageIndex, handleChangePage, formSteps } = useStepper({
+  const { currentPage, currentPageIndex, handleChangePage } = useStepper({
     initialSteps: formStepsOutpatientGeneral,
   });
 
@@ -307,7 +307,8 @@ const ReservationPage = () => {
                 handleConfirm={() => {
                   const today = new Date();
                   const selectedDate = new Date(watchDate);
-                  const minDate = new Date(today.setDate(today.getDate() + 2));
+                  const minDate = new Date(today.setDate(today.getDate()));
+
                   if (watchDate && watchBookTime && watchUnable && selectedDate >= minDate)
                     handleChangePage({ action: 'next' });
                   console.log(watchDate, watchBookTime, watchUnable);
@@ -316,7 +317,7 @@ const ReservationPage = () => {
                   } else if (selectedDate < minDate) {
                     setErrorMessage((prev) => ({
                       ...prev,
-                      dateErr: 'Tanggal Minimal 2 Hari dari Hari Ini',
+                      dateErr: 'Tanggal Minimal Besok',
                     }));
                   }
                   if (!watchBookTime) {
