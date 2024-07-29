@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { AppPage } from 'src/components/app-page';
@@ -27,7 +27,7 @@ import {
   SelectPractitioner,
   SuccessOutpatient,
 } from './components';
-import type { ReservationType, Insurancetype } from './model/types';
+import type { ReservationType, Insurancetype, FormValues } from './model/types';
 import InsertEmployeeNumber from './components/insert-employee-number';
 import {
   formStepsMCUGeneral,
@@ -48,6 +48,7 @@ import { fAsterisk } from 'src/utils/helper';
 import SelectLabPackage from './components/select-lab-package';
 import SelectRadService from './components/select-rad-service';
 import SelectTime from './components/select-time';
+import { toast } from 'sonner';
 
 const ReservationPage = () => {
   const navigate = useNavigate();
@@ -55,10 +56,11 @@ const ReservationPage = () => {
     initialSteps: formStepsOutpatientGeneral,
   });
 
-  console.log(formSteps, currentPage)
-  
-  const [reservationType, SetReservationType] = useState<ReservationType>(null);
+  // console.log(currentPage.value);
 
+  const [errorMessage, setErrorMessage] = useState({ dateErr: '', bookTimeErr: '', unableErr: '' });
+
+  const [reservationType, SetReservationType] = useState<ReservationType>(null);
 
   const [listReservationType, _setListReservationType] = useState<CardBannerProps[]>([
     {
@@ -135,7 +137,24 @@ const ReservationPage = () => {
   );
 
   const methods = useForm();
-  const { handleSubmit } = methods;
+
+  const { handleSubmit, watch } = methods;
+
+  const watchDate = watch('date');
+  const watchBookTime = watch('bookTime');
+  const watchUnable = watch('unable');
+
+  useEffect(() => {
+    setErrorMessage((prev) => ({ ...prev, dateErr: '' }));
+  }, [watchDate]);
+
+  useEffect(() => {
+    setErrorMessage((prev) => ({ ...prev, bookTimeErr: '' }));
+  }, [watchBookTime]);
+
+  useEffect(() => {
+    setErrorMessage((prev) => ({ ...prev, unableErr: '' }));
+  }, [watchUnable]);
 
   const onPractitionerSelect = () => {
     handleChangePage({ action: 'next' });
@@ -289,9 +308,29 @@ const ReservationPage = () => {
                   handleChangePage({ action: 'previous' });
                 }}
                 handleConfirm={() => {
-                  handleChangePage({ action: 'next' });
+                  const today = new Date();
+                  const selectedDate = new Date(watchDate);
+                  const minDate = new Date(today.setDate(today.getDate() + 2));
+                  if (watchDate && watchBookTime && watchUnable && selectedDate >= minDate)
+                    handleChangePage({ action: 'next' });
+                  console.log(watchDate, watchBookTime, watchUnable);
+                  if (!watchDate) {
+                    setErrorMessage((prev) => ({ ...prev, dateErr: 'Tanggal Harus Diisi' }));
+                  } else if (selectedDate < minDate) {
+                    setErrorMessage((prev) => ({
+                      ...prev,
+                      dateErr: 'Tanggal Minimal 2 Hari dari Hari Ini',
+                    }));
+                  }
+                  if (!watchBookTime) {
+                    setErrorMessage((prev) => ({ ...prev, bookTimeErr: 'Jam Harus Diisi' }));
+                  }
+                  if (!watchUnable) {
+                    setErrorMessage((prev) => ({ ...prev, unableErr: 'Pilihan Harus Diisi' }));
+                  }
                 }}
                 reservationType={reservationType}
+                errorMessage={errorMessage}
               />
             )}
 
@@ -498,6 +537,3 @@ const ReservationPage = () => {
 };
 
 export default ReservationPage;
-
-
-

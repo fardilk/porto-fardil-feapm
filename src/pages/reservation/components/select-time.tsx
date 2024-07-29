@@ -1,5 +1,5 @@
 import { AppPage } from 'src/components/app-page';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 import { FormValues, SelectTimeProps } from '../model/types';
 import { Form, RHFMobileDatePicker, RHFTimePils } from 'src/components/hook-form';
 import { useForm, FormProvider } from 'react-hook-form';
@@ -19,29 +19,15 @@ import {
 } from '@mui/material';
 import { LabelTextContainer, LabelTextProps } from 'src/components/label-text';
 import { reservationSchema } from '../model/schema';
+import TimePilsContainer from 'src/components/time-pils/time-pils-container';
+import { ErrorAlert } from 'src/components/error-alert';
+import { red } from '@mui/material/colors';
 
 const SelectTime = (props: SelectTimeProps) => {
-  const { reservationType, handleBack, handleConfirm } = props;
+  const { reservationType, handleBack, handleConfirm, errorMessage } = props;
+  const inputRef = useRef<any>({});
 
-  const [defaultValues, setDefaultVal] = useState<FormValues>({
-    date: new Date(),
-    unable: 'Pindah Jadwal',
-    bookTime: [],
-  });
-
-  const methods = useForm({
-    resolver: yupResolver(reservationSchema),
-    defaultValues,
-  });
-
-  const { register, handleSubmit, setError, formState: { errors } } = methods;
-
-  const onSubmitForm = (data: FormValues) => {
-    console.log(data)
-    // handleConfirm()
-    // onClick={() => methods.setError("timePils", { message: "Isi yang bener" })}
-  };
-
+  const dateRef = useRef<any>();
   const [headerData, _setHeaderData] = useState<LabelTextProps[]>([
     { title: 'Nama Dokter', body: "dr. Inas Shabrina Sp.M'", colSpan: 2 },
     { title: 'Keahlian', body: 'Spesialis Mata', colSpan: 2 },
@@ -50,15 +36,15 @@ const SelectTime = (props: SelectTimeProps) => {
   const timeOpt = [
     {
       label: '10:00',
-      value: 'item_10',
+      value: '10.00',
     },
     {
       label: '11:30',
-      value: 'item_11',
+      value: '11.30',
     },
     {
       label: '12:45',
-      value: 'item_12',
+      value: '12.45',
     },
   ];
 
@@ -83,7 +69,7 @@ const SelectTime = (props: SelectTimeProps) => {
 
   return (
     <Stack gap={4}>
-      {/* <Form methods={methods} onSubmit={handleSubmit(onSubmitForm)}> */}
+      {/* <Form methods={methods} onSubmit={handleSubmit(onSubmitForm as any)}> */}
       <Box>
         <Grid item xs={12} md={6}>
           <Typography gutterBottom variant="h5" color="secondary.darker">
@@ -102,11 +88,12 @@ const SelectTime = (props: SelectTimeProps) => {
             <TableRow>
               <TableCellBody titleText="Tanggal Kunjungan" />
               <TableCellBody>
-                <RHFMobileDatePicker
-                  name="date"
-                  format="DD/MM/YYYY"
-                  // {...register('date')}
-                />
+                <RHFMobileDatePicker name="date" format="DD/MM/YYYY" />
+                {errorMessage?.dateErr && (
+                  <Typography variant="caption" color="error.main">
+                    {errorMessage.dateErr}
+                  </Typography>
+                )}
               </TableCellBody>
             </TableRow>
             <TableRow>
@@ -116,7 +103,8 @@ const SelectTime = (props: SelectTimeProps) => {
                   options={timeOpt}
                   getOptionEqualToValue={(opt, value) => opt.value === value?.value}
                   getOptionLabel={(opt) => opt.label}
-                  name='visitHour'
+                  name="bookTime"
+                  errorText={errorMessage?.bookTimeErr}
                 />
               </TableCellBody>
             </TableRow>
@@ -128,6 +116,7 @@ const SelectTime = (props: SelectTimeProps) => {
                   getOptionEqualToValue={(opt, value) => opt.value === value?.value}
                   getOptionLabel={(opt) => opt.label}
                   name="unable"
+                  errorText={errorMessage?.unableErr}
                 />
               </TableCellBody>
             </TableRow>
@@ -149,6 +138,7 @@ const SelectTime = (props: SelectTimeProps) => {
           color="secondary"
           variant="contained"
           size="large"
+          type="submit"
           onClick={() => handleConfirm()}
         >
           Konfirmasi Daftar
