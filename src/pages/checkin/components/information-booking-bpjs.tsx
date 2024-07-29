@@ -53,8 +53,8 @@ const InformationBookingBPJS = () => {
   ]
 
   const detailData = [
-    { title: t("doctor_visit.service_destination"), body: 'Poli Mata', localIcon: 'stethoscope' },
-    { title: t("doctor_visit.examining_doctor"), body: 'dr. Inas Shabrina,Sp.M', localIcon: 'doctor' },
+    { title: t("appointment.service_destination"), body: 'Poli Mata', localIcon: 'stethoscope' },
+    { title: t("appointment.examining_doctor"), body: 'dr. Inas Shabrina,Sp.M', localIcon: 'doctor' },
     { title: t("global.payment_type"), body: 'BPJS', localIcon: 'bpjs' },
     { title: t("global.service_time"), body: 'Senin, 30-01-2022 10:00-14:00', localIcon: 'jadwal' },
   ]
@@ -132,7 +132,7 @@ const InformationBookingBPJS = () => {
 
       <Box>
         <Typography variant="h5" gutterBottom>
-          {t("doctor_visit.visit_detail")}
+          {t("appointment.visit_detail")}
         </Typography>
 
         <Grid container spacing={1}>

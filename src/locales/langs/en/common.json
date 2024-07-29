@@ -54,11 +54,74 @@
       "invalid": "Invalid Booking number"
     }
   },
-  "doctor_visit": {
+  "appointment": {
+    "input_your_nik": "Input your NIK",
+    "title_input_nik": "Input NIK",
+    "placeholder_input_nik": "Input your 16 digit NIK number",
     "input_your_passport": "Input your passport",
     "title_input_passport": "Input passport",
+    "placeholder_input_passport": "Submit your passport number",
     "visit_detail": "Visit Detail",
     "service_destination": "Service Destination",
-    "examining_doctor": "Examining Doctor"
+    "examining_doctor": "Examining Doctor",
+    "patient": {
+      "nik": "NIK",
+      "passport": "Passport No",
+      "fullname": "Full Name",
+      "birthdateplace": "Place & Date of Birth",
+      "blood_type": "Blood Type",
+      "blood_rhesus": "Rhesus",
+      "address": "Address",
+      "phone": "Phone No",
+      "email": "Email",
+      "actions": {
+        "update_msg": "To update your data, please proceed to the medical record station.",
+        "invalid_button": "Data is invalid, reinput NIK/passport",
+        "valid_button": "Data is valid, proceed"
+      }
+    },
+    "payment": {
+      "general": {
+        "title": "GENERAL",
+        "description": "General Patient Registration"
+      },
+      "assurance": {
+        "title": "ASSURANCE",
+        "description": "Patient Registration With Insurance, Company, or BPJS Payor",
+        "bpjs": {
+          "title": "BPJS",
+          "description": "BPJS patient registration"
+        },
+        "insurance": {
+          "title": "INSURANCE",
+          "description": "Insurance patient registration"
+        },
+        "company": {
+          "title": "COMPANY",
+          "description": "Company insurance patient registration"
+        }
+      }
+    },
+    "steps": {
+      "select_encounter_type": "Select Encounter Type"
+    }
+  },
+  "encounter": {
+    "outpatient": {
+      "title": "OUTPATIENT EXAMINATION",
+      "description": "Medical services that include health evaluation, diagnosis, and treatment without requiring hospitalization."
+    },
+    "mcu": {
+      "title": "MEDICAL CHECK UP",
+      "description": "A series of routine health tests to check the overall health of the body and anticipate disease risks."
+    },
+    "laboratory": {
+      "title": "LABORATORY",
+      "description": "Facilities that provide diagnostic tests to support health evaluation, diagnosis, and routine medical check-ups without the need for hospitalization."
+    },
+    "radiology": {
+      "title": "RADIOLOGY",
+      "description": "Medical services that provide imaging tests such as X-ray, CT scan, and MRI to support diagnosis and treatment without requiring hospitalization."
+    }
   }
 }

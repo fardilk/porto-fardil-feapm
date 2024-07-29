@@ -25,11 +25,11 @@ export function useTranslate(ns?: string) {
 
         const currentMessages = messages[newLang] || messages.en;
 
-        toast.promise(langChangePromise, {
+        /* toast.promise(langChangePromise, {
           loading: currentMessages.loading,
           success: () => currentMessages.success,
           error: currentMessages.error,
-        });
+        }); */
 
         if (currentLang) {
           dayjs.locale(currentLang.adapterLocale);

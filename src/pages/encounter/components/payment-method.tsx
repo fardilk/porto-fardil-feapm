@@ -3,22 +3,25 @@ import { useState } from "react"
 import { CardBanner } from "src/components/card-banner"
 import type { CardBannerProps } from "src/components/card-banner/types"
 import type { PaymentMethodProps } from "../model/types"
+import { useTranslate } from "src/locales"
 
 const PaymentMethod = (props: PaymentMethodProps) => {
+  const { t } = useTranslate()
+
   const { handleAssurance, handleGeneral, encounterType } = props
 
   const [openAssurance, setOpenAssurance] = useState(false)
 
   const [paymentMethod, _setPaymentMethod] = useState<CardBannerProps[]>([
     {
-      title: "UMUM",
-      body: "Pendaftaran Pasien Umum",
+      title: t("appointment.payment.general.title"),
+      body: t("appointment.payment.general.description"),
       localIcon: "pembayaran-umum",
       onClick: () => { handleGeneral() }
     },
     {
-      title: "JAMINAN",
-      body: "Pendaftaran Pasien dengan Jaminan Asuransi, Perusahaan atau BPJS",
+      title: t("appointment.payment.assurance.title"),
+      body: t("appointment.payment.assurance.description"),
       localIcon: "jaminan",
       onClick: () => { setOpenAssurance(true) }
     }
@@ -26,20 +29,20 @@ const PaymentMethod = (props: PaymentMethodProps) => {
 
   const [assurancePaymentMethod, _setAssurancePaymentMethod] = useState<CardBannerProps[]>([
     ... encounterType === "RJ" ? [{
-      title: "BPJS",
-      body: "Pendaftaran Pasien BPJS",
+      title: t("appointment.payment.assurance.bpjs.title"),
+      body: t("appointment.payment.assurance.bpjs.description"),
       localIcon: "bpjs",
       onClick: () => { handleAssurance("bpjs") }
     }] : [],
     {
-      title: "Asuransi",
-      body: "Pendaftaran pasien asuransi",
+      title: t("appointment.payment.assurance.insurance.title"),
+      body: t("appointment.payment.assurance.insurance.description"),
       localIcon: "asuransi",
       onClick: () => { handleAssurance("insurance") }
     },
     {
-      title: "Perusahaan",
-      body: "Pendaftaran pasien asuransi perusahaan",
+      title: t("appointment.payment.assurance.company.title"),
+      body: t("appointment.payment.assurance.company.description"),
       localIcon: "perusahaan",
       onClick: () => { handleAssurance("company") }
     },

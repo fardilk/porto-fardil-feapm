@@ -47,8 +47,11 @@ import {
 import { fAsterisk } from 'src/utils/helper';
 import SelectLabPackage from './components/select-lab-package';
 import SelectRadService from './components/select-rad-service';
+import { useTranslate } from 'src/locales';
 
 const EncounterPage = () => {
+  const { t } = useTranslate();
+
   const navigate = useNavigate();
   const { currentPage, currentPageIndex, handleChangePage } = useStepper({
     initialSteps: formStepsOutpatientGeneral,
@@ -56,10 +59,10 @@ const EncounterPage = () => {
   
   const [encounterType, setEncounterType] = useState<EncounterType>(null);
 
-  const [listEncounterType, _setListEncounterType] = useState<CardBannerProps[]>([
+  const listEncounterType = [
     {
-      title: 'PEMERIKSAAN RAWAT JALAN',
-      body: 'Layanan medis yang mencakup evaluasi kesehatan, diagnosis, dan perawatan tanpa memerlukan rawat inap.',
+      title: t('encounter.outpatient.title'),
+      body: t('encounter.outpatient.description'),
       localIcon: 'stethoscope',
       onClick: () => {
         setEncounterType('RJ');
@@ -67,8 +70,8 @@ const EncounterPage = () => {
       },
     },
     {
-      title: 'MEDICAL CHECK UP',
-      body: 'Serangkaian uji kesehatan rutin untuk memeriksa kesehatan tubuh secara keseluruhan dan mengantisipasi risiko penyakit.',
+      title: t('encounter.mcu.title'),
+      body: t('encounter.mcu.description'),
       localIcon: 'medical-checkup',
       onClick: () => {
         setEncounterType('MCU');
@@ -79,8 +82,8 @@ const EncounterPage = () => {
       },
     },
     {
-      title: 'LABORATORIUM',
-      body: 'Fasilitas yang menyediakan uji diagnostik untuk mendukung evaluasi kesehatan, diagnosis, dan medical check up rutin tanpa perlu rawat inap.',
+      title: t('encounter.laboratory.title'),
+      body: t('encounter.laboratory.description'),
       localIcon: 'blood-test',
       onClick: () => {
         setEncounterType('LAB');
@@ -88,15 +91,15 @@ const EncounterPage = () => {
       },
     },
     {
-      title: 'RADIOLOGI',
-      body: 'Layanan medis yang menyediakan uji pencitraan seperti X-ray, CT scan, dan MRI untuk mendukung diagnosis dan perawatan tanpa memerlukan rawat inap.',
+      title: t('encounter.radiology.title'),
+      body: t('encounter.radiology.description'),
       localIcon: 'x-rays',
       onClick: () => {
         setEncounterType('RAD');
         handleChangePage({ action: 'next', newFormSteps: formStepsRadGeneral });
       },
     },
-  ]);
+  ];
 
   const getListDataEmployee = useMemo(
     () => [
@@ -231,7 +234,7 @@ const EncounterPage = () => {
     <AppPage>
       <Form methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <WindowContainer
-          title={currentPage.label}
+          title={t(currentPage.label)}
           size={currentPage.properties?.containerSize || 'large'}
           handleBackNavigation={() => {
             handleChangePage({ action: 'previous' });
@@ -254,8 +257,8 @@ const EncounterPage = () => {
 
             {currentPage.value === 'information_outpatient_general' && (
               <InformationOutpatientGeneral
-                leftTextButton="Data salah, isi ulang NIK"
-                rightTextButton="Data sudah benar, lanjutkan"
+                leftTextButton={t("appointment.patient.actions.invalid_button")}
+                rightTextButton={t("appointment.patient.actions.valid_button")}
                 leftButtonProps={{
                   onClick: () => {
                     handleChangePage({ action: 'previous' });

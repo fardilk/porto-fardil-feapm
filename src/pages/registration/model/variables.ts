@@ -103,7 +103,7 @@ export const formStepsForeign = [
     label: "Submit Passport",
     value: "insert_nik",
     properties: {
-      i18n: "doctor_visit.title_input_passport"
+      i18n: "encounter.title_input_passport"
     }
   },
   {
