@@ -1,11 +1,6 @@
-import { AppPage } from 'src/components/app-page';
-import { ReactNode, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 import { SelectTimeProps } from '../model/types';
-import { Form, RHFMobileDatePicker, RHFTimePils } from 'src/components/hook-form';
-import { useForm, FormProvider } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { getDummyData } from '../../registration/model/functions';
+import { RHFMobileDatePicker, RHFTimePils } from 'src/components/hook-form';
 import {
   Button,
   Grid,
@@ -20,45 +15,8 @@ import {
 } from '@mui/material';
 import { LabelTextContainer, LabelTextProps } from 'src/components/label-text';
 
-// interface FormValues {
-//   date: Date;
-//   unable: 'Pindah Jadwal' | 'Batal Kunjungan';
-//   bookTime: number[];
-// }
-
 const SelectTime = (props: SelectTimeProps) => {
-  const { reservationType, handleBack, handleConfirm } = props;
-  // const schema = yup.object().shape({
-  //   date: yup.date().required('Field Date is Required'),
-  //   unable: yup
-  //     .string()
-  //     .oneOf(['Pindah Jadwal', 'Batal Kunjungan'])
-  //     .required('This Field is Required'),
-  //   bookTime: yup.array().of(yup.number()).min(1).required('At least one time slot is required'),
-  // });
-
-  // const [defaultValues, setDefaultVal] = useState<FormValues>({
-  //   date: new Date(),
-  //   unable: 'Pindah Jadwal',
-  //   bookTime: [],
-  // });
-
-  // const methods = useForm({
-  //   resolver: yupResolver(schema),
-  //   defaultValues,
-  // });
-
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  //   control,
-  // } = methods;
-
-  const onSubmitForm = (data: any) => {
-    // handleConfirm()
-  };
-
+  const { reservationType, handleBack, handleConfirm, errorMessage } = props;
   const [headerData, _setHeaderData] = useState<LabelTextProps[]>([
     { title: 'Nama Dokter', body: "dr. Inas Shabrina Sp.M'", colSpan: 2 },
     { title: 'Keahlian', body: 'Spesialis Mata', colSpan: 2 },
@@ -67,15 +25,15 @@ const SelectTime = (props: SelectTimeProps) => {
   const timeOpt = [
     {
       label: '10:00',
-      value: 'item_10',
+      value: '10.00',
     },
     {
       label: '11:30',
-      value: 'item_11',
+      value: '11.30',
     },
     {
       label: '12:45',
-      value: 'item_12',
+      value: '12.45',
     },
   ];
 
@@ -100,7 +58,6 @@ const SelectTime = (props: SelectTimeProps) => {
 
   return (
     <Stack gap={4}>
-      {/* <Form methods={methods} onSubmit={handleSubmit(onSubmitForm)}> */}
       <Box>
         <Grid item xs={12} md={6}>
           <Typography gutterBottom variant="h5" color="secondary.darker">
@@ -119,11 +76,12 @@ const SelectTime = (props: SelectTimeProps) => {
             <TableRow>
               <TableCellBody titleText="Tanggal Kunjungan" />
               <TableCellBody>
-                <RHFMobileDatePicker
-                  name="birthDate"
-                  format="DD/MM/YYYY"
-                  // {...register('date')}
-                />
+                <RHFMobileDatePicker name="date" format="DD/MM/YYYY" />
+                {errorMessage?.dateErr && (
+                  <Typography variant="caption" color="error.main">
+                    {errorMessage.dateErr}
+                  </Typography>
+                )}
               </TableCellBody>
             </TableRow>
             <TableRow>
@@ -133,7 +91,8 @@ const SelectTime = (props: SelectTimeProps) => {
                   options={timeOpt}
                   getOptionEqualToValue={(opt, value) => opt.value === value?.value}
                   getOptionLabel={(opt) => opt.label}
-                  name="timePils"
+                  name="bookTime"
+                  errorText={errorMessage?.bookTimeErr}
                 />
               </TableCellBody>
             </TableRow>
@@ -144,7 +103,8 @@ const SelectTime = (props: SelectTimeProps) => {
                   options={unableOpt}
                   getOptionEqualToValue={(opt, value) => opt.value === value?.value}
                   getOptionLabel={(opt) => opt.label}
-                  name="timePils2"
+                  name="unable"
+                  errorText={errorMessage?.unableErr}
                 />
               </TableCellBody>
             </TableRow>
@@ -166,12 +126,12 @@ const SelectTime = (props: SelectTimeProps) => {
           color="secondary"
           variant="contained"
           size="large"
+          type="submit"
           onClick={() => handleConfirm()}
         >
           Konfirmasi Daftar
         </Button>
       </Box>
-      {/* </Form> */}
     </Stack>
   );
 };

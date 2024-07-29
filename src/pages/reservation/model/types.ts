@@ -96,8 +96,21 @@ export type SelectRadServiceProps = {
   onCardSelect: () => void;
 };
 
+export type errMes = {
+  dateErr: string,
+  bookTimeErr: string,
+  unableErr: string
+}
+
 export type SelectTimeProps = {
   handleBack: () => void;
   handleConfirm: () => void;
   reservationType: ReservationType
+  errorMessage?: errMes
+}
+
+export type FormValues = {
+  date: Date;
+  unable: string;
+  bookTime: number[];
 }
