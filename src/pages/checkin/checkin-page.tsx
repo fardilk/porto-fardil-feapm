@@ -9,10 +9,12 @@ import { InformationBooking, InformationBookingBPJS, InformationBookingCompany, 
 import { useNavigate } from "react-router"
 import { toast } from "src/components/snackbar"
 import { useEffect, useState } from "react"
+import { useTranslate } from "src/locales"
 
 const CheckinPage = () => {
 
   const navigate = useNavigate()
+  const {t} = useTranslate()
   const {
     currentPage,
     currentPageIndex,
@@ -26,12 +28,12 @@ const CheckinPage = () => {
   const onSubmit = async (data: any) => {
 
     if(!data?.booking_number?.replaceAll("\n","")) {
-      toast.error("Nomor Booking tidak boleh kosong")
+      toast.error(t("checkin.error.empty_booking_number"))
       return;
     }
     if(data?.booking_number?.replaceAll("\n","")?.length < 3) {
-      setErrorMessage("Nomor Booking Tidak Ditemukan. Silahkan Cek Ulang Nomor Booking")
-      toast.error("Nomor Booking tidak valid")
+      setErrorMessage(t("checkin.error.not_found_number"))
+      toast.error(t("checkin.error.invalid"))
       return;
     }
 

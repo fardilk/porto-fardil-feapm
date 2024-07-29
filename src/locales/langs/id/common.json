@@ -1,6 +1,60 @@
 {
+  "global": {
+    "back": "kembali",
+    "next": "selanjutnya",
+    "cancel": "Batal",
+    "patient_detail": "Detail Pasien",
+    "complete_name": "Nama Lengkap",
+    "gender": "Jenis Kelamin",
+    "location": "Tempat",
+    "birthdate": "Tanggal Lahir",
+    "card_number": "Nomor Kartu",
+    "first_faskes": "Faskes Pertama",
+    "class": "Kelas",
+    "user_type": "Jenis Peserta",
+    "user_status": "Status Peserta",
+    "referral_detail": "Detail Rujukan",
+    "referral_num": "No. Rujukan",
+    "referral_date": "Tgl. Rujukan",
+    "poli": "Poliklinik",
+    "print_registration": "Cetak Bukti Daftar",
+    "payment_type": "Tipe Pembayaran",
+    "service_time": "Waktu Pelayanan"
+  },
+  "home": {
+    "menu": {
+      "checkin": {
+        "title": "Lapor Kehadiran",
+        "description": "Siapkan kode booking yang sudah didapat melalui website booking online"
+      },
+      "doctor_visit": {
+        "title": "Kunjungan Dokter",
+        "description": "Pendaftaran kunjungan pasien lama, siapkan nomor NIK"
+      },
+      "reservation": {
+        "title": "Reservasi",
+        "description": "Pesan jadwal kunjungan anda, siapkan data-data anda"
+      },
+      "registration": {
+        "title": "Registrasi Pasien Baru",
+        "description": "Registrasi Pasien Baru, Siapkan data-data anda"
+      }
+    }
+  },
+  "checkin": {
+    "title_input_scan": "Masukan/Scan Nomor Booking Anda",
+    "placeholder_input_number": "Masukan nomor booking anda",
+    "error": {
+      "empty_booking_number": "Nomor Booking tidak boleh kosong",
+      "not_found_number": "Nomor Booking Tidak Ditemukan. Silahkan Cek Ulang Nomor Booking",
+      "invalid": "Nomor booking tidak valid"
+    }
+  },
   "doctor_visit": {
     "input_your_passport": "Masukkan NIK Anda",
-    "title_input_passport": "Masukkan NIK"
+    "title_input_passport": "Masukkan NIK",
+    "visit_detail": "Detail Kunjungan",
+    "service_destination": "Tujuan Layanan",
+    "examining_doctor": "Dokter Pemeriksa"
   }
 }

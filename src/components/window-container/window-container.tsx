@@ -2,6 +2,7 @@ import { AppBar, Box, Button, IconButton, Toolbar, Typography } from "@mui/mater
 import { useMemo, type ReactNode } from "react"
 import { CloseIcon } from "yet-another-react-lightbox"
 import { Iconify } from "src/components/iconify"
+import { useTranslate } from "src/locales"
 
 type WindowContainerProps = {
   title: string,
@@ -15,6 +16,7 @@ type WindowContainerProps = {
 
 const WindowContainer = (props: WindowContainerProps) => {
   const { title, children, size = "medium", hideBackNavigation, hideCloseNavigation, handleBackNavigation, handleCloseNavigation } = props
+  const { t } = useTranslate()
 
   const containerWidth = useMemo(() => {
     if (size === "medium") {
@@ -44,7 +46,7 @@ const WindowContainer = (props: WindowContainerProps) => {
                   }}
                   onClick={handleBackNavigation}
                 >
-                  Kembali
+                  {t("global.back")}
                 </Button>
               )
             }
@@ -61,7 +63,7 @@ const WindowContainer = (props: WindowContainerProps) => {
                   }}
                   onClick={handleCloseNavigation}
                 >
-                  Batal
+                  {t("global.cancel")}
                 </Button>
               )
             }

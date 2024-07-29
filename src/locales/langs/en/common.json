@@ -3,8 +3,62 @@
     "lang": "English",
     "description": "The starting point for your next project is based on MUI. Easy customization helps you build apps faster and better."
   },
+  "global": {
+    "back": "back",
+    "next": "next",
+    "cancel": "cancel",
+    "patient_detail": "Patient Detail",
+    "complete_name": "Complete Name",
+    "gender": "Gender",
+    "location": "Location",
+    "birthdate": "Birthdate",
+    "card_number": "Card Number",
+    "first_faskes": "First Faskes",
+    "class": "Class",
+    "user_type": "User Type",
+    "user_status": "User Status",
+    "referral_detail": "Referral Detail",
+    "referral_num": "Referral Num.",
+    "referral_date": "Referral Date",
+    "poli": "Policlynic",
+    "print_registration": "Print Proof of Registration",
+    "payment_type": "Payment Type",
+    "service_time": "Service Time"
+  },
+  "home": {
+    "menu": {
+      "checkin": {
+        "title": "Check In",
+        "description": "Prepare the booking code that has been obtained through the online booking website"
+      },
+      "doctor_visit": {
+        "title": "Doctor's Visit",
+        "description": "Old Patient Visit Registration, prepare your passport"
+      },
+      "reservation": {
+        "title": "Reservation",
+        "description": "Book your visit, prepare your data"
+      },
+      "registration": {
+        "title": "New Patient Registration",
+        "description": "New Patient Registration, prepare your data"
+      }
+    }
+  },
+  "checkin": {
+    "title_input_scan": "Input/Scan Your Booking Number",
+    "placeholder_input_number": "Input your booking number",
+    "error": {
+      "empty_booking_number": "Booking number can't be empty",
+      "not_found_number": "Booking Number Not Found. Please double check the booking number",
+      "invalid": "Invalid Booking number"
+    }
+  },
   "doctor_visit": {
     "input_your_passport": "Input your passport",
-    "title_input_passport": "Input passport"
+    "title_input_passport": "Input passport",
+    "visit_detail": "Visit Detail",
+    "service_destination": "Service Destination",
+    "examining_doctor": "Examining Doctor"
   }
 }
