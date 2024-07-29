@@ -1,21 +1,22 @@
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, Grid, Stack, Typography } from '@mui/material';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Box, Grid, Stack, Typography } from '@mui/material';
+import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { AlertInformation } from 'src/components/alert-information';
 import { CardBanner } from 'src/components/card-banner';
 import { LabelTextContainer } from 'src/components/label-text';
 import type { LabelTextProps } from 'src/components/label-text/types';
-import { useBoolean, useCountdownSeconds } from 'src/hooks';
-import { getDummyData } from 'src/pages/registration/model/functions';
+import { useCountdownSeconds } from 'src/hooks';
 import { fDate } from 'src/utils/format-time';
 import { fAsterisk } from 'src/utils/helper';
-import { toast } from 'src/components/snackbar';
 import { useNavigate } from 'react-router';
 import { buttonStyle } from '../model/variables';
 import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
+import { type InformationType } from '../model/types';
+import { useTranslate } from 'src/locales';
 
-const InformationBooking = () => {
+const InformationBooking: FC<InformationType> = ({ type }) => {
   const navigate = useNavigate();
+  const { t } = useTranslate();
 
   const {
     startCountdown: startCountdown15,
@@ -31,25 +32,94 @@ const InformationBooking = () => {
 
   const [openPrint, setOpenPrint] = useState(false);
 
-  const [headerData, _setHeaderData] = useState<LabelTextProps[]>([
-    { title: 'NIK', body: fAsterisk('100200300400') },
-    { title: 'Nama Lengkap', body: 'Hello World' },
-    { title: 'Tanggal Lahir', body: fDate('04-05-2001', 'DD-MM-YYYY') },
-    { title: 'No Telpon', body: fAsterisk('085157902550') },
-    { title: 'Email', body: 'helloworld@gmail.com' },
-    {
-      title: 'Alamat',
-      body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
-      colSpan: 2,
-    },
-  ]);
+  const headerData = useMemo(() => {
+    if (type === 'bpjs') {
+      return [
+        { title: 'NIK', body: fAsterisk('100200300400') },
+        { title: t('global.complete_name'), body: 'Hello World' },
+        { title: t('global.gender'), body: 'Perempuan' },
+        {
+          title: `${t('global.location')}, ${t('global.birthdate')}`,
+          body: `Malaysia, ${fDate('04-05-2001', 'DD-MM-YYYY')}`,
+        },
+        { title: t('global.card_number'), body: '1001010101001010' },
+        { title: t('global.class'), body: 'Kelas III' },
+        { title: t('global.first_faskes'), body: 'Klinik Surya Medika' },
+        { title: t('global.user_type'), body: 'Pekerja Mandiri' },
+        { title: t('global.user_status'), body: 'Aktif' },
+      ];
+    }
 
-  const [detailData, _setDetailData] = useState([
-    { title: 'Tujuan Layanan', body: 'Poli Mata', localIcon: 'stethoscope' },
-    { title: 'Dokter Pemeriksa', body: 'dr. Inas Shabrina,Sp.M', localIcon: 'doctor' },
-    { title: 'Tipe Pembayaran', body: 'Umum', localIcon: 'pembayaran-umum' },
-    { title: 'Waktu Pelayanan', body: 'Senin, 30-01-2022 10:00-14:00', localIcon: 'jadwal' },
-  ]);
+    if (type === 'company' || type === 'insurance') {
+      return [
+        { title: 'NIK', body: fAsterisk('100200300400') },
+        { title: t('global.complete_name'), body: 'Hello World' },
+        { title: t("global.birthdate"), body: fDate('04-05-2001', 'DD-MM-YYYY') },
+        { title: t("global.phone_number"), body: fAsterisk('085157902550') },
+        { title: t("global.blood_type"), body: 'B' },
+        { title: 'Rhesus', body: 'Negatif' },
+        { title: 'Email', body: 'helloworld@gmail.com' },
+        {
+          title: t("global.address"),
+          body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
+        },
+      ];
+    }
+
+    return [
+      { title: 'NIK', body: fAsterisk('100200300400') },
+      { title: t('global.complete_name'), body: 'Hello World' },
+      { title: t('global.birthdate'), body: fDate('04-05-2001', 'DD-MM-YYYY') },
+      { title: t("global.phone_number"), body: fAsterisk('085157902550') },
+      { title: 'Email', body: 'helloworld@gmail.com' },
+      {
+        title: t("global.address"),
+        body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
+        colSpan: 2,
+      },
+    ];
+  }, [t, type]);
+
+  const detailData = useMemo(() => {
+    return [
+      { title: t('checkin.service_destination'), body: 'Poli Mata', localIcon: 'stethoscope' },
+      {
+        title: t('checkin.examining_doctor'),
+        body: 'dr. Inas Shabrina,Sp.M',
+        localIcon: 'doctor',
+      },
+      {
+        title: t('global.payment_type'),
+        body:
+          type === 'bpjs'
+            ? 'BPJS'
+            : type === 'insurance'
+              ? 'asuransi'
+              : type === 'company'
+                ? 'Perusahaan'
+                : 'Umum',
+        localIcon:
+          type === 'bpjs'
+            ? 'bpjs'
+            : type === 'insurance'
+              ? 'asuransi'
+              : type === 'company'
+                ? 'perusahaan'
+                : 'pembayaran-umum',
+      },
+      {
+        title: t('global.service_time'),
+        body: 'Senin, 30-01-2022 10:00-14:00',
+        localIcon: 'jadwal',
+      },
+    ];
+  }, [t, type]);
+
+  const referenceData: LabelTextProps[] = [
+    { title: t('global.referral_num'), body: fAsterisk('50040503009874') },
+    { title: t('global.referral_date'), body: fDate('04-05-2001', 'DD-MM-YYYY') },
+    { title: t('global.poli'), body: 'Poli Saraf' },
+  ];
 
   const getCountdown15 = useMemo(() => {
     if (!counting15) return '00:00';
@@ -68,22 +138,22 @@ const InformationBooking = () => {
   const HeaderPrint = useCallback(() => {
     return (
       <Box sx={{ display: 'flex', gap: 1, placeContent: 'end' }}>
-        <Typography variant="button">Kembali ke dashboard dalam : </Typography>
+        <Typography variant="button">{t("global.back_to_dashboard")} : </Typography>
         <Typography variant="button" color="grey">
           {getCountdown2min}
         </Typography>
       </Box>
     );
-  }, [getCountdown2min]);
+  }, [getCountdown2min, t]);
 
   const actionList = [
     {
-      label: 'Kembali Ke Dashboard',
+      label: t("global.back_to_dashboard"),
       buttonProps: { ...buttonStyle },
       action: () => navigate('/', { replace: true }),
     },
     {
-      label: 'Cetak Ulang',
+      label: t("global.reprint"),
       buttonProps: { ...buttonStyle, variant: 'outlined', disabled: counting15 },
       action: () => {
         startCountdown15();
@@ -102,21 +172,31 @@ const InformationBooking = () => {
   return (
     <Stack gap={4}>
       <AlertInformation
-        title="Pendaftaran Anda telah kami terima."
-        body="Silakan menuju ke nurse station untuk melaporkan kehadiran Anda."
+        title={t("checkin.title_success")}
+        body="Silakan menuju ke nurse station untuk melaporkan kehadiran Anda. (note)"
       />
+      <Grid container spacing={2}>
+        {type === 'bpjs' && (
+          <Grid item xs={12} md={4}>
+            <Typography variant="h5" gutterBottom>
+              {t('global.referral_detail')}
+            </Typography>
+
+            <LabelTextContainer col={1} listText={referenceData} />
+          </Grid>
+        )}
+        <Grid item xs={12} md={type === 'bpjs' ? 8 : 12}>
+          <Typography variant="h5" gutterBottom>
+            {t('global.patient_detail')}
+          </Typography>
+
+          <LabelTextContainer listText={headerData} />
+        </Grid>
+      </Grid>
 
       <Box>
         <Typography variant="h5" gutterBottom>
-          Detail Pasien
-        </Typography>
-
-        <LabelTextContainer listText={headerData} />
-      </Box>
-
-      <Box>
-        <Typography variant="h5" gutterBottom>
-          Detail Kunjungan
+          {t('checkin.visit_detail')}
         </Typography>
 
         <Grid container spacing={1}>
@@ -135,7 +215,7 @@ const InformationBooking = () => {
           })}
         </Grid>
       </Box>
-      <Button
+      <LoadingButton
         variant="contained"
         size="large"
         fullWidth
@@ -146,15 +226,15 @@ const InformationBooking = () => {
           startCountdown2min();
         }}
       >
-        Cetak Bukti Daftar
-      </Button>
+        {t('global.print_registration')}
+      </LoadingButton>
 
       <ModalInfoAndAction
         open={openPrint}
         handleClose={() => {
           setOpenPrint(false);
         }}
-        title="Bukti Daftar Cetak"
+        title={t("checkin.saved_proof")}
         titleProps={{ variant: 'h3' }}
         dialogProps={{ maxWidth: 'sm' }}
         disableClose
@@ -162,13 +242,10 @@ const InformationBooking = () => {
         child={actionList}
       >
         <Stack gap={2}>
-          <Typography textAlign="center">
-            Simpan bukti daftar dan scan barcode yang tertera sebagai panduan Anda selama berada di
-            rumah sakit kami
-          </Typography>
+          <Typography textAlign="center">{t("checkin.save_proof")}</Typography>
           <Box>
             <Typography variant="subtitle1" textAlign="center">
-              Bukti daftar tidak tercetak ?
+              {t("checkin.not_printed")}
             </Typography>
             <Typography textAlign="center">{getCountdown15}</Typography>
           </Box>
