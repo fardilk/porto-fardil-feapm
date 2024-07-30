@@ -3,5 +3,6 @@ export type ConfigIForm = {
   encounter: boolean;
   reservation: boolean;
   registration: boolean;
+  simplify: boolean;
   mode: 'fluid' | 'fixed';
 };
