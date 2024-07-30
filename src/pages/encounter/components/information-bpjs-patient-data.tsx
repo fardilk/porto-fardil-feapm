@@ -1,100 +1,101 @@
 import { Box, Button, Grid, Stack, Typography } from "@mui/material"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { LabelTextCard, type LabelTextCardProps, LabelTextContainer, type LabelTextProps } from "src/components/label-text"
 import { fAsterisk } from "src/utils/helper"
 import type { InformationBPJSPatientDataProps } from "../model/types"
 import { fDate } from "src/utils/format-time"
 import { Iconify } from "src/components/iconify"
+import { useTranslate } from "src/locales"
 
 const InformationBPJSPatientData = (props: InformationBPJSPatientDataProps) => {
 
   const { handleBack, handleSelect } = props
-
-  const [detailData, _setDetailData] = useState<LabelTextProps[]>([
-    { title: "Nomor BPJS", body: fAsterisk("100200300400") },
-    { title: "Nama Peserta", body: "Anisa Redina" },
-    { title: "Tempat, Tanggal Lahir", body: "Malaysia, 11-04-2000" },
+  const { t } = useTranslate()
+  const detailData = useMemo(() => [
+    { title: t("appointment.payment.assurance.bpjs.detail.bpjs_number"), body: fAsterisk("100200300400") },
+    { title: t("appointment.payment.assurance.bpjs.detail.participant_name"), body: "Anisa Redina" },
+    { title: `${t("global.location")}, ${t("global.birthdate")}`, body: "Malaysia, 11-04-2000" },
     { title: "PPK TK. 1", body: "Klinik Ketampanan Abadi" },
-    { title: "Kelas Rawat", body: "1" },
-    { title: "Jenis Peserta", body: "Pekerja Mandiri" }
-  ])
+    { title: t("appointment.payment.assurance.bpjs.detail.class"), body: "1" },
+    { title: t("global.user_type"), body: "Pekerja Mandiri" }
+  ],[t])
 
   const referenceList: LabelTextCardProps[] = [
     {
       listText: [
         {
-          title: "Nomor Rujukan",
+          title: t("global.referral_num"),
           body: fAsterisk("100200300102019431")
         },
         {
-          title: "Tanggal",
+          title: t("global.date"),
           body: fDate("04-05-2001", "DD-MM-YYYY")
         },
         {
-          title: "Asal Faskes Perujuk",
+          title: t("appointment.payment.assurance.bpjs.detail.ref_origin"),
           body: "RS Kesehatan Sentosa"
         },
         {
-          title: "Sub/Spesialis",
+          title: t("global.specialist"),
           body: "Saraf"
         }
       ],
       buttonAction: [
         {
           action: () => { handleSelect() },
-          label: "Pilih"
+          label: t("global.choose")
         }
       ]
     },
     {
       listText: [
         {
-          title: "Nomor Rujukan",
+          title: t("global.referral_num"),
           body: fAsterisk("100200300102019431")
         },
         {
-          title: "Tanggal",
+          title: t("global.date"),
           body: fDate("04-05-2001", "DD-MM-YYYY")
         },
         {
-          title: "Asal Faskes Perujuk",
+          title: t("appointment.payment.assurance.bpjs.detail.ref_origin"),
           body: "RS Kesehatan Sentosa"
         },
         {
-          title: "Sub/Spesialis",
+          title: t("global.specialist"),
           body: "Saraf"
         }
       ],
       buttonAction: [
         {
           action: () => { handleSelect() },
-          label: "Pilih"
+          label: t("global.choose")
         }
       ]
     },
     {
       listText: [
         {
-          title: "Nomor Rujukan",
+          title: t("global.referral_num"),
           body: fAsterisk("100200300102019431")
         },
         {
-          title: "Tanggal",
+          title: t("global.date"),
           body: fDate("04-05-2001", "DD-MM-YYYY")
         },
         {
-          title: "Asal Faskes Perujuk",
+          title: t("appointment.payment.assurance.bpjs.detail.ref_origin"),
           body: "RS Kesehatan Sentosa"
         },
         {
-          title: "Sub/Spesialis",
+          title: t("global.specialist"),
           body: "Saraf"
         }
       ],
       buttonAction: [
         {
           action: () => { handleSelect() },
-          label: "Pilih"
+          label: t("global.choose")
         }
       ]
     }
@@ -103,7 +104,7 @@ const InformationBPJSPatientData = (props: InformationBPJSPatientDataProps) => {
   return (
     <Stack gap={2}>
 
-      <Typography variant="h5" color="secondary.darker">Detail Data Pasien BPJS</Typography>
+      <Typography variant="h5" color="secondary.darker">{t("appointment.payment.assurance.bpjs.detail.title")}</Typography>
 
       <LabelTextContainer listText={detailData} />
 
@@ -139,7 +140,7 @@ const InformationBPJSPatientData = (props: InformationBPJSPatientDataProps) => {
       </Box>
 
       <Box sx={{ display: "flex", placeContent: "space-between", gap: 2 }}>
-        <Button fullWidth color="secondary" variant="outlined" size="large" onClick={handleBack}>Data Salah, Isi ulang nomor polis</Button>
+        <Button fullWidth color="secondary" variant="outlined" size="large" onClick={handleBack}>{t("appointment.payment.assurance.bpjs.detail.wrong_num")}</Button>
       </Box>
     </Stack>
   )

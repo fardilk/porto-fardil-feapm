@@ -45,7 +45,7 @@ const PaymentMethod = (props: PaymentMethodProps) => {
       localIcon: "perusahaan",
       onClick: () => { handleAssurance("company") }
     },
-  ],[t, reservationType, handleAssurance])
+  ],[t, handleAssurance, reservationType])
 
   return (
     <Grid container spacing={2}>

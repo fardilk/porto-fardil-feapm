@@ -21,6 +21,7 @@
     "first_faskes": "First Faskes",
     "class": "Class",
     "address": "Address",
+    "date": "Date",
     "user_type": "User Type",
     "user_status": "User Status",
     "referral_detail": "Referral Detail",
@@ -33,6 +34,7 @@
     "back_to_dashboard": "Back to dashboard",
     "reprint": "Reprint",
     "blood_type": "Blood type",
+    "choose": "Choose",
     "payment_method" : "Choose Payment Method"
   },
   "home": {
@@ -128,7 +130,17 @@
         "description": "Patient Registration With Insurance, Company, or BPJS Payor",
         "bpjs": {
           "title": "BPJS",
-          "description": "BPJS patient registration"
+          "description": "BPJS patient registration",
+          "title_input": "Input BPJS number",
+          "detail": {
+            "bpjs_number": "BPJS number",
+            "participant_name": "Paticipant name",
+            "title": "BPJS patient detail",
+            "class": "Care class",
+            "participant_type": "Participant type",
+            "ref_origin": "Referring Facility Origin",
+            "wrong_num": "Incorrect Data, Refill policy number"
+          }
         },
         "insurance": {
           "title": "INSURANCE",
