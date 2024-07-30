@@ -20,6 +20,7 @@
     "first_faskes": "Faskes Pertama",
     "class": "Kelas",
     "address": "Alamat",
+    "date": "Tanggal",
     "phone_number": "No Telpon",
     "user_type": "Jenis Peserta",
     "user_status": "Status Peserta",
@@ -32,7 +33,8 @@
     "service_time": "Waktu Pelayanan",
     "back_to_dashboard": "Kembali ke dashboard",
     "reprint": "Cetak ulang",
-    "blood_type": "Golongan"
+    "blood_type": "Golongan Darah",
+    "choose": "Pilih"
   },
   "home": {
     "menu": {
@@ -127,7 +129,17 @@
         "description": "Pendaftaran Pasien dengan Jaminan Asuransi, Perusahaan atau BPJS",
         "bpjs": {
           "title": "BPJS",
-          "description": "Pendaftaran pasien BPJS"
+          "description": "Pendaftaran pasien BPJS",
+          "title_input": "Masukan nomor BPJS",
+          "detail": {
+            "bpjs_number": "Nomor BPJS",
+            "participant_name": "Nama Peserta",
+            "title": "Detail data pasien BPJS",
+            "class": "Kelas Rawat",
+            "participant_type": "Jenis Peserta",
+            "ref_origin": "Asal Faskes Perujuk",
+            "wrong_num": "Data Salah, Isi ulang nomor polis"
+          }
         },
         "insurance": {
           "title": "Asuransi",

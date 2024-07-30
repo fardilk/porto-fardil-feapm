@@ -28,35 +28,36 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
   const { t } = useTranslate()
 
   const [openPrint, setOpenPrint] = useState(false)
-  const [detailData, _setDetailData] = useState<LabelTextProps[]>([
+
+  const detailData = useMemo(() => [
     { title: 'NIK', body: fAsterisk('100200300400') },
-    { title: 'Nama Lengkap', body: 'Anisa Redina' },
-    { title: 'Tempat, Tanggal Lahir', body: 'Malaysia, 11-04-2000' },
-    { title: 'No Telpon', body: fAsterisk('085157902550') },
-    { title: 'Golongan Darah', body: 'B' },
+    { title: t("global.complete_name"), body: 'Anisa Redina' },
+    { title: `${t("global.location")}, ${t("global.birthdate")}`, body: 'Malaysia, 11-04-2000' },
+    { title: t("global.phone_number"), body: fAsterisk('085157902550') },
+    { title: t("global.blood_type"), body: 'B' },
     { title: 'Rhesus', body: 'Negatif' },
     { title: 'Email', body: 'anisa@gmail.com' },
     {
-      title: 'Alamat',
+      title: t("global.address"),
       body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
     },
-  ]);
+  ],[t])
 
   const listCard = [
     ... encounterType === "RJ" ? [
       {
-        title: 'Tujuan Pelayanan',
+        title: t("appointment.service_destination"),
         body: 'Poli Mata',
         localIcon: 'stethoscope',
       },
       {
-        title: 'Dokter Pemeriksa',
+        title: t("appointment.examining_doctor"),
         body: 'dr. Inas Shabrina,Sp.M',
         localIcon: 'doctor',
       }
     ] : encounterType === "MCU" ? [
       {
-        title: "Tipe Layanan",
+        title: t("appointment.encounter.service_type"),
         body: "Paket Perimetal Wanita",
         localIcon: "medical-checkup"
       }
@@ -65,7 +66,7 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
       ...getPaymentType(type, t),
     },
     {
-      title: 'Waktu Pelayanan',
+      title: t("appointment.encounter.schedule"),
       body: 'Senin, 30-01-2022, 10:00-14:00',
       localIcon: 'jadwal',
     },
@@ -88,22 +89,22 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
   const HeaderPrint = useCallback(() => {
     return (
       <Box sx={{ display: 'flex', gap: 1, placeContent: 'end' }}>
-        <Typography variant="button">Kembali ke dashboard dalam : </Typography>
+        <Typography variant="button">{t("global.back_to_dashboard")} : </Typography>
         <Typography variant="button" color="grey">
           {getCountdown2min}
         </Typography>
       </Box>
     );
-  }, [getCountdown2min]);
+  }, [getCountdown2min,t]);
 
   const actionList = [
     {
-      label: 'Kembali Ke Dashboard',
+      label: t("global.back_to_dashboard"),
       buttonProps: { ...buttonStyle },
       action: () => navigate('/', { replace: true}),
     },
     {
-      label: 'Cetak Ulang',
+      label: t("global.reprint"),
       buttonProps: { ...buttonStyle, variant: 'outlined', disabled: counting15 },
       action: () => {
         startCountdown15();
@@ -122,20 +123,20 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
   return (
     <Stack gap={4}>
       <AlertInformation
-        title="Pendaftaran Anda telah kami terima."
+        title={t("checkin.title_success")}
         body="Silakan menuju ke poli Anda."
       />
 
       <Box>
         <Typography variant="h5" color="primary.darker" gutterBottom>
-          Detail Pasien
+        {t("global.patient_detail")}
         </Typography>
         <LabelTextContainer listText={detailData} />
       </Box>
 
       <Box>
         <Typography variant="h5" color="primary.darker" gutterBottom>
-          Detail Kunjungan
+        {t("checkin.visit_detail")}
         </Typography>
         <Grid container spacing={2}>
           {listCard.map((row, index) => {
@@ -166,7 +167,7 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
             startCountdown2min();
           }}
         >
-          Cetak Bukti Daftar
+          {t("global.print_registration")}
         </Button>
       </Box>
 
@@ -175,7 +176,7 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
         handleClose={() => {
           setOpenPrint(false);
         }}
-        title="Bukti Daftar Cetak"
+        title={t("checkin.saved_proof")}
         titleProps={{ variant: 'h3' }}
         dialogProps={{ maxWidth: 'sm' }}
         disableClose
@@ -184,12 +185,11 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
       >
         <Stack gap={2}>
           <Typography textAlign="center">
-            Simpan bukti daftar dan scan barcode yang tertera sebagai panduan Anda selama berada di
-            rumah sakit kami
+          {t("checkin.save_proof")}
           </Typography>
           <Box>
             <Typography variant="subtitle1" textAlign="center">
-              Bukti daftar tidak tercetak ?
+            {t("checkin.not_printed")}
             </Typography>
             <Typography textAlign="center">{getCountdown15}</Typography>
           </Box>

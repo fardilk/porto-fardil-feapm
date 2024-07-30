@@ -40,7 +40,7 @@ export const getPaymentType = (type: string, t: TFunction) => {
 
 export const initialStep = [
   {
-    label: 'appointment.steps.select_encounter_type', //'Pilih Jenis Kunjungan',
+    label: 'appointment.steps.select_encounter_type',
     value: 'select_encounter_type',
     properties: {
       disableBack: true,
