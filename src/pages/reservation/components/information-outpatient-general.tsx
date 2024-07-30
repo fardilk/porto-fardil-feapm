@@ -18,7 +18,7 @@ const InformationOutpatientGeneral = (props: InformationProps) => {
     { title: t("appointment.patient.address"), body: "Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan" },
     { title: t("appointment.patient.phone"), body: fAsterisk("085157902550") },
     { title: t("appointment.patient.email"), body: "anisa@gmail.com" },
-  ],[t, fAsterisk])
+  ],[t])
 
   return (
     <>

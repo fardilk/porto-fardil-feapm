@@ -33,7 +33,7 @@ const ConfirmationOutpatient = ({
     },
     { title: t('appointment.patient.phone'), body: fAsterisk('085157902550') },
     { title: t('appointment.patient.email'), body: 'anisa@gmail.com' },
-  ],[t, fAsterisk])
+  ],[t])
 
   const listCard = [
     {

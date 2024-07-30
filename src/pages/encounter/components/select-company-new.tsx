@@ -5,11 +5,13 @@ import { useRef, useState } from 'react';
 import { RHFTextField } from 'src/components/hook-form';
 import { Iconify } from 'src/components/iconify';
 import { Keyboard } from 'src/components/keyboard';
+import { useTranslate } from 'src/locales';
 
 const SelectCompanyNew = (props: SelectCompanyNewProps) => {
   const [elementName, setElementName] = useState('');
 
   const searchRef = useRef<any>({});
+  const { t } = useTranslate();
 
   const { handleSelect } = props;
 
@@ -28,7 +30,7 @@ const SelectCompanyNew = (props: SelectCompanyNewProps) => {
               ),
             }}
             autoComplete="off"
-            placeholder="Cari Perusahaan"
+            placeholder={t(('assurance.search_company'))}
             inputRef={(ref) => {
               searchRef.current.searchCompany = ref;
             }}

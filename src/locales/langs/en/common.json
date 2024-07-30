@@ -32,7 +32,8 @@
     "service_time": "Service Time",
     "back_to_dashboard": "Back to dashboard",
     "reprint": "Reprint",
-    "blood_type": "Blood type"
+    "blood_type": "Blood type",
+    "payment_method" : "Choose Payment Method"
   },
   "home": {
     "menu": {
@@ -365,5 +366,37 @@
     "patient_details": "Patient Details",
     "address": "Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan",
     "address_label": "Address"
+  },
+
+  "assurance": {
+    "subtitle": {
+      "enter_policy_number": "Enter Your Policy Number",
+      "enter_employee_number": "Enter Your Employee Number",
+      "detail_data": "Patient Insurance Data Details",
+      "detail_data_employee": "Employee Data Detail"
+
+    },
+    "button": {
+      "incorrect_data": "Incorrect data, refill the policy number",
+      "correct_data": "Data is correct, proceed"
+    },
+    "employee_number": "Employee Number",
+    "benefit_name": "Benefit Name",
+    "guarantee_number": "Guarantee Number",
+    "inhealth_number": "Inhealth Number",
+    "inhealth_class_rights": "Inhealth Class Rights",
+    "search_insurance": "Search Insurance",
+    "policy_number": "Policy Number",
+    "policy_no": "Policy Number",
+    "policy_holder_name": "Policy Holder Name",
+    "guarantor_type": "Guarantor Type",
+    "insurance_company": "Insurance Company",
+    "address": "Address",
+    "place_date_of_birth": "Place, Date of Birth",
+    "phone_number": "Phone Number",
+    "payment_scheme": "Payment Scheme",
+    "search_company": "Search Company",
+    "name": "Name",
+    "validity_period": "Validity Period"
   }
 }

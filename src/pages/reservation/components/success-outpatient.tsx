@@ -40,7 +40,7 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
       title: t("global.address"),
       body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
     },
-  ],[])
+  ],[t])
 
   const listCard = [
     ... reservationType === "RJ" ? [
