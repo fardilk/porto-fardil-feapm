@@ -3,7 +3,15 @@
     "back": "kembali",
     "next": "selanjutnya",
     "cancel": "Batal",
+    "doctor": "Dokter",
+    "MCU" : "MCU",
+    "laboratory" : "Laboratorium",
+    "radiology" : "Radiologi",
     "patient_detail": "Detail Pasien",
+    "doctor_detail": "Detail Dokter",
+    "doctor_name": "Nama Dokter",
+    "specialist": "Keahlian",
+    "reselect": "re-select",
     "complete_name": "Nama Lengkap",
     "gender": "Jenis Kelamin",
     "location": "Tempat",
@@ -60,6 +68,7 @@
     "visit_detail": "Detail Kunjungan",
     "service_destination": "Tujuan Layanan",
     "examining_doctor": "Dokter Pemeriksa",
+    "alert_info_poly": "Setelah memilih poli, dokter akan dipilihkan secara otomatis",
     "patient": {
       "title": "Detail Pasien",
       "nik": "NIK",
@@ -215,5 +224,12 @@
         "information_data_employee" : "Informasi Data Karyawan"
       }
     }
+  },
+  "reservation": {
+    "visit_date": "Tanggal Kunjungan",
+    "visit_hour": "Jam Kunjungan",
+    "if_doctor_can't_arrived" : "Jika Dokter Berhalangan Hadir di Jam Tersebut",
+    "change_schedule": "Pindah Jadwal",
+    "cancel_visit": "Batal Kunjungan"
   }
 }

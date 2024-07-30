@@ -48,6 +48,7 @@ import { fAsterisk } from 'src/utils/helper';
 import SelectLabPackage from './components/select-lab-package';
 import SelectRadService from './components/select-rad-service';
 import SelectTime from './components/select-time';
+import { useTranslate } from 'src/locales';
 
 const ReservationPage = () => {
   const navigate = useNavigate();
@@ -55,14 +56,16 @@ const ReservationPage = () => {
     initialSteps: formStepsOutpatientGeneral,
   });
 
+  const {t} = useTranslate()
+
   const [errorMessage, setErrorMessage] = useState({ dateErr: '', bookTimeErr: '', unableErr: '' });
 
   const [reservationType, SetReservationType] = useState<ReservationType>(null);
 
-  const [listReservationType, _setListReservationType] = useState<CardBannerProps[]>([
+  const listReservationType : CardBannerProps[] = useMemo(() => [
     {
-      title: 'PEMERIKSAAN RAWAT JALAN',
-      body: 'Layanan medis yang mencakup evaluasi kesehatan, diagnosis, dan perawatan tanpa memerlukan rawat inap.',
+      title: t('encounter.outpatient.title'),
+      body: t('encounter.outpatient.description'),
       localIcon: 'stethoscope',
       onClick: () => {
         SetReservationType('RJ');
@@ -70,8 +73,8 @@ const ReservationPage = () => {
       },
     },
     {
-      title: 'MEDICAL CHECK UP',
-      body: 'Serangkaian uji kesehatan rutin untuk memeriksa kesehatan tubuh secara keseluruhan dan mengantisipasi risiko penyakit.',
+      title: t('encounter.mcu.title'),
+      body: t('encounter.mcu.description'),
       localIcon: 'medical-checkup',
       onClick: () => {
         SetReservationType('MCU');
@@ -82,8 +85,8 @@ const ReservationPage = () => {
       },
     },
     {
-      title: 'LABORATORIUM',
-      body: 'Fasilitas yang menyediakan uji diagnostik untuk mendukung evaluasi kesehatan, diagnosis, dan medical check up rutin tanpa perlu rawat inap.',
+      title: t('encounter.laboratory.title'),
+      body: t('encounter.laboratory.description'),
       localIcon: 'blood-test',
       onClick: () => {
         SetReservationType('LAB');
@@ -91,15 +94,15 @@ const ReservationPage = () => {
       },
     },
     {
-      title: 'RADIOLOGI',
-      body: 'Layanan medis yang menyediakan uji pencitraan seperti X-ray, CT scan, dan MRI untuk mendukung diagnosis dan perawatan tanpa memerlukan rawat inap.',
+      title: t('encounter.radiology.title'),
+      body: t('encounter.radiology.description'),
       localIcon: 'x-rays',
       onClick: () => {
         SetReservationType('RAD');
         handleChangePage({ action: 'next', newFormSteps: formStepsRadGeneral });
       },
     },
-  ]);
+  ],[t, SetReservationType, handleChangePage])
 
   const getListDataEmployee = useMemo(
     () => [
@@ -274,8 +277,8 @@ const ReservationPage = () => {
 
             {currentPage.value === 'information_outpatient_general' && (
               <InformationOutpatientGeneral
-                leftTextButton="Data salah, isi ulang NIK"
-                rightTextButton="Data sudah benar, lanjutkan"
+              leftTextButton={t("appointment.patient.actions.invalid_button")}
+              rightTextButton={t("appointment.patient.actions.valid_button")}
                 leftButtonProps={{
                   onClick: () => {
                     handleChangePage({ action: 'previous' });

@@ -1,4 +1,4 @@
-import { ReactNode, useRef, useState } from 'react';
+import { ReactNode, useMemo, useRef, useState } from 'react';
 import { SelectTimeProps } from '../model/types';
 import { RHFMobileDatePicker, RHFTimePils } from 'src/components/hook-form';
 import {
@@ -14,13 +14,17 @@ import {
   TableRow,
 } from '@mui/material';
 import { LabelTextContainer, LabelTextProps } from 'src/components/label-text';
+import { useTranslate } from 'src/locales';
 
 const SelectTime = (props: SelectTimeProps) => {
   const { reservationType, handleBack, handleConfirm, errorMessage } = props;
-  const [headerData, _setHeaderData] = useState<LabelTextProps[]>([
-    { title: 'Nama Dokter', body: "dr. Inas Shabrina Sp.M'", colSpan: 2 },
-    { title: 'Keahlian', body: 'Spesialis Mata', colSpan: 2 },
-  ]);
+  const { t } = useTranslate()
+
+  const headerData : LabelTextProps[] = useMemo(() => [
+    { title: t("global.doctor_name"), body: "dr. Inas Shabrina Sp.M'", colSpan: 2 },
+    { title: t("global.specialist"), body: 'Spesialis Mata', colSpan: 2 },
+  ],[t])
+
 
   const timeOpt = [
     {
@@ -39,20 +43,20 @@ const SelectTime = (props: SelectTimeProps) => {
 
   const unableOpt = [
     {
-      label: 'Pindah Jadwal',
+      label: t("reservation.change_schedule"),
       value: 'pindah',
     },
     {
-      label: 'Batal Kunjungan',
+      label: t("reservation.cancel_visit"),
       value: 'batal',
     },
   ];
 
   const getButtonText = () => {
-    if (reservationType === 'RJ') return 'Dokter';
-    if (reservationType === 'MCU') return 'jenis pemeriksaan MCU';
-    if (reservationType === 'LAB') return 'pemeriksaan laboratorium';
-    if (reservationType === 'RAD') return 'pemeriksaan radiologi';
+    if (reservationType === 'RJ') return t("global.doctor");
+    if (reservationType === 'MCU') return t("MCU");
+    if (reservationType === 'LAB') return t("laboratory");
+    if (reservationType === 'RAD') return t("radiology");
     return '';
   };
 
@@ -61,7 +65,7 @@ const SelectTime = (props: SelectTimeProps) => {
       <Box>
         <Grid item xs={12} md={6}>
           <Typography gutterBottom variant="h5" color="secondary.darker">
-            Detail Dokter
+            {t("global.doctor_detail")}
           </Typography>
           <LabelTextContainer listText={headerData} orientation="vertical" />
         </Grid>
@@ -74,7 +78,7 @@ const SelectTime = (props: SelectTimeProps) => {
           </colgroup>
           <TableBody>
             <TableRow>
-              <TableCellBody titleText="Tanggal Kunjungan" />
+              <TableCellBody titleText={t("reservation.visit_date")} />
               <TableCellBody>
                 <RHFMobileDatePicker name="date" format="DD/MM/YYYY" />
                 {errorMessage?.dateErr && (
@@ -85,7 +89,7 @@ const SelectTime = (props: SelectTimeProps) => {
               </TableCellBody>
             </TableRow>
             <TableRow>
-              <TableCellBody titleText="Jam Kunjungan" />
+              <TableCellBody titleText={t("reservation.visit_hour")} />
               <TableCellBody>
                 <RHFTimePils
                   options={timeOpt}
@@ -97,7 +101,7 @@ const SelectTime = (props: SelectTimeProps) => {
               </TableCellBody>
             </TableRow>
             <TableRow>
-              <TableCellBody titleText="Jika Dokter Berhalangan Hadir di Jam Tersebut" />
+              <TableCellBody titleText={t("reservation.if_doctor_can't_arrived")} />
               <TableCellBody>
                 <RHFTimePils
                   options={unableOpt}
@@ -119,7 +123,7 @@ const SelectTime = (props: SelectTimeProps) => {
           size="large"
           onClick={() => handleBack()}
         >
-          Ulang Pilih {getButtonText()}
+          {t("global.reselect")} {getButtonText()}
         </Button>
         <Button
           fullWidth
@@ -129,7 +133,7 @@ const SelectTime = (props: SelectTimeProps) => {
           type="submit"
           onClick={() => handleConfirm()}
         >
-          Konfirmasi Daftar
+          {t("appointment.confirm_registration")}
         </Button>
       </Box>
     </Stack>

@@ -7,8 +7,16 @@
     "back": "back",
     "next": "next",
     "cancel": "cancel",
+    "doctor": "Doctor",
+    "MCU" : "MCU",
+    "laboratory" : "Laboratory",
+    "radiology" : "Radiology",
     "patient_detail": "Patient Detail",
+    "doctor_detail": "Doctor Detail",
+    "specialist": "Specialist",
+    "doctor_name": "Doctor Name",
     "complete_name": "Complete Name",
+    "reselect": "Re-select",
     "gender": "Gender",
     "location": "Location",
     "birthdate": "Birthdate",
@@ -64,6 +72,7 @@
     "visit_detail": "Visit Detail",
     "service_destination": "Service Destination",
     "examining_doctor": "Examining Doctor",
+    "alert_info_poly": "After selecting a clinic, a doctor will be automatically selected",
     "patient": {
       "title": "Patient Details",
       "nik": "NIK",
@@ -219,5 +228,12 @@
         "information_data_employee" : "Employee Information"
       }
     }
+  },
+  "reservation": {
+    "visit_date": "Date Visit",
+    "visit_hour": "Time Visit",
+    "if_doctor_can't_arrived" : "If the doctor is unavailable during these hours",
+    "change_schedule": "Change Schedule",
+    "cancel_visit": "Cancel Visit"
   }
 }

@@ -1,4 +1,4 @@
-import { useTranslate } from "src/locales";
+import { TFunction } from "i18next";
 
 export const buttonStyle: any = {
   fullWidth: true,
@@ -7,9 +7,7 @@ export const buttonStyle: any = {
   color: 'secondary',
 };
 
-export const getPaymentType = (type: string) => {
-  const { t } = useTranslate();
-
+export const getPaymentType = (type: string, t: TFunction) => {
   switch (type) {
     case 'general':
       return {

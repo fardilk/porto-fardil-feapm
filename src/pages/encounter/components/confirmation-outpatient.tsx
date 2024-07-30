@@ -47,7 +47,7 @@ const ConfirmationOutpatient = ({
       body: 'dr. Inas Shabrina,Sp.M',
       localIcon: 'doctor',
     },
-    { ...getPaymentType(type) },
+    { ...getPaymentType(type, t) },
     {
       title: t('appointment.encounter.schedule'),
       body: 'Senin, 30-01-2022, 10:00-14:00',
