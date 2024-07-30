@@ -11,6 +11,8 @@
     "card_number": "Nomor Kartu",
     "first_faskes": "Faskes Pertama",
     "class": "Kelas",
+    "address": "Alamat",
+    "phone_number": "No Telpon",
     "user_type": "Jenis Peserta",
     "user_status": "Status Peserta",
     "referral_detail": "Detail Rujukan",
@@ -19,7 +21,10 @@
     "poli": "Poliklinik",
     "print_registration": "Cetak Bukti Daftar",
     "payment_type": "Tipe Pembayaran",
-    "service_time": "Waktu Pelayanan"
+    "service_time": "Waktu Pelayanan",
+    "back_to_dashboard": "Kembali ke dashboard",
+    "reprint": "Cetak ulang",
+    "blood_type": "Golongan"
   },
   "home": {
     "menu": {
@@ -43,12 +48,21 @@
   },
   "checkin": {
     "title_input_scan": "Masukan/Scan Nomor Booking Anda",
+    "examining_doctor": "Dokter Pemeriksa",
+    "title_success": "Pendaftaran Anda telah kami terima.",
+    "saved_proof": "Bukti Daftar Cetak",
     "placeholder_input_number": "Masukan nomor booking anda",
+    "service_destination": "Tujuan Layanan",
+    "save_proof": "Simpan bukti daftar dan scan barcode yang tertera sebagai panduan Anda selama berada di rumah sakit kami",
+    "not_printed": "Bukti daftar tidak tercetak ?",
+    "checkin_success": "Lapor kehadiran berhasil",
+    "input_booking_title": "Masukan kode booking",
     "error": {
       "empty_booking_number": "Nomor Booking tidak boleh kosong",
       "not_found_number": "Nomor Booking Tidak Ditemukan. Silahkan Cek Ulang Nomor Booking",
       "invalid": "Nomor booking tidak valid"
-    }
+    },
+    "visit_detail": "Detail Kunjungan"
   },
   "doctor_visit": {
     "input_your_passport": "Masukkan NIK Anda",
