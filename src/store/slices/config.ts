@@ -5,6 +5,7 @@ export type ConfigType = {
   encounter: boolean;
   reservation: boolean;
   registration: boolean;
+  simplify: boolean;
   mode: 'fluid' | 'fixed';
 };
 
@@ -13,6 +14,7 @@ export const initialState: ConfigType = {
   encounter: true,
   reservation: true,
   registration: true,
+  simplify: false,
   mode: 'fixed',
 };
 
@@ -25,6 +27,7 @@ export const slice = createSlice({
       state.encounter = actions.payload.encounter;
       state.registration = actions.payload.registration;
       state.reservation = actions.payload.reservation;
+      state.simplify = actions.payload.simplify;
       state.mode = actions.payload.mode;
     },
   },

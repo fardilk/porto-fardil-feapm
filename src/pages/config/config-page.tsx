@@ -1,59 +1,80 @@
-import { LoadingButton } from "@mui/lab"
-import { Box, Button, Divider, Grid, Stack, Table, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
-import { ReactNode } from "react"
-import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router"
-import { toast } from "sonner"
-import { AppPage } from "src/components/app-page"
-import { Form, RHFRadioGroup, RHFSwitch } from "src/components/hook-form"
-import { Iconify } from "src/components/iconify"
-import { WindowContainer } from "src/components/window-container"
-import { setConfig } from "src/store/slices/config"
-import { dispatch, useSelector } from "src/store/store"
-import { timeout } from "src/utils/timeout"
-import { ConfigIForm } from "./model/types"
+import { LoadingButton } from '@mui/lab';
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Stack,
+  Table,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from '@mui/material';
+import { ReactNode } from 'react';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
+import { toast } from 'sonner';
+import { AppPage } from 'src/components/app-page';
+import { Form, RHFRadioGroup, RHFSwitch } from 'src/components/hook-form';
+import { Iconify } from 'src/components/iconify';
+import { WindowContainer } from 'src/components/window-container';
+import { setConfig } from 'src/store/slices/config';
+import { dispatch, useSelector } from 'src/store/store';
+import { timeout } from 'src/utils/timeout';
+import { ConfigIForm } from './model/types';
+import { useTranslate } from 'src/locales';
 
 const ConfigPage = () => {
+  const config = useSelector((root) => root.config);
 
-  const config = useSelector((root) => root.config)
+  const { t } = useTranslate();
 
   const defaultValues: ConfigIForm = {
     checkin: config.checkin,
     encounter: config.encounter,
     registration: config.registration,
     reservation: config.reservation,
-    mode: config.mode
-  }
+    simplify: config.simplify,
+    mode: config.mode,
+  };
 
-  const navigate = useNavigate()
-  const methods = useForm({ defaultValues })
-  const { handleSubmit, reset, watch, formState: { isDirty, isSubmitting } } = methods
+  const navigate = useNavigate();
+  const methods = useForm({ defaultValues });
+  const {
+    handleSubmit,
+    reset,
+    watch,
+    formState: { isDirty, isSubmitting },
+  } = methods;
 
-  const values = watch()
+  const values = watch();
 
-  const isFluid = values.mode === "fluid"
+  const isFluid = values.mode === 'fluid';
 
   const onSubmit = async (data: ConfigIForm) => {
-    await timeout(100)
+    await timeout(100);
 
-    dispatch(setConfig(data))
-    reset(data)
+    dispatch(setConfig(data));
+    reset(data);
 
-    toast.success("Berhasil Disimpan")
-  }
+    toast.success(t('config.success'));
+  };
 
   return (
     <AppPage>
       <WindowContainer
-        title="Configuration"
+        title={t('config.title')}
         hideBackNavigation
-        handleCloseNavigation={() => { navigate("/", { replace: true }) }}
+        handleCloseNavigation={() => {
+          navigate('/', { replace: true });
+        }}
       >
         <Form methods={methods} onSubmit={handleSubmit(onSubmit)}>
-
           <Stack spacing={2} p={4}>
             <Box sx={{ display: 'flex', placeContent: 'space-between' }}>
-              <Typography variant="h5">Konfigurasi Halaman Awal</Typography>
+              <Typography variant="h5">{t('config.configure_page')}</Typography>
               <LoadingButton
                 variant="soft"
                 color="info"
@@ -62,143 +83,130 @@ const ConfigPage = () => {
                 loading={isSubmitting}
                 startIcon={<Iconify icon="fluent:save-32-regular" />}
               >
-                Simpan
+                {t('config.save')}
               </LoadingButton>
             </Box>
             <Divider />
             <Box>
-              <TableContainer>
-                <Table>
-                  <colgroup>
-                    <col width="30%" />
-                    <col width="60%" />
-                  </colgroup>
-                  <TableHead>
-
-                    <TableRows title="Checkin">
-                      <RHFSwitch
-                        name="checkin"
-                        label="Aktif"
-                      />
-                    </TableRows>
-
-                    <TableRows title="Kunjungan Dokter">
-                      <RHFSwitch
-                        name="encounter"
-                        label="Aktif"
-                      />
-                    </TableRows>
-
-                    <TableRows title="Reservasi">
-                      <RHFSwitch
-                        name="reservation"
-                        label="Aktif"
-                      />
-                    </TableRows>
-
-                    <TableRows title="Registrasi Pasien Baru">
-                      <RHFSwitch
-                        name="registration"
-                        label="Aktif"
-                      />
-                    </TableRows>
-
-                  </TableHead>
-                </Table>
-              </TableContainer>
+              <Grid container rowSpacing={2} my={2} columnSpacing={3}>
+                <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                  <Typography variant="subtitle1" color="grey.600">
+                    {t('config.checkin')}
+                  </Typography>
+                </Grid>
+                <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                  <RHFSwitch name="checkin" label={t('config.active_label')} />
+                </Grid>
+                <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                  <Typography variant="subtitle1" color="grey.600">
+                    {t('config.encounter')}
+                  </Typography>
+                </Grid>
+                <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                  <RHFSwitch name="encounter" label={t('config.active_label')} />
+                </Grid>
+                <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                  <Typography variant="subtitle1" color="grey.600">
+                    {t('config.reservation')}
+                  </Typography>
+                </Grid>
+                <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                  <RHFSwitch name="reservation" label={t('config.active_label')} />
+                </Grid>
+                <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                  <Typography variant="subtitle1" color="grey.600">
+                    {t('config.registration')}
+                  </Typography>
+                </Grid>
+                <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                  <RHFSwitch name="registration" label={t('config.active_label')} />
+                </Grid>
+                <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                  <Typography variant="subtitle1" color="grey.600">
+                    {t('config.simplify')}
+                  </Typography>
+                </Grid>
+                <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                  <RHFSwitch name="simplify" label={t('config.active_label')} />
+                </Grid>
+              </Grid>
             </Box>
             <Divider />
             <Box>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Typography variant="subtitle2">Mode Tampilan Menu : </Typography>
+                  <Typography variant="subtitle2">{t('config.mode')} : </Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <RHFRadioGroup
                     row
                     name="mode"
-                    options={[{ label: "Fluid", value: "fluid" }, { label: "Fixed", value: "fixed" }]}
+                    options={[
+                      { label: 'Fluid', value: 'fluid' },
+                      { label: 'Fixed', value: 'fixed' },
+                    ]}
                   />
                 </Grid>
 
                 <Grid item xs={12} md={12}>
                   <Box
                     sx={{
-                      display: "flex",
-                      placeItems: "center",
-                      placeContent: "center",
-                      height: "100%",
-                      gap: 1
-                    }}>
-                    {
-                      values.checkin && (
-                        <Button
-                          sx={{ width: !isFluid ? '20%' : undefined }}
-                          variant="soft"
-                          color="primary"
-                          fullWidth={isFluid}
-                        >
-                          Checkin
-                        </Button>
-                      )
-                    }
-                    {
-                      values.encounter && (
-                        <Button
-                          sx={{ width: !isFluid ? '20%' : undefined }}
-                          variant="soft"
-                          color="primary"
-                          fullWidth={isFluid}
-                        >
-                          Kunjungan Dokter
-                        </Button>
-                      )
-                    }
-                    {
-                      values.reservation && (
-                        <Button
-                          sx={{ width: !isFluid ? '20%' : undefined }}
-                          variant="soft"
-                          color="primary"
-                          fullWidth={isFluid}
-                        >
-                          Reservasi
-                        </Button>
-                      )
-                    }
-                    {
-                      values.registration && (
-                        <Button
-                          sx={{ width: !isFluid ? '20%' : undefined }}
-                          variant="soft"
-                          color="primary"
-                          fullWidth={isFluid}
-                        >
-                          Registrasi Pasien Baru
-                        </Button>
-                      )
-                    }
+                      display: 'flex',
+                      placeItems: 'center',
+                      placeContent: 'center',
+                      height: '100%',
+                      gap: 1,
+                    }}
+                  >
+                    {values.checkin && (
+                      <Button
+                        sx={{ width: !isFluid ? '20%' : undefined }}
+                        variant="soft"
+                        color="primary"
+                        fullWidth={isFluid}
+                      >
+                        {t('config.checkin')}
+                      </Button>
+                    )}
+                    {values.encounter && (
+                      <Button
+                        sx={{ width: !isFluid ? '20%' : undefined }}
+                        variant="soft"
+                        color="primary"
+                        fullWidth={isFluid}
+                      >
+                        {t('config.encounter')}
+                      </Button>
+                    )}
+                    {values.reservation && (
+                      <Button
+                        sx={{ width: !isFluid ? '20%' : undefined }}
+                        variant="soft"
+                        color="primary"
+                        fullWidth={isFluid}
+                      >
+                        {t('config.reservation')}
+                      </Button>
+                    )}
+                    {values.registration && (
+                      <Button
+                        sx={{ width: !isFluid ? '20%' : undefined }}
+                        variant="soft"
+                        color="primary"
+                        fullWidth={isFluid}
+                      >
+                        {t('config.registration')}
+                      </Button>
+                    )}
                   </Box>
                 </Grid>
               </Grid>
             </Box>
           </Stack>
         </Form>
-
       </WindowContainer>
     </AppPage>
-  )
-}
+  );
+};
 
-export default ConfigPage
-
-const TableRows = ({ title, children }: { title: string, children: ReactNode }) => {
-  return (
-    <TableRow>
-      <TableCell> {title} </TableCell>
-      <TableCell>
-        {children}
-      </TableCell>
-    </TableRow>
-  )
-}
+export default ConfigPage;
