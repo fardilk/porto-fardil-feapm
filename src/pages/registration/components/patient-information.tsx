@@ -4,32 +4,34 @@ import { useFormContext } from "react-hook-form"
 import { LabelTextContainer, LabelTextProps } from "src/components/label-text"
 import { fAsterisk } from "src/utils/helper"
 import type { PatientInformationProps } from "../model/types"
+import { useTranslate } from "src/locales"
 
 const PatientInformation = (props: PatientInformationProps) => {
   const { leftButtonProps, rightButtonProps, leftTextButton, rigthTextButton } = props
 
+  const {t} = useTranslate()
   const { watch } = useFormContext()
   const isForeign = watch("citizenship")
 
   const [detailData, _setDetailData] = useState<LabelTextProps[]>([
     { title: isForeign ? "Passport" : "NIK/Medrec", body: fAsterisk("100200300400") },
-    { title: "Nama Lengkap", body: "Anisa Redina" },
-    { title: "Jenis Kelamin", body: "Perempuan" },
-    { title: "Tempat, Tanggal Lahir", body: "Malaysia, 11-04-2000" },
-    { title: "Alamat", body: "Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan" },
-    { title: "No Telpon", body: fAsterisk("085157902550") },
-    { title: "Email", body: "anisa@gmail.com" },
-    { title: "Golongan Darah", body: "B" },
-    { title: "Agama", body: "Islam" },
-    { title: "Pendidikan", body: "Sarjana" },
-    { title: "Status Perkawinan", body: "Belum menikah" },
-    { title: "Pekerjaan", body: "Karyawan Swasta" },
-    { title: "Bahasa Sehari-hari", body: "Bahasa Indonesia" },
+    { title: t("registration.fullname"), body: "Anisa Redina" },
+    { title: t("registration.gender"), body: "Perempuan" },
+    { title: t("registration.born_place_date"), body: "Malaysia, 11-04-2000" },
+    { title: t("registration.address_label"), body: t("registration.address") },
+    { title: t("registration.phone_number"), body: fAsterisk("085157902550") },
+    { title: t("registration.email"), body: "anisa@gmail.com" },
+    { title: t("registration.blood_type"), body: "B" },
+    { title: t("registration.religion"), body: "Islam" },
+    { title: t("registration.education"), body: t("registration.s1") },
+    { title: t("registration.marital_status"), body: t("registration.single") },
+    { title: t("registration.occupation"), body: t("registration.private_employee") },
+    { title: t("registration.daily_language"), body: t("registration.indonesian_language") },
   ])
 
   return (
     <>
-      <Alert color="warning" severity="warning">Anda sudah terdaftar sebagai pasien di RS Primaya Tangerang dengan data sebagai berikut :</Alert>
+      <Alert color="warning" severity="warning">{t("registration.registered_patient")}</Alert>
       <TableContainer sx={{ my: 2 }}>
         <LabelTextContainer
           disableOutline

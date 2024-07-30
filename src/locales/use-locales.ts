@@ -21,15 +21,15 @@ export function useTranslate(ns?: string) {
   const onChangeLang = useCallback(
     async (newLang: LanguageValue) => {
       try {
-        const langChangePromise = i18n.changeLanguage(newLang);
+        i18n.changeLanguage(newLang);
 
-        const currentMessages = messages[newLang] || messages.en;
+        // const currentMessages = messages[newLang] || messages.en;
 
-        /* toast.promise(langChangePromise, {
-          loading: currentMessages.loading,
-          success: () => currentMessages.success,
-          error: currentMessages.error,
-        }); */
+        // toast.promise(langChangePromise, {
+        //   loading: currentMessages.loading,
+        //   success: () => currentMessages.success,
+        //   error: currentMessages.error,
+        // });
 
         if (currentLang) {
           dayjs.locale(currentLang.adapterLocale);

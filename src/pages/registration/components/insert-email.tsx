@@ -6,6 +6,7 @@ import { typography } from "src/theme/core"
 
 import { Keyboard } from "src/components/keyboard"
 import { RHFTextField } from "src/components/hook-form"
+import { useTranslate } from "src/locales"
 
 const InsertEmail = () => {
 
@@ -14,14 +15,15 @@ const InsertEmail = () => {
   const [keyboardType, setKeyboardType] = useState("email")
 
   const inputRef = useRef<any>({})
+  const {t} = useTranslate()
 
   return (
     <Stack gap={2}>
-      <Typography variant="h4" textAlign="center">Masukkan Email Anda</Typography>
+      <Typography variant="h4" textAlign="center">{t("registration.input_your_email")}</Typography>
       <RHFTextField
         id="email"
         name="email"
-        placeholder="Masukkan Email Anda"
+        placeholder={t("registration.input_your_email")}
         variant="filled"
         onClick={() => {
           setElementName("email")
