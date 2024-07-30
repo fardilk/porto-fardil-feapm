@@ -1,49 +1,51 @@
 import { Grid } from "@mui/material"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { CardBanner } from "src/components/card-banner"
 import type { CardBannerProps } from "src/components/card-banner/types"
 import type { PaymentMethodProps } from "../model/types"
+import { useTranslate } from "src/locales"
 
 const PaymentMethod = (props: PaymentMethodProps) => {
   const { handleAssurance, handleGeneral, reservationType } = props
 
   const [openAssurance, setOpenAssurance] = useState(false)
+  const { t } = useTranslate()
 
-  const [paymentMethod, _setPaymentMethod] = useState<CardBannerProps[]>([
+  const paymentMethod : CardBannerProps[] = useMemo(() => [
     {
-      title: "UMUM",
-      body: "Pendaftaran Pasien Umum",
+      title: t("appointment.payment.general.title"),
+      body: t("appointment.payment.general.description"),
       localIcon: "pembayaran-umum",
       onClick: () => { handleGeneral() }
     },
     {
-      title: "JAMINAN",
-      body: "Pendaftaran Pasien dengan Jaminan Asuransi, Perusahaan atau BPJS",
+      title: t("appointment.payment.assurance.title"),
+      body: t("appointment.payment.assurance.description"),
       localIcon: "jaminan",
       onClick: () => { setOpenAssurance(true) }
     }
-  ])
+  ],[t, handleGeneral, setOpenAssurance])
 
-  const [assurancePaymentMethod, _setAssurancePaymentMethod] = useState<CardBannerProps[]>([
+  const assurancePaymentMethod : CardBannerProps[] = useMemo(() => [
     ... reservationType === "RJ" ? [{
-      title: "BPJS",
-      body: "Pendaftaran Pasien BPJS",
+      title: t("appointment.payment.assurance.bpjs.title"),
+      body: t("appointment.payment.assurance.bpjs.description"),
       localIcon: "bpjs",
       onClick: () => { handleAssurance("bpjs") }
     }] : [],
     {
-      title: "Asuransi",
-      body: "Pendaftaran pasien asuransi",
+      title: t("appointment.payment.assurance.insurance.title"),
+      body: t("appointment.payment.assurance.insurance.description"),
       localIcon: "asuransi",
       onClick: () => { handleAssurance("insurance") }
     },
     {
-      title: "Perusahaan",
-      body: "Pendaftaran pasien asuransi perusahaan",
+      title: t("appointment.payment.assurance.company.title"),
+      body: t("appointment.payment.assurance.company.description"),
       localIcon: "perusahaan",
       onClick: () => { handleAssurance("company") }
     },
-  ])
+  ],[t, handleAssurance])
 
   return (
     <Grid container spacing={2}>

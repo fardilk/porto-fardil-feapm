@@ -5,8 +5,11 @@ import { Iconify } from 'src/components/iconify';
 import type { SelectPractitionerProps } from '../model/types';
 import { Keyboard } from 'src/components/keyboard';
 import { RHFTextField } from 'src/components/hook-form';
+import { useTranslate } from 'src/locales';
 
 const SelectPractitioner = (props: SelectPractitionerProps) => {
+  const { t } = useTranslate();
+
   const { onCardSelect } = props;
 
   const [isPractitioner, setIsPractitioner] = useState(true);
@@ -59,7 +62,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
                 startAdornment: <Iconify icon="fluent:search-12-regular" color="gray" marginRight={1} />,
               }}
               autoComplete="off"
-              placeholder={isPractitioner ? 'Cari Dokter' : 'Cari Poli'}
+              placeholder={isPractitioner ? t('encounter.outpatient.doctor_find') : t('encounter.outpatient.department_find')}
               inputRef={(ref) => {
                 searchRef.current.searchPoli = ref;
               }}
@@ -125,8 +128,8 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
             }}
           >
             {isPractitioner
-              ? 'Belum tahu dokter? Pilih Poli & Temukan Dokter Terdekat'
-              : 'Sudah tahu dokter? Pilih dokter'}
+              ? t('encounter.outpatient.doctor_unknown')
+              : t('encounter.outpatient.doctor_known')}
           </Button>
 
           <Button

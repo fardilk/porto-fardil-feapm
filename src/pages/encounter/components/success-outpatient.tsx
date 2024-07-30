@@ -9,6 +9,7 @@ import type { SuccessOutpatientType } from '../model/types';
 import { buttonStyle, getPaymentType } from '../model/variables';
 import { useCountdownSeconds } from 'src/hooks';
 import { useNavigate } from 'react-router';
+import { useTranslate } from 'src/locales';
 
 const SuccessOutpatient = (props: SuccessOutpatientType) => {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
     countdown: countdown2min,
     counting: counting2min,
   } = useCountdownSeconds(2*60);
+  const { t } = useTranslate()
 
   const [openPrint, setOpenPrint] = useState(false)
   const [detailData, _setDetailData] = useState<LabelTextProps[]>([
@@ -60,7 +62,7 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
       }
     ] : [],
     {
-      ...getPaymentType(type),
+      ...getPaymentType(type, t),
     },
     {
       title: 'Waktu Pelayanan',

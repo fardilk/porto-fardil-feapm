@@ -6,8 +6,11 @@ import type { SelectRadServiceProps } from '../model/types';
 import { fCurrency } from 'src/utils/format-number';
 import { Keyboard } from 'src/components/keyboard';
 import { RHFTextField } from 'src/components/hook-form';
+import { useTranslate } from 'src/locales';
 
 const SelectRadService = (props: SelectRadServiceProps) => {
+  const { t } = useTranslate();
+  
   const { onCardSelect } = props;
 
   const [elementName, setElementName] = useState('');
@@ -39,7 +42,7 @@ const SelectRadService = (props: SelectRadServiceProps) => {
                 ),
               }}
               autoComplete="off"
-              placeholder="Cari Radiologi"
+              placeholder={t('encounter.radiology.package_find')}
               inputRef={(ref) => {
                 searchRef.current.searchRadiologi = ref;
               }}

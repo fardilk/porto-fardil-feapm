@@ -53,11 +53,11 @@ const InsertIdentifier = () => {
         />
       </Box>
 
-      <Typography variant="h4" textAlign="center">{t('doctor_visit.input_your_passport')}</Typography>
+      <Typography variant="h4" textAlign="center">{isForeign ? t('appointment.input_your_passport') : t('appointment.input_your_nik')}</Typography>
       <RHFTextField
         id="nik"
         name="nik"
-        placeholder={isForeign ? "Submit Your Passport Number" : "Masukkan 16 digit nomor NIK Anda"}
+        placeholder={isForeign ? t("appointment.placeholder_input_passport") : t("appointment.placeholder_input_nik")}
         variant="filled"
         inputRef={(ref) => { inputRef.current.nik = ref }}
         inputProps={{

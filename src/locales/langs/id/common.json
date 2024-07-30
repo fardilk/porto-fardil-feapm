@@ -3,7 +3,15 @@
     "back": "Kembali",
     "next": "Selanjutnya",
     "cancel": "Batal",
+    "doctor": "Dokter",
+    "MCU" : "MCU",
+    "laboratory" : "Laboratorium",
+    "radiology" : "Radiologi",
     "patient_detail": "Detail Pasien",
+    "doctor_detail": "Detail Dokter",
+    "doctor_name": "Nama Dokter",
+    "specialist": "Keahlian",
+    "reselect": "re-select",
     "complete_name": "Nama Lengkap",
     "gender": "Jenis Kelamin",
     "location": "Tempat",
@@ -64,11 +72,179 @@
     },
     "visit_detail": "Detail Kunjungan"
   },
-  "doctor_visit": {
-    "input_your_passport": "Masukkan NIK Anda",
-    "title_input_passport": "Masukkan NIK",
+  "appointment": {
+    "input_your_nik": "Masukkan NIK Anda",
+    "title_input_nik": "Masukkan NIK",
+    "placeholder_input_nik": "Masukkan 16 digit nomor NIK Anda",
+    "input_your_passport": "Masukkan nomor paspor Anda",
+    "title_input_passport": "Masukkan nomor paspor",
+    "placeholder_input_passport": "Masukkan nomor paspor Anda",
     "visit_detail": "Detail Kunjungan",
     "service_destination": "Tujuan Layanan",
+    "examining_doctor": "Dokter Pemeriksa",
+    "alert_info_poly": "Setelah memilih poli, dokter akan dipilihkan secara otomatis",
+    "patient": {
+      "title": "Detail Pasien",
+      "nik": "NIK",
+      "passport": "No Paspor",
+      "fullname": "Nama Lengkap",
+      "birthdateplace": "Tempat, Tanggal Lahir",
+      "blood_type": "Golongan Darah",
+      "blood_rhesus": "Rhesus",
+      "address": "Alamat",
+      "phone": "No Telpon",
+      "email": "Email",
+      "actions": {
+        "update_msg": "Untuk update data Anda, silahkan ke counter medical record.",
+        "invalid_button": "Data salah, isi ulang NIK",
+        "valid_button": "Data sudah benar, lanjutkan"
+      }
+    },
+    "encounter": {
+      "title": "Detail Kunjungan",
+      "healthcare_service": "Tujuan Pelayanan",
+      "service_type": "Tipe Pelayanan",
+      "practitioner": "Dokter Pemeriksa",
+      "payplan": "Tipe Pembayaran",
+      "schedule": "Waktu Pelayanan"
+    },
+    "data_statement": "Saya menyatakan bahwa apa yang telah saya beritahukan di atas adalah benar dan lengkap",
+    "change_registration": "Ubah Pendaftaran",
+    "confirm_registration": "Konfirmasi Daftar",
+    "confirmation": {
+      "title": "Konfirmasi Pendaftaran?",
+      "subtitle": "Pastikan seluruh data Anda telah benar dan lengkap.",
+      "recheck": "Periksa Kembali",
+      "confirm": "Konfirmasi Pendaftaran"
+    },
+    "payment": {
+      "general": {
+        "title": "UMUM",
+        "description": "Pendaftaran Pasien Umum"
+      },
+      "assurance": {
+        "title": "JAMINAN",
+        "description": "Pendaftaran Pasien dengan Jaminan Asuransi, Perusahaan atau BPJS",
+        "bpjs": {
+          "title": "BPJS",
+          "description": "Pendaftaran pasien BPJS"
+        },
+        "insurance": {
+          "title": "Asuransi",
+          "description": "Pendaftaran pasien asuransi"
+        },
+        "company": {
+          "title": "Perusahaan",
+          "description": "Pendaftaran pasien asuransi perusahaan"
+        }
+      }
+    },
+    "steps": {
+      "select_encounter_type": "Pilih Jenis Kunjungan",
+      "insert_nik": "Masukkan NIK",
+      "information_outpatient_general" : "Informasi Data Pasien",
+      "payment_method" : "Pilih Metode Pembayaran"
+    }
+  },
+  "encounter": {
+    "outpatient": {
+      "title": "PEMERIKSAAN RAWAT JALAN",
+      "description": "Layanan medis yang mencakup evaluasi kesehatan, diagnosis, dan perawatan tanpa memerlukan rawat inap.",
+      "doctor_find": "Cari Dokter",
+      "doctor_unknown": "Belum tahu dokter? Pilih Poli & Temukan Dokter Terdekat",
+      "doctor_known": "Sudah tahu dokter? Pilih dokter",
+      "department_find": "Cari Poli",
+      "general" : {
+        "select_healthcare_practitioner" : "Pilih Dokter Poli",
+        "confirmation_patient_registration" : "Konfirmasi Pendaftaran Pasien",
+        "registration_success" : "Pendaftaran Berhasil"
+      },
+      "insurance" : {
+        "select_insurance" : "Pilih Asuransi",
+        "insert_polis_number" : "Masukkan Nomor Polis Asuransi",
+        "information_data_patient_insurance" : "Informasi Data Asuransi Pasien"
+      },
+      "company" : {
+        "select_company" : "Pilih Perusahaan",
+        "select_company_new" : "Pilih Perusahaan",
+        "insert_employee_number": "Masukkan Nomor Karyawan",
+        "information_data_employee" : "Informasi Data Karyawan"
+      },
+      "bpjs" : {
+        "insert_bpjs_number" : "Masukan / Scan Nomor Kartu BPJS",
+        "information_patient_data_bpjs" : "Informasi Data Pasien BPJS"
+      }
+    },
+    "mcu": {
+      "title": "MEDICAL CHECK UP",
+      "description": "Serangkaian uji kesehatan rutin untuk memeriksa kesehatan tubuh secara keseluruhan dan mengantisipasi risiko penyakit.",
+      "package_find": "Cari MCU",
+      "general" : {
+        "select_mcu_package" : "Pilih Paket MCU yang anda inginkan",
+        "confirmation_patient_registration_mcu" : "Konfirmasi Pendaftaran Pasien",
+        "registration_success" : "Pendaftaran Berhasil"
+      },
+      "insurance" : {
+        "select_insurance" : "Pilih Asuransi",
+        "insert_polis_number" : "Masukkan Nomor Polis Asuransi",
+        "information_data_patient_insurance" : "Informasi Data Asuransi Pasien"
+      },
+      "company" : {
+        "select_company" : "Pilih Perusahaan",
+        "select_company_new" : "Pilih Perusahaan",
+        "insert_employee_number": "Masukkan Nomor Karyawan",
+        "information_data_employee" : "Informasi Data Karyawan"
+      }
+    },
+    "laboratory": {
+      "title": "LABORATORIUM",
+      "description": "Fasilitas yang menyediakan uji diagnostik untuk mendukung evaluasi kesehatan, diagnosis, dan medical check up rutin tanpa perlu rawat inap.",
+      "package_find": "Cari Paket Lab",
+      "general" : {
+        "select_lab_package" : "Pilih Paket Laboratorium yang Anda Inginkan",
+        "confirmation_patient_registration" : "Konfirmasi Pendaftaran Pasien",
+        "registration_success" : "Pendaftaran Berhasil"
+      },
+      "insurance" : {
+        "select_insurance" : "Pilih Asuransi",
+        "insert_polis_number" : "Masukkan Nomor Polis Asuransi",
+        "information_data_patient_insurance" : "Informasi Data Asuransi Pasien"
+      },
+      "company" : {
+        "select_company" : "Pilih Perusahaan",
+        "select_company_new" : "Pilih Perusahaan",
+        "insert_employee_number": "Masukkan Nomor Karyawan",
+        "information_data_employee" : "Informasi Data Karyawan"
+      }
+    },
+    "radiology": {
+      "title": "RADIOLOGI",
+      "description": "Layanan medis yang menyediakan uji pencitraan seperti X-ray, CT scan, dan MRI untuk mendukung diagnosis dan perawatan tanpa memerlukan rawat inap.",
+      "package_find": "Cari Radiologi",
+      "general" : {
+        "select_rad_service" : "Pilih Layanan Radiologi yang Anda Inginkan",
+        "confirmation_patient_registration" : "Konfirmasi Pendaftaran Pasien",
+        "registration_success" : "Pendaftaran Berhasil"
+      },
+      "insurance" : {
+        "select_insurance" : "Pilih Asuransi",
+        "insert_polis_number" : "Masukkan Nomor Polis Asuransi",
+        "information_data_patient_insurance" : "Informasi Data Asuransi Pasien"
+      },
+      "company" : {
+        "select_company" : "Pilih Perusahaan",
+        "select_company_new" : "Pilih Perusahaan",
+        "insert_employee_number": "Masukkan Nomor Karyawan",
+        "information_data_employee" : "Informasi Data Karyawan"
+      }
+    }
+  },
+  "reservation": {
+    "visit_date": "Tanggal Kunjungan",
+    "visit_hour": "Jam Kunjungan",
+    "if_doctor_can't_arrived" : "Jika Dokter Berhalangan Hadir di Jam Tersebut",
+    "change_schedule": "Pindah Jadwal",
+    "cancel_visit": "Batal Kunjungan",
     "examining_doctor": "Dokter Pemeriksa"
   },
 

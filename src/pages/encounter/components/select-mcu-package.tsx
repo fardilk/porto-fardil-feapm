@@ -5,8 +5,11 @@ import { type SelectMCUPackageProps } from '../model/types';
 import LabelListTextCard from './label-list-text-card';
 import { RHFTextField } from 'src/components/hook-form';
 import { Keyboard } from 'src/components/keyboard';
+import { useTranslate } from 'src/locales';
 
 const SelectMCUPackage: FC<SelectMCUPackageProps> = ({ handleSelect }) => {
+  const { t } = useTranslate();
+
   const [elementName, setElementName] = useState('');
 
   const searchRef = useRef<any>({});
@@ -91,7 +94,7 @@ const SelectMCUPackage: FC<SelectMCUPackageProps> = ({ handleSelect }) => {
             ),
           }}
           autoComplete="off"
-          placeholder="Cari MCU"
+          placeholder={t('encounter.mcu.package_find')}
           inputRef={(ref) => {
             searchRef.current.searchMCUPackage = ref;
           }}

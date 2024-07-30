@@ -6,8 +6,11 @@ import { fCurrency } from 'src/utils/format-number';
 import { RHFTextField } from 'src/components/hook-form';
 import { Keyboard } from 'src/components/keyboard';
 import type { SelectLabPackageProps } from '../model/types';
+import { useTranslate } from 'src/locales';
 
 const SelectLabPackage = (props: SelectLabPackageProps) => {
+  const { t } = useTranslate();
+
   const { onCardSelect } = props;
 
   const [elementName, setElementName] = useState('');
@@ -41,7 +44,7 @@ const SelectLabPackage = (props: SelectLabPackageProps) => {
                 ),
               }}
               autoComplete="off"
-              placeholder="Cari Paket Lab"
+              placeholder={t('encounter.laboratory.package_find')}
               inputRef={(ref) => {
                 searchRef.current.searchLabPackage = ref;
               }}

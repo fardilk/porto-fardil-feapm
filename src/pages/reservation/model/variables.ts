@@ -1,3 +1,5 @@
+import { TFunction } from "i18next";
+
 export const buttonStyle: any = {
     fullWidth: true,
     size: 'large',
@@ -5,35 +7,36 @@ export const buttonStyle: any = {
     color: 'secondary',
   };
   
-  export const getPaymentType = (type: string) => {
-    switch (type) {
-      case 'general':
-        return {
-          title: 'Tipe Pembayaran',
-          body: 'Umum',
-          localIcon: 'pembayaran-umum',
-        };
-      case 'insurance':
-        return {
-          title: 'Tipe Pembayaran',
-          body: 'Asuransi',
-          localIcon: 'asuransi',
-        };
-  
-      case 'company':
-        return {
-          title: 'Tipe Pembayaran',
-          body: 'Perusahaan',
-          localIcon: 'perusahaan',
-        };
-  
-      default:
-        return {
-          title: 'Tipe Pembayaran',
-          body: 'BPJS',
-          localIcon: 'bpjs',
-        };
-    }
+  export const getPaymentType = (type: string, t: TFunction<string>) => {
+
+  switch (type) {
+    case 'general':
+      return {
+        title: t('appointment.encounter.payplan'),
+        body: 'Umum',
+        localIcon: 'pembayaran-umum',
+      };
+    case 'insurance':
+      return {
+        title: t('appointment.encounter.payplan'),
+        body: 'Asuransi',
+        localIcon: 'asuransi',
+      };
+
+    case 'company':
+      return {
+        title: t('appointment.encounter.payplan'),
+        body: 'Perusahaan',
+        localIcon: 'perusahaan',
+      };
+
+    default:
+      return {
+        title: t('appointment.encounter.payplan'),
+        body: 'BPJS',
+        localIcon: 'bpjs',
+      };
+  }
   };
   
   export const initialStep = [

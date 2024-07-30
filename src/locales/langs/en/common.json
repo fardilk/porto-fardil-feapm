@@ -4,11 +4,19 @@
     "description": "The starting point for your next project is based on MUI. Easy customization helps you build apps faster and better."
   },
   "global": {
-    "back": "Back",
-    "next": "Next",
-    "cancel": "Cancel",
+    "back": "back",
+    "next": "next",
+    "cancel": "cancel",
+    "doctor": "Doctor",
+    "MCU" : "MCU",
+    "laboratory" : "Laboratory",
+    "radiology" : "Radiology",
     "patient_detail": "Patient Detail",
+    "doctor_detail": "Doctor Detail",
+    "specialist": "Specialist",
+    "doctor_name": "Doctor Name",
     "complete_name": "Complete Name",
+    "reselect": "Re-select",
     "gender": "Gender",
     "location": "Location",
     "birthdate": "Birthdate",
@@ -68,11 +76,179 @@
       "invalid": "Invalid Booking number"
     }
   },
-  "doctor_visit": {
+  "appointment": {
+    "input_your_nik": "Input your NIK",
+    "title_input_nik": "Input NIK",
+    "placeholder_input_nik": "Input your 16 digit NIK number",
     "input_your_passport": "Input your passport",
     "title_input_passport": "Input passport",
+    "placeholder_input_passport": "Submit your passport number",
     "visit_detail": "Visit Detail",
     "service_destination": "Service Destination",
+    "examining_doctor": "Examining Doctor",
+    "alert_info_poly": "After selecting a clinic, a doctor will be automatically selected",
+    "patient": {
+      "title": "Patient Details",
+      "nik": "NIK",
+      "passport": "Passport No",
+      "fullname": "Full Name",
+      "birthdateplace": "Place & Date of Birth",
+      "blood_type": "Blood Type",
+      "blood_rhesus": "Rhesus",
+      "address": "Address",
+      "phone": "Phone No",
+      "email": "Email",
+      "actions": {
+        "update_msg": "To update your data, please proceed to the medical record station.",
+        "invalid_button": "Data is invalid, reinput NIK/passport",
+        "valid_button": "Data is valid, proceed"
+      }
+    },
+    "encounter": {
+      "title": "Encounter Details",
+      "healthcare_service": "Healthcare Service",
+      "service_type": "Service Type",
+      "practitioner": "Practitioner",
+      "payplan": "Payplan Class",
+      "schedule": "Schedule"
+    },
+    "data_statement": "I declare that what I have stated above is true and complete.",
+    "change_registration": "Change Registration",
+    "confirm_registration": "Confirm Registration",
+    "confirmation": {
+      "title": "Confirm Registration?",
+      "subtitle": "Make sure that all your data is true and complete",
+      "recheck": "Recheck",
+      "confirm": "Confirm Registration"
+    },
+    "payment": {
+      "general": {
+        "title": "GENERAL",
+        "description": "General Patient Registration"
+      },
+      "assurance": {
+        "title": "ASSURANCE",
+        "description": "Patient Registration With Insurance, Company, or BPJS Payor",
+        "bpjs": {
+          "title": "BPJS",
+          "description": "BPJS patient registration"
+        },
+        "insurance": {
+          "title": "INSURANCE",
+          "description": "Insurance patient registration"
+        },
+        "company": {
+          "title": "COMPANY",
+          "description": "Company insurance patient registration"
+        }
+      }
+    },
+    "steps": {
+      "select_encounter_type": "Select Encounter Type",
+      "insert_nik": "Insert NIK",
+      "information_outpatient_general" : "Patient Information",
+      "payment_method" : "Choose Payment Method"
+    }
+  },
+  "encounter": {
+    "outpatient": {
+      "title": "OUTPATIENT EXAMINATION",
+      "description": "Medical services that include health evaluation, diagnosis, and treatment without requiring hospitalization.",
+      "doctor_find": "Find Doctor",
+      "doctor_unknown": "Don't know the doctor yet? Choose Healthcare Service & Find Nearest Doctor",
+      "doctor_known": "Already know the doctor? Choose doctor",
+      "department_find": "Find Healthcare Service",
+      "general" : {
+        "select_healthcare_practitioner" : "Choose Specialist",
+        "confirmation_patient_registration" : "Confirm Patient Registration",
+        "registration_success" : "Registration Success"
+      },
+      "insurance" : {
+        "select_insurance" : "Select Insurance",
+        "insert_polis_number" : "Enter Insurance Policy Number",
+        "information_data_patient_insurance" : "Patient Insurance Information"
+      },
+      "company" : {
+        "select_company" : "Select Company",
+        "select_company_new" : "Select Company",
+        "insert_employee_number": "Enter Employee Number",
+        "information_data_employee" : "Employee Information"
+      },
+      "bpjs" : {
+        "insert_bpjs_number" : "Enter / Scan BPJS Card Number",
+        "information_patient_data_bpjs" : "Patient BPJS Information"
+      }
+    },
+    "mcu": {
+      "title": "MEDICAL CHECK UP",
+      "description": "A series of routine health tests to check the overall health of the body and anticipate disease risks.",
+      "package_find": "Find MCU",
+      "general" : {
+        "select_mcu_package" : "Select the Health Checkup Package you want",
+        "confirmation_patient_registration_mcu" : "Confirm Patient Registration",
+        "registration_success" : "Registration Success"
+      },
+      "insurance" : {
+        "select_insurance" : "Select Insurance",
+        "insert_polis_number" : "Enter Insurance Policy Number",
+        "information_data_patient_insurance" : "Patient Insurance Information"
+      },
+      "company" : {
+        "select_company" : "Select Company",
+        "select_company_new" : "Select Company",
+        "insert_employee_number": "Enter Employee Number",
+        "information_data_employee" : "Employee Information"
+      }
+    },
+    "laboratory": {
+      "title": "LABORATORY",
+      "description": "Facilities that provide diagnostic tests to support health evaluation, diagnosis, and routine medical check-ups without the need for hospitalization.",
+      "package_find": "Find Lab Package",
+      "general" : {
+        "select_lab_package" : "Select the Laboratory Package you want",
+        "confirmation_patient_registration" : "Confirm Patient Registration",
+        "registration_success" : "Registration Success"
+      },
+      "insurance" : {
+        "select_insurance" : "Select Insurance",
+        "insert_polis_number" : "Enter Insurance Policy Number",
+        "information_data_patient_insurance" : "Patient Insurance Information"
+      },
+      "company" : {
+        "select_company" : "Select Company",
+        "select_company_new" : "Select Company",
+        "insert_employee_number": "Enter Employee Number",
+        "information_data_employee" : "Employee Information"
+      }
+    },
+    "radiology": {
+      "title": "RADIOLOGY",
+      "description": "Medical services that provide imaging tests such as X-ray, CT scan, and MRI to support diagnosis and treatment without requiring hospitalization.",
+      "package_find": "Find Radiology",
+      "general" : {
+        "select_rad_service" : "Select the Radiology Service you want",
+        "confirmation_patient_registration" : "Confirm Patient Registration",
+        "registration_success" : "Registration Success"
+      },
+      "insurance" : {
+        "select_insurance" : "Select Insurance",
+        "insert_polis_number" : "Enter Insurance Policy Number",
+        "information_data_patient_insurance" : "Patient Insurance Information"
+      },
+      "company" : {
+        "select_company" : "Select Company",
+        "select_company_new" : "Select Company",
+        "insert_employee_number": "Enter Employee Number",
+        "information_data_employee" : "Employee Information"
+      }
+    }
+  },
+  "reservation": {
+    "visit_date": "Date Visit",
+    "visit_hour": "Time Visit",
+    "if_doctor_can't_arrived" : "If the doctor is unavailable during these hours",
+    "change_schedule": "Change Schedule",
+    "cancel_visit": "Cancel Visit",
     "examining_doctor": "Examining Doctor"
   },
 
