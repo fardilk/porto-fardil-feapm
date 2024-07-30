@@ -143,8 +143,25 @@
     "steps": {
       "select_encounter_type": "Pilih Jenis Kunjungan",
       "insert_nik": "Masukkan NIK",
-      "information_outpatient_general": "Informasi Data Pasien",
-      "payment_method": "Pilih Metode Pembayaran"
+      "information_outpatient_general" : "Informasi Data Pasien",
+      "payment_method" : "Pilih Metode Pembayaran",
+      "select_healthcare_practitioner" : "Pilih Dokter Poli",
+      "confirmation_patient_registration" : "Konfirmasi Pendaftaran Pasien",
+      "select_mcu_package" : "Pilih Paket MCU yang anda inginkan",
+      "confirmation_patient_registration_mcu" : "Konfirmasi Pendaftaran Pasien",
+      "select_lab_package" : "Pilih Paket Laboratorium yang Anda Inginkan",
+      "select_rad_service" : "Pilih Layanan Radiologi yang Anda Inginkan",
+      "registration_success" : "Pendaftaran Berhasil",
+      "select_insurance" : "Pilih Asuransi",
+      "insert_polis_number" : "Masukkan Nomor Polis Asuransi",
+      "information_data_patient_insurance" : "Informasi Data Asuransi",
+      "select_company" : "Pilih Perusahaan",
+      "select_company_new" : "Pilih Perusahaan",
+      "insert_employee_number": "Masukkan Nomor Karyawan",
+      "information_data_employee" : "Informasi Data Karyawan",
+      "insert_bpjs_number" : "Masukan / Scan Nomor Kartu BPJS",
+      "information_patient_data_bpjs" : "Informasi Data Pasien BPJS",
+      "select_time": "Pilih Waktu Kunjungan"
     }
   },
   "encounter": {

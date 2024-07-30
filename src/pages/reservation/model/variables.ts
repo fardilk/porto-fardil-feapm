@@ -1,13 +1,13 @@
 import { TFunction } from "i18next";
 
 export const buttonStyle: any = {
-    fullWidth: true,
-    size: 'large',
-    variant: 'contained',
-    color: 'secondary',
-  };
-  
-  export const getPaymentType = (type: string, t: TFunction<string>) => {
+  fullWidth: true,
+  size: 'large',
+  variant: 'contained',
+  color: 'secondary',
+};
+
+export const getPaymentType = (type: string, t: TFunction<string>) => {
 
   switch (type) {
     case 'general':
@@ -37,601 +37,600 @@ export const buttonStyle: any = {
         localIcon: 'bpjs',
       };
   }
-  };
-  
-  export const initialStep = [
-    {
-      label: 'Pilih Jenis Kunjungan',
-      value: 'select_reservation_type',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Masukkan NIK',
-      value: 'insert_nik',
-    },
-    {
-      label: 'Informasi Data Pasien',
-      value: 'information_outpatient_general',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Pilih Jenis Pembayaran',
-      value: 'payment_method',
-      properties: {
-        disableBack: true,
-      },
-    },
-  ];
-  
-  export const formStepsOutpatientGeneral = [
-    ...initialStep,
-    {
-      label: 'Pilih Dokter Poli',
-      value: 'select_healthcare_practitioner',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Pilih Waktu Kunjungan',
-      value: 'select_time',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Konfirmasi Pendaftaran Pasien',
-      value: 'confirmation_patient_registration',
-      properties: {
-        disableBlack: true,
-      },
-    },
-    {
-      label: 'Pendaftaran Berhasil',
-      value: 'registration_success',
-      properties: {
-        disableBack: true,
-      },
-    },
-  ];
-  
-  export const formStepsOutpatientInsurance = [
-    ...initialStep,
-    {
-      label: 'Pilih Asuransi',
-      value: 'select_insurance',
-      properties: {
-        disableBack: true,
-        containerSize: 'superLarge',
-      },
-    },
-    {
-      label: 'Pilih Asuransi',
-      value: 'select_insurance_new',
-    },
-    {
-      label: 'Masukkan Nomor Polis Asuransi',
-      value: 'insert_polis_number',
-    },
-    {
-      label: 'Informasi Data Asuransi Pasien',
-      value: 'information_data_patient_insurance',
-    },
-    {
-      label: 'Pilih Dokter Poli',
-      value: 'select_healthcare_practitioner',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Pilih Waktu Kunjungan',
-      value: 'select_time',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Konfirmasi Pendaftaran Pasien',
-      value: 'confirmation_patient_registration_insurance',
-      properties: {
-        disableBlack: true,
-      },
-    },
-    {
-      label: 'Pendaftaran Berhasil',
-      value: 'registration_success_insurance',
-      properties: {
-        disableBack: true,
-      },
-    },
-  ];
-  
-  export const formStepsOutpatientCompany = [
-    ...initialStep,
-    {
-      label: 'Pilih Perusahaan',
-      value: 'select_company',
-      properties: {
-        disableBack: true,
-        containerSize: 'superLarge',
-      },
-    },
-    {
-      label: 'Pilih Perusahaan',
-      value: 'select_company_new',
-    },
-    {
-      label: 'Masukkan Nomor Karyawan',
-      value: 'insert_employee_number',
-    },
-    {
-      label: 'Informasi Data Karyawan',
-      value: 'information_data_employee',
-    },
-    {
-      label: 'Pilih Dokter Poli',
-      value: 'select_healthcare_practitioner',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Pilih Waktu Kunjungan',
-      value: 'select_time',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Konfirmasi Pendaftaran Pasien',
-      value: 'confirmation_patient_registration_company',
-      properties: {
-        disableBlack: true,
-      },
-    },
-    {
-      label: 'Pendaftaran Berhasil',
-      value: 'registration_success_company',
-      properties: {
-        disableBack: true,
-      },
-    },
-  ];
-  
-  export const formStepsOutpatientBPJS = [
-    {
-      label: 'Masukan / Scan Nomor Kartu BPJS',
-      value: 'insert_bpjs_number',
-    },
-    {
-      label: 'Informasi Data Pasien BPJS',
-      value: 'information_patient_data_bpjs',
-    },
-    {
-      label: 'Pilih Dokter Poli',
-      value: 'select_healthcare_practitioner',
-    },
-    {
-      label: 'Pilih Waktu Kunjungan',
-      value: 'select_time',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Konfirmasi Pendaftaran Pasien',
-      value: 'confirmation_patient_registration_bpjs',
-      properties: {
-        disableBlack: true,
-      },
-    },
-    {
-      label: 'Pendaftaran Berhasil',
-      value: 'registration_success_bpjs',
-      properties: {
-        disableBack: true,
-      },
-    },
-  ];
-  
-  export const formStepsMCUGeneral = [
-    ...initialStep,
-    {
-      label: 'Pilih Paket MCU yang anda inginkan',
-      value: 'select_mcu_package',
-      properties: {
-        disableBack: true,
-        containerSize: 'superLarge',
-      },
-    },
-    {
-      label: 'Pilih Waktu Kunjungan',
-      value: 'select_time',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Konfirmasi Pendaftaran Pasien',
-      value: 'confirmation_patient_registration_mcu',
-      properties: {
-        disableBlack: true,
-      },
-    },
-    {
-      label: 'Pendaftaran Berhasil',
-      value: 'registration_success',
-      properties: {
-        disableBack: true,
-      },
-    },
-  ];
-  
-  export const formStepsMCUAssurance = [
-    ...initialStep,
-    {
-      label: 'Pilih Asuransi',
-      value: 'select_insurance',
-      properties: {
-        disableBack: true,
-        containerSize: 'superLarge',
-      },
-    },
-    {
-      label: 'Pilih Asuransi',
-      value: 'select_insurance_new',
-    },
-    {
-      label: 'Pilih Paket MCU yang anda inginkan',
-      value: 'select_mcu_package',
-      properties: {
-        disableBack: true,
-        containerSize: 'superLarge',
-      },
-    },
-    {
-      label: 'Pilih Waktu Kunjungan',
-      value: 'select_time',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Konfirmasi Pendaftaran Pasien',
-      value: 'confirmation_patient_registration_mcu',
-      properties: {
-        disableBlack: true,
-      },
-    },
-    {
-      label: 'Pendaftaran Berhasil',
-      value: 'registration_success_insurance',
-      properties: {
-        disableBack: true,
-      },
-    },
-  ];
-  
-  export const formStepsMCUCompany = [
-    ...initialStep,
-    {
-      label: 'Pilih Perusahaan',
-      value: 'select_company',
-      properties: {
-        disableBack: true,
-        containerSize: 'superLarge',
-      },
-    },
-    {
-      label: 'Pilih Perusahaan',
-      value: 'select_company_new',
-    },
-    {
-      label: 'Pilih Paket MCU yang anda inginkan',
-      value: 'select_mcu_package',
-      properties: {
-        disableBack: true,
-        containerSize: 'superLarge',
-      },
-    },
-    {
-      label: 'Pilih Waktu Kunjungan',
-      value: 'select_time',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Konfirmasi Pendaftaran Pasien',
-      value: 'confirmation_patient_registration_mcu',
-      properties: {
-        disableBlack: true,
-      },
-    },
-    {
-      label: 'Pendaftaran Berhasil',
-      value: 'registration_success_company',
-      properties: {
-        disableBack: true,
-      },
-    },
-  ];
-  
-  export const formStepsLabGeneral = [
-    ...initialStep,
-    {
-      label: 'Pilih Paket Laboratorium yang Anda Inginkan',
-      value: 'select_lab_package',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Pilih Waktu Kunjungan',
-      value: 'select_time',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Konfirmasi Pendaftaran Pasien',
-      value: 'confirmation_patient_registration',
-      properties: {
-        disableBlack: true,
-      },
-    },
-    {
-      label: 'Pendaftaran Berhasil',
-      value: 'registration_success',
-      properties: {
-        disableBack: true,
-      },
-    },
-  ];
-  
-  export const formStepsLabInsurance = [
-    ...initialStep,
-    {
-      label: 'Pilih Asuransi',
-      value: 'select_insurance',
-      properties: {
-        disableBack: true,
-        containerSize: 'superLarge',
-      },
-    },
-    {
-      label: 'Pilih Asuransi',
-      value: 'select_insurance_new',
-    },
-    {
-      label: 'Masukkan Nomor Polis Asuransi',
-      value: 'insert_polis_number',
-    },
-    {
-      label: 'Informasi Data Asuransi Pasien',
-      value: 'information_data_patient_insurance',
-    },
-    {
-      label: 'Pilih Paket Laboratorium yang Anda Inginkan',
-      value: 'select_lab_package',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Pilih Waktu Kunjungan',
-      value: 'select_time',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Konfirmasi Pendaftaran Pasien',
-      value: 'confirmation_patient_registration_insurance',
-      properties: {
-        disableBlack: true,
-      },
-    },
-    {
-      label: 'Pendaftaran Berhasil',
-      value: 'registration_success_insurance',
-      properties: {
-        disableBack: true,
-      },
-    },
-  ];
-  
-  export const formStepsLabCompany = [
-    ...initialStep,
-    {
-      label: 'Pilih Perusahaan',
-      value: 'select_company',
-      properties: {
-        disableBack: true,
-        containerSize: 'superLarge',
-      },
-    },
-    {
-      label: 'Pilih Perusahaan',
-      value: 'select_company_new',
-    },
-    {
-      label: 'Masukkan Nomor Karyawan',
-      value: 'insert_employee_number',
-    },
-    {
-      label: 'Informasi Data Karyawan',
-      value: 'information_data_employee',
-    },
-    {
-      label: 'Pilih Paket Laboratorium yang Anda Inginkan',
-      value: 'select_lab_package',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Pilih Waktu Kunjungan',
-      value: 'select_time',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Konfirmasi Pendaftaran Pasien',
-      value: 'confirmation_patient_registration_company',
-      properties: {
-        disableBlack: true,
-      },
-    },
-    {
-      label: 'Pendaftaran Berhasil',
-      value: 'registration_success_company',
-      properties: {
-        disableBack: true,
-      },
-    },
-  ];
-  
-  
-  export const formStepsRadGeneral = [
-    ...initialStep,
-    {
-      label: 'Pilih Layanan Radiologi yang Anda Inginkan',
-      value: 'select_rad_service',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Pilih Waktu Kunjungan',
-      value: 'select_time',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Konfirmasi Pendaftaran Pasien',
-      value: 'confirmation_patient_registration',
-      properties: {
-        disableBlack: true,
-      },
-    },
-    {
-      label: 'Pendaftaran Berhasil',
-      value: 'registration_success',
-      properties: {
-        disableBack: true,
-      },
-    },
-  ];
-  
-  export const formStepsRadInsurance = [
-    ...initialStep,
-    {
-      label: 'Pilih Asuransi',
-      value: 'select_insurance',
-      properties: {
-        disableBack: true,
-        containerSize: 'superLarge',
-      },
-    },
-    {
-      label: 'Pilih Asuransi',
-      value: 'select_insurance_new',
-    },
-    {
-      label: 'Masukkan Nomor Polis Asuransi',
-      value: 'insert_polis_number',
-    },
-    {
-      label: 'Informasi Data Asuransi Pasien',
-      value: 'information_data_patient_insurance',
-    },
-    {
-      label: 'Pilih Layanan Radiologi yang Anda Inginkan',
-      value: 'select_rad_service',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Pilih Waktu Kunjungan',
-      value: 'select_time',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Konfirmasi Pendaftaran Pasien',
-      value: 'confirmation_patient_registration_insurance',
-      properties: {
-        disableBlack: true,
-      },
-    },
-    {
-      label: 'Pendaftaran Berhasil',
-      value: 'registration_success_insurance',
-      properties: {
-        disableBack: true,
-      },
-    },
-  ];
-  
-  export const formStepsRadCompany = [
-    ...initialStep,
-    {
-      label: 'Pilih Perusahaan',
-      value: 'select_company',
-      properties: {
-        disableBack: true,
-        containerSize: 'superLarge',
-      },
-    },
-    {
-      label: 'Pilih Perusahaan',
-      value: 'select_company_new',
-    },
-    {
-      label: 'Masukkan Nomor Karyawan',
-      value: 'insert_employee_number',
-    },
-    {
-      label: 'Informasi Data Karyawan',
-      value: 'information_data_employee',
-    },
-    {
-      label: 'Pilih Layanan Radiologi yang Anda Inginkan',
-      value: 'select_rad_service',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Pilih Waktu Kunjungan',
-      value: 'select_time',
-      properties: {
-        disableBack: true,
-      },
-    },
-    {
-      label: 'Konfirmasi Pendaftaran Pasien',
-      value: 'confirmation_patient_registration_company',
-      properties: {
-        disableBlack: true,
-      },
-    },
-    {
-      label: 'Pendaftaran Berhasil',
-      value: 'registration_success_company',
-      properties: {
-        disableBack: true,
-      },
-    },
-  ];
-  
+};
+
+export const initialStep = [
+  {
+    label: 'appointment.steps.select_encounter_type',
+    value: 'select_reservation_type',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.insert_nik',
+    value: 'insert_nik',
+  },
+  {
+    label: 'appointment.steps.information_outpatient_general',
+    value: 'information_outpatient_general',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.payment_method',
+    value: 'payment_method',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
+
+export const formStepsOutpatientGeneral = [
+  ...initialStep,
+  {
+    label: 'appointment.steps.select_healthcare_practitioner',
+    value: 'select_healthcare_practitioner',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.select_time',
+    value: 'select_time',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.confirmation_patient_registration',
+    value: 'confirmation_patient_registration',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.registration_success',
+    value: 'registration_success',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
+
+export const formStepsOutpatientInsurance = [
+  ...initialStep,
+  {
+    label: 'appointment.steps.select_insurance',
+    value: 'select_insurance',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'appointment.steps.select_insurance',
+    value: 'select_insurance_new',
+  },
+  {
+    label: 'appointment.steps.insert_polis_number',
+    value: 'insert_polis_number',
+  },
+  {
+    label: 'appointment.steps.information_data_patient_insurance',
+    value: 'information_data_patient_insurance',
+  },
+  {
+    label: 'appointment.steps.select_healthcare_practitioner',
+    value: 'select_healthcare_practitioner',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.select_time',
+    value: 'select_time',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.confirmation_patient_registration',
+    value: 'confirmation_patient_registration_insurance',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.registration_success',
+    value: 'registration_success_insurance',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
+
+export const formStepsOutpatientCompany = [
+  ...initialStep,
+  {
+    label: 'appointment.steps.select_company',
+    value: 'select_company',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'appointment.steps.select_company_new',
+    value: 'select_company_new',
+  },
+  {
+    label: 'appointment.steps.insert_employee_number',
+    value: 'insert_employee_number',
+  },
+  {
+    label: 'appointment.steps.information_data_employee',
+    value: 'information_data_employee',
+  },
+  {
+    label: 'appointment.steps.select_healthcare_practitioner',
+    value: 'select_healthcare_practitioner',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.select_time',
+    value: 'select_time',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.confirmation_patient_registration',
+    value: 'confirmation_patient_registration_company',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.registration_success',
+    value: 'registration_success_company',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
+
+export const formStepsOutpatientBPJS = [
+  {
+    label: 'appointment.steps.insert_bpjs_number',
+    value: 'insert_bpjs_number',
+  },
+  {
+    label: 'appointment.steps.information_patient_data_bpjs',
+    value: 'information_patient_data_bpjs',
+  },
+  {
+    label: 'appointment.steps.select_healthcare_practitioner',
+    value: 'select_healthcare_practitioner',
+  },
+  {
+    label: 'appointment.steps.select_time',
+    value: 'select_time',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.confirmation_patient_registration',
+    value: 'confirmation_patient_registration_bpjs',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.registration_success',
+    value: 'registration_success',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
+
+export const formStepsMCUGeneral = [
+  ...initialStep,
+  {
+    label: 'appointment.steps.select_mcu_package',
+    value: 'select_mcu_package',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'appointment.steps.select_time',
+    value: 'select_time',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.confirmation_patient_registration_mcu',
+    value: 'confirmation_patient_registration_mcu',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.registration_success',
+    value: 'registration_success',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
+
+export const formStepsMCUAssurance = [
+  ...initialStep,
+  {
+    label: 'appointment.steps.select_insurance',
+    value: 'select_insurance',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'appointment.steps.select_insurance',
+    value: 'select_insurance_new',
+  },
+  {
+    label: 'appointment.steps.select_mcu_package',
+    value: 'select_mcu_package',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'appointment.steps.select_time',
+    value: 'select_time',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.confirmation_patient_registration_mcu',
+    value: 'confirmation_patient_registration_mcu',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.registration_success',
+    value: 'registration_success_insurance',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
+
+export const formStepsMCUCompany = [
+  ...initialStep,
+  {
+    label: 'appointment.steps.company.select_company',
+    value: 'select_company',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'appointment.steps.company.select_company_new',
+    value: 'select_company_new',
+  },
+  {
+    label: 'appointment.steps.select_mcu_package',
+    value: 'select_mcu_package',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'appointment.steps.select_time',
+    value: 'select_time',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.confirmation_patient_registration_mcu',
+    value: 'confirmation_patient_registration_mcu',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.registration_success',
+    value: 'registration_success_company',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
+
+export const formStepsLabGeneral = [
+  ...initialStep,
+  {
+    label: 'appointment.steps.select_lab_package',
+    value: 'select_lab_package',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.select_time',
+    value: 'select_time',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.confirmation_patient_registration',
+    value: 'confirmation_patient_registration',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.registration_success',
+    value: 'registration_success',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
+
+export const formStepsLabInsurance = [
+  ...initialStep,
+  {
+    label: 'appointment.steps.select_insurance',
+    value: 'select_insurance',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'appointment.steps.select_insurance',
+    value: 'select_insurance_new',
+  },
+  {
+    label: 'appointment.steps.insert_polis_number',
+    value: 'insert_polis_number',
+  },
+  {
+    label: 'appointment.steps.information_data_patient_insurance',
+    value: 'information_data_patient_insurance',
+  },
+  {
+    label: 'appointment.steps.select_lab_package',
+    value: 'select_lab_package',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.select_time',
+    value: 'select_time',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.confirmation_patient_registration',
+    value: 'confirmation_patient_registration_insurance',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.registration_success',
+    value: 'registration_success_insurance',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
+
+export const formStepsLabCompany = [
+  ...initialStep,
+  {
+    label: 'appointment.steps.select_company',
+    value: 'select_company',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'appointment.steps.select_company_new',
+    value: 'select_company_new',
+  },
+  {
+    label: 'appointment.steps.insert_employee_number',
+    value: 'insert_employee_number',
+  },
+  {
+    label: 'appointment.steps.information_data_employee',
+    value: 'information_data_employee',
+  },
+  {
+    label: 'appointment.steps.select_lab_package',
+    value: 'select_lab_package',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.select_time',
+    value: 'select_time',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.confirmation_patient_registration',
+    value: 'confirmation_patient_registration_company',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.registration_success',
+    value: 'registration_success_company',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
+
+
+export const formStepsRadGeneral = [
+  ...initialStep,
+  {
+    label: 'appointment.steps.select_rad_service',
+    value: 'select_rad_service',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.select_time',
+    value: 'select_time',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.confirmation_patient_registration',
+    value: 'confirmation_patient_registration',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.registration_success',
+    value: 'registration_success',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
+
+export const formStepsRadInsurance = [
+  ...initialStep,
+  {
+    label: 'appointment.steps.select_insurance',
+    value: 'select_insurance',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'appointment.steps.select_insurance',
+    value: 'select_insurance_new',
+  },
+  {
+    label: 'appointment.steps.insert_polis_number',
+    value: 'insert_polis_number',
+  },
+  {
+    label: 'appointment.steps.information_data_patient_insurance',
+    value: 'information_data_patient_insurance',
+  },
+  {
+    label: 'appointment.steps.select_rad_service',
+    value: 'select_rad_service',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.select_time',
+    value: 'select_time',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.confirmation_patient_registration',
+    value: 'confirmation_patient_registration_insurance',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.registration_success',
+    value: 'registration_success_insurance',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
+
+export const formStepsRadCompany = [
+  ...initialStep,
+  {
+    label: 'appointment.steps.select_company',
+    value: 'select_company',
+    properties: {
+      disableBack: true,
+      containerSize: 'superLarge',
+    },
+  },
+  {
+    label: 'appointment.steps.select_company_new',
+    value: 'select_company_new',
+  },
+  {
+    label: 'appointment.steps.insert_employee_number',
+    value: 'insert_employee_number',
+  },
+  {
+    label: 'appointment.steps.information_data_employee',
+    value: 'information_data_employee',
+  },
+  {
+    label: 'appointment.steps.select_rad_service',
+    value: 'select_rad_service',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.select_time',
+    value: 'select_time',
+    properties: {
+      disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.confirmation_patient_registration',
+    value: 'confirmation_patient_registration_company',
+    properties: {
+      disableBlack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.registration_success',
+    value: 'registration_success_company',
+    properties: {
+      disableBack: true,
+    },
+  },
+];
