@@ -5,12 +5,14 @@ import { useRef, useState } from 'react';
 import { RHFTextField } from 'src/components/hook-form';
 import { Iconify } from 'src/components/iconify';
 import { Keyboard } from 'src/components/keyboard';
+import { useTranslate } from 'src/locales';
 
 const SelectInsuranceNew = (props: SelectInsuranceNewProps) => {
   const { handleSelect } = props;
 
   const [elementName, setElementName] = useState('');
 
+  const { t } = useTranslate();
   const searchRef = useRef<any>({});
 
   return (
@@ -28,7 +30,7 @@ const SelectInsuranceNew = (props: SelectInsuranceNewProps) => {
               ),
             }}
             autoComplete="off"
-            placeholder="Cari Asuransi"
+            placeholder={t('assurance.search_insurance')}
             inputRef={(ref) => {
               searchRef.current.searchInsurance = ref;
             }}

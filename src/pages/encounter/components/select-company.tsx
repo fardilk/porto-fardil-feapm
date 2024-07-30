@@ -5,21 +5,23 @@ import { LabelTextCard } from "src/components/label-text"
 import { LabelTextProps } from "src/components/label-text/types"
 import { fDate } from "src/utils/format-time"
 import { SelectCompanyProps } from "../model/types"
+import { useTranslate } from "src/locales"
 
 const SelectCompany = (props: SelectCompanyProps) => {
   const { handleSelect, handleSelectNew } = props
 
   const [currentIndex, setCurrentIndex] = useState(0)
+  const { t } = useTranslate();
 
   const listInsuranceToCard = (param: typeof listCompanyAvailable[0]): LabelTextProps[] => {
     const { namaPerusahaan, ...rest } = param
 
     function getLabel<K extends keyof typeof rest>(key: K) {
       const mapFromKeyToLabel = {
-        skemaPembayaran: "Skema Pembayaran",
-        nama: "Nama",
-        masaBerlaku: "Masa Berlaku",
-        noPolis: "No Polis",
+        skemaPembayaran: t('assurance.payment_scheme'),
+        nama: t('assurance.name'),
+        masaBerlaku: t('assurance.validity_period'),
+        noPolis: t(('assurance.policy_no')),
       }
 
       return mapFromKeyToLabel[key]
