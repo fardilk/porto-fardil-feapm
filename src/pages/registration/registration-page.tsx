@@ -62,7 +62,10 @@ const RegistrationPage = () => {
     }
   }
 
-  const getTitle = useMemo(() => currentPage.properties?.i18n ? t(currentPage.properties?.i18n) : currentPage.label, [currentPage,t])
+  const getTitle = useMemo(
+    () => (currentPage?.properties?.i18n ? t(currentPage?.properties?.i18n) : currentPage.label),
+    [currentPage, t]
+  );
 
   return (
     <AppPage>
@@ -82,8 +85,8 @@ const RegistrationPage = () => {
             {
               currentPage.value === "information" && (
                 <PatientInformation
-                  leftTextButton="Kembali Ke Beranda"
-                  rigthTextButton="Edit Nomor Telepon dan Email"
+                  leftTextButton={(t("registration.button.back_to_home"))}
+                  rigthTextButton={(t("registration.button.edit_phone_email"))}
                   leftButtonProps={{ onClick: () => handleChangePage({ toSpecificPage: "insert_nik" }) }}
                   rightButtonProps={{ onClick: () => handleChangePage({ action: "next" }) }}
                 />
@@ -135,8 +138,8 @@ const RegistrationPage = () => {
             {
               currentPage.value === "confirmation_new_patient" && (
                 <PatientInformation
-                  leftTextButton="Data salah, isi ulang data"
-                  rigthTextButton="Data sudah benar, lanjutkan"
+                  leftTextButton={t("registration.button.wrong_data")}
+                  rigthTextButton={t("registration.button.correct_data")}
                   leftButtonProps={{ onClick: () => handleChangePage({ action: "previous" }) }}
                   rightButtonProps={{ onClick: () => handleChangePage({ action: "next" }) }}
                 />

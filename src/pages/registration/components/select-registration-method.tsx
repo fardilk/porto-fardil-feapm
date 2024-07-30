@@ -4,21 +4,24 @@ import { type FC, useMemo } from "react"
 import { CardBanner } from "src/components/card-banner"
 import type { CardBannerProps } from "src/components/card-banner/types"
 import type { SelectRegistrationMethodProps } from "../model/types"
+import { useTranslate } from "src/locales"
 
 const SelectRegistrationMethod : FC<SelectRegistrationMethodProps> = ({handleByAnjungan, handleByPhone}) => {
 
+  const {t} = useTranslate()
+
   const registrationMethod : CardBannerProps[] = useMemo(() => [{
-    title: "Melalui Ponsel Anda",
-    body: "Pendaftaran profile baru dengan melalui ponsel anda",
+    title: t("registration.via_phone"),
+    body: t("registration.via_phone_desc"),
     localIcon: "phone",
     onClick: handleByPhone
   },
   {
-    title: "Melalui Anjungan",
-    body: "Pendaftaran profile baru melalui anjungan ini",
+    title: t("registration.via_platform"),
+    body: t("registration.via_platform_desc"),
     localIcon: "apm",
     onClick: handleByAnjungan
-  }],[handleByAnjungan, handleByPhone])
+  }],[handleByAnjungan, handleByPhone, t])
 
   return (
     <Grid container spacing={2}>
