@@ -3,10 +3,12 @@ import { useRef } from "react"
 import { RHFTextField } from "src/components/hook-form"
 import { Keyboard } from "src/components/keyboard"
 import { usePartialState } from "src/hooks"
+import { useTranslate } from "src/locales"
 import { typography } from "src/theme/core"
 
 const InsertPolisNumber = () => {
 
+  const { t } = useTranslate();
   const theme = useTheme()
   const inputRef = useRef<any>({})
 
@@ -14,11 +16,11 @@ const InsertPolisNumber = () => {
 
   return (
     <Stack gap={2}>
-      <Typography variant="h4" textAlign="center" gutterBottom>Masukan Nomor Polis Anda</Typography>
+      <Typography variant="h4" textAlign="center" gutterBottom>{t('assurance.subtitle.enter_policy_number')}</Typography>
 
       <RHFTextField
         name="polis"
-        placeholder="Masukan Nomor Polis Anda"
+        placeholder={t('assurance.subtitle.enter_policy_number')}
         variant="filled"
         inputRef={(ref) => { inputRef.current.polis = ref }}
         inputProps={{

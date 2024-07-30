@@ -106,34 +106,34 @@ const ReservationPage = () => {
 
   const getListDataEmployee = useMemo(
     () => [
-      { title: 'Nomor Karyawan', body: fAsterisk('100200300400') },
-      { title: 'Nama Pemegang Polis', body: 'Anisa Redina' },
-      { title: 'Jenis Penjamin', body: 'Asuransi Kesehatan' },
-      { title: 'Perusahaan Asuransi', body: 'Allianz Life Insurance' },
+      { title: t('assurance.employee_number'), body: fAsterisk('100200300400') },
+      { title: t('assurance.policy_holder_name'), body: 'Anisa Redina' },
+      { title: t('assurance.guarantor_type'), body: 'Asuransi Kesehatan' },
+      { title: t('assurance.insurance_company'), body: 'Allianz Life Insurance' },
       {
-        title: 'Alamat',
+        title: t('assurance.address'),
         body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
       },
-      { title: 'Tempat, Tanggal Lahir', body: 'Malaysia, 11-04-2000' },
-      { title: 'No Telpon', body: fAsterisk('085157902550') },
+      { title: t('assurance.place_date_of_birth'), body: 'Malaysia, 11-04-2000' },
+      { title: t('assurance.phone_number'), body: fAsterisk('085157902550') },
     ],
-    []
+    [t]
   );
 
   const getListDataInsurance = useMemo(
     () => [
-      { title: 'Nomor Polis', body: fAsterisk('100200300400') },
-      { title: 'Nama Pemegang Polis', body: 'Anisa Redina' },
-      { title: 'Jenis Penjamin', body: 'Asuransi Kesehatan' },
-      { title: 'Perusahaan Asuransi', body: 'Allianz Life Insurance' },
+      { title: t('assurance.policy_number'), body: fAsterisk('100200300400') },
+      { title: t('assurance.policy_holder_name'), body: 'Anisa Redina' },
+      { title: t('assurance.guarantor_type'), body: 'Asuransi Kesehatan' },
+      { title: t('assurance.insurance_company'), body: 'Allianz Life Insurance' },
       {
-        title: 'Alamat',
+        title: t('assurance.address'),
         body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
       },
-      { title: 'Tempat, Tanggal Lahir', body: 'Malaysia, 11-04-2000' },
-      { title: 'No Telpon', body: fAsterisk('085157902550') },
+      { title: t('assurance.place_date_of_birth'), body: 'Malaysia, 11-04-2000' },
+      { title: t('assurance.phone_number'), body: fAsterisk('085157902550') },
     ],
-    []
+    [t]
   );
 
   const methods = useForm();
@@ -419,7 +419,7 @@ const ReservationPage = () => {
 
             {currentPage.value === 'information_data_patient_insurance' && (
               <InformationPatient
-                title="Detail Data Asuransi Pasien"
+                title={t('assurance.subtitle.detail_data')}
                 detailData={getListDataInsurance}
                 handleBack={() => {
                   handleChangePage({ action: 'previous' });
@@ -473,7 +473,7 @@ const ReservationPage = () => {
 
             {currentPage.value === 'information_data_employee' && (
               <InformationPatient
-                title="Detail Data Karyawan"
+                title={t('assurance.subtitle.detail_data_employee')}
                 detailData={getListDataEmployee}
                 handleBack={() => {
                   handleChangePage({ action: 'previous' });

@@ -3,22 +3,24 @@ import { useRef } from "react"
 import { RHFTextField } from "src/components/hook-form"
 import { Keyboard } from "src/components/keyboard"
 import { usePartialState } from "src/hooks"
+import { useTranslate } from "src/locales"
 import { typography } from "src/theme/core"
 
 const InsertEmployeeNumber = () => {
 
   const theme = useTheme()
   const inputRef = useRef<any>({})
+  const { t } = useTranslate();
 
   const [{ elementName, keyboardType }, setPartialState] = usePartialState({ elementName: "employeeNumber", keyboardType: "numberOnly" })
 
   return (
     <Stack gap={2}>
-      <Typography variant="h4" textAlign="center" gutterBottom>Masukan Nomor Karyawan Anda</Typography>
+      <Typography variant="h4" textAlign="center" gutterBottom>{t('assurance.subtitle.enter_employee_number')}</Typography>
 
       <RHFTextField
         name="employeeNumber"
-        placeholder="Masukan Nomor Karyawan Anda"
+        placeholder={t('assurance.subtitle.enter_employee_number')}
         variant="filled"
         inputRef={(ref) => { inputRef.current.employeeNumber = ref }}
         inputProps={{
