@@ -38,7 +38,7 @@ const ConfirmationOutpatientMCU = ({
 
   const listCard = [
     {
-      ...getPaymentType("general"),
+      ...getPaymentType("general", t),
     },
     {
       title: t('appointment.encounter.schedule'),

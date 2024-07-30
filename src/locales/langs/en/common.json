@@ -1,8 +1,4 @@
 {
-  "demo": {
-    "lang": "English",
-    "description": "The starting point for your next project is based on MUI. Easy customization helps you build apps faster and better."
-  },
   "global": {
     "back": "back",
     "next": "next",
@@ -147,7 +143,24 @@
       "select_encounter_type": "Select Encounter Type",
       "insert_nik": "Insert NIK",
       "information_outpatient_general" : "Patient Information",
-      "payment_method" : "Choose Payment Method"
+      "payment_method" : "Choose Payment Method",
+      "select_healthcare_practitioner" : "Choose Specialist",
+      "confirmation_patient_registration" : "Confirm Patient Registration",
+      "select_mcu_package" : "Select the Health Checkup Package you want",
+      "confirmation_patient_registration_mcu" : "Confirm Patient Registration",
+      "select_lab_package" : "Select the Laboratory Package you want",
+      "select_rad_service" : "Select the Radiology Service you want",
+      "registration_success" : "Registration Success",
+      "select_insurance" : "Select Insurance",
+      "insert_polis_number" : "Enter Insurance Policy Number",
+      "information_data_patient_insurance" : "Patient Insurance Information",
+      "select_company" : "Select Company",
+      "select_company_new" : "Select Company",
+      "insert_employee_number": "Enter Employee Number",
+      "information_data_employee" : "Employee Information",
+      "insert_bpjs_number" : "Enter / Scan BPJS Card Number",
+      "information_patient_data_bpjs" : "Patient BPJS Information",
+      "select_time": "Choose Schedule"
     }
   },
   "encounter": {
