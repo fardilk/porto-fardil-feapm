@@ -49,18 +49,18 @@ export const initialStep = [
     },
   },
   {
-    label: 'Masukkan NIK',
+    label: 'appointment.steps.insert_nik',
     value: 'insert_nik',
   },
   {
-    label: 'Informasi Data Pasien',
+    label: 'appointment.steps.information_outpatient_general',
     value: 'information_outpatient_general',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'Pilih Jenis Pembayaran',
+    label: 'appointment.steps.payment_method',
     value: 'payment_method',
     properties: {
       disableBack: true,
@@ -71,21 +71,21 @@ export const initialStep = [
 export const formStepsOutpatientGeneral = [
   ...initialStep,
   {
-    label: 'Pilih Dokter Poli',
+    label: 'encounter.outpatient.general.select_healthcare_practitioner',
     value: 'select_healthcare_practitioner',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'Konfirmasi Pendaftaran Pasien',
+    label: 'encounter.outpatient.general.confirmation_patient_registration',
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'Pendaftaran Berhasil',
+    label: 'encounter.outpatient.general.registration_success',
     value: 'registration_success',
     properties: {
       disableBack: true,
@@ -96,7 +96,7 @@ export const formStepsOutpatientGeneral = [
 export const formStepsOutpatientInsurance = [
   ...initialStep,
   {
-    label: 'Pilih Asuransi',
+    label: 'encounter.outpatient.insurance.select_insurance',
     value: 'select_insurance',
     properties: {
       disableBack: true,
@@ -104,34 +104,34 @@ export const formStepsOutpatientInsurance = [
     },
   },
   {
-    label: 'Pilih Asuransi',
+    label: 'encounter.outpatient.insurance.select_insurance',
     value: 'select_insurance_new',
   },
   {
-    label: 'Masukkan Nomor Polis Asuransi',
+    label: 'encounter.outpatient.insurance.insert_polis_number',
     value: 'insert_polis_number',
   },
   {
-    label: 'Informasi Data Asuransi Pasien',
+    label: 'encounter.outpatient.insurance.information_data_patient_insurance',
     value: 'information_data_patient_insurance',
   },
   {
-    label: 'Pilih Dokter Poli',
+    label: 'encounter.outpatient.general.select_healthcare_practitioner',
     value: 'select_healthcare_practitioner',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'Konfirmasi Pendaftaran Pasien',
-    value: 'confirmation_patient_registration_insurance',
+    label: 'encounter.outpatient.general.confirmation_patient_registration',
+    value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'Pendaftaran Berhasil',
-    value: 'registration_success_insurance',
+    label: 'encounter.outpatient.general.registration_success',
+    value: 'registration_success',
     properties: {
       disableBack: true,
     },
@@ -141,7 +141,7 @@ export const formStepsOutpatientInsurance = [
 export const formStepsOutpatientCompany = [
   ...initialStep,
   {
-    label: 'Pilih Perusahaan',
+    label: 'encounter.outpatient.company.select_company',
     value: 'select_company',
     properties: {
       disableBack: true,
@@ -149,34 +149,34 @@ export const formStepsOutpatientCompany = [
     },
   },
   {
-    label: 'Pilih Perusahaan',
+    label: 'encounter.outpatient.company.select_company_new',
     value: 'select_company_new',
   },
   {
-    label: 'Masukkan Nomor Karyawan',
+    label: 'encounter.outpatient.company.insert_employee_number',
     value: 'insert_employee_number',
   },
   {
-    label: 'Informasi Data Karyawan',
+    label: 'encounter.outpatient.company.information_data_employee',
     value: 'information_data_employee',
   },
   {
-    label: 'Pilih Dokter Poli',
+    label: 'encounter.outpatient.general.select_healthcare_practitioner',
     value: 'select_healthcare_practitioner',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'Konfirmasi Pendaftaran Pasien',
-    value: 'confirmation_patient_registration_company',
+    label: 'encounter.outpatient.general.confirmation_patient_registration',
+    value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'Pendaftaran Berhasil',
-    value: 'registration_success_company',
+    label: 'encounter.outpatient.general.registration_success',
+    value: 'registration_success',
     properties: {
       disableBack: true,
     },
@@ -185,27 +185,30 @@ export const formStepsOutpatientCompany = [
 
 export const formStepsOutpatientBPJS = [
   {
-    label: 'Masukan / Scan Nomor Kartu BPJS',
+    label: 'encounter.outpatient.bpjs.insert_bpjs_number',
     value: 'insert_bpjs_number',
   },
   {
-    label: 'Informasi Data Pasien BPJS',
+    label: 'encounter.outpatient.bpjs.information_patient_data_bpjs',
     value: 'information_patient_data_bpjs',
   },
   {
-    label: 'Pilih Dokter Poli',
+    label: 'encounter.outpatient.general.select_healthcare_practitioner',
     value: 'select_healthcare_practitioner',
+    properties: {
+      disableBack: true,
+    },
   },
   {
-    label: 'Konfirmasi Pendaftaran Pasien',
-    value: 'confirmation_patient_registration_bpjs',
+    label: 'encounter.outpatient.general.confirmation_patient_registration',
+    value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'Pendaftaran Berhasil',
-    value: 'registration_success_bpjs',
+    label: 'encounter.outpatient.general.registration_success',
+    value: 'registration_success',
     properties: {
       disableBack: true,
     },
@@ -215,7 +218,7 @@ export const formStepsOutpatientBPJS = [
 export const formStepsMCUGeneral = [
   ...initialStep,
   {
-    label: 'Pilih Paket MCU yang anda inginkan',
+    label: 'encounter.mcu.general.select_mcu_package',
     value: 'select_mcu_package',
     properties: {
       disableBack: true,
@@ -223,14 +226,14 @@ export const formStepsMCUGeneral = [
     },
   },
   {
-    label: 'Konfirmasi Pendaftaran Pasien',
+    label: 'encounter.mcu.general.confirmation_patient_registration_mcu',
     value: 'confirmation_patient_registration_mcu',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'Pendaftaran Berhasil',
+    label: 'encounter.mcu.general.registration_success',
     value: 'registration_success',
     properties: {
       disableBack: true,
@@ -241,7 +244,7 @@ export const formStepsMCUGeneral = [
 export const formStepsMCUAssurance = [
   ...initialStep,
   {
-    label: 'Pilih Asuransi',
+    label: 'encounter.mcu.insurance.select_insurance',
     value: 'select_insurance',
     properties: {
       disableBack: true,
@@ -249,11 +252,11 @@ export const formStepsMCUAssurance = [
     },
   },
   {
-    label: 'Pilih Asuransi',
+    label: 'encounter.mcu.insurance.select_insurance',
     value: 'select_insurance_new',
   },
   {
-    label: 'Pilih Paket MCU yang anda inginkan',
+    label: 'encounter.mcu.general.select_mcu_package',
     value: 'select_mcu_package',
     properties: {
       disableBack: true,
@@ -261,15 +264,15 @@ export const formStepsMCUAssurance = [
     },
   },
   {
-    label: 'Konfirmasi Pendaftaran Pasien',
+    label: 'encounter.mcu.general.confirmation_patient_registration_mcu',
     value: 'confirmation_patient_registration_mcu',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'Pendaftaran Berhasil',
-    value: 'registration_success_insurance',
+    label: 'encounter.mcu.general.registration_success',
+    value: 'registration_success',
     properties: {
       disableBack: true,
     },
@@ -279,7 +282,7 @@ export const formStepsMCUAssurance = [
 export const formStepsMCUCompany = [
   ...initialStep,
   {
-    label: 'Pilih Perusahaan',
+    label: 'encounter.mcu.company.select_company',
     value: 'select_company',
     properties: {
       disableBack: true,
@@ -287,11 +290,11 @@ export const formStepsMCUCompany = [
     },
   },
   {
-    label: 'Pilih Perusahaan',
+    label: 'encounter.mcu.company.select_company_new',
     value: 'select_company_new',
   },
   {
-    label: 'Pilih Paket MCU yang anda inginkan',
+    label: 'encounter.mcu.general.select_mcu_package',
     value: 'select_mcu_package',
     properties: {
       disableBack: true,
@@ -299,15 +302,15 @@ export const formStepsMCUCompany = [
     },
   },
   {
-    label: 'Konfirmasi Pendaftaran Pasien',
+    label: 'encounter.mcu.general.confirmation_patient_registration_mcu',
     value: 'confirmation_patient_registration_mcu',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'Pendaftaran Berhasil',
-    value: 'registration_success_company',
+    label: 'encounter.mcu.general.registration_success',
+    value: 'registration_success',
     properties: {
       disableBack: true,
     },
@@ -317,21 +320,21 @@ export const formStepsMCUCompany = [
 export const formStepsLabGeneral = [
   ...initialStep,
   {
-    label: 'Pilih Paket Laboratorium yang Anda Inginkan',
+    label: 'encounter.laboratory.general.select_lab_package',
     value: 'select_lab_package',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'Konfirmasi Pendaftaran Pasien',
+    label: 'encounter.laboratory.general.confirmation_patient_registration',
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'Pendaftaran Berhasil',
+    label: 'encounter.laboratory.general.registration_success',
     value: 'registration_success',
     properties: {
       disableBack: true,
@@ -342,7 +345,7 @@ export const formStepsLabGeneral = [
 export const formStepsLabInsurance = [
   ...initialStep,
   {
-    label: 'Pilih Asuransi',
+    label: 'encounter.laboratory.insurance.select_insurance',
     value: 'select_insurance',
     properties: {
       disableBack: true,
@@ -350,34 +353,34 @@ export const formStepsLabInsurance = [
     },
   },
   {
-    label: 'Pilih Asuransi',
+    label: 'encounter.laboratory.insurance.select_insurance',
     value: 'select_insurance_new',
   },
   {
-    label: 'Masukkan Nomor Polis Asuransi',
+    label: 'encounter.laboratory.insurance.insert_polis_number',
     value: 'insert_polis_number',
   },
   {
-    label: 'Informasi Data Asuransi Pasien',
+    label: 'encounter.laboratory.insurance.information_data_patient_insurance',
     value: 'information_data_patient_insurance',
   },
   {
-    label: 'Pilih Paket Laboratorium yang Anda Inginkan',
+    label: 'encounter.laboratory.general.select_lab_package',
     value: 'select_lab_package',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'Konfirmasi Pendaftaran Pasien',
-    value: 'confirmation_patient_registration_insurance',
+    label: 'encounter.laboratory.general.confirmation_patient_registration',
+    value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'Pendaftaran Berhasil',
-    value: 'registration_success_insurance',
+    label: 'encounter.laboratory.general.registration_success',
+    value: 'registration_success',
     properties: {
       disableBack: true,
     },
@@ -387,7 +390,7 @@ export const formStepsLabInsurance = [
 export const formStepsLabCompany = [
   ...initialStep,
   {
-    label: 'Pilih Perusahaan',
+    label: 'encounter.laboratory.company.select_company',
     value: 'select_company',
     properties: {
       disableBack: true,
@@ -395,34 +398,34 @@ export const formStepsLabCompany = [
     },
   },
   {
-    label: 'Pilih Perusahaan',
+    label: 'encounter.laboratory.company.select_company_new',
     value: 'select_company_new',
   },
   {
-    label: 'Masukkan Nomor Karyawan',
+    label: 'encounter.laboratory.company.insert_employee_number',
     value: 'insert_employee_number',
   },
   {
-    label: 'Informasi Data Karyawan',
+    label: 'encounter.laboratory.company.information_data_employee',
     value: 'information_data_employee',
   },
   {
-    label: 'Pilih Paket Laboratorium yang Anda Inginkan',
+    label: 'encounter.laboratory.general.select_lab_package',
     value: 'select_lab_package',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'Konfirmasi Pendaftaran Pasien',
-    value: 'confirmation_patient_registration_company',
+    label: 'encounter.laboratory.general.confirmation_patient_registration',
+    value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'Pendaftaran Berhasil',
-    value: 'registration_success_company',
+    label: 'encounter.laboratory.general.registration_success',
+    value: 'registration_success',
     properties: {
       disableBack: true,
     },
@@ -433,21 +436,21 @@ export const formStepsLabCompany = [
 export const formStepsRadGeneral = [
   ...initialStep,
   {
-    label: 'Pilih Layanan Radiologi yang Anda Inginkan',
+    label: 'encounter.radiology.general.select_rad_service',
     value: 'select_rad_service',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'Konfirmasi Pendaftaran Pasien',
+    label: 'encounter.radiology.general.confirmation_patient_registration',
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'Pendaftaran Berhasil',
+    label: 'encounter.radiology.general.registration_success',
     value: 'registration_success',
     properties: {
       disableBack: true,
@@ -458,7 +461,7 @@ export const formStepsRadGeneral = [
 export const formStepsRadInsurance = [
   ...initialStep,
   {
-    label: 'Pilih Asuransi',
+    label: 'encounter.radiology.insurance.select_insurance',
     value: 'select_insurance',
     properties: {
       disableBack: true,
@@ -466,34 +469,34 @@ export const formStepsRadInsurance = [
     },
   },
   {
-    label: 'Pilih Asuransi',
+    label: 'encounter.radiology.insurance.select_insurance',
     value: 'select_insurance_new',
   },
   {
-    label: 'Masukkan Nomor Polis Asuransi',
+    label: 'encounter.radiology.insurance.insert_polis_number',
     value: 'insert_polis_number',
   },
   {
-    label: 'Informasi Data Asuransi Pasien',
+    label: 'encounter.radiology.insurance.information_data_patient_insurance',
     value: 'information_data_patient_insurance',
   },
   {
-    label: 'Pilih Layanan Radiologi yang Anda Inginkan',
+    label: 'encounter.radiology.general.select_rad_service',
     value: 'select_rad_service',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'Konfirmasi Pendaftaran Pasien',
-    value: 'confirmation_patient_registration_insurance',
+    label: 'encounter.radiology.general.confirmation_patient_registration',
+    value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'Pendaftaran Berhasil',
-    value: 'registration_success_insurance',
+    label: 'encounter.radiology.general.registration_success',
+    value: 'registration_success',
     properties: {
       disableBack: true,
     },
@@ -503,7 +506,7 @@ export const formStepsRadInsurance = [
 export const formStepsRadCompany = [
   ...initialStep,
   {
-    label: 'Pilih Perusahaan',
+    label: 'encounter.radiology.company.select_company',
     value: 'select_company',
     properties: {
       disableBack: true,
@@ -511,34 +514,34 @@ export const formStepsRadCompany = [
     },
   },
   {
-    label: 'Pilih Perusahaan',
+    label: 'encounter.radiology.company.select_company_new',
     value: 'select_company_new',
   },
   {
-    label: 'Masukkan Nomor Karyawan',
+    label: 'encounter.radiology.company.insert_employee_number',
     value: 'insert_employee_number',
   },
   {
-    label: 'Informasi Data Karyawan',
+    label: 'encounter.radiology.company.information_data_employee',
     value: 'information_data_employee',
   },
   {
-    label: 'Pilih Layanan Radiologi yang Anda Inginkan',
+    label: 'encounter.radiology.general.select_rad_service',
     value: 'select_rad_service',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'Konfirmasi Pendaftaran Pasien',
-    value: 'confirmation_patient_registration_company',
+    label: 'encounter.radiology.general.confirmation_patient_registration',
+    value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'Pendaftaran Berhasil',
-    value: 'registration_success_company',
+    label: 'encounter.radiology.general.registration_success',
+    value: 'registration_success',
     properties: {
       disableBack: true,
     },

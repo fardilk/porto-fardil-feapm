@@ -121,7 +121,10 @@
       }
     },
     "steps": {
-      "select_encounter_type": "Select Encounter Type"
+      "select_encounter_type": "Select Encounter Type",
+      "insert_nik": "Insert NIK",
+      "information_outpatient_general" : "Patient Information",
+      "payment_method" : "Choose Payment Method"
     }
   },
   "encounter": {
@@ -131,22 +134,90 @@
       "doctor_find": "Find Doctor",
       "doctor_unknown": "Don't know the doctor yet? Choose Healthcare Service & Find Nearest Doctor",
       "doctor_known": "Already know the doctor? Choose doctor",
-      "department_find": "Find Healthcare Service"
+      "department_find": "Find Healthcare Service",
+      "general" : {
+        "select_healthcare_practitioner" : "Choose Specialist",
+        "confirmation_patient_registration" : "Confirm Patient Registration",
+        "registration_success" : "Registration Success"
+      },
+      "insurance" : {
+        "select_insurance" : "Select Insurance",
+        "insert_polis_number" : "Enter Insurance Policy Number",
+        "information_data_patient_insurance" : "Patient Insurance Information"
+      },
+      "company" : {
+        "select_company" : "Select Company",
+        "select_company_new" : "Select Company",
+        "insert_employee_number": "Enter Employee Number",
+        "information_data_employee" : "Employee Information"
+      },
+      "bpjs" : {
+        "insert_bpjs_number" : "Enter / Scan BPJS Card Number",
+        "information_patient_data_bpjs" : "Patient BPJS Information"
+      }
     },
     "mcu": {
       "title": "MEDICAL CHECK UP",
       "description": "A series of routine health tests to check the overall health of the body and anticipate disease risks.",
-      "package_find": "Find MCU"
+      "package_find": "Find MCU",
+      "general" : {
+        "select_mcu_package" : "Select the Health Checkup Package you want",
+        "confirmation_patient_registration_mcu" : "Confirm Patient Registration",
+        "registration_success" : "Registration Success"
+      },
+      "insurance" : {
+        "select_insurance" : "Select Insurance",
+        "insert_polis_number" : "Enter Insurance Policy Number",
+        "information_data_patient_insurance" : "Patient Insurance Information"
+      },
+      "company" : {
+        "select_company" : "Select Company",
+        "select_company_new" : "Select Company",
+        "insert_employee_number": "Enter Employee Number",
+        "information_data_employee" : "Employee Information"
+      }
     },
     "laboratory": {
       "title": "LABORATORY",
       "description": "Facilities that provide diagnostic tests to support health evaluation, diagnosis, and routine medical check-ups without the need for hospitalization.",
-      "package_find": "Find Lab Package"
+      "package_find": "Find Lab Package",
+      "general" : {
+        "select_lab_package" : "Select the Laboratory Package you want",
+        "confirmation_patient_registration" : "Confirm Patient Registration",
+        "registration_success" : "Registration Success"
+      },
+      "insurance" : {
+        "select_insurance" : "Select Insurance",
+        "insert_polis_number" : "Enter Insurance Policy Number",
+        "information_data_patient_insurance" : "Patient Insurance Information"
+      },
+      "company" : {
+        "select_company" : "Select Company",
+        "select_company_new" : "Select Company",
+        "insert_employee_number": "Enter Employee Number",
+        "information_data_employee" : "Employee Information"
+      }
     },
     "radiology": {
       "title": "RADIOLOGY",
       "description": "Medical services that provide imaging tests such as X-ray, CT scan, and MRI to support diagnosis and treatment without requiring hospitalization.",
-      "package_find": "Find Radiology"
+      "package_find": "Find Radiology",
+      "general" : {
+        "select_rad_service" : "Select the Radiology Service you want",
+        "confirmation_patient_registration" : "Confirm Patient Registration",
+        "registration_success" : "Registration Success"
+      },
+      "insurance" : {
+        "select_insurance" : "Select Insurance",
+        "insert_polis_number" : "Enter Insurance Policy Number",
+        "information_data_patient_insurance" : "Patient Insurance Information"
+      },
+      "company" : {
+        "select_company" : "Select Company",
+        "select_company_new" : "Select Company",
+        "insert_employee_number": "Enter Employee Number",
+        "information_data_employee" : "Employee Information"
+      }
     }
   }
 }
