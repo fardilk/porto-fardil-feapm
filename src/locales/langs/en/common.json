@@ -4,9 +4,9 @@
     "description": "The starting point for your next project is based on MUI. Easy customization helps you build apps faster and better."
   },
   "global": {
-    "back": "back",
-    "next": "next",
-    "cancel": "cancel",
+    "back": "Back",
+    "next": "Next",
+    "cancel": "Cancel",
     "patient_detail": "Patient Detail",
     "complete_name": "Complete Name",
     "gender": "Gender",
