@@ -254,7 +254,7 @@ const ReservationPage = () => {
     <AppPage>
       <Form methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <WindowContainer
-          title={currentPage.label}
+          title={t(currentPage.label)}
           size={currentPage.properties?.containerSize || 'large'}
           handleBackNavigation={() => {
             handleChangePage({ action: 'previous' });

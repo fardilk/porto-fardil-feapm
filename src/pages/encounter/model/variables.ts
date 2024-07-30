@@ -69,21 +69,21 @@ export const initialStep = [
 export const formStepsOutpatientGeneral = [
   ...initialStep,
   {
-    label: 'encounter.outpatient.general.select_healthcare_practitioner',
+    label: 'appointment.steps.select_healthcare_practitioner',
     value: 'select_healthcare_practitioner',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'encounter.outpatient.general.confirmation_patient_registration',
+    label: 'appointment.steps.confirmation_patient_registration',
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'encounter.outpatient.general.registration_success',
+    label: 'appointment.steps.registration_success',
     value: 'registration_success',
     properties: {
       disableBack: true,
@@ -94,7 +94,7 @@ export const formStepsOutpatientGeneral = [
 export const formStepsOutpatientInsurance = [
   ...initialStep,
   {
-    label: 'encounter.outpatient.insurance.select_insurance',
+    label: 'appointment.steps.select_insurance',
     value: 'select_insurance',
     properties: {
       disableBack: true,
@@ -102,33 +102,33 @@ export const formStepsOutpatientInsurance = [
     },
   },
   {
-    label: 'encounter.outpatient.insurance.select_insurance',
+    label: 'appointment.steps.select_insurance',
     value: 'select_insurance_new',
   },
   {
-    label: 'encounter.outpatient.insurance.insert_polis_number',
+    label: 'appointment.steps.insert_polis_number',
     value: 'insert_polis_number',
   },
   {
-    label: 'encounter.outpatient.insurance.information_data_patient_insurance',
+    label: 'appointment.steps.information_data_patient_insurance',
     value: 'information_data_patient_insurance',
   },
   {
-    label: 'encounter.outpatient.general.select_healthcare_practitioner',
+    label: 'appointment.steps.select_healthcare_practitioner',
     value: 'select_healthcare_practitioner',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'encounter.outpatient.general.confirmation_patient_registration',
+    label: 'appointment.steps.confirmation_patient_registration',
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'encounter.outpatient.general.registration_success',
+    label: 'appointment.steps.registration_success',
     value: 'registration_success',
     properties: {
       disableBack: true,
@@ -139,7 +139,7 @@ export const formStepsOutpatientInsurance = [
 export const formStepsOutpatientCompany = [
   ...initialStep,
   {
-    label: 'encounter.outpatient.company.select_company',
+    label: 'appointment.steps.select_company',
     value: 'select_company',
     properties: {
       disableBack: true,
@@ -147,33 +147,33 @@ export const formStepsOutpatientCompany = [
     },
   },
   {
-    label: 'encounter.outpatient.company.select_company_new',
+    label: 'appointment.steps.select_company_new',
     value: 'select_company_new',
   },
   {
-    label: 'encounter.outpatient.company.insert_employee_number',
+    label: 'appointment.steps.insert_employee_number',
     value: 'insert_employee_number',
   },
   {
-    label: 'encounter.outpatient.company.information_data_employee',
+    label: 'appointment.steps.information_data_employee',
     value: 'information_data_employee',
   },
   {
-    label: 'encounter.outpatient.general.select_healthcare_practitioner',
+    label: 'appointment.steps.select_healthcare_practitioner',
     value: 'select_healthcare_practitioner',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'encounter.outpatient.general.confirmation_patient_registration',
+    label: 'appointment.steps.confirmation_patient_registration',
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'encounter.outpatient.general.registration_success',
+    label: 'appointment.steps.registration_success',
     value: 'registration_success',
     properties: {
       disableBack: true,
@@ -183,29 +183,29 @@ export const formStepsOutpatientCompany = [
 
 export const formStepsOutpatientBPJS = [
   {
-    label: 'encounter.outpatient.bpjs.insert_bpjs_number',
+    label: 'appointment.steps.insert_bpjs_number',
     value: 'insert_bpjs_number',
   },
   {
-    label: 'encounter.outpatient.bpjs.information_patient_data_bpjs',
+    label: 'appointment.steps.information_patient_data_bpjs',
     value: 'information_patient_data_bpjs',
   },
   {
-    label: 'encounter.outpatient.general.select_healthcare_practitioner',
+    label: 'appointment.steps.select_healthcare_practitioner',
     value: 'select_healthcare_practitioner',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'encounter.outpatient.general.confirmation_patient_registration',
+    label: 'appointment.steps.confirmation_patient_registration',
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'encounter.outpatient.general.registration_success',
+    label: 'appointment.steps.registration_success',
     value: 'registration_success',
     properties: {
       disableBack: true,
@@ -216,7 +216,7 @@ export const formStepsOutpatientBPJS = [
 export const formStepsMCUGeneral = [
   ...initialStep,
   {
-    label: 'encounter.mcu.general.select_mcu_package',
+    label: 'appointment.steps.select_mcu_package',
     value: 'select_mcu_package',
     properties: {
       disableBack: true,
@@ -224,14 +224,14 @@ export const formStepsMCUGeneral = [
     },
   },
   {
-    label: 'encounter.mcu.general.confirmation_patient_registration_mcu',
+    label: 'appointment.steps.confirmation_patient_registration_mcu',
     value: 'confirmation_patient_registration_mcu',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'encounter.mcu.general.registration_success',
+    label: 'appointment.steps.registration_success',
     value: 'registration_success',
     properties: {
       disableBack: true,
@@ -242,7 +242,7 @@ export const formStepsMCUGeneral = [
 export const formStepsMCUAssurance = [
   ...initialStep,
   {
-    label: 'encounter.mcu.insurance.select_insurance',
+    label: 'appointment.steps.select_insurance',
     value: 'select_insurance',
     properties: {
       disableBack: true,
@@ -250,11 +250,11 @@ export const formStepsMCUAssurance = [
     },
   },
   {
-    label: 'encounter.mcu.insurance.select_insurance',
+    label: 'appointment.steps.select_insurance',
     value: 'select_insurance_new',
   },
   {
-    label: 'encounter.mcu.general.select_mcu_package',
+    label: 'appointment.steps.select_mcu_package',
     value: 'select_mcu_package',
     properties: {
       disableBack: true,
@@ -262,14 +262,14 @@ export const formStepsMCUAssurance = [
     },
   },
   {
-    label: 'encounter.mcu.general.confirmation_patient_registration_mcu',
+    label: 'appointment.steps.confirmation_patient_registration_mcu',
     value: 'confirmation_patient_registration_mcu',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'encounter.mcu.general.registration_success',
+    label: 'appointment.steps.registration_success',
     value: 'registration_success',
     properties: {
       disableBack: true,
@@ -280,7 +280,7 @@ export const formStepsMCUAssurance = [
 export const formStepsMCUCompany = [
   ...initialStep,
   {
-    label: 'encounter.mcu.company.select_company',
+    label: 'appointment.steps.company.select_company',
     value: 'select_company',
     properties: {
       disableBack: true,
@@ -288,11 +288,11 @@ export const formStepsMCUCompany = [
     },
   },
   {
-    label: 'encounter.mcu.company.select_company_new',
+    label: 'appointment.steps.company.select_company_new',
     value: 'select_company_new',
   },
   {
-    label: 'encounter.mcu.general.select_mcu_package',
+    label: 'appointment.steps.select_mcu_package',
     value: 'select_mcu_package',
     properties: {
       disableBack: true,
@@ -300,14 +300,14 @@ export const formStepsMCUCompany = [
     },
   },
   {
-    label: 'encounter.mcu.general.confirmation_patient_registration_mcu',
+    label: 'appointment.steps.confirmation_patient_registration_mcu',
     value: 'confirmation_patient_registration_mcu',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'encounter.mcu.general.registration_success',
+    label: 'appointment.steps.registration_success',
     value: 'registration_success',
     properties: {
       disableBack: true,
@@ -318,21 +318,21 @@ export const formStepsMCUCompany = [
 export const formStepsLabGeneral = [
   ...initialStep,
   {
-    label: 'encounter.laboratory.general.select_lab_package',
+    label: 'appointment.steps.select_lab_package',
     value: 'select_lab_package',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'encounter.laboratory.general.confirmation_patient_registration',
+    label: 'appointment.steps.confirmation_patient_registration',
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'encounter.laboratory.general.registration_success',
+    label: 'appointment.steps.registration_success',
     value: 'registration_success',
     properties: {
       disableBack: true,
@@ -343,7 +343,7 @@ export const formStepsLabGeneral = [
 export const formStepsLabInsurance = [
   ...initialStep,
   {
-    label: 'encounter.laboratory.insurance.select_insurance',
+    label: 'appointment.steps.select_insurance',
     value: 'select_insurance',
     properties: {
       disableBack: true,
@@ -351,33 +351,33 @@ export const formStepsLabInsurance = [
     },
   },
   {
-    label: 'encounter.laboratory.insurance.select_insurance',
+    label: 'appointment.steps.select_insurance',
     value: 'select_insurance_new',
   },
   {
-    label: 'encounter.laboratory.insurance.insert_polis_number',
+    label: 'appointment.steps.insert_polis_number',
     value: 'insert_polis_number',
   },
   {
-    label: 'encounter.laboratory.insurance.information_data_patient_insurance',
+    label: 'appointment.steps.information_data_patient_insurance',
     value: 'information_data_patient_insurance',
   },
   {
-    label: 'encounter.laboratory.general.select_lab_package',
+    label: 'appointment.steps.select_lab_package',
     value: 'select_lab_package',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'encounter.laboratory.general.confirmation_patient_registration',
+    label: 'appointment.steps.confirmation_patient_registration',
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'encounter.laboratory.general.registration_success',
+    label: 'appointment.steps.registration_success',
     value: 'registration_success',
     properties: {
       disableBack: true,
@@ -388,7 +388,7 @@ export const formStepsLabInsurance = [
 export const formStepsLabCompany = [
   ...initialStep,
   {
-    label: 'encounter.laboratory.company.select_company',
+    label: 'appointment.steps.select_company',
     value: 'select_company',
     properties: {
       disableBack: true,
@@ -396,33 +396,33 @@ export const formStepsLabCompany = [
     },
   },
   {
-    label: 'encounter.laboratory.company.select_company_new',
+    label: 'appointment.steps.select_company_new',
     value: 'select_company_new',
   },
   {
-    label: 'encounter.laboratory.company.insert_employee_number',
+    label: 'appointment.steps.insert_employee_number',
     value: 'insert_employee_number',
   },
   {
-    label: 'encounter.laboratory.company.information_data_employee',
+    label: 'appointment.steps.information_data_employee',
     value: 'information_data_employee',
   },
   {
-    label: 'encounter.laboratory.general.select_lab_package',
+    label: 'appointment.steps.select_lab_package',
     value: 'select_lab_package',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'encounter.laboratory.general.confirmation_patient_registration',
+    label: 'appointment.steps.confirmation_patient_registration',
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'encounter.laboratory.general.registration_success',
+    label: 'appointment.steps.registration_success',
     value: 'registration_success',
     properties: {
       disableBack: true,
@@ -434,21 +434,21 @@ export const formStepsLabCompany = [
 export const formStepsRadGeneral = [
   ...initialStep,
   {
-    label: 'encounter.radiology.general.select_rad_service',
+    label: 'appointment.steps.select_rad_service',
     value: 'select_rad_service',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'encounter.radiology.general.confirmation_patient_registration',
+    label: 'appointment.steps.confirmation_patient_registration',
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'encounter.radiology.general.registration_success',
+    label: 'appointment.steps.registration_success',
     value: 'registration_success',
     properties: {
       disableBack: true,
@@ -459,7 +459,7 @@ export const formStepsRadGeneral = [
 export const formStepsRadInsurance = [
   ...initialStep,
   {
-    label: 'encounter.radiology.insurance.select_insurance',
+    label: 'appointment.steps.select_insurance',
     value: 'select_insurance',
     properties: {
       disableBack: true,
@@ -467,33 +467,33 @@ export const formStepsRadInsurance = [
     },
   },
   {
-    label: 'encounter.radiology.insurance.select_insurance',
+    label: 'appointment.steps.select_insurance',
     value: 'select_insurance_new',
   },
   {
-    label: 'encounter.radiology.insurance.insert_polis_number',
+    label: 'appointment.steps.insert_polis_number',
     value: 'insert_polis_number',
   },
   {
-    label: 'encounter.radiology.insurance.information_data_patient_insurance',
+    label: 'appointment.steps.information_data_patient_insurance',
     value: 'information_data_patient_insurance',
   },
   {
-    label: 'encounter.radiology.general.select_rad_service',
+    label: 'appointment.steps.select_rad_service',
     value: 'select_rad_service',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'encounter.radiology.general.confirmation_patient_registration',
+    label: 'appointment.steps.confirmation_patient_registration',
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'encounter.radiology.general.registration_success',
+    label: 'appointment.steps.registration_success',
     value: 'registration_success',
     properties: {
       disableBack: true,
@@ -504,7 +504,7 @@ export const formStepsRadInsurance = [
 export const formStepsRadCompany = [
   ...initialStep,
   {
-    label: 'encounter.radiology.company.select_company',
+    label: 'appointment.steps.select_company',
     value: 'select_company',
     properties: {
       disableBack: true,
@@ -512,33 +512,33 @@ export const formStepsRadCompany = [
     },
   },
   {
-    label: 'encounter.radiology.company.select_company_new',
+    label: 'appointment.steps.select_company_new',
     value: 'select_company_new',
   },
   {
-    label: 'encounter.radiology.company.insert_employee_number',
+    label: 'appointment.steps.insert_employee_number',
     value: 'insert_employee_number',
   },
   {
-    label: 'encounter.radiology.company.information_data_employee',
+    label: 'appointment.steps.information_data_employee',
     value: 'information_data_employee',
   },
   {
-    label: 'encounter.radiology.general.select_rad_service',
+    label: 'appointment.steps.select_rad_service',
     value: 'select_rad_service',
     properties: {
       disableBack: true,
     },
   },
   {
-    label: 'encounter.radiology.general.confirmation_patient_registration',
+    label: 'appointment.steps.confirmation_patient_registration',
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
     },
   },
   {
-    label: 'encounter.radiology.general.registration_success',
+    label: 'appointment.steps.registration_success',
     value: 'registration_success',
     properties: {
       disableBack: true,

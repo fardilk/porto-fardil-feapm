@@ -4,7 +4,6 @@ import { CardBanner } from 'src/components/card-banner';
 import { LabelTextContainer, type LabelTextProps } from 'src/components/label-text';
 import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
 import { fAsterisk } from 'src/utils/helper';
-import type { OutpatientType } from '../model/types';
 import { useTranslate } from 'src/locales';
 import { getPaymentType } from '../model/variables';
 
@@ -38,7 +37,7 @@ const ConfirmationOutpatientMCU = ({
 
   const listCard = [
     {
-      ...getPaymentType("general",t),
+      ...getPaymentType("general", t),
     },
     {
       title: t('appointment.encounter.schedule'),
