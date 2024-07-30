@@ -24,9 +24,12 @@ import { setConfig } from 'src/store/slices/config';
 import { dispatch, useSelector } from 'src/store/store';
 import { timeout } from 'src/utils/timeout';
 import { ConfigIForm } from './model/types';
+import { useTranslate } from 'src/locales';
 
 const ConfigPage = () => {
   const config = useSelector((root) => root.config);
+
+  const { t } = useTranslate();
 
   const defaultValues: ConfigIForm = {
     checkin: config.checkin,
@@ -56,13 +59,13 @@ const ConfigPage = () => {
     dispatch(setConfig(data));
     reset(data);
 
-    toast.success('Berhasil Disimpan');
+    toast.success(t('config.success'));
   };
 
   return (
     <AppPage>
       <WindowContainer
-        title="Configuration"
+        title={t('config.title')}
         hideBackNavigation
         handleCloseNavigation={() => {
           navigate('/', { replace: true });
@@ -71,7 +74,7 @@ const ConfigPage = () => {
         <Form methods={methods} onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing={2} p={4}>
             <Box sx={{ display: 'flex', placeContent: 'space-between' }}>
-              <Typography variant="h5">Konfigurasi Halaman Awal</Typography>
+              <Typography variant="h5">{t('config.configure_page')}</Typography>
               <LoadingButton
                 variant="soft"
                 color="info"
@@ -80,7 +83,7 @@ const ConfigPage = () => {
                 loading={isSubmitting}
                 startIcon={<Iconify icon="fluent:save-32-regular" />}
               >
-                Simpan
+                {t('config.save')}
               </LoadingButton>
             </Box>
             <Divider />
@@ -88,48 +91,43 @@ const ConfigPage = () => {
               <Grid container rowSpacing={2} my={2} columnSpacing={3}>
                 <Grid item xs={3} display={'flex'} alignItems={'center'}>
                   <Typography variant="subtitle1" color="grey.600">
-                    {/* {t('registration.gender')} */}
-                    Check In
+                    {t('config.checkin')}
                   </Typography>
                 </Grid>
                 <Grid item xs={3} display={'flex'} alignItems={'center'}>
-                  <RHFSwitch name="checkin" label="Aktif" />
+                  <RHFSwitch name="checkin" label={t('config.active_label')} />
                 </Grid>
                 <Grid item xs={3} display={'flex'} alignItems={'center'}>
                   <Typography variant="subtitle1" color="grey.600">
-                    {/* {t('registration.gender')} */}
-                    Kunjungan Dokter
+                    {t('config.encounter')}
                   </Typography>
                 </Grid>
                 <Grid item xs={3} display={'flex'} alignItems={'center'}>
-                  <RHFSwitch name="encounter" label="Aktif" />
+                  <RHFSwitch name="encounter" label={t('config.active_label')} />
                 </Grid>
                 <Grid item xs={3} display={'flex'} alignItems={'center'}>
                   <Typography variant="subtitle1" color="grey.600">
-                    {/* {t('registration.gender')} */}
-                    Reservasi
+                    {t('config.reservation')}
                   </Typography>
                 </Grid>
                 <Grid item xs={3} display={'flex'} alignItems={'center'}>
-                  <RHFSwitch name="reservation" label="Aktif" />
+                  <RHFSwitch name="reservation" label={t('config.active_label')} />
                 </Grid>
                 <Grid item xs={3} display={'flex'} alignItems={'center'}>
                   <Typography variant="subtitle1" color="grey.600">
-                    {/* {t('registration.gender')} */}
-                    Registrasi Pasien Baru
+                    {t('config.registration')}
                   </Typography>
                 </Grid>
                 <Grid item xs={3} display={'flex'} alignItems={'center'}>
-                  <RHFSwitch name="registration" label="Aktif" />
+                  <RHFSwitch name="registration" label={t('config.active_label')} />
                 </Grid>
                 <Grid item xs={3} display={'flex'} alignItems={'center'}>
                   <Typography variant="subtitle1" color="grey.600">
-                    {/* {t('registration.gender')} */}
-                    Simplifikasi Registrasi Pasien
+                    {t('config.simplify')}
                   </Typography>
                 </Grid>
                 <Grid item xs={3} display={'flex'} alignItems={'center'}>
-                  <RHFSwitch name="simplify" label="Aktif" />
+                  <RHFSwitch name="simplify" label={t('config.active_label')} />
                 </Grid>
               </Grid>
             </Box>
@@ -137,7 +135,7 @@ const ConfigPage = () => {
             <Box>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
-                  <Typography variant="subtitle2">Mode Tampilan Menu : </Typography>
+                  <Typography variant="subtitle2">{t('config.mode')} : </Typography>
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <RHFRadioGroup
@@ -167,7 +165,7 @@ const ConfigPage = () => {
                         color="primary"
                         fullWidth={isFluid}
                       >
-                        Checkin
+                        {t('config.checkin')}
                       </Button>
                     )}
                     {values.encounter && (
@@ -177,7 +175,7 @@ const ConfigPage = () => {
                         color="primary"
                         fullWidth={isFluid}
                       >
-                        Kunjungan Dokter
+                        {t('config.encounter')}
                       </Button>
                     )}
                     {values.reservation && (
@@ -187,7 +185,7 @@ const ConfigPage = () => {
                         color="primary"
                         fullWidth={isFluid}
                       >
-                        Reservasi
+                        {t('config.reservation')}
                       </Button>
                     )}
                     {values.registration && (
@@ -197,7 +195,7 @@ const ConfigPage = () => {
                         color="primary"
                         fullWidth={isFluid}
                       >
-                        Registrasi Pasien Baru
+                        {t('config.registration')}
                       </Button>
                     )}
                   </Box>

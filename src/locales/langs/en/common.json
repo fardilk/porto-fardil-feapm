@@ -410,5 +410,19 @@
     "search_company": "Search Company",
     "name": "Name",
     "validity_period": "Validity Period"
+  },
+
+  "config": {
+    "title": "Configuration",
+    "configure_page": "Configure Page",
+    "checkin": "Check In",
+    "encounter": "Encounter",
+    "reservation": "Reservation",
+    "registration": "Registration",
+    "simplify": "Simplify Registration Data",
+    "mode": "Menu Display Mode",
+    "save": "Save",
+    "success": "Successfully Saved",
+    "active_label": "Active"
   }
 }

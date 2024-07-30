@@ -106,7 +106,7 @@ export const formStepsNotExistInSatuSehat = [
     value: 'create_new_patient',
     properties: {
       hideBack: true,
-      i18n: 'registration.title.check_whatsapp_or_scan_barcode',
+      i18n: 'registration.title.fill_new_patient_data',
     },
   },
   {
@@ -114,7 +114,7 @@ export const formStepsNotExistInSatuSehat = [
     value: 'create_detail_new_patient',
     properties: {
       hideBack: true,
-      i18n: 'registration.title.check_whatsapp_or_scan_barcode',
+      i18n: 'registration.title.fill_new_patient_data',
     },
   },
   {

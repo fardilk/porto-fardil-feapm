@@ -31,7 +31,6 @@ import { useMemo } from 'react';
 import { useSelector } from 'src/store/store';
 
 const RegistrationPage = () => {
-  
   const isSimplify = useSelector((root) => root.config.simplify);
 
   const defaultValues: RegistrationIForm = {
@@ -158,7 +157,12 @@ const RegistrationPage = () => {
               <PatientInformation
                 leftTextButton={t('registration.button.wrong_data')}
                 rigthTextButton={t('registration.button.correct_data')}
-                leftButtonProps={{ onClick: () => handleChangePage({ action: 'previous' }) }}
+                leftButtonProps={{
+                  onClick: () => {
+                    if (isSimplify) handleChangePage({ toSpecificPage: 'create_new_patient' });
+                    else handleChangePage({ action: 'previous' });
+                  },
+                }}
                 rightButtonProps={{ onClick: () => handleChangePage({ action: 'next' }) }}
               />
             )}

@@ -409,5 +409,19 @@
     "search_company": "Cari Perusahaan",
     "name": "Nama",
     "validity_period": "Masa Berlaku"
+  },
+
+  "config": {
+    "title": "Konfigurasi",
+    "configure_page": "Konfigurasi Halaman",
+    "checkin": "Lapor Kehadiran",
+    "encounter": "Kunjungan Dokter",
+    "reservation": "Reservasi",
+    "registration": "Registrasi",
+    "simplify": "Simplifikasi Data Register",
+    "mode": "Mode Tampilan Menu",
+    "save": "Simpan",
+    "success": "Berhasil Disimpan",
+    "active_label": "Aktif"
   }
 }
