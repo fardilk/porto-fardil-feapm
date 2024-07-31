@@ -16,7 +16,9 @@ const PatientInformation = (props: PatientInformationProps) => {
   const { watch } = useFormContext();
   const isForeign = watch('citizenship');
 
-  const [detailData, _setDetailData] = useState<LabelTextProps[]>([
+  const [detailData, _setDetailData] = useState<LabelTextProps[]>([]);
+
+  const [initData, setInitData] = useState<LabelTextProps[]>([
     { title: isForeign ? 'Passport' : 'NIK/Medrec', body: fAsterisk('100200300400') },
     { title: t('registration.fullname'), body: 'Anisa Redina' },
     { title: t('registration.gender'), body: 'Perempuan' },
@@ -37,10 +39,12 @@ const PatientInformation = (props: PatientInformationProps) => {
 
   useEffect(() => {
     if (!isSimplify) {
-      _setDetailData(detailData)
-      _setDetailData((prevDetailData) => [...prevDetailData, ...moreData]);
+      _setDetailData([...initData, ...moreData]);
     }
-  }, [isSimplify, moreData, detailData]);
+    else{
+      _setDetailData([...initData])
+    }
+  }, [isSimplify, initData, moreData]);
 
   return (
     <>
