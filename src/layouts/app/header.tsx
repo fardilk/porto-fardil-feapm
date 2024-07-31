@@ -8,6 +8,7 @@ import { Image } from "src/components/image";
 import { RHFSelect, RHFSwitch } from "src/components/hook-form";
 import { Iconify } from "src/components/iconify";
 import { useTranslate } from "src/locales";
+import { CONFIG } from "src/config-global";
 
 const Header = () => {
 
@@ -42,6 +43,8 @@ const Header = () => {
   }, []);
 
   console.log(currentLang.value)
+  const PlatformName = "Anjungan " + CONFIG.app.platformName
+  const HospitalName = "RS " + CONFIG.app.hospitalName
 
 
   return (
@@ -56,8 +59,8 @@ const Header = () => {
       <Image src="/logo/logo.png" alt="logo_rs" />
 
       <Box sx={{ flexGrow: 1 }}>
-        <Typography variant="h6">{import.meta.env.VITE_APP_NAME}</Typography>
-        <Typography variant="body2" noWrap textOverflow="ellipsis">{import.meta.env.VITE_APP_ADDRESS} Telp: {import.meta.env.VITE_APP_TELECOM}</Typography>
+        <Typography variant="h6" color={'grey'}>{PlatformName.toUpperCase()}</Typography>
+        <Typography variant="h6" color={'secondary.darker'} noWrap textOverflow="ellipsis">{HospitalName.toUpperCase()}</Typography>
       </Box>
 
       <Box

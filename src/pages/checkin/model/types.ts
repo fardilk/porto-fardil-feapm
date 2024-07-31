@@ -3,5 +3,5 @@ export type InsertBookingProps = {
 }
 
 export type InformationType = {
-  type: "bpjs" | "company" | "insurance" |"general"
+  type: "bpjs" | "company" | "insurance" |"general" |"new"
 }

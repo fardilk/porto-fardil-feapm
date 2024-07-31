@@ -42,7 +42,7 @@ const CheckinPage = () => {
             ? 'insurance'
             : keyboardValue === '789'
               ? 'company'
-              : 'general'
+              : keyboardValue==='000' ? 'general' : 'new'
       );
 
       if (resp.data === 'general')
