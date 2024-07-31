@@ -31,6 +31,16 @@ export const getCheckin = async ({ bookingNumber }: { bookingNumber: string }) :
               scheduleSlotDate,
               scheduleSlotStartTime,
             }
+            bpjs {
+              referralNumber
+              referralDate
+              performerServiceName
+              subscriberInstitution
+              subscriberNumber
+              subscriberCategory
+              subscriberStatus
+              subscriberClass
+            }
           }
         }
       }

@@ -9,16 +9,16 @@ export type CheckinResponse = {
     bookingID: string;
     payplanClass: "GENERAL" | "BPJS" | "INSURANCE" | "COMPANY";
     notes: string;
-    // bpjs: Nullable<{
-    //   performerServiceName: string;
-    //   referralDate: string;
-    //   referralNumber: string;
-    //   subscriberCategory: string;
-    //   subscriberClass: string;
-    //   subscriberInstitution: string;
-    //   subscriberNumber: string;
-    //   subscriberStatus: string;
-    // }>;
+    bpjs: Nullable<{
+      performerServiceName: string;
+      referralDate: string;
+      referralNumber: string;
+      subscriberCategory: string;
+      subscriberClass: string;
+      subscriberInstitution: string;
+      subscriberNumber: string;
+      subscriberStatus: string;
+    }>;
     patient: {
       nik: string;
       name: string;

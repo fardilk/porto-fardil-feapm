@@ -42,15 +42,15 @@ const InformationBooking: FC<InformationType> = ({ type, data }) => {
           title: `${t('global.location')}, ${t('global.birthdate')}`,
           body: `${data.booking.patient.birthPlace}, ${fDate(data.booking.patient.birthDttm, 'DD-MM-YYYY')}`,
         },
-        { title: t('global.card_number'), body: '1001010101001010' },
-        { title: t('global.class'), body: 'Kelas III' },
-        { title: t('global.first_faskes'), body: 'Klinik Surya Medika' },
-        { title: t('global.user_type'), body: 'Pekerja Mandiri' },
-        { title: t('global.user_status'), body: 'Aktif' },
+        { title: t('global.card_number'), body: data.booking.bpjs?.subscriberNumber ?? "-"},
+        { title: t('global.class'), body: data.booking.bpjs?.referralNumber ?? "-" },
+        { title: t('global.first_faskes'), body: data.booking.bpjs?.subscriberInstitution ?? "-" },
+        { title: t('global.user_type'), body: data.booking.bpjs?.subscriberCategory ?? "-" },
+        { title: t('global.user_status'), body: data.booking.bpjs?.subscriberStatus ?? "-" },
       ];
     }
 
-    if (type === 'company' || type === 'insurance') {
+    if (data.booking.payplanClass === 'COMPANY' || data.booking.payplanClass === 'INSURANCE') {
       return [
         { title: 'NIK', body: fAsterisk('100200300400') },
         { title: t('global.complete_name'), body: 'Hello World' },
@@ -120,9 +120,9 @@ const InformationBooking: FC<InformationType> = ({ type, data }) => {
   }, [t, type]);
 
   const referenceData: LabelTextProps[] = [
-    { title: t('global.referral_num'), body: fAsterisk('50040503009874') },
-    { title: t('global.referral_date'), body: fDate('04-05-2001', 'DD-MM-YYYY') },
-    { title: t('global.poli'), body: 'Poli Saraf' },
+    { title: t('global.referral_num'), body: fAsterisk(data.booking.bpjs?.referralNumber ?? "-") },
+    { title: t('global.referral_date'), body: fDate(data.booking.bpjs?.referralDate ?? "-", 'DD-MM-YYYY') },
+    { title: t('global.poli'), body: data.booking.bpjs?.performerServiceName ?? "-" },
   ];
 
   const getCountdown15 = useMemo(() => {
@@ -180,7 +180,7 @@ const InformationBooking: FC<InformationType> = ({ type, data }) => {
         body={data.booking.notes}
       />
       <Grid container spacing={2}>
-        {type === 'bpjs' && (
+        {data.booking.payplanClass === 'BPJS' && (
           <Grid item xs={12} md={4}>
             <Typography variant="h5" gutterBottom>
               {t('global.referral_detail')}
@@ -189,7 +189,7 @@ const InformationBooking: FC<InformationType> = ({ type, data }) => {
             <LabelTextContainer col={1} listText={referenceData} />
           </Grid>
         )}
-        <Grid item xs={12} md={type === 'bpjs' ? 8 : 12}>
+        <Grid item xs={12} md={data.booking.payplanClass === 'BPJS' ? 8 : 12}>
           <Typography variant="h5" gutterBottom>
             {t('global.patient_detail')}
           </Typography>
