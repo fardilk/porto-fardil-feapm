@@ -41,7 +41,9 @@ export type ConfigValue = {
 
 export const CONFIG: ConfigValue = {
   app: {
-    graphqlPath: `${import.meta.env.VITE_APP_API_HOST}:${import.meta.env.VITE_APP_API_PORT}`,
+    graphqlPath: import.meta.env.VITE_APP_API_PORT
+      ? `${import.meta.env.VITE_APP_API_HOST}:${import.meta.env.VITE_APP_API_PORT}`
+      : import.meta.env.VITE_APP_API_HOST,
   },
   site: {
     name: 'Minimals',

@@ -14,7 +14,7 @@ import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
 import { type InformationType } from '../model/types';
 import { useTranslate } from 'src/locales';
 
-const InformationBooking: FC<InformationType> = ({ type }) => {
+const InformationBooking: FC<InformationType> = ({ type, data }) => {
   const navigate = useNavigate();
   const { t } = useTranslate();
 
@@ -33,14 +33,14 @@ const InformationBooking: FC<InformationType> = ({ type }) => {
   const [openPrint, setOpenPrint] = useState(false);
 
   const headerData = useMemo(() => {
-    if (type === 'bpjs') {
+    if (data.booking.payplanClass === 'BPJS') {
       return [
-        { title: 'NIK', body: fAsterisk('100200300400') },
-        { title: t('global.complete_name'), body: 'Hello World' },
-        { title: t('global.gender'), body: 'Perempuan' },
+        { title: 'NIK', body: fAsterisk(data.booking.patient.nik) },
+        { title: t('global.complete_name'), body: data.booking.patient.name },
+        { title: t('global.gender'), body: data.booking.patient.gender },
         {
           title: `${t('global.location')}, ${t('global.birthdate')}`,
-          body: `Malaysia, ${fDate('04-05-2001', 'DD-MM-YYYY')}`,
+          body: `${data.booking.patient.birthPlace}, ${fDate(data.booking.patient.birthDttm, 'DD-MM-YYYY')}`,
         },
         { title: t('global.card_number'), body: '1001010101001010' },
         { title: t('global.class'), body: 'Kelas III' },
@@ -54,27 +54,27 @@ const InformationBooking: FC<InformationType> = ({ type }) => {
       return [
         { title: 'NIK', body: fAsterisk('100200300400') },
         { title: t('global.complete_name'), body: 'Hello World' },
-        { title: t("global.birthdate"), body: fDate('04-05-2001', 'DD-MM-YYYY') },
-        { title: t("global.phone_number"), body: fAsterisk('085157902550') },
-        { title: t("global.blood_type"), body: 'B' },
+        { title: t('global.birthdate'), body: fDate('04-05-2001', 'DD-MM-YYYY') },
+        { title: t('global.phone_number'), body: fAsterisk('085157902550') },
+        { title: t('global.blood_type'), body: 'B' },
         { title: 'Rhesus', body: 'Negatif' },
         { title: 'Email', body: 'helloworld@gmail.com' },
         {
-          title: t("global.address"),
+          title: t('global.address'),
           body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
         },
       ];
     }
 
     return [
-      { title: 'NIK', body: fAsterisk('100200300400') },
-      { title: t('global.complete_name'), body: 'Hello World' },
-      { title: t('global.birthdate'), body: fDate('04-05-2001', 'DD-MM-YYYY') },
-      { title: t("global.phone_number"), body: fAsterisk('085157902550') },
-      { title: 'Email', body: 'helloworld@gmail.com' },
+      { title: 'NIK', body: fAsterisk(data.booking.patient.nik) },
+      { title: t('global.complete_name'), body: data.booking.patient.name },
+      { title: t('global.birthdate'), body: fDate(data.booking.patient.birthDttm, 'DD-MM-YYYY') },
+      { title: t('global.phone_number'), body: fAsterisk(data.booking.patient.phone) },
+      { title: 'Email', body: data.booking.patient.email },
       {
-        title: t("global.address"),
-        body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
+        title: t('global.address'),
+        body: data.booking.patient.address,
         colSpan: 2,
       },
     ];
@@ -82,34 +82,38 @@ const InformationBooking: FC<InformationType> = ({ type }) => {
 
   const detailData = useMemo(() => {
     return [
-      { title: t('checkin.service_destination'), body: 'Poli Mata', localIcon: 'stethoscope' },
+      {
+        title: t('checkin.service_destination'),
+        body: data.booking.encounter.healthcareServiceName,
+        localIcon: 'stethoscope',
+      },
       {
         title: t('checkin.examining_doctor'),
-        body: 'dr. Inas Shabrina,Sp.M',
+        body: data.booking.encounter.practitionerName,
         localIcon: 'doctor',
       },
       {
         title: t('global.payment_type'),
         body:
-          type === 'bpjs'
+          data.booking.payplanClass === 'BPJS'
             ? 'BPJS'
-            : type === 'insurance'
+            : data.booking.payplanClass === 'INSURANCE'
               ? 'asuransi'
-              : type === 'company'
+              : data.booking.payplanClass === 'COMPANY'
                 ? 'Perusahaan'
                 : 'Umum',
         localIcon:
-          type === 'bpjs'
+          data.booking.payplanClass === 'BPJS'
             ? 'bpjs'
-            : type === 'insurance'
+            : data.booking.payplanClass === 'INSURANCE'
               ? 'asuransi'
-              : type === 'company'
+              : data.booking.payplanClass === 'COMPANY'
                 ? 'perusahaan'
                 : 'pembayaran-umum',
       },
       {
         title: t('global.service_time'),
-        body: 'Senin, 30-01-2022 10:00-14:00',
+        body: `${data.booking.encounter.scheduleSlotDate}, ${data.booking.encounter.scheduleSlotStartTime}`,
         localIcon: 'jadwal',
       },
     ];
@@ -138,7 +142,7 @@ const InformationBooking: FC<InformationType> = ({ type }) => {
   const HeaderPrint = useCallback(() => {
     return (
       <Box sx={{ display: 'flex', gap: 1, placeContent: 'end' }}>
-        <Typography variant="button">{t("global.back_to_dashboard")} : </Typography>
+        <Typography variant="button">{t('global.back_to_dashboard')} : </Typography>
         <Typography variant="button" color="grey">
           {getCountdown2min}
         </Typography>
@@ -148,12 +152,12 @@ const InformationBooking: FC<InformationType> = ({ type }) => {
 
   const actionList = [
     {
-      label: t("global.back_to_dashboard"),
+      label: t('global.back_to_dashboard'),
       buttonProps: { ...buttonStyle },
       action: () => navigate('/', { replace: true }),
     },
     {
-      label: t("global.reprint"),
+      label: t('global.reprint'),
       buttonProps: { ...buttonStyle, variant: 'outlined', disabled: counting15 },
       action: () => {
         startCountdown15();
@@ -172,8 +176,8 @@ const InformationBooking: FC<InformationType> = ({ type }) => {
   return (
     <Stack gap={4}>
       <AlertInformation
-        title={t("checkin.title_success")}
-        body="Silakan menuju ke nurse station untuk melaporkan kehadiran Anda. (note)"
+        title={t('checkin.title_success')}
+        body={data.booking.notes}
       />
       <Grid container spacing={2}>
         {type === 'bpjs' && (
@@ -234,7 +238,7 @@ const InformationBooking: FC<InformationType> = ({ type }) => {
         handleClose={() => {
           setOpenPrint(false);
         }}
-        title={t("checkin.saved_proof")}
+        title={t('checkin.saved_proof')}
         titleProps={{ variant: 'h3' }}
         dialogProps={{ maxWidth: 'sm' }}
         disableClose
@@ -242,10 +246,10 @@ const InformationBooking: FC<InformationType> = ({ type }) => {
         child={actionList}
       >
         <Stack gap={2}>
-          <Typography textAlign="center">{t("checkin.save_proof")}</Typography>
+          <Typography textAlign="center">{t('checkin.save_proof')}</Typography>
           <Box>
             <Typography variant="subtitle1" textAlign="center">
-              {t("checkin.not_printed")}
+              {t('checkin.not_printed')}
             </Typography>
             <Typography textAlign="center">{getCountdown15}</Typography>
           </Box>

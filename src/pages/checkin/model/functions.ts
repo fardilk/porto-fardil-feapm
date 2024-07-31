@@ -1,0 +1,88 @@
+import { gql } from 'graphql-request';
+import GqlClient from 'src/utils/gql';
+import { CheckinResponse } from './types';
+
+const req = new GqlClient({
+  endpoint: '/v1/appointment/query',
+});
+
+export const getCheckin = async ({ bookingNumber }: { bookingNumber: string }) : Promise<CheckinResponse> => {
+  const res = await req.request(
+    gql`
+      query appointmentGet($bookingNumber: String!) {
+        appointmentGet(bookingNumber: $bookingNumber) {
+          booking {
+            bookingID
+            payplanClass
+            notes
+            patient {
+              nik
+              name
+              birthDttm
+              birthPlace
+              phone
+              email
+              address
+              gender
+            }
+            encounter {
+              healthcareServiceName,
+              practitionerName,
+              scheduleSlotDate,
+              scheduleSlotStartTime,
+            }
+          }
+        }
+      }
+    `,
+    { bookingNumber }
+  );
+
+  return res.appointmentGet;
+};
+
+/**
+
+booking {
+  bookingID
+  bookingNumber
+  channel
+  payplanClass
+  notes
+  encounter {
+    healthcareServiceName
+    practitionerName
+    payor
+    scheduleSlotDate
+    scheduleSlotStartTime
+    scheduleSlotStopTime
+    package {
+      packageID
+      packageName
+    }
+  }
+  patient {
+    nik
+    passportNo
+    name
+    birthDttm
+    birthPlace
+    gender
+    phone
+    email
+    address
+    bloodType
+    bloodRhesus
+  }
+  bpjs {
+    subscriberNumber
+    subscriberClass
+    subscriberCategory
+    subscriberInstitution
+    subscriberStatus
+    referralNumber
+    referralDate
+    performerServiceName
+  }
+}
+ */

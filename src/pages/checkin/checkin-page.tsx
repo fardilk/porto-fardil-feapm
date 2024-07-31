@@ -10,6 +10,8 @@ import { useNavigate } from 'react-router';
 import { toast } from 'src/components/snackbar';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslate } from 'src/locales';
+import { getCheckin } from './model/functions';
+import { CheckinResponse } from './model/types';
 
 const CheckinPage = () => {
   const navigate = useNavigate();
@@ -17,46 +19,65 @@ const CheckinPage = () => {
   const { currentPage, currentPageIndex, handleChangePage } = useStepper({
     initialSteps: formStepsCheckinGeneral,
   });
+  const [dataCheckin, setDataCheckin] = useState<CheckinResponse | null>(null)
 
   const [errorMessage, setErrorMessage] = useState('');
 
   const methods = useForm();
   const { handleSubmit, watch } = methods;
-  const onSubmit = async (data: any) => {
-    if (!data?.booking_number?.replaceAll('\n', '')) {
-      toast.error(t('checkin.error.empty_booking_number'));
-      return;
-    }
-    if (data?.booking_number?.replaceAll('\n', '')?.length < 3) {
-      setErrorMessage(t('checkin.error.not_found_number'));
-      toast.error(t('checkin.error.invalid'));
-      return;
-    }
+  // const onSubmit = async (data: any) => {
+  //   if (!data?.booking_number?.replaceAll('\n', '')) {
+  //     toast.error(t('checkin.error.empty_booking_number'));
+  //     return;
+  //   }
+  //   if (data?.booking_number?.replaceAll('\n', '')?.length < 3) {
+  //     setErrorMessage(t('checkin.error.not_found_number'));
+  //     toast.error(t('checkin.error.invalid'));
+  //     return;
+  //   }
 
-    if (currentPageIndex === 0) {
-      const keyboardValue = data.booking_number.replaceAll('\n', '');
-      const resp = await getDummyData(
-        keyboardValue === '123'
-          ? 'bpjs'
-          : keyboardValue === '456'
-            ? 'insurance'
-            : keyboardValue === '789'
-              ? 'company'
-              : 'general'
-      );
+  //   if (currentPageIndex === 0) {
+  //     const keyboardValue = data.booking_number.replaceAll('\n', '');
+  //     const resp = await getDummyData(
+  //       keyboardValue === '123'
+  //         ? 'bpjs'
+  //         : keyboardValue === '456'
+  //           ? 'insurance'
+  //           : keyboardValue === '789'
+  //             ? 'company'
+  //             : 'general'
+  //     );
 
-      if (resp.data === 'general')
-        handleChangePage({ action: 'next', newFormSteps: formStepsCheckinGeneral });
-      else if (resp.data === 'bpjs')
-        handleChangePage({ action: 'next', newFormSteps: formStepsCheckinBPJS });
-      else if (resp.data === 'insurance')
-        handleChangePage({ action: 'next', newFormSteps: formStepsCheckinInsurance });
-      else if (resp.data === 'company')
-        handleChangePage({ action: 'next', newFormSteps: formStepsCheckinCompany });
-    } else {
-      console.log('hello world');
+  //     if (resp.data === 'general')
+  //       handleChangePage({ action: 'next', newFormSteps: formStepsCheckinGeneral });
+  //     else if (resp.data === 'bpjs')
+  //       handleChangePage({ action: 'next', newFormSteps: formStepsCheckinBPJS });
+  //     else if (resp.data === 'insurance')
+  //       handleChangePage({ action: 'next', newFormSteps: formStepsCheckinInsurance });
+  //     else if (resp.data === 'company')
+  //       handleChangePage({ action: 'next', newFormSteps: formStepsCheckinCompany });
+  //   } else {
+  //     console.log('hello world');
+  //   }
+  // };
+
+  const onSubmit = async (data : {booking_number?: string}) => {
+
+    const bookingNumber = data.booking_number?.replaceAll('\n', "")
+
+    if(!bookingNumber){
+      return ''
     }
-  };
+    try {
+      const data = await getCheckin({
+        bookingNumber
+      })
+      setDataCheckin(data)
+      handleChangePage({ action: "next" })
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   const watchBookingNumnber = watch('booking_number');
 
@@ -68,6 +89,8 @@ const CheckinPage = () => {
   useEffect(() => {
     setErrorMessage('');
   }, [watchBookingNumnber]);
+
+  console.log(dataCheckin,'checkin data')
 
   return (
     <AppPage>
@@ -83,12 +106,12 @@ const CheckinPage = () => {
         >
           <Box sx={{ p: 4 }}>
             {currentPage.value === 'insert_booking_number' && (
-              <InsertBookingNumber errorMessage={errorMessage} />
+              <InsertBookingNumber errorMessage={errorMessage}/>
             )}
 
-            {currentPage.value === 'booking_information' && <InformationBooking type="general" />}
+            {currentPage.value === 'booking_information' && dataCheckin && <InformationBooking data={dataCheckin} type="general" />}
 
-            {currentPage.value === 'booking_information_bpjs' && <InformationBooking type="bpjs" />}
+            {/* {currentPage.value === 'booking_information_bpjs' && <InformationBooking type="bpjs" />}
 
             {currentPage.value === 'booking_information_insurance' && (
               <InformationBooking type="insurance" />
@@ -96,7 +119,7 @@ const CheckinPage = () => {
 
             {currentPage.value === 'booking_information_company' && (
               <InformationBooking type="company" />
-            )}
+            )} */}
           </Box>
         </WindowContainer>
       </Form>
