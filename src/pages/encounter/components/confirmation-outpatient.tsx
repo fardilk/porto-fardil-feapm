@@ -4,7 +4,7 @@ import { CardBanner } from 'src/components/card-banner';
 import { LabelTextContainer, type LabelTextProps } from 'src/components/label-text';
 import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
 import { fAsterisk } from 'src/utils/helper';
-import type { OutpatientType } from '../model/types';
+import type { GetPatientByNIKResponse, OutpatientType, SelectedPractioner } from '../model/types';
 import { getPaymentType } from '../model/variables';
 import { useTranslate } from 'src/locales';
 
@@ -12,10 +12,14 @@ const ConfirmationOutpatient = ({
   handleBack,
   handleConfirm,
   type,
+  patientDetail,
+  doctorInfo
 }: {
   handleBack: () => void;
   handleConfirm: () => void;
   type: OutpatientType;
+  patientDetail: GetPatientByNIKResponse
+  doctorInfo: SelectedPractioner
 }) => {
   const { t } = useTranslate();
 
@@ -23,34 +27,34 @@ const ConfirmationOutpatient = ({
   const [acceptedTerm, setAcceptedTerm] = useState(false);
 
   const detailData: LabelTextProps[] = [
-    { title: t('appointment.patient.nik'), body: fAsterisk('100200300400') },
-    { title: t('appointment.patient.fullname'), body: 'Anisa Redina' },
-    { title: t('appointment.patient.birthdateplace'), body: 'Malaysia, 11-04-2000' },
-    { title: t('appointment.patient.blood_type'), body: 'B' },
-    { title: t('appointment.patient.blood_rhesus'), body: 'Negatif' },
+    { title: t('appointment.patient.nik'), body: fAsterisk(patientDetail.nik ?? patientDetail.passportNumber ?? "-") },
+    { title: t('appointment.patient.fullname'), body:  patientDetail.name},
+    { title: t('appointment.patient.birthdateplace'), body: `${patientDetail.birthPlace}, ${patientDetail.birthDttm}` },
+    { title: t('appointment.patient.blood_type'), body: patientDetail.additional.bloodType },
+    { title: t('appointment.patient.blood_rhesus'), body: patientDetail.additional.bloodRhesus },
     {
       title: t('appointment.patient.address'),
-      body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
+      body: patientDetail.address,
     },
-    { title: t('appointment.patient.phone'), body: fAsterisk('085157902550') },
-    { title: t('appointment.patient.email'), body: 'anisa@gmail.com' },
+    { title: t('appointment.patient.phone'), body: fAsterisk(patientDetail.phone) },
+    { title: t('appointment.patient.email'), body: patientDetail.email },
   ];
 
   const listCard = [
     {
       title: t('appointment.encounter.healthcare_service'),
-      body: 'Poli Mata',
+      body: doctorInfo.polyName,
       localIcon: 'stethoscope',
     },
     {
       title: t('appointment.encounter.practitioner'),
-      body: 'dr. Inas Shabrina,Sp.M',
+      body: doctorInfo.doctor,
       localIcon: 'doctor',
     },
     { ...getPaymentType(type, t) },
     {
       title: t('appointment.encounter.schedule'),
-      body: 'Senin, 30-01-2022, 10:00-14:00',
+      body: doctorInfo.serviceTime,
       localIcon: 'jadwal',
     },
   ];
