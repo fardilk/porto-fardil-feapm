@@ -11,7 +11,7 @@ import { useTranslate } from "src/locales"
 const InsertPhone = () => {
 
   const theme = useTheme()
-  const [elementName, setElementName] = useState("phone")
+  const [elementName, setElementName] = useState("phoneNumber")
   const [keyboardType, setKeyboardType] = useState("number")
 
   const inputRef = useRef<any>({})
@@ -21,15 +21,15 @@ const InsertPhone = () => {
     <Stack gap={2}>
       <Typography variant="h4" textAlign="center">{t("registration.subtitle.input_your_phone")}</Typography>
       <RHFTextField
-        id="phone"
-        name="phone"
+        id="phoneNumber"
+        name="phoneNumber"
         placeholder={t("registration.subtitle.input_your_phone")}
         variant="filled"
         onClick={() => {
-          setElementName("phone")
+          setElementName("phoneNumber")
           setKeyboardType("number")
         }}
-        inputRef={(ref) => { inputRef.current.phone = ref }}
+        inputRef={(ref) => { inputRef.current.phoneNumber = ref }}
         inputProps={{
           style: {
             textAlign: "center",

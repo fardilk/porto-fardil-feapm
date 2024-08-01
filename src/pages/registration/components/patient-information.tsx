@@ -8,7 +8,7 @@ import { useTranslate } from 'src/locales';
 import { useSelector } from 'src/store/store';
 
 const PatientInformation = (props: PatientInformationProps) => {
-  const { leftButtonProps, rightButtonProps, leftTextButton, rigthTextButton } = props;
+  const { leftButtonProps, leftTextButton, rigthTextButton } = props;
 
   const isSimplify = useSelector((root) => root.config.simplify);
 
@@ -59,7 +59,7 @@ const PatientInformation = (props: PatientInformationProps) => {
         <Button size="large" variant="outlined" fullWidth color="secondary" {...leftButtonProps}>
           {leftTextButton}
         </Button>
-        <Button size="large" variant="contained" fullWidth color="secondary" {...rightButtonProps}>
+        <Button size="large" variant="contained" fullWidth color="secondary" type='submit'>
           {rigthTextButton}
         </Button>
       </Box>

@@ -191,7 +191,7 @@ const NewPatient = (props: NewPatientProps) => {
         </Grid>
         <Grid item xs={10}>
           <RHFTimePils
-            name="agama"
+            name="religion"
             options={listReligion}
             getOptionLabel={(opt) => opt.label}
             getOptionEqualToValue={(opt, value) => opt.value === value?.value}
