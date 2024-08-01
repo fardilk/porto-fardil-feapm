@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 
-import { Box, MenuItem, Select, Switch, Typography, useTheme } from "@mui/material";
+import { Box, Switch, Typography, useTheme } from "@mui/material";
 
 import { Header_Height } from "src/utils/variables";
 
 import { Image } from "src/components/image";
-import { RHFSelect, RHFSwitch } from "src/components/hook-form";
 import { Iconify } from "src/components/iconify";
 import { useTranslate } from "src/locales";
 import { CONFIG } from "src/config-global";
@@ -42,10 +41,8 @@ const Header = () => {
     return () => clearInterval(timerId);
   }, []);
 
-  console.log(currentLang.value)
   const PlatformName = "Anjungan " + CONFIG.app.platformName
   const HospitalName = "RS " + CONFIG.app.hospitalName
-
 
   return (
     <Box sx={{

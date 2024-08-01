@@ -4,57 +4,42 @@ import { AppPage } from 'src/components/app-page';
 import { Form } from 'src/components/hook-form';
 import { WindowContainer } from 'src/components/window-container';
 import { useStepper } from 'src/hooks';
-import { getDummyData } from '../registration/model/functions';
 import { InformationBooking, InsertBookingNumber } from './components';
 import { useNavigate } from 'react-router';
 import { toast } from 'src/components/snackbar';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslate } from 'src/locales';
+import { getCheckin } from './model/functions';
+import { CheckinResponse } from './model/types';
 
 const CheckinPage = () => {
   const navigate = useNavigate();
   const { t } = useTranslate();
-  const { currentPage, currentPageIndex, handleChangePage } = useStepper({
-    initialSteps: formStepsCheckinGeneral,
+  const { currentPage, handleChangePage } = useStepper({
+    initialSteps: steps,
   });
+  const [dataCheckin, setDataCheckin] = useState<CheckinResponse | null>(null);
 
   const [errorMessage, setErrorMessage] = useState('');
 
   const methods = useForm();
   const { handleSubmit, watch } = methods;
-  const onSubmit = async (data: any) => {
-    if (!data?.booking_number?.replaceAll('\n', '')) {
+
+  const onSubmit = async (data: { booking_number?: string }): Promise<void> => {
+    const bookingNumber = data.booking_number?.replaceAll('\n', '');
+
+    if (!bookingNumber) {
       toast.error(t('checkin.error.empty_booking_number'));
-      return;
-    }
-    if (data?.booking_number?.replaceAll('\n', '')?.length < 3) {
-      setErrorMessage(t('checkin.error.not_found_number'));
-      toast.error(t('checkin.error.invalid'));
-      return;
-    }
-
-    if (currentPageIndex === 0) {
-      const keyboardValue = data.booking_number.replaceAll('\n', '');
-      const resp = await getDummyData(
-        keyboardValue === '123'
-          ? 'bpjs'
-          : keyboardValue === '456'
-            ? 'insurance'
-            : keyboardValue === '789'
-              ? 'company'
-              : keyboardValue==='000' ? 'general' : 'new'
-      );
-
-      if (resp.data === 'general')
-        handleChangePage({ action: 'next', newFormSteps: formStepsCheckinGeneral });
-      else if (resp.data === 'bpjs')
-        handleChangePage({ action: 'next', newFormSteps: formStepsCheckinBPJS });
-      else if (resp.data === 'insurance')
-        handleChangePage({ action: 'next', newFormSteps: formStepsCheckinInsurance });
-      else if (resp.data === 'company')
-        handleChangePage({ action: 'next', newFormSteps: formStepsCheckinCompany });
     } else {
-      console.log('hello world');
+      try {
+        const response = await getCheckin({
+          bookingNumber,
+        });
+        setDataCheckin(response);
+        handleChangePage({ action: 'next' });
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
@@ -86,16 +71,8 @@ const CheckinPage = () => {
               <InsertBookingNumber errorMessage={errorMessage} />
             )}
 
-            {currentPage.value === 'booking_information' && <InformationBooking type="general" />}
-
-            {currentPage.value === 'booking_information_bpjs' && <InformationBooking type="bpjs" />}
-
-            {currentPage.value === 'booking_information_insurance' && (
-              <InformationBooking type="insurance" />
-            )}
-
-            {currentPage.value === 'booking_information_company' && (
-              <InformationBooking type="company" />
+            {currentPage.value === 'booking_information' && dataCheckin && (
+              <InformationBooking data={dataCheckin} />
             )}
           </Box>
         </WindowContainer>
@@ -106,7 +83,7 @@ const CheckinPage = () => {
 
 export default CheckinPage;
 
-const initialStep = [
+const steps = [
   {
     label: 'Masukkan Nomor Booking',
     value: 'insert_booking_number',
@@ -114,49 +91,9 @@ const initialStep = [
       i18n: 'checkin.input_booking_title',
     },
   },
-];
-
-const formStepsCheckinGeneral = [
-  ...initialStep,
   {
     label: 'Checkin Berhasil',
     value: 'booking_information',
-    properties: {
-      disableBack: true,
-      i18n: 'checkin.checkin_success',
-    },
-  },
-];
-
-const formStepsCheckinBPJS = [
-  ...initialStep,
-  {
-    label: 'Check-in Berhasil',
-    value: 'booking_information_bpjs',
-    properties: {
-      disableBack: true,
-      i18n: 'checkin.checkin_success',
-    },
-  },
-];
-
-const formStepsCheckinInsurance = [
-  ...initialStep,
-  {
-    label: 'Pendaftaran Berhasil',
-    value: 'booking_information_insurance',
-    properties: {
-      disableBack: true,
-      i18n: 'checkin.checkin_success',
-    },
-  },
-];
-
-const formStepsCheckinCompany = [
-  ...initialStep,
-  {
-    label: 'Pendaftaran Berhasil',
-    value: 'booking_information_company',
     properties: {
       disableBack: true,
       i18n: 'checkin.checkin_success',

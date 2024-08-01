@@ -6,7 +6,7 @@ import { UserType } from './types';
 import { UserQuery } from './query';
 
 export const getUser = async ({ userID }: { userID: string }): Promise<UserType[] | undefined> => {
-  const be = new GqlClient();
+  const be = new GqlClient({endpoint: "/"});
 
   const res = await be.request(
     gql`

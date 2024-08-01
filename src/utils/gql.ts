@@ -7,8 +7,8 @@ import { CONFIG } from 'src/config-global';
 class GqlClient extends GraphQLClient {
   auth: boolean;
 
-  constructor(auth: boolean = true) {
-    super(`${CONFIG.app.graphqlPath}/query`);
+  constructor({ auth = true, endpoint }: { auth?: boolean; endpoint: string }) {
+    super(new URL(`/api/${endpoint}`.replaceAll("//","/"), CONFIG.app.graphqlPath).toString());
     this.auth = auth;
     if (auth) {
       const token = GetAccessToken();
