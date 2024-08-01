@@ -28,6 +28,8 @@ export type CheckinResponse = {
       email: string;
       address: string;
       gender: string;
+      bloodType: string;
+      bloodRhesus: string;
     };
     encounter: {
       healthcareServiceName: string;
@@ -39,6 +41,5 @@ export type CheckinResponse = {
 };
 
 export type InformationType = {
-  type: 'bpjs' | 'company' | 'insurance' | 'general';
   data: CheckinResponse
 };

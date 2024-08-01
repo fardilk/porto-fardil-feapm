@@ -24,6 +24,8 @@ export const getCheckin = async ({ bookingNumber }: { bookingNumber: string }) :
               email
               address
               gender
+              bloodType
+              bloodRhesus
             }
             encounter {
               healthcareServiceName,

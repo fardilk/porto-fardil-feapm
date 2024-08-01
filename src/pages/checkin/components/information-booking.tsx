@@ -14,7 +14,7 @@ import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
 import { type InformationType } from '../model/types';
 import { useTranslate } from 'src/locales';
 
-const InformationBooking: FC<InformationType> = ({ type, data }) => {
+const InformationBooking: FC<InformationType> = ({ data }) => {
   const navigate = useNavigate();
   const { t } = useTranslate();
 
@@ -52,16 +52,28 @@ const InformationBooking: FC<InformationType> = ({ type, data }) => {
 
     if (data.booking.payplanClass === 'COMPANY' || data.booking.payplanClass === 'INSURANCE') {
       return [
-        { title: 'NIK', body: fAsterisk('100200300400') },
-        { title: t('global.complete_name'), body: 'Hello World' },
-        { title: t('global.birthdate'), body: fDate('04-05-2001', 'DD-MM-YYYY') },
-        { title: t('global.phone_number'), body: fAsterisk('085157902550') },
-        { title: t('global.blood_type'), body: 'B' },
-        { title: 'Rhesus', body: 'Negatif' },
-        { title: 'Email', body: 'helloworld@gmail.com' },
+        { title: 'NIK', body: fAsterisk(data.booking.patient.nik) },
+        { title: t('global.complete_name'), body: data.booking.patient.name },
+        { title: t('global.birthdate'), body: fDate(data.booking.patient.birthDttm, 'DD-MM-YYYY') },
+        { title: t('global.phone_number'), body: fAsterisk(data.booking.patient.phone) },
+        { title: t('global.blood_type'), body: data.booking.patient.bloodType },
+        { title: 'Rhesus', body: data.booking.patient.bloodRhesus },
+        { title: 'Email', body: data.booking.patient.email },
         {
           title: t('global.address'),
-          body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
+          body: data.booking.patient.address,
+        },
+        {
+          title:t('assurance.policy_no'),
+          body: "not provided"
+        },
+        {
+          title:t('assurance.guarantor_type'),
+          body: "not provided"
+        },
+        {
+          title:t('assurance.insurance_company'),
+          body: "not provided"
         },
       ];
     }
@@ -78,7 +90,7 @@ const InformationBooking: FC<InformationType> = ({ type, data }) => {
         colSpan: 2,
       },
     ];
-  }, [t, type]);
+  }, [t, data]);
 
   const detailData = useMemo(() => {
     return [
@@ -98,7 +110,7 @@ const InformationBooking: FC<InformationType> = ({ type, data }) => {
           data.booking.payplanClass === 'BPJS'
             ? 'BPJS'
             : data.booking.payplanClass === 'INSURANCE'
-              ? 'asuransi'
+              ? 'Asuransi'
               : data.booking.payplanClass === 'COMPANY'
                 ? 'Perusahaan'
                 : 'Umum',
@@ -117,7 +129,7 @@ const InformationBooking: FC<InformationType> = ({ type, data }) => {
         localIcon: 'jadwal',
       },
     ];
-  }, [t, type]);
+  }, [t, data]);
 
   const referenceData: LabelTextProps[] = [
     { title: t('global.referral_num'), body: fAsterisk(data.booking.bpjs?.referralNumber ?? "-") },
@@ -206,9 +218,8 @@ const InformationBooking: FC<InformationType> = ({ type, data }) => {
         <Grid container spacing={1}>
           {detailData.map((it, index) => {
             return (
-              <Grid item xs={12} md={3}>
+              <Grid item xs={12} md={3} key={index}>
                 <CardBanner
-                  key={index}
                   {...it}
                   cardProps={{ variant: 'outlined' }}
                   titleProps={{ variant: 'subtitle2', color: 'grey' }}

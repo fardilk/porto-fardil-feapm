@@ -41,9 +41,6 @@ const Header = () => {
     return () => clearInterval(timerId);
   }, []);
 
-  console.log(currentLang.value)
-
-
   return (
     <Box sx={{
       height: Header_Height,
