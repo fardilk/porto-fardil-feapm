@@ -7,6 +7,9 @@ import packageJson from '../package.json';
 export type ConfigValue = {
   app: {
     graphqlPath: string;
+    urlName: string;
+    platformName: string;
+    hospitalName: string;
   };
   site: {
     name: string;
@@ -44,6 +47,9 @@ export const CONFIG: ConfigValue = {
     graphqlPath: import.meta.env.VITE_APP_API_PORT
       ? `${import.meta.env.VITE_APP_API_HOST}:${import.meta.env.VITE_APP_API_PORT}`
       : import.meta.env.VITE_APP_API_HOST,
+    urlName: `${import.meta.env.VITE_APP_URL_NAME ?? ''}`,
+    platformName: `${import.meta.env.VITE_APP_PLATFORM_NAME ?? ''}`,
+    hospitalName: `${import.meta.env.VITE_APP_HOSPITAL_NAME ?? ''}`,
   },
   site: {
     name: 'Minimals',
