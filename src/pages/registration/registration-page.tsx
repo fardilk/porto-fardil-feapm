@@ -39,39 +39,18 @@ const RegistrationPage = () => {
     nik: '',
     citizenship: false,
     name: '',
-    gender: {
-      label: '',
-      value: '',
-    },
+    gender: null,
     birthPlace: '',
     birthDate: '',
     phoneNumber: '',
     email: '',
     address: '',
-    bloodType: {
-      label: '',
-      value: '',
-    },
-    religion: {
-      label: '',
-      value: '',
-    },
-    study: {
-      label: '',
-      value: '',
-    },
-    marriage: {
-      label: '',
-      value: '',
-    },
-    job: {
-      label: '',
-      value: '',
-    },
-    language: {
-      label: '',
-      value: '',
-    },
+    bloodType: null,
+    religion: null,
+    study: null,
+    marriage: null,
+    job: null,
+    language: null,
   };
 
   const { t } = useTranslate();
@@ -89,8 +68,14 @@ const RegistrationPage = () => {
 
   // const methods = useForm();
   // const { handleSubmit, watch } = methods;
-  const watch = useForm().watch
-  const value = watch();
+
+  /**
+   * kalo mau ada 2 useForm, methods ini ganti nama sesuai dengan kebutuhannya ya.
+   * disini aku kasih methodsDefault aja
+   */
+  const methodsDefault = useForm()
+  const { watch } = methodsDefault
+
   const isForeign = watch('citizenship');
   const [isSatuSehat, setIsSatuSehat] = useState(false)
 
@@ -99,7 +84,7 @@ const RegistrationPage = () => {
     resolver: yupResolver(getValidationSchema(currentPage.value, isForeign, formSteps)),
   });
 
-  const { handleSubmit, formState: { errors } } = methods;
+  const { handleSubmit } = methods;
 
   const createPatient = useCallback(
     async (payload: {
@@ -138,69 +123,71 @@ const RegistrationPage = () => {
   const onSubmit = async (data: any) => {
     console.log('Form data:', data);
     console.log('ooo', currentPage.value);
-    try{if (currentPageIndex === 0) {
-      if(data.nik.replace('\n', '')==='12'){
-        setIsSatuSehat(true)
-      }
-      if (isForeign) {
-        console.log(data.nik.replace('\n', ''));
-        handleChangePage({ action: 'next', newFormSteps: formStepsForeign });
-      } else {
-        const dataNIK = data.nik.replace('\n', '');
-        console.log(dataNIK, 'data form');
-        // const resp = await getDummyData(dataNIK === '123' ? 'medrec_exist' : 'medrec_not_exist');
-
-        const resp = dataNIK === '123' ? 'medrec_exist' : 'medrec_not_exist';
-
-        console.log(resp)
-        if (resp === 'medrec_exist') {
-          handleChangePage({ action: 'next', newFormSteps: formStepsExistInInternal });
+    try {
+      if (currentPageIndex === 0) {
+        if (data.nik.replace('\n', '') === '12') {
+          setIsSatuSehat(true)
+        }
+        if (isForeign) {
+          console.log(data.nik.replace('\n', ''));
+          handleChangePage({ action: 'next', newFormSteps: formStepsForeign });
         } else {
-          handleChangePage({ action: 'next', newFormSteps: formStepsNotExistInternal });
+          const dataNIK = data.nik.replace('\n', '');
+          console.log(dataNIK, 'data form');
+          // const resp = await getDummyData(dataNIK === '123' ? 'medrec_exist' : 'medrec_not_exist');
+
+          const resp = dataNIK === '123' ? 'medrec_exist' : 'medrec_not_exist';
+
+          console.log(resp)
+          if (resp === 'medrec_exist') {
+            handleChangePage({ action: 'next', newFormSteps: formStepsExistInInternal });
+          } else {
+            handleChangePage({ action: 'next', newFormSteps: formStepsNotExistInternal });
+          }
+        }
+      } else if (currentPageIndex !== 0) {
+        // console.log("kkkk", formSteps, formSteps===formStepsRegistrationMethodByPhone)
+        if (currentPage.value === 'insert_email') {
+          handleChangePage({ toSpecificPage: 'information' });
+        } else if (
+          currentPage.value === 'confirmation_new_patient' ||
+          (currentPage.value === 'insert_phone_number' &&
+            formSteps === formStepsRegistrationMethodByPhone)
+        ) {
+          console.log('takde');
+          const payload = {
+            data: {
+              nik: isForeign ? '' : data.nik.replace('\n', ''),
+              passportNumber: isForeign ? data.nik.replace('\n', '') : '',
+              name: data.name,
+              gender: data.gender.value,
+              birthPlace: data.birthPlace,
+              birthDttm: data.birthDate,
+              phone: data.phoneNumber.replace('\n', ''),
+              email: data.email,
+              nationality: isForeign ? 'WNA' : 'WNI',
+              address: data.address,
+              additional: {
+                bloodType: data.bloodType.value,
+                religion: data.religion.value,
+                education: data.study.value,
+                maritalStatus: data.marriage.value,
+                occupation: data.job.value,
+                dailyLanguage: data.language.value,
+              },
+            },
+          };
+          createPatient(payload);
+        }
+        else if (currentPage.value === 'create_new_patient' && isSimplify) {
+          handleChangePage({ toSpecificPage: 'confirmation_new_patient' });
+        }
+        else {
+          console.log("hayo")
+          handleChangePage({ action: 'next' });
         }
       }
-    } else if (currentPageIndex !== 0) {
-      // console.log("kkkk", formSteps, formSteps===formStepsRegistrationMethodByPhone)
-      if (currentPage.value === 'insert_email') {
-        handleChangePage({ toSpecificPage: 'information' });
-      } else if (
-        currentPage.value === 'confirmation_new_patient' ||
-        (currentPage.value === 'insert_phone_number' &&
-          formSteps === formStepsRegistrationMethodByPhone)
-      ) {
-        console.log('takde');
-        const payload = {
-          data: {
-            nik: isForeign ? '' : data.nik.replace('\n', ''),
-            passportNumber: isForeign ? data.nik.replace('\n', '') : '',
-            name: data.name,
-            gender: data.gender.value,
-            birthPlace: data.birthPlace,
-            birthDttm: data.birthDate,
-            phone: data.phoneNumber.replace('\n', ''),
-            email: data.email,
-            nationality: isForeign ? 'WNA' : 'WNI',
-            address: data.address,
-            additional: {
-              bloodType: data.bloodType.value,
-              religion: data.religion.value,
-              education: data.study.value,
-              maritalStatus: data.marriage.value,
-              occupation: data.job.value,
-              dailyLanguage: data.language.value,
-            },
-          },
-        };
-        createPatient(payload);
-      }
-      else if(currentPage.value==='create_new_patient' && isSimplify){
-        handleChangePage({ toSpecificPage: 'confirmation_new_patient' });
-      }
-      else {
-        console.log("hayo")
-        handleChangePage({ action: 'next' });
-      }
-    }}
+    }
     catch (error) {
       // Log the error if submission fails
       console.log('Submission error:', error);
@@ -232,7 +219,7 @@ const RegistrationPage = () => {
                 leftButtonProps={{
                   onClick: () => handleChangePage({ toSpecificPage: 'insert_nik' }),
                 }}
-                // rightButtonProps={{ onClick: () => handleChangePage({ action: 'next' }) }}
+              // rightButtonProps={{ onClick: () => handleChangePage({ action: 'next' }) }}
               />
             )}
 
@@ -271,7 +258,6 @@ const RegistrationPage = () => {
               <DetailNewPatient
                 handleNextPage={() => handleChangePage({ action: 'next' })}
                 handlePreviousPage={() => handleChangePage({ action: 'previous' })}
-                errors={errors}
               />
             )}
 
@@ -282,7 +268,6 @@ const RegistrationPage = () => {
                   else handleChangePage({ action: 'next' });
                 }}
                 handlePreviousPage={() => handleChangePage({ action: 'previous' })}
-                errors={errors}
               />
             )}
 
@@ -296,12 +281,12 @@ const RegistrationPage = () => {
                     else handleChangePage({ action: 'previous' });
                   },
                 }}
-                // rightButtonProps = {{
-                //   onClick: async () => {
-                //     await registerPatient();
-                //     handleChangePage({ action: 'next' });
-                //   }
-                // }}
+              // rightButtonProps = {{
+              //   onClick: async () => {
+              //     await registerPatient();
+              //     handleChangePage({ action: 'next' });
+              //   }
+              // }}
               />
             )}
 

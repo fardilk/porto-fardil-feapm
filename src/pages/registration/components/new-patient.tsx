@@ -20,15 +20,17 @@ import { useTranslate } from 'src/locales';
 import type { NewPatientProps } from '../model/types';
 
 const NewPatient = (props: NewPatientProps) => {
-  const { handleNextPage, handlePreviousPage, errors } = props;
+  const { handleNextPage, handlePreviousPage } = props;
 
   const [elementName, setElementName] = useState('');
   const [keyboardType, setKeyboardType] = useState('');
   const inputRef = useRef<any>({});
 
-  const { watch, setError } = useFormContext();
+  const { watch, setError, formState: { errors } } = useFormContext();
   const isForeign = watch('citizenship');
   const { t } = useTranslate();
+
+  console.log(errors)
 
   const listReligion = useMemo(
     () => [

@@ -11,7 +11,6 @@ export type PatientInformationProps = {
 export type NewPatientProps = {
   handlePreviousPage: () => void;
   handleNextPage: () => void;
-  errors: FieldErrors<RegistrationIForm>;
 };
 
 export type SuccessNewPatientProps = {
@@ -25,7 +24,7 @@ export interface RegistrationIForm {
   gender: {
     label: string;
     value: string;
-  };
+  } | null;
   birthPlace: string;
   birthDate: string;
   phoneNumber: string;
@@ -34,29 +33,28 @@ export interface RegistrationIForm {
   bloodType: {
     label: string;
     value: string;
-  };
+  } | null;
   religion: {
     label: string;
     value: string;
-  };
+  } | null;
   study: {
     label: string;
     value: string;
-  };
+  } | null;
   marriage: {
     label: string;
     value: string;
-  };
+  } | null;
   job: {
     label: string;
     value: string;
-  };
+  } | null;
   language: {
     label: string;
     value: string;
-  };
+  } | null;
 }
-
 
 export type SelectRegistrationMethodProps = {
   handleByPhone: () => void;

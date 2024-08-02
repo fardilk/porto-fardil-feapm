@@ -13,7 +13,7 @@ import { RHFTimePils } from 'src/components/hook-form';
 import { NewPatientProps, RegistrationIForm } from '../model/types';
 import { useTranslate } from 'src/locales';
 
-const DetailNewPatient: FC<NewPatientProps> = ({ handleNextPage, handlePreviousPage, errors }) => {
+const DetailNewPatient: FC<NewPatientProps> = ({ handleNextPage, handlePreviousPage }) => {
   const { t } = useTranslate();
 
   const bloodType = useMemo(
