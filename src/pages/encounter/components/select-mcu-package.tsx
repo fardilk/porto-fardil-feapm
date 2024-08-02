@@ -1,5 +1,5 @@
 import { Box, Grid, Typography, TextField, Button, InputAdornment } from '@mui/material';
-import { useRef, useState, type FC } from 'react';
+import { useEffect, useMemo, useRef, useState, type FC } from 'react';
 import { Iconify } from 'src/components/iconify';
 import { type SelectMCUPackageProps } from '../model/types';
 import LabelListTextCard from './label-list-text-card';
@@ -7,10 +7,11 @@ import { RHFTextField } from 'src/components/hook-form';
 import { Keyboard } from 'src/components/keyboard';
 import { useTranslate } from 'src/locales';
 
-const SelectMCUPackage: FC<SelectMCUPackageProps> = ({ handleSelect }) => {
+const SelectMCUPackage: FC<SelectMCUPackageProps> = ({ handleSelect, data, handleGetPackage, setFormValue, watchFormValue }) => {
   const { t } = useTranslate();
 
   const [elementName, setElementName] = useState('');
+  const [afterFirstSearch, setAfterFirstSearch] = useState(false);
 
   const searchRef = useRef<any>({});
 
@@ -18,68 +19,28 @@ const SelectMCUPackage: FC<SelectMCUPackageProps> = ({ handleSelect }) => {
     console.log(action);
   };
 
-  const listPackage = [
-    {
-      name: 'Paket Prematerial Wanita',
-      list: [
-        'Darah lengkap + LED',
-        'Golongan Darah + Rhesus',
-        'Glukosa Puasa',
-        'HBX',
-        'Anti HIV',
-        'Toxoplasma IgG',
-        'Rubella IgG',
-        'CMV IgG',
-      ],
-      price: 'Rp 720.000',
-      action: handleSelect,
-    },
-    {
-      name: 'Paket Prematerial Wanita',
-      list: [
-        'Darah lengkap + LED',
-        'Golongan Darah + Rhesus',
-        'Glukosa Puasa',
-        'HBX',
-        'Anti HIV',
-        'Toxoplasma IgG',
-        'Rubella IgG',
-        'CMV IgG',
-      ],
-      price: 'Rp 720.000',
-      action: handleSelect,
-    },
-    {
-      name: 'Paket Prematerial Wanita',
-      list: [
-        'Darah lengkap + LED',
-        'Golongan Darah + Rhesus',
-        'Glukosa Puasa',
-        'HBX',
-        'Anti HIV',
-        'Toxoplasma IgG',
-        'Rubella IgG',
-        'CMV IgG',
-      ],
-      price: 'Rp 720.000',
-      action: handleSelect,
-    },
-    {
-      name: 'Paket Prematerial Wanita',
-      list: [
-        'Darah lengkap + LED',
-        'Golongan Darah + Rhesus',
-        'Glukosa Puasa',
-        'HBX',
-        'Anti HIV',
-        'Toxoplasma IgG',
-        'Rubella IgG',
-        'CMV IgG',
-      ],
-      price: 'Rp 720.000',
-      action: handleSelect,
-    },
-  ];
+  const searchMCUPackage = watchFormValue('searchMCUPackage');
+
+  const listPackage = useMemo(() => data.map((pack) => ({
+    name: pack.packageName,
+    list: pack.contents,
+    price: new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR"
+    }).format(pack.price),
+    action: () => handleSelect({
+      id: pack.packageID,
+      packageName: pack.packageName
+    })
+  })),[data, handleSelect])
+
+  useEffect(() => {
+    if (searchMCUPackage || afterFirstSearch) {
+      handleGetPackage(searchMCUPackage, 1);
+      setAfterFirstSearch(true);
+    }
+  },[handleGetPackage, searchMCUPackage, afterFirstSearch])
+
   return (
     <Grid container spacing={2}>
       <Grid item xs={12}>
@@ -103,29 +64,33 @@ const SelectMCUPackage: FC<SelectMCUPackageProps> = ({ handleSelect }) => {
           }}
         />
       </Grid>
-      {listPackage.map((item, index) => (
-        <Grid item xs={12} md={3} key={index}>
-          <LabelListTextCard
-            action={item.action}
-            headerText={item.name}
-            listText={item.list}
-            sectionBottom={
-              <Box
-                bgcolor="#28B87A1A"
-                padding={0.8}
-                justifyContent="center"
-                alignItems="center"
-                display="flex"
-                marginTop={1}
-              >
-                <Typography variant="caption" color="secondary.dark" textAlign="center">
-                  {item.price}
-                </Typography>
-              </Box>
-            }
-          />
+      <Grid item xs={12} >
+        <Grid container spacing={2}>
+          {listPackage.map((item, index) => (
+            <Grid item xs={12} md={3} alignSelf="stretch" key={index}>
+              <LabelListTextCard
+                action={item.action}
+                headerText={item.name}
+                listText={item.list}
+                sectionBottom={
+                  <Box
+                    bgcolor="#28B87A1A"
+                    padding={0.8}
+                    justifyContent="center"
+                    alignItems="center"
+                    display="flex"
+                    marginTop={1}
+                  >
+                    <Typography variant="caption" color="secondary.dark" textAlign="center">
+                      {item.price}
+                    </Typography>
+                  </Box>
+                }
+              />
+            </Grid>
+          ))}
         </Grid>
-      ))}
+      </Grid>
       <Grid item xs={12}>
         <Box sx={{ width: '100%', display: 'flex', placeContent: 'space-between', gap: '10%' }}>
           <Button

@@ -4,6 +4,7 @@ import {
   AvailableDoctorResponse,
   GetPatientByNIKResponse,
   ListDoctorResponse,
+  ListMCUPackageResponse,
   ListPolyResponse,
 } from './types';
 
@@ -83,6 +84,38 @@ export const getDoctorList = async ({
   return res.doctorList;
 };
 
+export const getMCUPackage = async ({
+  page,
+  keyword,
+}: {
+  page: number;
+  keyword: string;
+}): Promise<ListMCUPackageResponse> => {
+  const req = new GqlClient({
+    endpoint: '/v1/healthcare-service/query',
+  });
+
+  const res = await req.request(
+    gql`
+      query mcuPackageList($page: Int!, $totalRecord: Int!, $keyword: String!) {
+        mcuPackageList(page: $page, totalRecord: $totalRecord, keyword: $keyword) {
+          packageID
+          packageName
+          price
+          contents
+        }
+      }
+    `,
+    {
+      page,
+      keyword,
+      totalRecord: 6,
+    }
+  );
+
+  return res.mcuPackageList;
+};
+
 export const getPolyList = async ({
   page,
   keyword,
@@ -148,13 +181,15 @@ export const createBooking = async ({
   doctorId,
   payplanClass,
   polyId,
-  patientId
+  packageMCUId,
+  patientId,
 }: {
-  serviceType: "OUTPATIENT" | "MCU" | "LABORATORY" | "RADIOLOGY"
-  payplanClass: "GENERAL" | "BPJS" | "INSURANCE" | "COMPANY"
-  doctorId: string
-  polyId: string
-  patientId: string
+  serviceType: 'OUTPATIENT' | 'MCU' | 'LABORATORY' | 'RADIOLOGY';
+  payplanClass: 'GENERAL' | 'BPJS' | 'INSURANCE' | 'COMPANY';
+  doctorId?: string;
+  polyId?: string;
+  packageMCUId?: string;
+  patientId: string;
 }): Promise<AvailableDoctorResponse> => {
   const req = new GqlClient({
     endpoint: '/v1/appointment/query',
@@ -171,10 +206,17 @@ export const createBooking = async ({
     {
       data: {
         serviceType,
-        serviceParamOutpatient: {
-          doctorID: doctorId,
-          departmentID: polyId,
-        },
+        ... doctorId && polyId ? {
+          serviceParamOutpatient: {
+            doctorID: doctorId,
+            departmentID: polyId,
+          }
+        } : {},
+        ... packageMCUId ? {
+          serviceParamMcu: {
+            packageID: packageMCUId
+          }
+        } : {},
         payorParam: {
           payplanClass,
         },

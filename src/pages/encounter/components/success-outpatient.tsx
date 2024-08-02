@@ -11,9 +11,14 @@ import { useCountdownSeconds } from 'src/hooks';
 import { useNavigate } from 'react-router';
 import { useTranslate } from 'src/locales';
 
-const SuccessOutpatient = (props: SuccessOutpatientType) => {
+const SuccessOutpatient = ({
+  type,
+  encounterType,
+  patientData,
+  MCUPackageName,
+  practitioner,
+}: SuccessOutpatientType) => {
   const navigate = useNavigate();
-  const { type, encounterType } = props;
   const {
     startCountdown: startCountdown15,
     countdown: countdown15,
@@ -24,49 +29,59 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
     startCountdown: startCountdown2min,
     countdown: countdown2min,
     counting: counting2min,
-  } = useCountdownSeconds(2*60);
-  const { t } = useTranslate()
+  } = useCountdownSeconds(2 * 60);
+  const { t } = useTranslate();
 
-  const [openPrint, setOpenPrint] = useState(false)
+  const [openPrint, setOpenPrint] = useState(false);
 
-  const detailData = useMemo(() => [
-    { title: 'NIK', body: fAsterisk('100200300400') },
-    { title: t("global.complete_name"), body: 'Anisa Redina' },
-    { title: `${t("global.location")}, ${t("global.birthdate")}`, body: 'Malaysia, 11-04-2000' },
-    { title: t("global.phone_number"), body: fAsterisk('085157902550') },
-    { title: t("global.blood_type"), body: 'B' },
-    { title: 'Rhesus', body: 'Negatif' },
-    { title: 'Email', body: 'anisa@gmail.com' },
-    {
-      title: t("global.address"),
-      body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
-    },
-  ],[t])
+  const detailData = useMemo(
+    () => [
+      { title: 'NIK', body: fAsterisk(patientData.nik ?? patientData.passportNumber ?? '-') },
+      { title: t('global.complete_name'), body: patientData.name },
+      {
+        title: `${t('global.location')}, ${t('global.birthdate')}`,
+        body: `${patientData.birthPlace}, ${patientData.birthDttm}`,
+      },
+      { title: t('global.phone_number'), body: fAsterisk(patientData.phone) },
+      { title: t('global.blood_type'), body: patientData.additional.bloodType },
+      { title: 'Rhesus', body: patientData.additional.bloodRhesus },
+      { title: 'Email', body: patientData.email },
+      {
+        title: t('global.address'),
+        body: patientData.address,
+      },
+    ],
+    [t, patientData]
+  );
 
   const listCard = [
-    ... encounterType === "RJ" ? [
-      {
-        title: t("appointment.service_destination"),
-        body: 'Poli Mata',
-        localIcon: 'stethoscope',
-      },
-      {
-        title: t("appointment.examining_doctor"),
-        body: 'dr. Inas Shabrina,Sp.M',
-        localIcon: 'doctor',
-      }
-    ] : encounterType === "MCU" ? [
-      {
-        title: t("appointment.encounter.service_type"),
-        body: "Paket Perimetal Wanita",
-        localIcon: "medical-checkup"
-      }
-    ] : [],
+    ...(encounterType === 'RJ' && practitioner
+      ? [
+          {
+            title: t('appointment.service_destination'),
+            body: practitioner.polyName,
+            localIcon: 'stethoscope',
+          },
+          {
+            title: t('appointment.examining_doctor'),
+            body: practitioner.doctor,
+            localIcon: 'doctor',
+          },
+        ]
+      : encounterType === 'MCU' && MCUPackageName
+        ? [
+            {
+              title: t('appointment.encounter.service_type'),
+              body: MCUPackageName,
+              localIcon: 'medical-checkup',
+            },
+          ]
+        : []),
     {
       ...getPaymentType(type, t),
     },
     {
-      title: t("appointment.encounter.schedule"),
+      title: t('appointment.encounter.schedule'),
       body: 'Senin, 30-01-2022, 10:00-14:00',
       localIcon: 'jadwal',
     },
@@ -89,22 +104,22 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
   const HeaderPrint = useCallback(() => {
     return (
       <Box sx={{ display: 'flex', gap: 1, placeContent: 'end' }}>
-        <Typography variant="button">{t("global.back_to_dashboard")} : </Typography>
+        <Typography variant="button">{t('global.back_to_dashboard')} : </Typography>
         <Typography variant="button" color="grey">
           {getCountdown2min}
         </Typography>
       </Box>
     );
-  }, [getCountdown2min,t]);
+  }, [getCountdown2min, t]);
 
   const actionList = [
     {
-      label: t("global.back_to_dashboard"),
+      label: t('global.back_to_dashboard'),
       buttonProps: { ...buttonStyle },
-      action: () => navigate('/', { replace: true}),
+      action: () => navigate('/', { replace: true }),
     },
     {
-      label: t("global.reprint"),
+      label: t('global.reprint'),
       buttonProps: { ...buttonStyle, variant: 'outlined', disabled: counting15 },
       action: () => {
         startCountdown15();
@@ -113,30 +128,27 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
   ];
 
   useEffect(() => {
-    if(countdown2min === 5) {
+    if (countdown2min === 5) {
       setTimeout(() => {
         navigate('/', { replace: true });
-      },5000)
+      }, 5000);
     }
-  },[countdown2min, navigate])
+  }, [countdown2min, navigate]);
 
   return (
     <Stack gap={4}>
-      <AlertInformation
-        title={t("checkin.title_success")}
-        body="Silakan menuju ke poli Anda."
-      />
+      <AlertInformation title={t('checkin.title_success')} body="Silakan menuju ke poli Anda." />
 
       <Box>
         <Typography variant="h5" color="primary.darker" gutterBottom>
-        {t("global.patient_detail")}
+          {t('global.patient_detail')}
         </Typography>
         <LabelTextContainer listText={detailData} />
       </Box>
 
       <Box>
         <Typography variant="h5" color="primary.darker" gutterBottom>
-        {t("checkin.visit_detail")}
+          {t('checkin.visit_detail')}
         </Typography>
         <Grid container spacing={2}>
           {listCard.map((row, index) => {
@@ -167,7 +179,7 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
             startCountdown2min();
           }}
         >
-          {t("global.print_registration")}
+          {t('global.print_registration')}
         </Button>
       </Box>
 
@@ -176,7 +188,7 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
         handleClose={() => {
           setOpenPrint(false);
         }}
-        title={t("checkin.saved_proof")}
+        title={t('checkin.saved_proof')}
         titleProps={{ variant: 'h3' }}
         dialogProps={{ maxWidth: 'sm' }}
         disableClose
@@ -184,12 +196,10 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
         child={actionList}
       >
         <Stack gap={2}>
-          <Typography textAlign="center">
-          {t("checkin.save_proof")}
-          </Typography>
+          <Typography textAlign="center">{t('checkin.save_proof')}</Typography>
           <Box>
             <Typography variant="subtitle1" textAlign="center">
-            {t("checkin.not_printed")}
+              {t('checkin.not_printed')}
             </Typography>
             <Typography textAlign="center">{getCountdown15}</Typography>
           </Box>

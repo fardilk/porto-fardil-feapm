@@ -6,13 +6,18 @@ import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
 import { fAsterisk } from 'src/utils/helper';
 import { useTranslate } from 'src/locales';
 import { getPaymentType } from '../model/variables';
+import { GetPatientByNIKResponse } from '../model/types';
 
 const ConfirmationOutpatientMCU = ({
   handleBack,
   handleConfirm,
+  packageName,
+  patientDetail,
 }: {
   handleBack: () => void;
   handleConfirm: () => void;
+  patientDetail: GetPatientByNIKResponse;
+  packageName: string;
 }) => {
   const { t } = useTranslate();
 
@@ -20,28 +25,36 @@ const ConfirmationOutpatientMCU = ({
   const [acceptedTerm, setAcceptedTerm] = useState(false);
 
   const detailData: LabelTextProps[] = [
-    { title: t('appointment.patient.nik'), body: fAsterisk('100200300400') },
-    { title: t('appointment.patient.fullname'), body: 'Anisa Redina' },
-    { title: t('appointment.patient.birthdateplace'), body: 'Malaysia, 11-04-2000' },
-    { title: t('appointment.patient.blood_type'), body: 'B' },
-    { title: t('appointment.patient.blood_rhesus'), body: 'Negatif' },
+    {
+      title: t('appointment.patient.nik'),
+      body: fAsterisk(patientDetail.nik ?? patientDetail.passportNumber ?? '-'),
+    },
+    { title: t('appointment.patient.fullname'), body: patientDetail.name },
+    {
+      title: t('appointment.patient.birthdateplace'),
+      body: `${patientDetail.birthPlace}, ${patientDetail.birthDttm}`,
+    },
+    { title: t('appointment.patient.blood_type'), body: patientDetail.additional.bloodType },
+    { title: t('appointment.patient.blood_rhesus'), body: patientDetail.additional.bloodRhesus },
     {
       title: t('appointment.patient.address'),
-      body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
+      body: patientDetail.address,
     },
-    { title: t('appointment.patient.phone'), body: fAsterisk('085157902550') },
-    { title: t('appointment.patient.email'), body: 'anisa@gmail.com' },
+    { title: t('appointment.patient.phone'), body: fAsterisk(patientDetail.phone) },
+    { title: t('appointment.patient.email'), body: patientDetail.email },
   ];
-
-  const tipeLayanan = 'Paket Premarital Wanita';
 
   const listCard = [
     {
-      ...getPaymentType("general", t),
+      ...getPaymentType('general', t),
     },
     {
       title: t('appointment.encounter.schedule'),
-      body: 'Senin, 30-01-2022, 10:00-14:00',
+      body: new Date().toLocaleDateString('id-ID', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      }),
       localIcon: 'jadwal',
     },
   ];
@@ -80,8 +93,8 @@ const ConfirmationOutpatientMCU = ({
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <CardBanner
-                title={t("appointment.encounter.service_type")}
-                body={tipeLayanan}
+                title={t('appointment.encounter.service_type')}
+                body={packageName}
                 localIcon="medical-checkup"
                 cardProps={{ variant: 'outlined' }}
                 titleProps={{ variant: 'subtitle2', sx: { color: 'grey' } }}
