@@ -424,5 +424,23 @@
     "save": "Save",
     "success": "Successfully Saved",
     "active_label": "Active"
+  },
+
+  "validation": {
+    "name_required": "Name is required",
+    "gender_required": "Gender is required",
+    "birth_place_required": "Birth place is required",
+    "birth_date_required": "Birth date is required",
+    "phone_number_required": "Phone number is required",
+    "pho_number_format": "Phone number must be at least 10 angka",
+    "email_required": "Email is required",
+    "invalid_email_format": "Invalid email format",
+    "address_required": "Address is required",
+    "religion_required": "Religion is required",
+    "blood_type_required": "Blood type is required",
+    "education_required": "Education is required",
+    "marital_status_required": "Marital status is required",
+    "occupation_required": "Occupation is required",
+    "language_required": "Language is required"
   }
 }

@@ -1,10 +1,15 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Box } from '@mui/material';
+import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { AppPage } from 'src/components/app-page';
 import { Form } from 'src/components/hook-form';
+import { InsertIdentifier } from 'src/components/insert-identifier';
 import { WindowContainer } from 'src/components/window-container';
 import { useStepper } from 'src/hooks';
+import { useTranslate } from 'src/locales';
+import { useSelector } from 'src/store/store';
 import {
   BarcodePhone,
   DetailNewPatient,
@@ -15,8 +20,9 @@ import {
   SelectRegistrationMethod,
   SuccessNewPatient,
 } from './components';
+import { postPatient } from './model/functions';
+import useValidationSchemas from './model/schema';
 import type { RegistrationIForm } from './model/types';
-import { InsertIdentifier } from 'src/components/insert-identifier';
 import {
   formStepsExistInInternal,
   formStepsExistInSatuSehat,
@@ -25,12 +31,6 @@ import {
   formStepsNotExistInternal,
   formStepsRegistrationMethodByPhone,
 } from './model/variables';
-import { useTranslate } from 'src/locales';
-import { useCallback, useMemo, useState } from 'react';
-import { useSelector } from 'src/store/store';
-import { postPatient } from './model/functions';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { getValidationSchema } from './model/schema';
 
 const RegistrationPage = () => {
   const isSimplify = useSelector((root) => root.config.simplify);
@@ -61,23 +61,12 @@ const RegistrationPage = () => {
     initialSteps: formStepsExistInInternal,
   });
 
-  // const methods = useForm<RegistrationIForm>({
-  //   defaultValues,
-  //   resolver: yupResolver(getValidationSchema(currentPage, watch('citizenship'), formSteps)),
-  // });
-
-  // const methods = useForm();
-  // const { handleSubmit, watch } = methods;
-
-  /**
-   * kalo mau ada 2 useForm, methods ini ganti nama sesuai dengan kebutuhannya ya.
-   * disini aku kasih methodsDefault aja
-   */
   const methodsDefault = useForm()
   const { watch } = methodsDefault
 
   const isForeign = watch('citizenship');
   const [isSatuSehat, setIsSatuSehat] = useState(false)
+  const { getValidationSchema } = useValidationSchemas();
 
   const methods = useForm<RegistrationIForm>({
     defaultValues,
@@ -146,7 +135,6 @@ const RegistrationPage = () => {
           }
         }
       } else if (currentPageIndex !== 0) {
-        // console.log("kkkk", formSteps, formSteps===formStepsRegistrationMethodByPhone)
         if (currentPage.value === 'insert_email') {
           handleChangePage({ toSpecificPage: 'information' });
         } else if (
@@ -219,7 +207,6 @@ const RegistrationPage = () => {
                 leftButtonProps={{
                   onClick: () => handleChangePage({ toSpecificPage: 'insert_nik' }),
                 }}
-              // rightButtonProps={{ onClick: () => handleChangePage({ action: 'next' }) }}
               />
             )}
 
@@ -232,7 +219,6 @@ const RegistrationPage = () => {
                   })
                 }
                 handleByAnjungan={() => {
-                  // console.log('hehe',watch('nik'))
                   if (isSatuSehat) {
                     handleChangePage({
                       action: 'next',
@@ -281,12 +267,6 @@ const RegistrationPage = () => {
                     else handleChangePage({ action: 'previous' });
                   },
                 }}
-              // rightButtonProps = {{
-              //   onClick: async () => {
-              //     await registerPatient();
-              //     handleChangePage({ action: 'next' });
-              //   }
-              // }}
               />
             )}
 

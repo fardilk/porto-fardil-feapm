@@ -20,7 +20,7 @@ import { useTranslate } from 'src/locales';
 import type { NewPatientProps } from '../model/types';
 
 const NewPatient = (props: NewPatientProps) => {
-  const { handleNextPage, handlePreviousPage } = props;
+  const { handlePreviousPage } = props;
 
   const [elementName, setElementName] = useState('');
   const [keyboardType, setKeyboardType] = useState('');
@@ -132,11 +132,6 @@ const NewPatient = (props: NewPatientProps) => {
             getOptionLabel={(opt) => opt.label}
             getOptionEqualToValue={(opt, value) => opt.value === value?.value}
           />
-          {/* {errors?.gender && (
-            <Typography variant="caption" color="error.main">
-              {errors.gender.value?.message}
-            </Typography>
-          )} */}
         </Grid>
         <Grid item xs={2} display={'flex'} alignItems={'center'}>
           <Typography variant="subtitle1" color="grey.600">
@@ -195,11 +190,6 @@ const NewPatient = (props: NewPatientProps) => {
             getOptionLabel={(opt) => opt.label}
             getOptionEqualToValue={(opt, value) => opt.value === value?.value}
           />
-          {/* {errors?.religion && (
-            <Typography variant="caption" color="error.main">
-              {errors.religion.value?.message}
-            </Typography>
-          )} */}
         </Grid>
         <Grid item xs={2} display={'flex'} alignItems={'center'}>
           <Typography variant="subtitle1" color="grey.600">
@@ -277,7 +267,6 @@ const NewPatient = (props: NewPatientProps) => {
           variant="contained"
           fullWidth
           color="secondary"
-          // onClick={handleNextPage}
           type="submit"
         >
           {t('global.next')}

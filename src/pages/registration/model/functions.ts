@@ -1,4 +1,3 @@
-import { timeout } from 'src/utils/timeout';
 import { gql } from 'graphql-request';
 import GqlClient from 'src/utils/gql';
 import { additionalType, RegisterResponse } from './types';

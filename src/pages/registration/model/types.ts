@@ -1,11 +1,9 @@
 import type { ButtonProps } from '@mui/material';
-import { FieldErrors } from 'react-hook-form';
 
 export type PatientInformationProps = {
   leftTextButton: string;
   rigthTextButton: string;
   leftButtonProps: ButtonProps;
-  // rightButtonProps: ButtonProps;
 };
 
 export type NewPatientProps = {
