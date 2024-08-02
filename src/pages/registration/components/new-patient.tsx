@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react';
 
 import { useMemo, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -7,25 +6,18 @@ import {
   Box,
   Button,
   Grid,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Typography,
+  Typography
 } from '@mui/material';
 
 import {
   RHFMobileDatePicker,
-  RHFRadioGroup,
   RHFTextField,
-  RHFTimePils,
+  RHFTimePils
 } from 'src/components/hook-form';
 import { Keyboard } from 'src/components/keyboard';
 
-import type { NewPatientProps } from '../model/types';
-import { label } from 'yet-another-react-lightbox';
 import { useTranslate } from 'src/locales';
+import type { NewPatientProps } from '../model/types';
 
 const NewPatient = (props: NewPatientProps) => {
   const { handleNextPage, handlePreviousPage } = props;
@@ -34,7 +26,7 @@ const NewPatient = (props: NewPatientProps) => {
   const [keyboardType, setKeyboardType] = useState('');
   const inputRef = useRef<any>({});
 
-  const { watch } = useFormContext();
+  const { watch, setError } = useFormContext();
   const isForeign = watch('citizenship');
   const { t } = useTranslate();
 

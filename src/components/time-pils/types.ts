@@ -3,4 +3,5 @@ export type TimePilsContainerProps<T> = {
   getOptionLabel: (option: T) => string;
   getIsSelected: (option: T) => boolean;
   onClick: (option: T) => void;
+  error?: boolean;
 };
