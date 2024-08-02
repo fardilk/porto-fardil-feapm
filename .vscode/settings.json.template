@@ -1,0 +1,10 @@
+{
+  "rest-client.environmentVariables": {
+    "local": {
+      "baseUrl": "http://localhost:8080"
+    },
+    "dev_server": {
+      "baseUrl": "https://dev-api.tbd.com"
+    }
+  }
+}
