@@ -193,11 +193,11 @@ const NewPatient = (props: NewPatientProps) => {
             getOptionLabel={(opt) => opt.label}
             getOptionEqualToValue={(opt, value) => opt.value === value?.value}
           />
-          {errors?.religion && (
+          {/* {errors?.religion && (
             <Typography variant="caption" color="error.main">
               {errors.religion.value?.message}
             </Typography>
-          )}
+          )} */}
         </Grid>
         <Grid item xs={2} display={'flex'} alignItems={'center'}>
           <Typography variant="subtitle1" color="grey.600">

@@ -26,7 +26,7 @@ import {
   formStepsRegistrationMethodByPhone,
 } from './model/variables';
 import { useTranslate } from 'src/locales';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useSelector } from 'src/store/store';
 import { postPatient } from './model/functions';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -92,6 +92,7 @@ const RegistrationPage = () => {
   const watch = useForm().watch
   const value = watch();
   const isForeign = watch('citizenship');
+  const [isSatuSehat, setIsSatuSehat] = useState(false)
 
   const methods = useForm<RegistrationIForm>({
     defaultValues,
@@ -138,6 +139,9 @@ const RegistrationPage = () => {
     console.log('Form data:', data);
     console.log('ooo', currentPage.value);
     try{if (currentPageIndex === 0) {
+      if(data.nik.replace('\n', '')==='12'){
+        setIsSatuSehat(true)
+      }
       if (isForeign) {
         console.log(data.nik.replace('\n', ''));
         handleChangePage({ action: 'next', newFormSteps: formStepsForeign });
@@ -241,8 +245,8 @@ const RegistrationPage = () => {
                   })
                 }
                 handleByAnjungan={() => {
-                  console.log(watch('nik'))
-                  if (watch('nik').trim() === '12') {
+                  // console.log('hehe',watch('nik'))
+                  if (isSatuSehat) {
                     handleChangePage({
                       action: 'next',
                       newFormSteps: formStepsExistInSatuSehat,
