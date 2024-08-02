@@ -10,10 +10,10 @@ import {
 } from '@mui/material';
 import { FC, ReactNode, useMemo } from 'react';
 import { RHFTimePils } from 'src/components/hook-form';
-import { NewPatientProps } from '../model/types';
+import { NewPatientProps, RegistrationIForm } from '../model/types';
 import { useTranslate } from 'src/locales';
 
-const DetailNewPatient: FC<NewPatientProps> = ({ handleNextPage, handlePreviousPage }) => {
+const DetailNewPatient: FC<NewPatientProps> = ({ handleNextPage, handlePreviousPage, errors }) => {
   const { t } = useTranslate();
 
   const bloodType = useMemo(
@@ -277,6 +277,14 @@ const DetailNewPatient: FC<NewPatientProps> = ({ handleNextPage, handlePreviousP
     [bloodType, job, language, marriage, study, t]
   );
 
+  // const getErrorMessage = (field: keyof RegistrationIForm, errorType: 'label' | 'value'): string | undefined => {
+  //   const error = errors?.[field];
+  //   if (error && typeof error === 'object' && 'label' in error && 'value' in error) {
+  //     return (error as any)?.[errorType]?.message;
+  //   }
+  //   return undefined;
+  // };
+
   return (
     <>
       <TableContainer sx={{ my: 2 }}>
@@ -296,6 +304,11 @@ const DetailNewPatient: FC<NewPatientProps> = ({ handleNextPage, handlePreviousP
                     getOptionLabel={(opt) => opt.label}
                     getOptionEqualToValue={(opt, value) => opt.value === value?.value}
                   />
+                  {/* {getErrorMessage(list.name as keyof RegistrationIForm, 'value') && (
+                    <Typography variant="caption" color="error.main">
+                      {getErrorMessage(list.name as keyof RegistrationIForm, 'value')}
+                    </Typography>
+                  )} */}
                 </TableCellBody>
               </TableRow>
             ))}
@@ -317,7 +330,8 @@ const DetailNewPatient: FC<NewPatientProps> = ({ handleNextPage, handlePreviousP
           variant="contained"
           fullWidth
           color="secondary"
-          onClick={handleNextPage}
+          // onClick={handleNextPage}
+          type="submit"
         >
           {t('global.next')}
         </Button>

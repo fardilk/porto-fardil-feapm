@@ -1,4 +1,5 @@
 import type { ButtonProps } from '@mui/material';
+import { FieldErrors } from 'react-hook-form';
 
 export type PatientInformationProps = {
   leftTextButton: string;
@@ -10,15 +11,16 @@ export type PatientInformationProps = {
 export type NewPatientProps = {
   handlePreviousPage: () => void;
   handleNextPage: () => void;
+  errors: FieldErrors<RegistrationIForm>;
 };
 
 export type SuccessNewPatientProps = {
   handleFinish: () => void;
 };
 
-export type RegistrationIForm = {
+export interface RegistrationIForm {
   nik: string;
-  citizenship: false;
+  citizenship: boolean;
   name: string;
   gender: {
     label: string;
@@ -53,7 +55,8 @@ export type RegistrationIForm = {
     label: string;
     value: string;
   };
-};
+}
+
 
 export type SelectRegistrationMethodProps = {
   handleByPhone: () => void;

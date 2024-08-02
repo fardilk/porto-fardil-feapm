@@ -15,7 +15,7 @@ import {
   SelectRegistrationMethod,
   SuccessNewPatient,
 } from './components';
-import type { additionalType, RegistrationIForm } from './model/types';
+import type { RegistrationIForm } from './model/types';
 import { InsertIdentifier } from 'src/components/insert-identifier';
 import {
   formStepsExistInInternal,
@@ -26,9 +26,11 @@ import {
   formStepsRegistrationMethodByPhone,
 } from './model/variables';
 import { useTranslate } from 'src/locales';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useSelector } from 'src/store/store';
 import { postPatient } from './model/functions';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { getValidationSchema } from './model/schema';
 
 const RegistrationPage = () => {
   const isSimplify = useSelector((root) => root.config.simplify);
@@ -80,10 +82,23 @@ const RegistrationPage = () => {
     initialSteps: formStepsExistInInternal,
   });
 
-  const methods = useForm({ defaultValues });
-  const { handleSubmit, watch } = methods;
+  // const methods = useForm<RegistrationIForm>({
+  //   defaultValues,
+  //   resolver: yupResolver(getValidationSchema(currentPage, watch('citizenship'), formSteps)),
+  // });
+
+  // const methods = useForm();
+  // const { handleSubmit, watch } = methods;
+  const watch = useForm().watch
   const value = watch();
   const isForeign = watch('citizenship');
+
+  const methods = useForm<RegistrationIForm>({
+    defaultValues,
+    resolver: yupResolver(getValidationSchema(currentPage.value, isForeign, formSteps)),
+  });
+
+  const { handleSubmit, formState: { errors } } = methods;
 
   const createPatient = useCallback(
     async (payload: {
@@ -98,7 +113,14 @@ const RegistrationPage = () => {
         email: string;
         nationality: string;
         address: string;
-        additional: additionalType;
+        additional: {
+          bloodType: string;
+          religion: string;
+          education: string;
+          maritalStatus: string;
+          occupation: string;
+          dailyLanguage: string;
+        };
       };
     }) => {
       try {
@@ -112,59 +134,10 @@ const RegistrationPage = () => {
     [handleChangePage]
   );
 
-  // const registerPatient = async () => {
-  //   if (currentPage.value === 'barcode_phone' || currentPage.value === 'confirmation_new_patient') {
-  //     const payload = {
-  //       data: {
-  //         nik: isForeign ? '' : value.nik.replace('\n', ''),
-  //         passportNumber: isForeign ? value.nik.replace('\n', '') : '',
-  //         name: value.name,
-  //         gender: value.gender.value,
-  //         birthPlace: value.birthPlace,
-  //         birthDttm: value.birthDate,
-  //         phone: value.phoneNumber,
-  //         email: value.email,
-  //         nationality: isForeign ? 'WNA' : 'WNI',
-  //         address: value.address,
-  //         additional: {
-  //           bloodType: value.bloodType.value,
-  //           religion: value.religion.value,
-  //           education: value.study.value,
-  //           maritalStatus: value.marriage.value,
-  //           occupation: value.job.value,
-  //           dailyLanguage: value.language.value,
-  //         },
-  //       },
-  //     };
-  //     await createPatient(payload);
-  //   }
-  // };
-
-  // useEffect(() => {
-
-  // }, [
-  //   currentPage?.value,
-  //   createPatient,
-  //   isForeign,
-  //   value?.address,
-  //   value?.birthDate,
-  //   value?.birthPlace,
-  //   value?.bloodType?.value,
-  //   value?.email,
-  //   value?.gender?.value,
-  //   value?.job?.value,
-  //   value?.language?.value,
-  //   value?.marriage?.value,
-  //   value?.name,
-  //   value?.nik,
-  //   value?.phoneNumber,
-  //   value?.religion?.value,
-  //   value?.study?.value,
-  // ]);
-
   const onSubmit = async (data: any) => {
+    console.log('Form data:', data);
     console.log('ooo', currentPage.value);
-    if (currentPageIndex === 0) {
+    try{if (currentPageIndex === 0) {
       if (isForeign) {
         console.log(data.nik.replace('\n', ''));
         handleChangePage({ action: 'next', newFormSteps: formStepsForeign });
@@ -175,6 +148,7 @@ const RegistrationPage = () => {
 
         const resp = dataNIK === '123' ? 'medrec_exist' : 'medrec_not_exist';
 
+        console.log(resp)
         if (resp === 'medrec_exist') {
           handleChangePage({ action: 'next', newFormSteps: formStepsExistInInternal });
         } else {
@@ -199,7 +173,7 @@ const RegistrationPage = () => {
             gender: data.gender.value,
             birthPlace: data.birthPlace,
             birthDttm: data.birthDate,
-            phone: data.phoneNumber,
+            phone: data.phoneNumber.replace('\n', ''),
             email: data.email,
             nationality: isForeign ? 'WNA' : 'WNI',
             address: data.address,
@@ -215,10 +189,17 @@ const RegistrationPage = () => {
         };
         createPatient(payload);
       }
-
+      else if(currentPage.value==='create_new_patient' && isSimplify){
+        handleChangePage({ toSpecificPage: 'confirmation_new_patient' });
+      }
       else {
+        console.log("hayo")
         handleChangePage({ action: 'next' });
       }
+    }}
+    catch (error) {
+      // Log the error if submission fails
+      console.log('Submission error:', error);
     }
   };
 
@@ -260,6 +241,7 @@ const RegistrationPage = () => {
                   })
                 }
                 handleByAnjungan={() => {
+                  console.log(watch('nik'))
                   if (watch('nik').trim() === '12') {
                     handleChangePage({
                       action: 'next',
@@ -285,6 +267,7 @@ const RegistrationPage = () => {
               <DetailNewPatient
                 handleNextPage={() => handleChangePage({ action: 'next' })}
                 handlePreviousPage={() => handleChangePage({ action: 'previous' })}
+                errors={errors}
               />
             )}
 
@@ -295,6 +278,7 @@ const RegistrationPage = () => {
                   else handleChangePage({ action: 'next' });
                 }}
                 handlePreviousPage={() => handleChangePage({ action: 'previous' })}
+                errors={errors}
               />
             )}
 
