@@ -14,7 +14,7 @@ export type RHFTimePilsProps<T> = Omit<TimePilsContainerProps<T>, 'getIsSelected
 export function RHFTimePils<T>(props: RHFTimePilsProps<T>) {
   const { name, options, multiple, errorText, label, getOptionEqualToValue, getOptionLabel } = props
 
-  const { watch, setValue, control } = useFormContext()
+  const { clearErrors, watch, setValue, control } = useFormContext()
   const { fieldState: { error } } = useController({ name, control })
 
   const value = watch(name)
@@ -34,7 +34,9 @@ export function RHFTimePils<T>(props: RHFTimePilsProps<T>) {
       <TimePilsContainer
         getIsSelected={(opt) => Boolean(isSelected(opt))}
         getOptionLabel={getOptionLabel}
+        error={Boolean(error?.message)}
         onClick={(newValue) => {
+          clearErrors(name)
           const isExist = isSelected(newValue)
 
           if (multiple) {
