@@ -50,6 +50,18 @@ export type ListMCUPackageResponse = {
   contents: string[];
 }[];
 
+export type ListLabPackageResponse = {
+  packageID: string;
+  packageName: string;
+  price: number;
+}[]
+
+export type ListRadiologyPackageResponse = {
+  packageID: string;
+  packageName: string;
+  price: number;
+}[]
+
 export type AvailableDoctorResponse = {
   doctorID: string;
   doctorName: string;
@@ -84,6 +96,16 @@ export type SelectedPractioner = {
   serviceTime: string;
 };
 
+export type SelectedLabPackage = {
+  name: string;
+  price: number
+}
+
+export type SelectedRadiologyPackage = {
+  name: string;
+  price: number
+}
+
 export type SelectPractitionerProps = {
   onCardSelect: () => void;
   handleGetDoctor: (keyword: string, page: number) => Promise<void>;
@@ -113,6 +135,8 @@ export type SuccessOutpatientType = {
   patientData: GetPatientByNIKResponse;
   practitioner: Nullable<SelectedPractioner>
   MCUPackageName: Nullable<string>
+  labPackage: Nullable<SelectedLabPackage>
+  radiologyPackage: Nullable<SelectedRadiologyPackage>
 };
 
 export type SelectInsuranceNewProps = {
@@ -164,9 +188,17 @@ export type InformationPatientProps = {
 };
 
 export type SelectLabPackageProps = {
-  onCardSelect: () => void;
+  onCardSelect: (params: { id: string } & SelectedLabPackage) => void;
+  data: ListLabPackageResponse;
+  handleGetPackage: (keyword: string, page: number) => Promise<void>;
+  setFormValue: UseFormSetValue<FieldValues>;
+  watchFormValue: UseFormWatch<FieldValues>;
 };
 
 export type SelectRadServiceProps = {
-  onCardSelect: () => void;
+  onCardSelect: (params: { id: string } & SelectedLabPackage) => void;
+  data: ListRadiologyPackageResponse;
+  handleGetPackage: (keyword: string, page: number) => Promise<void>;
+  setFormValue: UseFormSetValue<FieldValues>;
+  watchFormValue: UseFormWatch<FieldValues>;
 };

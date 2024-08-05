@@ -1,5 +1,5 @@
 import { Box, Button, Grid, InputAdornment, Stack } from '@mui/material';
-import { useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { CardBanner } from 'src/components/card-banner';
 import { Iconify } from 'src/components/iconify';
 import { fCurrency } from 'src/utils/format-number';
@@ -8,25 +8,50 @@ import { Keyboard } from 'src/components/keyboard';
 import type { SelectLabPackageProps } from '../model/types';
 import { useTranslate } from 'src/locales';
 
-const SelectLabPackage = (props: SelectLabPackageProps) => {
+const SelectLabPackage = ({
+  onCardSelect,
+  data,
+  handleGetPackage,
+  setFormValue,
+  watchFormValue,
+}: SelectLabPackageProps) => {
   const { t } = useTranslate();
 
-  const { onCardSelect } = props;
-
   const [elementName, setElementName] = useState('');
+  const [afterFirstSearch, setAfterFirstSearch] = useState(false);
 
   const searchRef = useRef<any>({});
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const listLabPackage = Array.from({ length: 60 }, (index) => ({
-    name: `Paket Cek Kesehatan Umum`,
-  }));
+  const searchLabPackage = watchFormValue('searchLabPackage');
+
+  const listLabPackage = useMemo(
+    () =>
+      data.map((pack) => ({
+        name: pack.packageName,
+        price: fCurrency(pack.price),
+        onSelect: () =>
+          onCardSelect({
+            id: pack.packageID,
+            name: pack.packageName,
+            price: pack.price
+          }),
+      })),
+    [data, onCardSelect]
+  );
 
   const handleChangePagination = ({ action }: { action: 'prev' | 'next' }) => {
     const nextIndex = listLabPackage ? 6 : 16;
     setCurrentIndex((prev) => (action === 'prev' ? prev - nextIndex : prev + nextIndex));
   };
+
+  useEffect(() => {
+    if (searchLabPackage || afterFirstSearch) {
+      handleGetPackage(searchLabPackage, 1);
+      setAfterFirstSearch(true);
+    }
+  }, [handleGetPackage, searchLabPackage, afterFirstSearch]);
 
   return (
     <>
@@ -53,23 +78,21 @@ const SelectLabPackage = (props: SelectLabPackageProps) => {
               }}
             />
           </Grid>
-          {listLabPackage.slice(currentIndex, currentIndex + 6).map((_row, index) => {
-            return (
-              <Grid item xs={12} md={3} key={index}>
-                <CardBanner
-                  key={index}
-                  localIcon="blood-test"
-                  cardProps={{ variant: 'outlined' }}
-                  body={fCurrency(50000)}
-                  title={'Paket Cek Kesehatan Umum'}
-                  titleProps={{ variant: 'subtitle1', color: 'secondary.dark' }}
-                  bodyProps={{ variant: 'body2', color: 'secondary.dark' }}
-                  clickable
-                  onClick={onCardSelect}
-                />
-              </Grid>
-            );
-          })}
+          {listLabPackage.map((pack, index) => (
+            <Grid item xs={12} md={3} key={index}>
+              <CardBanner
+                key={index}
+                localIcon="blood-test"
+                cardProps={{ variant: 'outlined' }}
+                body={pack.price}
+                title={pack.name}
+                titleProps={{ variant: 'subtitle1', color: 'secondary.dark' }}
+                bodyProps={{ variant: 'body2', color: 'secondary.dark' }}
+                clickable
+                onClick={pack.onSelect}
+              />
+            </Grid>
+          ))}
         </Grid>
         <Box sx={{ width: '100%', display: 'flex', placeContent: 'space-between', gap: '10%' }}>
           <Button

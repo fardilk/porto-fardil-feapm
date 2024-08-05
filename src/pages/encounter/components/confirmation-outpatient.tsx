@@ -4,22 +4,37 @@ import { CardBanner } from 'src/components/card-banner';
 import { LabelTextContainer, type LabelTextProps } from 'src/components/label-text';
 import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
 import { fAsterisk } from 'src/utils/helper';
-import type { GetPatientByNIKResponse, OutpatientType, SelectedPractioner } from '../model/types';
+import type {
+  EncounterType,
+  GetPatientByNIKResponse,
+  OutpatientType,
+  SelectedLabPackage,
+  SelectedPractioner,
+  SelectedRadiologyPackage,
+} from '../model/types';
 import { getPaymentType } from '../model/variables';
 import { useTranslate } from 'src/locales';
+import { Nullable } from 'src/types/common';
+import { fCurrency } from 'src/utils/format-number';
 
 const ConfirmationOutpatient = ({
   handleBack,
   handleConfirm,
   type,
   patientDetail,
-  doctorInfo
+  doctorInfo,
+  encounterType,
+  labPackage,
+  radPackage
 }: {
   handleBack: () => void;
   handleConfirm: () => void;
   type: OutpatientType;
-  patientDetail: GetPatientByNIKResponse
-  doctorInfo: SelectedPractioner
+  patientDetail: GetPatientByNIKResponse;
+  doctorInfo: Nullable<SelectedPractioner>;
+  labPackage: Nullable<SelectedLabPackage>;
+  radPackage: Nullable<SelectedRadiologyPackage>
+  encounterType: EncounterType;
 }) => {
   const { t } = useTranslate();
 
@@ -27,9 +42,15 @@ const ConfirmationOutpatient = ({
   const [acceptedTerm, setAcceptedTerm] = useState(false);
 
   const detailData: LabelTextProps[] = [
-    { title: t('appointment.patient.nik'), body: fAsterisk(patientDetail.nik ?? patientDetail.passportNumber ?? "-") },
-    { title: t('appointment.patient.fullname'), body:  patientDetail.name},
-    { title: t('appointment.patient.birthdateplace'), body: `${patientDetail.birthPlace}, ${patientDetail.birthDttm}` },
+    {
+      title: t('appointment.patient.nik'),
+      body: fAsterisk(patientDetail.nik ?? patientDetail.passportNumber ?? '-'),
+    },
+    { title: t('appointment.patient.fullname'), body: patientDetail.name },
+    {
+      title: t('appointment.patient.birthdateplace'),
+      body: `${patientDetail.birthPlace}, ${patientDetail.birthDttm}`,
+    },
     { title: t('appointment.patient.blood_type'), body: patientDetail.additional.bloodType },
     { title: t('appointment.patient.blood_rhesus'), body: patientDetail.additional.bloodRhesus },
     {
@@ -41,22 +62,62 @@ const ConfirmationOutpatient = ({
   ];
 
   const listCard = [
-    {
-      title: t('appointment.encounter.healthcare_service'),
-      body: doctorInfo.polyName,
-      localIcon: 'stethoscope',
-    },
-    {
-      title: t('appointment.encounter.practitioner'),
-      body: doctorInfo.doctor,
-      localIcon: 'doctor',
-    },
+    ...(encounterType === 'RJ' && doctorInfo
+      ? [
+          {
+            title: t('appointment.encounter.healthcare_service'),
+            body: doctorInfo.polyName,
+            localIcon: 'stethoscope',
+          },
+          {
+            title: t('appointment.encounter.practitioner'),
+            body: doctorInfo.doctor,
+            localIcon: 'doctor',
+          },
+        ]
+      : encounterType === 'LAB' && labPackage
+        ? [
+            {
+              title: t('appointment.encounter.healthcare_service'),
+              body: 'Laboratorium',
+              localIcon: 'blood-test',
+            },
+            {
+              title: labPackage.name,
+              body: fCurrency(labPackage.price),
+              localIcon: 'blood-test',
+              titleProps: { variant: 'subtitle1', sx: { color: 'primary.darker' } },
+              bodyProps: {
+                variant: 'subtitle2',
+                sx: { color: 'primary.darker', fontWeight: '500' },
+              },
+            },
+          ]
+        : encounterType === 'RAD' && radPackage ? [{
+          title: t('appointment.encounter.healthcare_service'),
+          body: 'Radiologi',
+          localIcon: 'x-rays',
+        },
+        {
+          title: radPackage.name,
+          body: fCurrency(radPackage.price),
+          localIcon: 'x-rays',
+          titleProps: { variant: 'subtitle1', sx: { color: 'primary.darker' } },
+          bodyProps: {
+            variant: 'subtitle2',
+            sx: { color: 'primary.darker', fontWeight: '500' },
+          },
+        },] : []),
     { ...getPaymentType(type, t) },
-    {
-      title: t('appointment.encounter.schedule'),
-      body: doctorInfo.serviceTime,
-      localIcon: 'jadwal',
-    },
+    ...(encounterType === 'RJ' && doctorInfo
+      ? [
+          {
+            title: t('appointment.encounter.schedule'),
+            body: doctorInfo.serviceTime,
+            localIcon: 'jadwal',
+          },
+        ]
+      : []),
   ];
 
   const buttonAction = [
@@ -98,8 +159,16 @@ const ConfirmationOutpatient = ({
                     key={index}
                     {...row}
                     cardProps={{ variant: 'outlined' }}
-                    titleProps={{ variant: 'subtitle2', sx: { color: 'grey' } }}
-                    bodyProps={{ variant: 'subtitle2', sx: { color: 'primary.darker' } }}
+                    titleProps={
+                      row.titleProps
+                        ? (row.titleProps as any)
+                        : { variant: 'subtitle2', sx: { color: 'grey' } }
+                    }
+                    bodyProps={
+                      row.bodyProps
+                        ? (row.bodyProps as any)
+                        : { variant: 'subtitle2', sx: { color: 'primary.darker' } }
+                    }
                   />
                 </Grid>
               );
