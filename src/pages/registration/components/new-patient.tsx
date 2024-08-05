@@ -30,8 +30,6 @@ const NewPatient = (props: NewPatientProps) => {
   const isForeign = watch('citizenship');
   const { t } = useTranslate();
 
-  console.log(errors)
-
   const listReligion = useMemo(
     () => [
       {

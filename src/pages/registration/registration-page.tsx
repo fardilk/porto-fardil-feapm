@@ -100,34 +100,28 @@ const RegistrationPage = () => {
     }) => {
       try {
         const response = await postPatient(payload);
-        console.log('success', response);
         handleChangePage({ action: 'next' });
       } catch (e) {
-        console.log(e);
+        // do something
       }
     },
     [handleChangePage]
   );
 
   const onSubmit = async (data: any) => {
-    console.log('Form data:', data);
-    console.log('ooo', currentPage.value);
     try {
       if (currentPageIndex === 0) {
         if (data.nik.replace('\n', '') === '12') {
           setIsSatuSehat(true)
         }
         if (isForeign) {
-          console.log(data.nik.replace('\n', ''));
           handleChangePage({ action: 'next', newFormSteps: formStepsForeign });
         } else {
           const dataNIK = data.nik.replace('\n', '');
-          console.log(dataNIK, 'data form');
           // const resp = await getDummyData(dataNIK === '123' ? 'medrec_exist' : 'medrec_not_exist');
 
           const resp = dataNIK === '123' ? 'medrec_exist' : 'medrec_not_exist';
 
-          console.log(resp)
           if (resp === 'medrec_exist') {
             handleChangePage({ action: 'next', newFormSteps: formStepsExistInInternal });
           } else {
@@ -142,7 +136,6 @@ const RegistrationPage = () => {
           (currentPage.value === 'insert_phone_number' &&
             formSteps === formStepsRegistrationMethodByPhone)
         ) {
-          console.log('takde');
           const payload = {
             data: {
               nik: isForeign ? '' : data.nik.replace('\n', ''),
@@ -171,14 +164,12 @@ const RegistrationPage = () => {
           handleChangePage({ toSpecificPage: 'confirmation_new_patient' });
         }
         else {
-          console.log("hayo")
           handleChangePage({ action: 'next' });
         }
       }
     }
     catch (error) {
       // Log the error if submission fails
-      console.log('Submission error:', error);
     }
   };
 
