@@ -304,7 +304,7 @@
       "input_your_NIK": "Masukkan NIK Anda",
       "input_your_phone": "Masukkan Nomor Telepon Anda",
       "input_your_passport": "Masukkan Nomor Passport Anda",
-      "input_your-email": "Masukkan Email Anda"
+      "input_your_email": "Masukkan Email Anda"
     },
     "via_phone": "Melalui Ponsel Anda",
     "via_phone_desc": "Pendaftaran profile baru dengan melalui ponsel anda",
@@ -423,5 +423,23 @@
     "save": "Simpan",
     "success": "Berhasil Disimpan",
     "active_label": "Aktif"
+  },
+
+  "validation": {
+    "name_required": "Nama perlu diisi",
+    "gender_required": "Gender perlu diisi",
+    "birth_place_required": "Tempat lahir perlu diisi",
+    "birth_date_required": "Tanggal lahir perlu diisi",
+    "phone_number_required": "No telp perlu diisi",
+    "pho_number_format": "No telp minimal 10 angka",
+    "email_required": "Email perlu diisi",
+    "invalid_email_format": "Format email tidak sesuai",
+    "address_required": "Alamat perlu diisi",
+    "religion_required": "Agama perlu diisi",
+    "blood_type_required": "Golongan darah perlu diisi",
+    "education_required": "Pendidikan perlu diisi",
+    "marital_status_required": "Status perkawinan perlu diisi",
+    "occupation_required": "Pekerjaan perlu diisi",
+    "language_required": "Bahasa perlu diisi"
   }
 }

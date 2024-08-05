@@ -1,10 +1,15 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Box } from '@mui/material';
+import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { AppPage } from 'src/components/app-page';
 import { Form } from 'src/components/hook-form';
+import { InsertIdentifier } from 'src/components/insert-identifier';
 import { WindowContainer } from 'src/components/window-container';
 import { useStepper } from 'src/hooks';
+import { useTranslate } from 'src/locales';
+import { useSelector } from 'src/store/store';
 import {
   BarcodePhone,
   DetailNewPatient,
@@ -15,9 +20,9 @@ import {
   SelectRegistrationMethod,
   SuccessNewPatient,
 } from './components';
-import { getDummyData } from './model/functions';
+import { postPatient } from './model/functions';
+import useValidationSchemas from './model/schema';
 import type { RegistrationIForm } from './model/types';
-import { InsertIdentifier } from 'src/components/insert-identifier';
 import {
   formStepsExistInInternal,
   formStepsExistInSatuSehat,
@@ -26,9 +31,6 @@ import {
   formStepsNotExistInternal,
   formStepsRegistrationMethodByPhone,
 } from './model/variables';
-import { useTranslate } from 'src/locales';
-import { useMemo } from 'react';
-import { useSelector } from 'src/store/store';
 
 const RegistrationPage = () => {
   const isSimplify = useSelector((root) => root.config.simplify);
@@ -36,44 +38,138 @@ const RegistrationPage = () => {
   const defaultValues: RegistrationIForm = {
     nik: '',
     citizenship: false,
+    name: '',
+    gender: null,
+    birthPlace: '',
+    birthDate: '',
+    phoneNumber: '',
+    email: '',
+    address: '',
+    bloodType: null,
+    religion: null,
+    study: null,
+    marriage: null,
+    job: null,
+    language: null,
   };
 
   const { t } = useTranslate();
 
   const navigate = useNavigate();
 
-  const { currentPage, currentPageIndex, handleChangePage } = useStepper({
+  const { currentPage, currentPageIndex, handleChangePage, formSteps } = useStepper({
     initialSteps: formStepsExistInInternal,
   });
 
-  const methods = useForm({ defaultValues });
-  const { handleSubmit, watch } = methods;
+  const methodsDefault = useForm()
+  const { watch } = methodsDefault
+
   const isForeign = watch('citizenship');
+  const [isSatuSehat, setIsSatuSehat] = useState(false)
+  const { getValidationSchema } = useValidationSchemas();
+
+  const methods = useForm<RegistrationIForm>({
+    defaultValues,
+    resolver: yupResolver(getValidationSchema(currentPage.value, isForeign, formSteps)),
+  });
+
+  const { handleSubmit } = methods;
+
+  const createPatient = useCallback(
+    async (payload: {
+      data: {
+        nik: string;
+        passportNumber: string;
+        name: string;
+        gender: string;
+        birthPlace: string;
+        birthDttm: string;
+        phone: string;
+        email: string;
+        nationality: string;
+        address: string;
+        additional: {
+          bloodType: string;
+          religion: string;
+          education: string;
+          maritalStatus: string;
+          occupation: string;
+          dailyLanguage: string;
+        };
+      };
+    }) => {
+      try {
+        const response = await postPatient(payload);
+        handleChangePage({ action: 'next' });
+      } catch (e) {
+        // do something
+      }
+    },
+    [handleChangePage]
+  );
 
   const onSubmit = async (data: any) => {
-    if (currentPageIndex === 0) {
-      if (isForeign) {
-        handleChangePage({ action: 'next', newFormSteps: formStepsForeign });
-      } else {
-        const dataNIK = data.nik.replace('\n', '');
-        console.log(dataNIK, 'data form');
-        const resp = await getDummyData(dataNIK === '123' ? 'medrec_exist' : 'medrec_not_exist');
-
-        if (resp.data === 'medrec_exist') {
-          handleChangePage({ action: 'next', newFormSteps: formStepsExistInInternal });
-        } else {
-          handleChangePage({ action: 'next', newFormSteps: formStepsNotExistInternal });
+    try {
+      if (currentPageIndex === 0) {
+        if (data.nik.replace('\n', '') === '12') {
+          setIsSatuSehat(true)
         }
-      }
-    } else {
-      switch (currentPage.value) {
-        case 'insert_email':
+        if (isForeign) {
+          handleChangePage({ action: 'next', newFormSteps: formStepsForeign });
+        } else {
+          const dataNIK = data.nik.replace('\n', '');
+          // const resp = await getDummyData(dataNIK === '123' ? 'medrec_exist' : 'medrec_not_exist');
+
+          const resp = dataNIK === '123' ? 'medrec_exist' : 'medrec_not_exist';
+
+          if (resp === 'medrec_exist') {
+            handleChangePage({ action: 'next', newFormSteps: formStepsExistInInternal });
+          } else {
+            handleChangePage({ action: 'next', newFormSteps: formStepsNotExistInternal });
+          }
+        }
+      } else if (currentPageIndex !== 0) {
+        if (currentPage.value === 'insert_email') {
           handleChangePage({ toSpecificPage: 'information' });
-          break;
-        default: {
+        } else if (
+          currentPage.value === 'confirmation_new_patient' ||
+          (currentPage.value === 'insert_phone_number' &&
+            formSteps === formStepsRegistrationMethodByPhone)
+        ) {
+          const payload = {
+            data: {
+              nik: isForeign ? '' : data.nik.replace('\n', ''),
+              passportNumber: isForeign ? data.nik.replace('\n', '') : '',
+              name: data.name,
+              gender: data.gender.value,
+              birthPlace: data.birthPlace,
+              birthDttm: data.birthDate,
+              phone: data.phoneNumber.replace('\n', ''),
+              email: data.email,
+              nationality: isForeign ? 'WNA' : 'WNI',
+              address: data.address,
+              additional: {
+                bloodType: data.bloodType.value,
+                religion: data.religion.value,
+                education: data.study.value,
+                maritalStatus: data.marriage.value,
+                occupation: data.job.value,
+                dailyLanguage: data.language.value,
+              },
+            },
+          };
+          createPatient(payload);
+        }
+        else if (currentPage.value === 'create_new_patient' && isSimplify) {
+          handleChangePage({ toSpecificPage: 'confirmation_new_patient' });
+        }
+        else {
           handleChangePage({ action: 'next' });
         }
       }
+    }
+    catch (error) {
+      // Log the error if submission fails
     }
   };
 
@@ -102,7 +198,6 @@ const RegistrationPage = () => {
                 leftButtonProps={{
                   onClick: () => handleChangePage({ toSpecificPage: 'insert_nik' }),
                 }}
-                rightButtonProps={{ onClick: () => handleChangePage({ action: 'next' }) }}
               />
             )}
 
@@ -115,7 +210,7 @@ const RegistrationPage = () => {
                   })
                 }
                 handleByAnjungan={() => {
-                  if (watch('nik').trim() === '12') {
+                  if (isSatuSehat) {
                     handleChangePage({
                       action: 'next',
                       newFormSteps: formStepsExistInSatuSehat,
@@ -163,7 +258,6 @@ const RegistrationPage = () => {
                     else handleChangePage({ action: 'previous' });
                   },
                 }}
-                rightButtonProps={{ onClick: () => handleChangePage({ action: 'next' }) }}
               />
             )}
 

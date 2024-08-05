@@ -6,6 +6,15 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea
+.npmrc
+
+!_data/.gitkeep
+_data/
+
+!_resources/.gitkeep
+_resources/
+
+!.vscode/.gitkeep
 
 # dependencies
 node_modules

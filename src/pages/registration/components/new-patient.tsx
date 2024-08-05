@@ -1,4 +1,3 @@
-import type { ReactNode } from 'react';
 
 import { useMemo, useRef, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -7,34 +6,27 @@ import {
   Box,
   Button,
   Grid,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Typography,
+  Typography
 } from '@mui/material';
 
 import {
   RHFMobileDatePicker,
-  RHFRadioGroup,
   RHFTextField,
-  RHFTimePils,
+  RHFTimePils
 } from 'src/components/hook-form';
 import { Keyboard } from 'src/components/keyboard';
 
-import type { NewPatientProps } from '../model/types';
-import { label } from 'yet-another-react-lightbox';
 import { useTranslate } from 'src/locales';
+import type { NewPatientProps } from '../model/types';
 
 const NewPatient = (props: NewPatientProps) => {
-  const { handleNextPage, handlePreviousPage } = props;
+  const { handlePreviousPage } = props;
 
   const [elementName, setElementName] = useState('');
   const [keyboardType, setKeyboardType] = useState('');
   const inputRef = useRef<any>({});
 
-  const { watch } = useFormContext();
+  const { watch, setError, formState: { errors } } = useFormContext();
   const isForeign = watch('citizenship');
   const { t } = useTranslate();
 
@@ -191,7 +183,7 @@ const NewPatient = (props: NewPatientProps) => {
         </Grid>
         <Grid item xs={10}>
           <RHFTimePils
-            name="agama"
+            name="religion"
             options={listReligion}
             getOptionLabel={(opt) => opt.label}
             getOptionEqualToValue={(opt, value) => opt.value === value?.value}
@@ -273,7 +265,7 @@ const NewPatient = (props: NewPatientProps) => {
           variant="contained"
           fullWidth
           color="secondary"
-          onClick={handleNextPage}
+          type="submit"
         >
           {t('global.next')}
         </Button>

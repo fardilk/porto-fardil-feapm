@@ -1,5 +1,5 @@
 import { LoadingButton } from "@mui/lab";
-import { Alert, Box, Button, CircularProgress, Dialog, DialogContent, Divider, Grid, Stack, TextField, Typography, useTheme } from "@mui/material";
+import { Alert, Box, Button, CircularProgress, Dialog, DialogContent, Divider, Grid, IconButton, Stack, TextField, Typography, useTheme } from "@mui/material";
 import type { ReactNode } from "react";
 import React, { memo, useCallback, useMemo, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
@@ -50,7 +50,12 @@ const KeyboardWrapper = React.forwardRef((props: KeyboardWrapperProps, inputRef:
       <Dialog open={open || false} onClose={onClose} maxWidth="lg" fullWidth>
         <DialogContent>
           <Stack sx={{ my: 2 }} spacing={2}>
-            <Typography variant="subtitle1" gutterBottom>{inputLabel}</Typography>
+            <Box sx={{ display: "flex", placeItems: "center", placeContent: "space-between" }}>
+              <Typography variant="subtitle1" gutterBottom>{inputLabel}</Typography>
+              <IconButton size="large" color="error" title="Close" onClick={onClose}>
+                <Iconify icon="carbon:close-filled" width={28} />
+              </IconButton>
+            </Box>
             <TextField
               fullWidth
               value={values}

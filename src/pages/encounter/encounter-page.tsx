@@ -7,7 +7,6 @@ import { Form } from 'src/components/hook-form';
 import { InsertIdentifier } from 'src/components/insert-identifier';
 import { WindowContainer } from 'src/components/window-container';
 import { useStepper } from 'src/hooks';
-import { getDummyData } from '../registration/model/functions';
 import {
   ConfirmationOutpatient,
   ConfirmationOutpatientMCU,
@@ -339,17 +338,17 @@ const EncounterPage = () => {
       }
     } else {
       if (currentPage.value === 'insert_polis_number') {
-        await getDummyData('');
+        // await getDummyData('');
         handleChangePage({ action: 'next' });
       }
 
       if (currentPage.value === 'insert_employee_number') {
-        await getDummyData('');
+        // await getDummyData('');
         handleChangePage({ action: 'next' });
       }
 
       if (currentPage.value === 'insert_bpjs_number') {
-        await getDummyData('');
+        // await getDummyData('');
         handleChangePage({ action: 'next' });
       }
     }

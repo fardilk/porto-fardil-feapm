@@ -19,11 +19,11 @@ const InsertEmail = () => {
 
   return (
     <Stack gap={2}>
-      <Typography variant="h4" textAlign="center">{t("registration.input_your_email")}</Typography>
+      <Typography variant="h4" textAlign="center">{t("registration.subtitle.input_your_email")}</Typography>
       <RHFTextField
         id="email"
         name="email"
-        placeholder={t("registration.input_your_email")}
+        placeholder={t("registration.subtitle.input_your_email")}
         variant="filled"
         onClick={() => {
           setElementName("email")
