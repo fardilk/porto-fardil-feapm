@@ -30,8 +30,10 @@ import type {
   GetPatientByNIKResponse,
   Insurancetype,
   ListDoctorResponse,
+  ListLabPackageResponse,
   ListMCUPackageResponse,
   ListPolyResponse,
+  SelectedLabPackage,
   SelectedPractioner,
 } from './model/types';
 import InsertEmployeeNumber from './components/insert-employee-number';
@@ -57,6 +59,7 @@ import { useTranslate } from 'src/locales';
 import {
   createBooking,
   getDoctorList,
+  getLabPackage,
   getMCUPackage,
   getPatientByNIK,
   getPolyList,
@@ -74,11 +77,14 @@ const EncounterPage = () => {
   });
 
   const [selectedPractioner, setSelectedPractioner] = useState<Nullable<SelectedPractioner>>(null);
+  const [errorIdentifier, setErrorIdentifier] = useState<string>();
   const [selectedPackageMCUName, setSelectedPackageMCUName] = useState<Nullable<string>>(null);
+  const [selectedPackageLab, setSelectedPackageLab] = useState<Nullable<SelectedLabPackage>>(null);
   const [encounterType, setEncounterType] = useState<EncounterType>(null);
   const [patientData, setPatientData] = useState<Nullable<GetPatientByNIKResponse>>(null);
   const [listDoctor, setListDoctor] = useState<ListDoctorResponse>([]);
   const [mcuPackageList, setMCUPackageList] = useState<ListMCUPackageResponse>([]);
+  const [labPackageList, setLabPackageList] = useState<ListLabPackageResponse>([]);
   const [listPoly, setListPoly] = useState<ListPolyResponse>([]);
   const listEncounterType = [
     {
@@ -110,6 +116,7 @@ const EncounterPage = () => {
       localIcon: 'blood-test',
       onClick: () => {
         setEncounterType('LAB');
+        setValue('serviceType', 'LABORATORY')
         handleChangePage({ action: 'next', newFormSteps: formStepsLabGeneral });
       },
     },
@@ -157,10 +164,6 @@ const EncounterPage = () => {
   );
 
   const onPractitionerSelect = () => {
-    handleChangePage({ action: 'next' });
-  };
-
-  const onLabPakckageSelect = () => {
     handleChangePage({ action: 'next' });
   };
 
@@ -266,6 +269,19 @@ const EncounterPage = () => {
     }
   }, []);
 
+  const handleGetListPackageLab = useCallback(async (keyword: string, page: number) => {
+    try {
+      const response = await getLabPackage({
+        page,
+        keyword,
+      });
+
+      setLabPackageList(response);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
   const handleCreateBooking = useCallback(async () => {
     try {
       await createBooking({
@@ -278,7 +294,11 @@ const EncounterPage = () => {
             ? {
                 packageMCUId: getValues()?.MCUPackageId ?? '-',
               }
-            : {}),
+            : encounterType === 'LAB'
+              ? {
+                  packageLabId: getValues()?.LabPackageId,
+                }
+              : {}),
         patientId: getValues()?.patientId ?? '-',
         payplanClass: getValues()?.payplan ?? '-',
         serviceType: getValues()?.serviceType ?? '-',
@@ -313,6 +333,10 @@ const EncounterPage = () => {
       handleGetListPackageMCU('', 1);
     }
 
+    if (encounterType === 'LAB') {
+      handleGetListPackageLab('', 1);
+    }
+
     handleChangePage({ action: 'next' });
   };
 
@@ -327,14 +351,32 @@ const EncounterPage = () => {
     [handleChangePage, setValue, setSelectedPackageMCUName]
   );
 
+  const handleSelectLabPackage = useCallback(
+    (selected: { id: string; name: string; price: number }) => {
+      setValue('LabPackageId', selected.id);
+      setSelectedPackageLab({
+        name: selected.name,
+        price: selected.price,
+      });
+      handleChangePage({
+        action: 'next',
+      });
+    },
+    [handleChangePage, setValue, setSelectedPackageLab]
+  );
+
   const onSubmit = async (data: any) => {
     if (currentPageIndex === 1) {
       const nik = data?.nik?.replaceAll('\n', '');
-      try {
-        await handleGetPatientByNIK(nik);
-        handleChangePage({ action: 'next' });
-      } catch (e) {
-        console.log(e);
+      if (nik.length < 16) {
+        setErrorIdentifier('NIK minimal 16 karakter');
+      } else {
+        try {
+          await handleGetPatientByNIK(nik);
+          handleChangePage({ action: 'next' });
+        } catch (e) {
+          console.log(e);
+        }
       }
     } else {
       if (currentPage.value === 'insert_polis_number') {
@@ -353,6 +395,12 @@ const EncounterPage = () => {
       }
     }
   };
+
+  const watchNIK = watch('nik');
+
+  useEffect(() => {
+    setErrorIdentifier(undefined);
+  }, [watchNIK]);
 
   return (
     <AppPage>
@@ -377,7 +425,9 @@ const EncounterPage = () => {
               />
             )}
 
-            {currentPage.value === 'insert_nik' && <InsertIdentifier />}
+            {currentPage.value === 'insert_nik' && (
+              <InsertIdentifier errorMessage={errorIdentifier} />
+            )}
 
             {currentPage.value === 'information_outpatient_general' && patientData && (
               <InformationOutpatientGeneral
@@ -419,19 +469,19 @@ const EncounterPage = () => {
               />
             )}
 
-            {currentPage.value === 'confirmation_patient_registration' &&
-              patientData &&
-              selectedPractioner && (
-                <ConfirmationOutpatient
-                  patientDetail={patientData}
-                  doctorInfo={selectedPractioner}
-                  handleBack={() => {
-                    handleChangePage({ action: 'previous' });
-                  }}
-                  handleConfirm={handleCreateBooking}
-                  type="general"
-                />
-              )}
+            {currentPage.value === 'confirmation_patient_registration' && patientData && (
+              <ConfirmationOutpatient
+                patientDetail={patientData}
+                doctorInfo={selectedPractioner}
+                encounterType={encounterType}
+                labPackage={selectedPackageLab}
+                handleBack={() => {
+                  handleChangePage({ action: 'previous' });
+                }}
+                handleConfirm={handleCreateBooking}
+                type="general"
+              />
+            )}
 
             {currentPage.value === 'confirmation_patient_registration_mcu' &&
               patientData &&
@@ -446,27 +496,28 @@ const EncounterPage = () => {
                 />
               )}
 
-            {currentPage.value === 'confirmation_patient_registration_insurance' &&
-              patientData &&
-              selectedPractioner && (
-                <ConfirmationOutpatient
-                  doctorInfo={selectedPractioner}
-                  patientDetail={patientData}
-                  handleBack={() => {
-                    handleChangePage({ action: 'previous' });
-                  }}
-                  handleConfirm={() => {
-                    handleChangePage({ action: 'next' });
-                  }}
-                  type="insurance"
-                />
-              )}
+            {currentPage.value === 'confirmation_patient_registration_insurance' && patientData && (
+              <ConfirmationOutpatient
+                doctorInfo={selectedPractioner}
+                patientDetail={patientData}
+                encounterType={encounterType}
+                labPackage={selectedPackageLab}
+                handleBack={() => {
+                  handleChangePage({ action: 'previous' });
+                }}
+                handleConfirm={() => {
+                  handleChangePage({ action: 'next' });
+                }}
+                type="insurance"
+              />
+            )}
 
             {currentPage.value === 'registration_success' && patientData && (
               <SuccessOutpatient
                 patientData={patientData}
                 encounterType={encounterType}
                 practitioner={selectedPractioner}
+                labPackage={selectedPackageLab}
                 MCUPackageName={selectedPackageMCUName}
                 type="general"
               />
@@ -477,6 +528,7 @@ const EncounterPage = () => {
                 patientData={patientData}
                 encounterType={encounterType}
                 practitioner={selectedPractioner}
+                labPackage={selectedPackageLab}
                 MCUPackageName={selectedPackageMCUName}
                 type="insurance"
               />
@@ -487,6 +539,7 @@ const EncounterPage = () => {
                 patientData={patientData}
                 encounterType={encounterType}
                 practitioner={selectedPractioner}
+                labPackage={selectedPackageLab}
                 MCUPackageName={selectedPackageMCUName}
                 type="company"
               />
@@ -563,21 +616,21 @@ const EncounterPage = () => {
               />
             )}
 
-            {currentPage.value === 'confirmation_patient_registration_company' &&
-              patientData &&
-              selectedPractioner && (
-                <ConfirmationOutpatient
-                  doctorInfo={selectedPractioner}
-                  patientDetail={patientData}
-                  handleBack={() => {
-                    handleChangePage({ action: 'previous' });
-                  }}
-                  handleConfirm={() => {
-                    handleChangePage({ action: 'next' });
-                  }}
-                  type="company"
-                />
-              )}
+            {currentPage.value === 'confirmation_patient_registration_company' && patientData && (
+              <ConfirmationOutpatient
+                doctorInfo={selectedPractioner}
+                encounterType={encounterType}
+                patientDetail={patientData}
+                labPackage={selectedPackageLab}
+                handleBack={() => {
+                  handleChangePage({ action: 'previous' });
+                }}
+                handleConfirm={() => {
+                  handleChangePage({ action: 'next' });
+                }}
+                type="company"
+              />
+            )}
 
             {currentPage.value === 'insert_employee_number' && <InsertEmployeeNumber />}
 
@@ -607,27 +660,28 @@ const EncounterPage = () => {
               />
             )}
 
-            {currentPage.value === 'confirmation_patient_registration_bpjs' &&
-              patientData &&
-              selectedPractioner && (
-                <ConfirmationOutpatient
-                  doctorInfo={selectedPractioner}
-                  patientDetail={patientData}
-                  handleBack={() => {
-                    handleChangePage({ action: 'previous' });
-                  }}
-                  type="bpjs"
-                  handleConfirm={() => {
-                    handleChangePage({ action: 'next' });
-                  }}
-                />
-              )}
+            {currentPage.value === 'confirmation_patient_registration_bpjs' && patientData && (
+              <ConfirmationOutpatient
+                doctorInfo={selectedPractioner}
+                encounterType={encounterType}
+                patientDetail={patientData}
+                labPackage={selectedPackageLab}
+                handleBack={() => {
+                  handleChangePage({ action: 'previous' });
+                }}
+                type="bpjs"
+                handleConfirm={() => {
+                  handleChangePage({ action: 'next' });
+                }}
+              />
+            )}
 
             {currentPage.value === 'registration_success_bpjs' && patientData && (
               <SuccessOutpatient
                 patientData={patientData}
                 encounterType={encounterType}
                 practitioner={selectedPractioner}
+                labPackage={selectedPackageLab}
                 MCUPackageName={selectedPackageMCUName}
                 type="bpjs"
               />
@@ -644,7 +698,13 @@ const EncounterPage = () => {
             )}
 
             {currentPage.value === 'select_lab_package' && (
-              <SelectLabPackage onCardSelect={onLabPakckageSelect} />
+              <SelectLabPackage
+                onCardSelect={handleSelectLabPackage}
+                watchFormValue={watch}
+                setFormValue={setValue}
+                data={labPackageList}
+                handleGetPackage={handleGetListPackageLab}
+              />
             )}
 
             {currentPage.value === 'select_rad_service' && (

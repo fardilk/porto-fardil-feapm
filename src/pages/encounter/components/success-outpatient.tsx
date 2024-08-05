@@ -10,6 +10,7 @@ import { buttonStyle, getPaymentType } from '../model/variables';
 import { useCountdownSeconds } from 'src/hooks';
 import { useNavigate } from 'react-router';
 import { useTranslate } from 'src/locales';
+import { fCurrency } from 'src/utils/format-number';
 
 const SuccessOutpatient = ({
   type,
@@ -17,6 +18,7 @@ const SuccessOutpatient = ({
   patientData,
   MCUPackageName,
   practitioner,
+  labPackage,
 }: SuccessOutpatientType) => {
   const navigate = useNavigate();
   const {
@@ -76,15 +78,32 @@ const SuccessOutpatient = ({
               localIcon: 'medical-checkup',
             },
           ]
-        : []),
+        : encounterType === 'LAB'
+          ? [
+              {
+                title: t('appointment.service_destination'),
+                body: 'Laboratorium',
+                localIcon: 'blood-test',
+              },
+            ]
+          : []),
     {
       ...getPaymentType(type, t),
     },
-    {
-      title: t('appointment.encounter.schedule'),
-      body: 'Senin, 30-01-2022, 10:00-14:00',
-      localIcon: 'jadwal',
-    },
+    ...(encounterType === 'LAB' && labPackage
+      ? [
+        {
+          title: labPackage.name,
+          body: fCurrency(labPackage.price),
+          localIcon: 'blood-test',
+          titleProps: { variant: 'subtitle1', sx: { color: 'primary.darker' } },
+          bodyProps: {
+            variant: 'subtitle2',
+            sx: { color: 'primary.darker', fontWeight: '500' },
+          },
+        },
+        ]
+      : []),
   ];
 
   const getCountdown15 = useMemo(() => {
@@ -158,8 +177,16 @@ const SuccessOutpatient = ({
                   key={index}
                   {...row}
                   cardProps={{ variant: 'outlined' }}
-                  titleProps={{ variant: 'subtitle2', sx: { color: 'grey' } }}
-                  bodyProps={{ variant: 'subtitle2', sx: { color: 'primary.darker' } }}
+                  titleProps={
+                    row.titleProps
+                      ? (row.titleProps as any)
+                      : { variant: 'subtitle2', sx: { color: 'grey' } }
+                  }
+                  bodyProps={
+                    row.bodyProps
+                      ? (row.bodyProps as any)
+                      : { variant: 'subtitle2', sx: { color: 'primary.darker' } }
+                  }
                 />
               </Grid>
             );
