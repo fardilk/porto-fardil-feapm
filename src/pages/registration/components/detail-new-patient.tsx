@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { FC, ReactNode, useMemo } from 'react';
 import { RHFTimePils } from 'src/components/hook-form';
-import { NewPatientProps } from '../model/types';
+import { NewPatientProps, RegistrationIForm } from '../model/types';
 import { useTranslate } from 'src/locales';
 
 const DetailNewPatient: FC<NewPatientProps> = ({ handleNextPage, handlePreviousPage }) => {
@@ -317,7 +317,7 @@ const DetailNewPatient: FC<NewPatientProps> = ({ handleNextPage, handlePreviousP
           variant="contained"
           fullWidth
           color="secondary"
-          onClick={handleNextPage}
+          type="submit"
         >
           {t('global.next')}
         </Button>
