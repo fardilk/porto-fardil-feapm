@@ -8,17 +8,19 @@ import { useTranslate } from "src/locales"
 const InformationOutpatientGeneral = (props: InformationProps) => {
   const { t } = useTranslate()
 
-  const { leftButtonProps, rightButtonProps, leftTextButton, rightTextButton } = props
+  console.log("informasi outpatient")
+
+  const { leftButtonProps, rightButtonProps, leftTextButton, rightTextButton, data } = props
 
   const detailData = [
-    { title: t("appointment.patient.nik"), body: fAsterisk("100200300400") },
-    { title: t("appointment.patient.fullname"), body: "Anisa Redina" },
-    { title: t("appointment.patient.birthdateplace"), body: "Malaysia, 11-04-2000" },
-    { title: t("appointment.patient.blood_type"), body: "B" },
-    { title: t("appointment.patient.blood_rhesus"), body: "Negatif" },
-    { title: t("appointment.patient.address"), body: "Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan" },
-    { title: t("appointment.patient.phone"), body: fAsterisk("085157902550") },
-    { title: t("appointment.patient.email"), body: "anisa@gmail.com" },
+    { title: t("appointment.patient.nik"), body: fAsterisk(data.nik ?? data.passportNumber ?? "-") },
+    { title: t("appointment.patient.fullname"), body: data.name },
+    { title: t("appointment.patient.birthdateplace"), body: `${data.birthPlace}, ${data.birthDttm}` },
+    { title: t("appointment.patient.blood_type"), body: data.additional.bloodType },
+    { title: t("appointment.patient.blood_rhesus"), body: data.additional.bloodRhesus },
+    { title: t("appointment.patient.address"), body: data.address },
+    { title: t("appointment.patient.phone"), body: fAsterisk(data.phone) },
+    { title: t("appointment.patient.email"), body: data.email },
   ]
 
   return (

@@ -29,3 +29,5 @@ export type ISocialLink = {
   linkedin: string;
   twitter: string;
 };
+
+export type Nullable<T> = T | null;

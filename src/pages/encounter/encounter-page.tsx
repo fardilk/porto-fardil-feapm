@@ -1,9 +1,8 @@
 import { Box } from '@mui/material';
-import { useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { AppPage } from 'src/components/app-page';
-import type { CardBannerProps } from 'src/components/card-banner/types';
 import { Form } from 'src/components/hook-form';
 import { InsertIdentifier } from 'src/components/insert-identifier';
 import { WindowContainer } from 'src/components/window-container';
@@ -26,7 +25,15 @@ import {
   SelectPractitioner,
   SuccessOutpatient,
 } from './components';
-import type { EncounterType, Insurancetype } from './model/types';
+import type {
+  EncounterType,
+  GetPatientByNIKResponse,
+  Insurancetype,
+  ListDoctorResponse,
+  ListMCUPackageResponse,
+  ListPolyResponse,
+  SelectedPractioner,
+} from './model/types';
 import InsertEmployeeNumber from './components/insert-employee-number';
 import {
   formStepsMCUGeneral,
@@ -47,17 +54,32 @@ import { fAsterisk } from 'src/utils/helper';
 import SelectLabPackage from './components/select-lab-package';
 import SelectRadService from './components/select-rad-service';
 import { useTranslate } from 'src/locales';
+import {
+  createBooking,
+  getDoctorList,
+  getMCUPackage,
+  getPatientByNIK,
+  getPolyList,
+} from './model/functions';
+import { Nullable } from 'src/types/common';
 
 const EncounterPage = () => {
   const { t } = useTranslate();
+  const methods = useForm();
+  const { handleSubmit, watch, setValue, getValues } = methods;
 
   const navigate = useNavigate();
   const { currentPage, currentPageIndex, handleChangePage } = useStepper({
     initialSteps: formStepsOutpatientGeneral,
   });
-  
-  const [encounterType, setEncounterType] = useState<EncounterType>(null);
 
+  const [selectedPractioner, setSelectedPractioner] = useState<Nullable<SelectedPractioner>>(null);
+  const [selectedPackageMCUName, setSelectedPackageMCUName] = useState<Nullable<string>>(null);
+  const [encounterType, setEncounterType] = useState<EncounterType>(null);
+  const [patientData, setPatientData] = useState<Nullable<GetPatientByNIKResponse>>(null);
+  const [listDoctor, setListDoctor] = useState<ListDoctorResponse>([]);
+  const [mcuPackageList, setMCUPackageList] = useState<ListMCUPackageResponse>([]);
+  const [listPoly, setListPoly] = useState<ListPolyResponse>([]);
   const listEncounterType = [
     {
       title: t('encounter.outpatient.title'),
@@ -65,6 +87,7 @@ const EncounterPage = () => {
       localIcon: 'stethoscope',
       onClick: () => {
         setEncounterType('RJ');
+        setValue('serviceType', 'OUTPATIENT');
         handleChangePage({ action: 'next', newFormSteps: formStepsOutpatientGeneral });
       },
     },
@@ -74,6 +97,7 @@ const EncounterPage = () => {
       localIcon: 'medical-checkup',
       onClick: () => {
         setEncounterType('MCU');
+        setValue('serviceType', 'MCU');
         handleChangePage({
           action: 'next',
           newFormSteps: formStepsMCUGeneral,
@@ -131,9 +155,6 @@ const EncounterPage = () => {
     ],
     [t]
   );
-
-  const methods = useForm();
-  const { handleSubmit } = methods;
 
   const onPractitionerSelect = () => {
     handleChangePage({ action: 'next' });
@@ -206,11 +227,115 @@ const EncounterPage = () => {
     }
   };
 
-  const onSubmit = async (data: any) => {
-    if (currentPageIndex === 1) {
-      // await getDummyData('company');
+  const handleGetListDoctor = useCallback(async (keyword: string, page: number) => {
+    try {
+      const response = await getDoctorList({
+        page,
+        keyword,
+      });
+
+      setListDoctor(response);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+  const handleGetListPoly = useCallback(async (keyword: string, page: number) => {
+    try {
+      const response = await getPolyList({
+        page,
+        keyword,
+      });
+
+      setListPoly(response);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+  const handleGetListPackageMCU = useCallback(async (keyword: string, page: number) => {
+    try {
+      const response = await getMCUPackage({
+        page,
+        keyword,
+      });
+
+      setMCUPackageList(response);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+  const handleCreateBooking = useCallback(async () => {
+    try {
+      await createBooking({
+        ...(encounterType === 'RJ'
+          ? {
+              doctorId: getValues()?.practionerId ?? '-',
+              polyId: getValues()?.departmentId ?? '-',
+            }
+          : encounterType === 'MCU'
+            ? {
+                packageMCUId: getValues()?.MCUPackageId ?? '-',
+              }
+            : {}),
+        patientId: getValues()?.patientId ?? '-',
+        payplanClass: getValues()?.payplan ?? '-',
+        serviceType: getValues()?.serviceType ?? '-',
+      });
 
       handleChangePage({ action: 'next' });
+    } catch (e) {
+      console.log(e);
+    }
+  }, [getValues, handleChangePage, encounterType]);
+
+  const handleGetPatientByNIK = async (NIK: string) => {
+    try {
+      const res = await getPatientByNIK({
+        NIK,
+      });
+      setPatientData(res);
+      setValue('patientId', res.patientID);
+    } catch (e) {
+      Promise.reject(e);
+    }
+  };
+
+  const handleSelectGeneralPayment = () => {
+    setValue('payplan', 'GENERAL');
+    if (encounterType === 'RJ') {
+      handleGetListDoctor('', 1);
+      handleGetListPoly('', 1);
+    }
+
+    if (encounterType === 'MCU') {
+      handleGetListPackageMCU('', 1);
+    }
+
+    handleChangePage({ action: 'next' });
+  };
+
+  const handleSelectMCUPackage = useCallback(
+    (selected: { id: string; packageName: string }) => {
+      setValue('MCUPackageId', selected.id);
+      setSelectedPackageMCUName(selected.packageName);
+      handleChangePage({
+        action: 'next',
+      });
+    },
+    [handleChangePage, setValue, setSelectedPackageMCUName]
+  );
+
+  const onSubmit = async (data: any) => {
+    if (currentPageIndex === 1) {
+      const nik = data?.nik?.replaceAll('\n', '');
+      try {
+        await handleGetPatientByNIK(nik);
+        handleChangePage({ action: 'next' });
+      } catch (e) {
+        console.log(e);
+      }
     } else {
       if (currentPage.value === 'insert_polis_number') {
         // await getDummyData('');
@@ -254,12 +379,13 @@ const EncounterPage = () => {
 
             {currentPage.value === 'insert_nik' && <InsertIdentifier />}
 
-            {currentPage.value === 'information_outpatient_general' && (
+            {currentPage.value === 'information_outpatient_general' && patientData && (
               <InformationOutpatientGeneral
-                leftTextButton={t("appointment.patient.actions.invalid_button")}
-                rightTextButton={t("appointment.patient.actions.valid_button")}
+                leftTextButton={t('appointment.patient.actions.invalid_button')}
+                rightTextButton={t('appointment.patient.actions.valid_button')}
                 leftButtonProps={{
                   onClick: () => {
+                    setPatientData(null);
                     handleChangePage({ action: 'previous' });
                   },
                 }}
@@ -268,68 +394,102 @@ const EncounterPage = () => {
                     handleChangePage({ action: 'next' });
                   },
                 }}
+                data={patientData}
               />
             )}
 
             {currentPage.value === 'payment_method' && (
               <PaymentMethod
-                handleGeneral={() => {
-                  handleChangePage({ action: 'next' });
-                }}
+                handleGeneral={handleSelectGeneralPayment}
                 encounterType={encounterType}
                 handleAssurance={onAssuranceSelect}
               />
             )}
 
             {currentPage.value === 'select_healthcare_practitioner' && (
-              <SelectPractitioner onCardSelect={onPractitionerSelect} />
+              <SelectPractitioner
+                setFormValue={setValue}
+                watchFormValue={watch}
+                onCardSelect={onPractitionerSelect}
+                handleGetDoctor={handleGetListDoctor}
+                handleGetPoly={handleGetListPoly}
+                setSelectedPractitioner={setSelectedPractioner}
+                listDoctor={listDoctor}
+                listPoly={listPoly}
+              />
             )}
 
-            {currentPage.value === 'confirmation_patient_registration' && (
-              <ConfirmationOutpatient
-                handleBack={() => {
-                  handleChangePage({ action: 'previous' });
-                }}
-                handleConfirm={() => {
-                  handleChangePage({ action: 'next' });
-                }}
+            {currentPage.value === 'confirmation_patient_registration' &&
+              patientData &&
+              selectedPractioner && (
+                <ConfirmationOutpatient
+                  patientDetail={patientData}
+                  doctorInfo={selectedPractioner}
+                  handleBack={() => {
+                    handleChangePage({ action: 'previous' });
+                  }}
+                  handleConfirm={handleCreateBooking}
+                  type="general"
+                />
+              )}
+
+            {currentPage.value === 'confirmation_patient_registration_mcu' &&
+              patientData &&
+              selectedPackageMCUName && (
+                <ConfirmationOutpatientMCU
+                  packageName={selectedPackageMCUName}
+                  patientDetail={patientData}
+                  handleBack={() => {
+                    handleChangePage({ action: 'previous' });
+                  }}
+                  handleConfirm={handleCreateBooking}
+                />
+              )}
+
+            {currentPage.value === 'confirmation_patient_registration_insurance' &&
+              patientData &&
+              selectedPractioner && (
+                <ConfirmationOutpatient
+                  doctorInfo={selectedPractioner}
+                  patientDetail={patientData}
+                  handleBack={() => {
+                    handleChangePage({ action: 'previous' });
+                  }}
+                  handleConfirm={() => {
+                    handleChangePage({ action: 'next' });
+                  }}
+                  type="insurance"
+                />
+              )}
+
+            {currentPage.value === 'registration_success' && patientData && (
+              <SuccessOutpatient
+                patientData={patientData}
+                encounterType={encounterType}
+                practitioner={selectedPractioner}
+                MCUPackageName={selectedPackageMCUName}
                 type="general"
               />
             )}
 
-            {currentPage.value === 'confirmation_patient_registration_mcu' && (
-              <ConfirmationOutpatientMCU
-                handleBack={() => {
-                  handleChangePage({ action: 'previous' });
-                }}
-                handleConfirm={() => {
-                  handleChangePage({ action: 'next' });
-                }}
-              />
-            )}
-
-            {currentPage.value === 'confirmation_patient_registration_insurance' && (
-              <ConfirmationOutpatient
-                handleBack={() => {
-                  handleChangePage({ action: 'previous' });
-                }}
-                handleConfirm={() => {
-                  handleChangePage({ action: 'next' });
-                }}
+            {currentPage.value === 'registration_success_insurance' && patientData && (
+              <SuccessOutpatient
+                patientData={patientData}
+                encounterType={encounterType}
+                practitioner={selectedPractioner}
+                MCUPackageName={selectedPackageMCUName}
                 type="insurance"
               />
             )}
 
-            {currentPage.value === 'registration_success' && (
-              <SuccessOutpatient encounterType={encounterType} type="general" />
-            )}
-
-            {currentPage.value === 'registration_success_insurance' && (
-              <SuccessOutpatient encounterType={encounterType} type="insurance" />
-            )}
-
-            {currentPage.value === 'registration_success_company' && (
-              <SuccessOutpatient encounterType={encounterType} type="company" />
+            {currentPage.value === 'registration_success_company' && patientData && (
+              <SuccessOutpatient
+                patientData={patientData}
+                encounterType={encounterType}
+                practitioner={selectedPractioner}
+                MCUPackageName={selectedPackageMCUName}
+                type="company"
+              />
             )}
 
             {currentPage.value === 'select_insurance' && (
@@ -403,17 +563,21 @@ const EncounterPage = () => {
               />
             )}
 
-            {currentPage.value === 'confirmation_patient_registration_company' && (
-              <ConfirmationOutpatient
-                handleBack={() => {
-                  handleChangePage({ action: 'previous' });
-                }}
-                handleConfirm={() => {
-                  handleChangePage({ action: 'next' });
-                }}
-                type="company"
-              />
-            )}
+            {currentPage.value === 'confirmation_patient_registration_company' &&
+              patientData &&
+              selectedPractioner && (
+                <ConfirmationOutpatient
+                  doctorInfo={selectedPractioner}
+                  patientDetail={patientData}
+                  handleBack={() => {
+                    handleChangePage({ action: 'previous' });
+                  }}
+                  handleConfirm={() => {
+                    handleChangePage({ action: 'next' });
+                  }}
+                  type="company"
+                />
+              )}
 
             {currentPage.value === 'insert_employee_number' && <InsertEmployeeNumber />}
 
@@ -443,29 +607,39 @@ const EncounterPage = () => {
               />
             )}
 
-            {currentPage.value === 'confirmation_patient_registration_bpjs' && (
-              <ConfirmationOutpatient
-                handleBack={() => {
-                  handleChangePage({ action: 'previous' });
-                }}
-                type="bpjs"
-                handleConfirm={() => {
-                  handleChangePage({ action: 'next' });
-                }}
-              />
-            )}
+            {currentPage.value === 'confirmation_patient_registration_bpjs' &&
+              patientData &&
+              selectedPractioner && (
+                <ConfirmationOutpatient
+                  doctorInfo={selectedPractioner}
+                  patientDetail={patientData}
+                  handleBack={() => {
+                    handleChangePage({ action: 'previous' });
+                  }}
+                  type="bpjs"
+                  handleConfirm={() => {
+                    handleChangePage({ action: 'next' });
+                  }}
+                />
+              )}
 
-            {currentPage.value === 'registration_success_bpjs' && (
-              <SuccessOutpatient encounterType={encounterType} type="bpjs" />
+            {currentPage.value === 'registration_success_bpjs' && patientData && (
+              <SuccessOutpatient
+                patientData={patientData}
+                encounterType={encounterType}
+                practitioner={selectedPractioner}
+                MCUPackageName={selectedPackageMCUName}
+                type="bpjs"
+              />
             )}
 
             {currentPage.value === 'select_mcu_package' && (
               <SelectMCUPackage
-                handleSelect={() =>
-                  handleChangePage({
-                    action: 'next',
-                  })
-                }
+                handleSelect={handleSelectMCUPackage}
+                watchFormValue={watch}
+                setFormValue={setValue}
+                data={mcuPackageList}
+                handleGetPackage={handleGetListPackageMCU}
               />
             )}
 

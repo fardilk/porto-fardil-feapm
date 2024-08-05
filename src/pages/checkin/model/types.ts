@@ -1,8 +1,8 @@
+import { Nullable } from "src/types/common";
+
 export type InsertBookingProps = {
   errorMessage?: string;
 };
-
-type Nullable<T> = T | null;
 
 export type CheckinResponse = {
   booking: {

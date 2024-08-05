@@ -18,7 +18,7 @@ const LabelListTextCard: FC<LabelListTextCardProps> = ({
     }}
     onClick={action}>
       <Card variant='outlined'
-      sx={{width:"100%"}}
+      sx={{width:"100%", height: "100%"}}
       >
         <Box
           sx={{
@@ -26,41 +26,45 @@ const LabelListTextCard: FC<LabelListTextCardProps> = ({
             gap: 2,
             px: 1.5,
             py: 1.5,
+            height: "100%",
             placeItems: 'center',
             alignItems: 'start',
           }}
         >
           <Iconify localIcon="medical-checkup" sxIcon={{ width: 50 }} />
-          <Box>
+          <Box height="100%" display="flex" flexDirection="column">
             {headerText && (
               <Typography variant="subtitle2" color="secondary.dark">
                 {headerText}
               </Typography>
             )}
-            {listText.length > 0 && (
-              <List
-                sx={{
-                  padding: 0,
-                  listStyleType: 'disc',
-                  paddingLeft: 2
-                }}
-              >
-                {listText.map((it, index) => (
-                  <ListItem
-                    key={index}
-                    sx={{
-                      padding: 0,
-                      display: 'list-item',
-                      "::marker": {
-                        color: theme.palette.secondary.dark
-                      }
-                    }}
-                  >
-                    <Typography variant="caption" color="secondary.dark">{it}</Typography>
-                  </ListItem>
-                ))}
-              </List>
-            )}
+            <Box flex={1}>
+              {listText.length > 0 && (
+                <List
+                  sx={{
+                    padding: 0,
+                    listStyleType: 'disc',
+                    paddingLeft: 2
+                  }}
+                >
+                  {listText.map((it, index) => (
+                    <ListItem
+                      key={index}
+                      sx={{
+                        padding: 0,
+                        display: 'list-item',
+                        "::marker": {
+                          color: theme.palette.secondary.dark
+                        }
+                      }}
+                    >
+                      <Typography variant="caption" color="secondary.dark">{it}</Typography>
+                    </ListItem>
+                  ))}
+                </List>
+              )}
+
+            </Box>
             {sectionBottom}
           </Box>
         </Box>
