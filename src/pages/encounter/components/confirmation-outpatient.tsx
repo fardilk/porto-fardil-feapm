@@ -10,6 +10,7 @@ import type {
   OutpatientType,
   SelectedLabPackage,
   SelectedPractioner,
+  SelectedRadiologyPackage,
 } from '../model/types';
 import { getPaymentType } from '../model/variables';
 import { useTranslate } from 'src/locales';
@@ -24,6 +25,7 @@ const ConfirmationOutpatient = ({
   doctorInfo,
   encounterType,
   labPackage,
+  radPackage
 }: {
   handleBack: () => void;
   handleConfirm: () => void;
@@ -31,6 +33,7 @@ const ConfirmationOutpatient = ({
   patientDetail: GetPatientByNIKResponse;
   doctorInfo: Nullable<SelectedPractioner>;
   labPackage: Nullable<SelectedLabPackage>;
+  radPackage: Nullable<SelectedRadiologyPackage>
   encounterType: EncounterType;
 }) => {
   const { t } = useTranslate();
@@ -90,7 +93,21 @@ const ConfirmationOutpatient = ({
               },
             },
           ]
-        : []),
+        : encounterType === 'RAD' && radPackage ? [{
+          title: t('appointment.encounter.healthcare_service'),
+          body: 'Radiologi',
+          localIcon: 'x-rays',
+        },
+        {
+          title: radPackage.name,
+          body: fCurrency(radPackage.price),
+          localIcon: 'x-rays',
+          titleProps: { variant: 'subtitle1', sx: { color: 'primary.darker' } },
+          bodyProps: {
+            variant: 'subtitle2',
+            sx: { color: 'primary.darker', fontWeight: '500' },
+          },
+        },] : []),
     { ...getPaymentType(type, t) },
     ...(encounterType === 'RJ' && doctorInfo
       ? [

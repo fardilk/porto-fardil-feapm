@@ -33,8 +33,10 @@ import type {
   ListLabPackageResponse,
   ListMCUPackageResponse,
   ListPolyResponse,
+  ListRadiologyPackageResponse,
   SelectedLabPackage,
   SelectedPractioner,
+  SelectedRadiologyPackage,
 } from './model/types';
 import InsertEmployeeNumber from './components/insert-employee-number';
 import {
@@ -63,6 +65,7 @@ import {
   getMCUPackage,
   getPatientByNIK,
   getPolyList,
+  getRadiologyPackage,
 } from './model/functions';
 import { Nullable } from 'src/types/common';
 
@@ -80,11 +83,16 @@ const EncounterPage = () => {
   const [errorIdentifier, setErrorIdentifier] = useState<string>();
   const [selectedPackageMCUName, setSelectedPackageMCUName] = useState<Nullable<string>>(null);
   const [selectedPackageLab, setSelectedPackageLab] = useState<Nullable<SelectedLabPackage>>(null);
+  const [selectedPackageRadiology, setSelectedPackageRadiology] =
+    useState<Nullable<SelectedRadiologyPackage>>(null);
   const [encounterType, setEncounterType] = useState<EncounterType>(null);
   const [patientData, setPatientData] = useState<Nullable<GetPatientByNIKResponse>>(null);
   const [listDoctor, setListDoctor] = useState<ListDoctorResponse>([]);
   const [mcuPackageList, setMCUPackageList] = useState<ListMCUPackageResponse>([]);
   const [labPackageList, setLabPackageList] = useState<ListLabPackageResponse>([]);
+  const [radiologyPackageList, setRadiologyPackageList] = useState<ListRadiologyPackageResponse>(
+    []
+  );
   const [listPoly, setListPoly] = useState<ListPolyResponse>([]);
   const listEncounterType = [
     {
@@ -116,7 +124,7 @@ const EncounterPage = () => {
       localIcon: 'blood-test',
       onClick: () => {
         setEncounterType('LAB');
-        setValue('serviceType', 'LABORATORY')
+        setValue('serviceType', 'LABORATORY');
         handleChangePage({ action: 'next', newFormSteps: formStepsLabGeneral });
       },
     },
@@ -126,6 +134,7 @@ const EncounterPage = () => {
       localIcon: 'x-rays',
       onClick: () => {
         setEncounterType('RAD');
+        setValue('serviceType', 'RADIOLOGY');
         handleChangePage({ action: 'next', newFormSteps: formStepsRadGeneral });
       },
     },
@@ -282,6 +291,19 @@ const EncounterPage = () => {
     }
   }, []);
 
+  const handleGetListPackageRadiology = useCallback(async (keyword: string, page: number) => {
+    try {
+      const response = await getRadiologyPackage({
+        page,
+        keyword,
+      });
+
+      setRadiologyPackageList(response);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
   const handleCreateBooking = useCallback(async () => {
     try {
       await createBooking({
@@ -298,7 +320,11 @@ const EncounterPage = () => {
               ? {
                   packageLabId: getValues()?.LabPackageId,
                 }
-              : {}),
+              : encounterType === 'RAD'
+                ? {
+                    packageRadiologyId: getValues()?.radPackageId,
+                  }
+                : {}),
         patientId: getValues()?.patientId ?? '-',
         payplanClass: getValues()?.payplan ?? '-',
         serviceType: getValues()?.serviceType ?? '-',
@@ -337,6 +363,10 @@ const EncounterPage = () => {
       handleGetListPackageLab('', 1);
     }
 
+    if (encounterType === 'RAD') {
+      handleGetListPackageRadiology('', 1);
+    }
+
     handleChangePage({ action: 'next' });
   };
 
@@ -363,6 +393,20 @@ const EncounterPage = () => {
       });
     },
     [handleChangePage, setValue, setSelectedPackageLab]
+  );
+
+  const handleSelectRadiologyPackage = useCallback(
+    (selected: { id: string; name: string; price: number }) => {
+      setValue('radPackageId', selected.id);
+      setSelectedPackageRadiology({
+        name: selected.name,
+        price: selected.price,
+      });
+      handleChangePage({
+        action: 'next',
+      });
+    },
+    [handleChangePage, setValue, setSelectedPackageRadiology]
   );
 
   const onSubmit = async (data: any) => {
@@ -472,6 +516,7 @@ const EncounterPage = () => {
             {currentPage.value === 'confirmation_patient_registration' && patientData && (
               <ConfirmationOutpatient
                 patientDetail={patientData}
+                radPackage={selectedPackageRadiology}
                 doctorInfo={selectedPractioner}
                 encounterType={encounterType}
                 labPackage={selectedPackageLab}
@@ -499,6 +544,7 @@ const EncounterPage = () => {
             {currentPage.value === 'confirmation_patient_registration_insurance' && patientData && (
               <ConfirmationOutpatient
                 doctorInfo={selectedPractioner}
+                radPackage={selectedPackageRadiology}
                 patientDetail={patientData}
                 encounterType={encounterType}
                 labPackage={selectedPackageLab}
@@ -516,6 +562,7 @@ const EncounterPage = () => {
               <SuccessOutpatient
                 patientData={patientData}
                 encounterType={encounterType}
+                radiologyPackage={selectedPackageRadiology}
                 practitioner={selectedPractioner}
                 labPackage={selectedPackageLab}
                 MCUPackageName={selectedPackageMCUName}
@@ -526,6 +573,7 @@ const EncounterPage = () => {
             {currentPage.value === 'registration_success_insurance' && patientData && (
               <SuccessOutpatient
                 patientData={patientData}
+                radiologyPackage={selectedPackageRadiology}
                 encounterType={encounterType}
                 practitioner={selectedPractioner}
                 labPackage={selectedPackageLab}
@@ -537,6 +585,7 @@ const EncounterPage = () => {
             {currentPage.value === 'registration_success_company' && patientData && (
               <SuccessOutpatient
                 patientData={patientData}
+                radiologyPackage={selectedPackageRadiology}
                 encounterType={encounterType}
                 practitioner={selectedPractioner}
                 labPackage={selectedPackageLab}
@@ -619,6 +668,7 @@ const EncounterPage = () => {
             {currentPage.value === 'confirmation_patient_registration_company' && patientData && (
               <ConfirmationOutpatient
                 doctorInfo={selectedPractioner}
+                radPackage={selectedPackageRadiology}
                 encounterType={encounterType}
                 patientDetail={patientData}
                 labPackage={selectedPackageLab}
@@ -663,6 +713,7 @@ const EncounterPage = () => {
             {currentPage.value === 'confirmation_patient_registration_bpjs' && patientData && (
               <ConfirmationOutpatient
                 doctorInfo={selectedPractioner}
+                radPackage={selectedPackageRadiology}
                 encounterType={encounterType}
                 patientDetail={patientData}
                 labPackage={selectedPackageLab}
@@ -679,6 +730,7 @@ const EncounterPage = () => {
             {currentPage.value === 'registration_success_bpjs' && patientData && (
               <SuccessOutpatient
                 patientData={patientData}
+                radiologyPackage={selectedPackageRadiology}
                 encounterType={encounterType}
                 practitioner={selectedPractioner}
                 labPackage={selectedPackageLab}
@@ -708,7 +760,13 @@ const EncounterPage = () => {
             )}
 
             {currentPage.value === 'select_rad_service' && (
-              <SelectRadService onCardSelect={onRadServiceSelect} />
+              <SelectRadService
+                onCardSelect={handleSelectRadiologyPackage}
+                watchFormValue={watch}
+                setFormValue={setValue}
+                data={radiologyPackageList}
+                handleGetPackage={handleGetListPackageRadiology}
+              />
             )}
           </Box>
         </WindowContainer>

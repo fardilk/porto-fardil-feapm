@@ -19,6 +19,7 @@ const SuccessOutpatient = ({
   MCUPackageName,
   practitioner,
   labPackage,
+  radiologyPackage,
 }: SuccessOutpatientType) => {
   const navigate = useNavigate();
   const {
@@ -86,24 +87,45 @@ const SuccessOutpatient = ({
                 localIcon: 'blood-test',
               },
             ]
-          : []),
+          : encounterType === 'RAD'
+            ? [
+                {
+                  title: t('appointment.service_destination'),
+                  body: 'Radiologi',
+                  localIcon: 'x-rays',
+                },
+              ]
+            : []),
     {
       ...getPaymentType(type, t),
     },
     ...(encounterType === 'LAB' && labPackage
       ? [
-        {
-          title: labPackage.name,
-          body: fCurrency(labPackage.price),
-          localIcon: 'blood-test',
-          titleProps: { variant: 'subtitle1', sx: { color: 'primary.darker' } },
-          bodyProps: {
-            variant: 'subtitle2',
-            sx: { color: 'primary.darker', fontWeight: '500' },
+          {
+            title: labPackage.name,
+            body: fCurrency(labPackage.price),
+            localIcon: 'blood-test',
+            titleProps: { variant: 'subtitle1', sx: { color: 'primary.darker' } },
+            bodyProps: {
+              variant: 'subtitle2',
+              sx: { color: 'primary.darker', fontWeight: '500' },
+            },
           },
-        },
         ]
-      : []),
+      : encounterType === 'RAD' && radiologyPackage
+        ? [
+            {
+              title: radiologyPackage.name,
+              body: fCurrency(radiologyPackage.price),
+              localIcon: 'x-rays',
+              titleProps: { variant: 'subtitle1', sx: { color: 'primary.darker' } },
+              bodyProps: {
+                variant: 'subtitle2',
+                sx: { color: 'primary.darker', fontWeight: '500' },
+              },
+            },
+          ]
+        : []),
   ];
 
   const getCountdown15 = useMemo(() => {
