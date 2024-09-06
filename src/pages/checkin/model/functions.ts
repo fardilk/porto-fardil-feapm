@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request';
 import GqlClient from 'src/utils/gql';
-import type { CheckinResponse } from './types';
+import { BookingType } from './types';
 
 const req = new GqlClient({
   module: 'appointment',
@@ -10,43 +10,55 @@ export const getCheckin = async ({
   bookingNumber,
 }: {
   bookingNumber: string;
-}): Promise<CheckinResponse> => {
+}): Promise<BookingType> => {
   const res = await req.request(
     gql`
-      query appointmentGet($bookingNumber: String!) {
-        appointmentGet(bookingNumber: $bookingNumber) {
-          booking {
-            bookingID
-            payplanClass
-            notes
-            patient {
-              nik
-              name
-              birthDttm
-              birthPlace
-              phone
-              email
-              address
-              gender
+      query bookingGet($bookingNumber: String!) {
+        bookingGet(bookingNumber: $bookingNumber) {
+          bookingID
+          bookingNumber
+          notes
+          encounter {
+            healthcareServiceName
+            practitionerName
+            scheduleSlotDate
+            package {
+              packageID
+              packageName
+            }
+          }
+          patient {
+            patientID
+            identifierTypeCode
+            identifierValue
+            medrec
+            name
+            gender
+            religion
+            birthPlace
+            birthDttm
+            maritalStatus
+            phone
+            email
+            nationality
+            address
+            additional {
               bloodType
               bloodRhesus
+              education
+              occupation
+              dailyLanguage
             }
-            encounter {
-              healthcareServiceName
-              practitionerName
-              scheduleSlotDate
-              scheduleSlotStartTime
-            }
-            bpjs {
-              referralNumber
-              referralDate
-              performerServiceName
-              subscriberInstitution
-              subscriberNumber
-              subscriberCategory
-              subscriberStatus
-              subscriberClass
-            }
+          }
+          bpjs {
+            subscriberNumber
+            subscriberClass
+            subscriberCategory
+            subscriberInstitution
+            subscriberStatus
+            referralNumber
+            referralDate
+            performerServiceName
           }
         }
       }
@@ -54,5 +66,5 @@ export const getCheckin = async ({
     { bookingNumber }
   );
 
-  return res.appointmentGet;
+  return res.bookingGet;
 };

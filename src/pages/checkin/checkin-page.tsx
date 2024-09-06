@@ -10,7 +10,8 @@ import { toast } from 'src/components/snackbar';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslate } from 'src/locales';
 import { getCheckin } from './model/functions';
-import type { CheckinResponse } from './model/types';
+import { BookingType } from './model/types';
+import nProgress from 'nprogress';
 
 const CheckinPage = () => {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ const CheckinPage = () => {
   const { currentPage, handleChangePage } = useStepper({
     initialSteps: steps,
   });
-  const [dataCheckin, setDataCheckin] = useState<CheckinResponse | null>(null);
+  const [dataCheckin, setDataCheckin] = useState<BookingType | null>(null);
 
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -27,18 +28,24 @@ const CheckinPage = () => {
 
   const onSubmit = async (data: { booking_number?: string }): Promise<void> => {
     const bookingNumber = data.booking_number?.replaceAll('\n', '');
+    console.log(bookingNumber);
 
     if (!bookingNumber) {
       toast.error(t('checkin.error.empty_booking_number'));
     } else {
       try {
+        nProgress.start();
         const response = await getCheckin({
           bookingNumber,
         });
+        toast.success('Berhasil Lapor Kehadiran');
         setDataCheckin(response);
+        console.log(response);
         handleChangePage({ action: 'next' });
       } catch (e) {
-        console.log(e);
+        toast.error('Gagal Lapor Kehadiran');
+      } finally {
+        nProgress.done();
       }
     }
   };
