@@ -1,3 +1,8 @@
 [submodule "_resources/http-requests"]
 	path = _resources/http-requests
 	url = git@github.com:developersismedika/apem-graphql-http-files.git
+	branch = develop
+[submodule "_resources/json"]
+	path = _resources/json
+	url = git@github.com:developersismedika/apem-json-resources.git
+	branch = develop

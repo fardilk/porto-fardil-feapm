@@ -1,5 +1,5 @@
 import { Box, Button, Divider, Stack, Typography } from "@mui/material";
-import { FC } from "react";
+import type { FC } from "react";
 import { Iconify } from "src/components/iconify";
 import { useTranslate } from "src/locales";
 

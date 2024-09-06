@@ -6,7 +6,7 @@ import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
 import { fAsterisk } from 'src/utils/helper';
 import { useTranslate } from 'src/locales';
 import { getPaymentType } from '../model/variables';
-import { GetPatientByNIKResponse } from '../model/types';
+import type { GetPatientByNIKResponse } from '../model/types';
 
 const ConfirmationOutpatientMCU = ({
   handleBack,

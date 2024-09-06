@@ -1,5 +1,6 @@
-import { ReactNode, useMemo, useRef, useState } from 'react';
-import { SelectTimeProps } from '../model/types';
+import type { ReactNode} from 'react';
+import { useMemo } from 'react';
+import type { SelectTimeProps } from '../model/types';
 import { RHFMobileDatePicker, RHFTimePils } from 'src/components/hook-form';
 import {
   Button,
@@ -13,7 +14,8 @@ import {
   TableCell,
   TableRow,
 } from '@mui/material';
-import { LabelTextContainer, LabelTextProps } from 'src/components/label-text';
+import type { LabelTextProps } from 'src/components/label-text';
+import { LabelTextContainer } from 'src/components/label-text';
 import { useTranslate } from 'src/locales';
 
 const SelectTime = (props: SelectTimeProps) => {

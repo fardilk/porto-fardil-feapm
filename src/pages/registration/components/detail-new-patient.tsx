@@ -8,9 +8,10 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import { FC, ReactNode, useMemo } from 'react';
+import type { FC, ReactNode} from 'react';
+import { useMemo } from 'react';
 import { RHFTimePils } from 'src/components/hook-form';
-import { NewPatientProps, RegistrationIForm } from '../model/types';
+import type { NewPatientProps} from '../model/types';
 import { useTranslate } from 'src/locales';
 
 const DetailNewPatient: FC<NewPatientProps> = ({ handleNextPage, handlePreviousPage }) => {

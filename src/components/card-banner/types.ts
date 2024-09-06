@@ -1,5 +1,5 @@
 import type { CardProps, TypographyProps } from '@mui/material';
-import { IconifyProps } from '../iconify';
+import type { IconifyProps } from '../iconify';
 
 export type ButtonBaseOverrideProps = {
   clickable?: boolean;

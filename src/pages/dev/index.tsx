@@ -1,7 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup"
 import { LoadingButton } from "@mui/lab"
 import { Box, Divider, Grid, MenuItem, Typography } from "@mui/material"
-import { lazy, ReactNode, Suspense, useMemo } from "react"
+import type { ReactNode} from "react";
+import { lazy, Suspense, useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { AppPage } from "src/components/app-page"
@@ -9,7 +10,7 @@ import { Form, RHFAutocomplete, RHFCheckbox, RHFDatePicker, RHFSelect, RHFSwitch
 import { WindowContainer } from "src/components/window-container"
 import { timeout } from "src/utils/timeout"
 import { getUser } from "./model/functions"
-import { DevIForm } from "./model/model"
+import type { DevIForm } from "./model/model"
 import { devSchema } from "./model/schema"
 
 const DevPage = () => {

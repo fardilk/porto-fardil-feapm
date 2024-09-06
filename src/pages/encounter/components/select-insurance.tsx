@@ -2,9 +2,9 @@ import { Box, Button, ButtonBase, Card, Grid, Stack } from "@mui/material"
 import { useState } from "react"
 import { Iconify } from "src/components/iconify"
 import { LabelTextCard } from "src/components/label-text"
-import { LabelTextProps } from "src/components/label-text/types"
+import type { LabelTextProps } from "src/components/label-text/types"
 import { fDate } from "src/utils/format-time"
-import { SelectInsuranceProps } from "../model/types"
+import type { SelectInsuranceProps } from "../model/types"
 import { useTranslate } from "src/locales"
 
 const SelectInsurance = (props: SelectInsuranceProps) => {

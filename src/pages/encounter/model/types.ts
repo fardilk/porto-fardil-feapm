@@ -1,9 +1,7 @@
 import type { ButtonProps } from '@mui/material';
-import { Dispatch } from '@reduxjs/toolkit';
-import { SetStateAction } from 'react';
-import { FieldValues, UseFormSetValue, UseFormWatch } from 'react-hook-form';
+import type { FieldValues, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import type { CardBannerProps } from 'src/components/card-banner/types';
-import { Nullable } from 'src/types/common';
+import type { Nullable } from 'src/types/common';
 
 export type SelectEncounterTypeProps = {
   items: CardBannerProps[];
@@ -50,6 +48,18 @@ export type ListMCUPackageResponse = {
   contents: string[];
 }[];
 
+export type ListLabPackageResponse = {
+  packageID: string;
+  packageName: string;
+  price: number;
+}[]
+
+export type ListRadiologyPackageResponse = {
+  packageID: string;
+  packageName: string;
+  price: number;
+}[]
+
 export type AvailableDoctorResponse = {
   doctorID: string;
   doctorName: string;
@@ -84,6 +94,16 @@ export type SelectedPractioner = {
   serviceTime: string;
 };
 
+export type SelectedLabPackage = {
+  name: string;
+  price: number
+}
+
+export type SelectedRadiologyPackage = {
+  name: string;
+  price: number
+}
+
 export type SelectPractitionerProps = {
   onCardSelect: () => void;
   handleGetDoctor: (keyword: string, page: number) => Promise<void>;
@@ -113,6 +133,8 @@ export type SuccessOutpatientType = {
   patientData: GetPatientByNIKResponse;
   practitioner: Nullable<SelectedPractioner>
   MCUPackageName: Nullable<string>
+  labPackage: Nullable<SelectedLabPackage>
+  radiologyPackage: Nullable<SelectedRadiologyPackage>
 };
 
 export type SelectInsuranceNewProps = {
@@ -164,9 +186,17 @@ export type InformationPatientProps = {
 };
 
 export type SelectLabPackageProps = {
-  onCardSelect: () => void;
+  onCardSelect: (params: { id: string } & SelectedLabPackage) => void;
+  data: ListLabPackageResponse;
+  handleGetPackage: (keyword: string, page: number) => Promise<void>;
+  setFormValue: UseFormSetValue<FieldValues>;
+  watchFormValue: UseFormWatch<FieldValues>;
 };
 
 export type SelectRadServiceProps = {
-  onCardSelect: () => void;
+  onCardSelect: (params: { id: string } & SelectedLabPackage) => void;
+  data: ListRadiologyPackageResponse;
+  handleGetPackage: (keyword: string, page: number) => Promise<void>;
+  setFormValue: UseFormSetValue<FieldValues>;
+  watchFormValue: UseFormWatch<FieldValues>;
 };

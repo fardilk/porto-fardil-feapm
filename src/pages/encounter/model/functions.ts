@@ -1,11 +1,13 @@
 import { gql } from 'graphql-request';
 import GqlClient from 'src/utils/gql';
-import {
+import type {
   AvailableDoctorResponse,
   GetPatientByNIKResponse,
   ListDoctorResponse,
+  ListLabPackageResponse,
   ListMCUPackageResponse,
   ListPolyResponse,
+  ListRadiologyPackageResponse,
 } from './types';
 
 export const getPatientByNIK = async ({
@@ -14,7 +16,7 @@ export const getPatientByNIK = async ({
   NIK: string;
 }): Promise<GetPatientByNIKResponse> => {
   const req = new GqlClient({
-    endpoint: '/v1/patient/query',
+    module: 'patient',
   });
 
   const res = await req.request(
@@ -55,7 +57,7 @@ export const getDoctorList = async ({
   keyword: string;
 }): Promise<ListDoctorResponse> => {
   const req = new GqlClient({
-    endpoint: '/v1/doctor/query',
+    module: 'doctor',
   });
 
   const res = await req.request(
@@ -92,7 +94,7 @@ export const getMCUPackage = async ({
   keyword: string;
 }): Promise<ListMCUPackageResponse> => {
   const req = new GqlClient({
-    endpoint: '/v1/healthcare-service/query',
+    module: 'healthcare-service',
   });
 
   const res = await req.request(
@@ -124,7 +126,7 @@ export const getPolyList = async ({
   keyword: string;
 }): Promise<ListPolyResponse> => {
   const req = new GqlClient({
-    endpoint: '/v1/department/query',
+    module: 'department',
   });
 
   const res = await req.request(
@@ -152,7 +154,7 @@ export const getAvailableDoctor = async ({
   polyID: string;
 }): Promise<AvailableDoctorResponse> => {
   const req = new GqlClient({
-    endpoint: '/v1/doctor/query',
+    module: 'doctor',
   });
 
   const res = await req.request(
@@ -182,6 +184,8 @@ export const createBooking = async ({
   payplanClass,
   polyId,
   packageMCUId,
+  packageLabId,
+  packageRadiologyId,
   patientId,
 }: {
   serviceType: 'OUTPATIENT' | 'MCU' | 'LABORATORY' | 'RADIOLOGY';
@@ -189,10 +193,12 @@ export const createBooking = async ({
   doctorId?: string;
   polyId?: string;
   packageMCUId?: string;
+  packageLabId?: string;
+  packageRadiologyId?: string;
   patientId: string;
 }): Promise<AvailableDoctorResponse> => {
   const req = new GqlClient({
-    endpoint: '/v1/appointment/query',
+    module: 'appointment',
   });
 
   const res = await req.request(
@@ -206,17 +212,35 @@ export const createBooking = async ({
     {
       data: {
         serviceType,
-        ... doctorId && polyId ? {
-          serviceParamOutpatient: {
-            doctorID: doctorId,
-            departmentID: polyId,
-          }
-        } : {},
-        ... packageMCUId ? {
-          serviceParamMcu: {
-            packageID: packageMCUId
-          }
-        } : {},
+        ...(doctorId && polyId
+          ? {
+              serviceParamOutpatient: {
+                doctorID: doctorId,
+                departmentID: polyId,
+              },
+            }
+          : {}),
+        ...(packageMCUId
+          ? {
+              serviceParamMcu: {
+                packageID: packageMCUId,
+              },
+            }
+          : {}),
+        ...(packageLabId
+          ? {
+              serviceParamLaboratory: {
+                packageID: packageLabId,
+              },
+            }
+          : {}),
+        ...(packageRadiologyId
+          ? {
+              serviceParamRadiology: {
+                packageID: packageRadiologyId,
+              },
+            }
+          : {}),
         payorParam: {
           payplanClass,
         },
@@ -225,4 +249,58 @@ export const createBooking = async ({
   );
 
   return res.doctorAvailable;
+};
+
+export const getLabPackage = async ({
+  page,
+  keyword,
+}: {
+  page: number;
+  keyword: string;
+}): Promise<ListLabPackageResponse> => {
+  const req = new GqlClient({
+    module: 'healthcare-service',
+  });
+
+  const res = await req.request(
+    gql`
+      query labPackageList($page: Int!, $totalRecord: Int!, $keyword: String!) {
+        labPackageList(page: $page, totalRecord: $totalRecord, keyword: $keyword) {
+          packageID
+          packageName
+          price
+        }
+      }
+    `,
+    { page, keyword, totalRecord: 9 }
+  );
+
+  return res.labPackageList;
+};
+
+export const getRadiologyPackage = async ({
+  page,
+  keyword,
+}: {
+  page: number;
+  keyword: string;
+}): Promise<ListRadiologyPackageResponse> => {
+  const req = new GqlClient({
+    module: 'healthcare-service',
+  });
+
+  const res = await req.request(
+    gql`
+      query radiologyPackageList($page: Int!, $totalRecord: Int!, $keyword: String!) {
+        radiologyPackageList(page: $page, totalRecord: $totalRecord, keyword: $keyword) {
+          packageID
+          packageName
+          price
+        }
+      }
+    `,
+    { page, keyword, totalRecord: 9 }
+  );
+
+  return res.radiologyPackageList;
 };

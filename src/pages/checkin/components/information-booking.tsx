@@ -1,6 +1,7 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, Grid, Stack, Typography } from '@mui/material';
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import type { FC} from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AlertInformation } from 'src/components/alert-information';
 import { CardBanner } from 'src/components/card-banner';
 import { LabelTextContainer } from 'src/components/label-text';

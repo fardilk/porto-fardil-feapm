@@ -1,7 +1,8 @@
-import { Alert, Box, Button, TableCell, TableContainer, Typography } from '@mui/material';
+import { Alert, Box, Button, TableContainer } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { LabelTextContainer, LabelTextProps } from 'src/components/label-text';
+import type { LabelTextProps } from 'src/components/label-text';
+import { LabelTextContainer } from 'src/components/label-text';
 import { fAsterisk } from 'src/utils/helper';
 import type { PatientInformationProps } from '../model/types';
 import { useTranslate } from 'src/locales';

@@ -1,9 +1,9 @@
 import { gql } from 'graphql-request';
 import GqlClient from 'src/utils/gql';
-import { additionalType, RegisterResponse } from './types';
+import type { additionalType, RegisterResponse } from './types';
 
 const req = new GqlClient({
-  endpoint: '/v1/patient/query',
+  module: 'patient',
 });
 
 type Params = {
@@ -19,12 +19,10 @@ type Params = {
     nationality: string;
     address: string;
     additional: additionalType;
-  }
+  };
 };
 
-export const postPatient = async ({
-  data
-}: Params): Promise<RegisterResponse> => {
+export const postPatient = async ({ data }: Params): Promise<RegisterResponse> => {
   const res = await req.request(
     gql`
       mutation patientCreate($data: PatientCreateInput!) {
@@ -42,19 +40,19 @@ export const postPatient = async ({
           nationality
           address
           additional {
-              bloodType
-              bloodRhesus
-              religion
-              education
-              maritalStatus
-              occupation
-              dailyLanguage
+            bloodType
+            bloodRhesus
+            religion
+            education
+            maritalStatus
+            occupation
+            dailyLanguage
           }
         }
       }
     `,
     {
-      data
+      data,
     }
   );
   return res.patientCreate;

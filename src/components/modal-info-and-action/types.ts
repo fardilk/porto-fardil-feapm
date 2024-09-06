@@ -1,7 +1,7 @@
 import type { LoadingButtonProps } from '@mui/lab';
 import type { ButtonProps, DialogProps, SxProps, TypographyProps } from '@mui/material';
 import type { Theme } from '@mui/material/styles';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 export type ModalInfoAndActionProp = {
   disableHeader?: boolean;

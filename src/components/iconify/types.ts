@@ -1,7 +1,7 @@
 import type { IconProps } from '@iconify/react';
-import { SxProps } from '@mui/material';
+import type { SxProps } from '@mui/material';
 import type { BoxProps } from '@mui/material/Box';
-import { Theme } from '@mui/material/styles';
+import type { Theme } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 

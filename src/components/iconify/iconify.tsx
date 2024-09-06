@@ -23,7 +23,7 @@ const InternalIcon = (props: IconifyProps) => {
     return <Icon icon={icon} sx={sxIcon} {...other} />
   }
 
-  return <></>
+  return <>invalid icon</>
 }
 
 export const Iconify = forwardRef<SVGElement, IconifyProps>(

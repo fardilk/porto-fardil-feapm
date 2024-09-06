@@ -3,7 +3,7 @@ import GqlClient from 'src/utils/gql';
 import { BookingType } from './types';
 
 const req = new GqlClient({
-  endpoint: '/v1/appointment/query',
+  module: 'appointment',
 });
 
 export const getCheckin = async ({
