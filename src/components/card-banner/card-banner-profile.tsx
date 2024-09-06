@@ -1,6 +1,5 @@
-import { Box, Button, Card, CardContent, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Card, CardContent, Stack, Typography, useTheme } from "@mui/material";
 import { Iconify } from "../iconify";
-import { Label } from "../label";
 import { Image } from "../image";
 import { ButtonBaseOverride } from "./card-banner";
 import type { CardBannerProfileProps } from "./types";

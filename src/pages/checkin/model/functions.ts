@@ -1,12 +1,16 @@
 import { gql } from 'graphql-request';
 import GqlClient from 'src/utils/gql';
-import { CheckinResponse } from './types';
+import type { CheckinResponse } from './types';
 
 const req = new GqlClient({
-  endpoint: '/v1/appointment/query',
+  module: 'appointment',
 });
 
-export const getCheckin = async ({ bookingNumber }: { bookingNumber: string }) : Promise<CheckinResponse> => {
+export const getCheckin = async ({
+  bookingNumber,
+}: {
+  bookingNumber: string;
+}): Promise<CheckinResponse> => {
   const res = await req.request(
     gql`
       query appointmentGet($bookingNumber: String!) {
@@ -28,10 +32,10 @@ export const getCheckin = async ({ bookingNumber }: { bookingNumber: string }) :
               bloodRhesus
             }
             encounter {
-              healthcareServiceName,
-              practitionerName,
-              scheduleSlotDate,
-              scheduleSlotStartTime,
+              healthcareServiceName
+              practitionerName
+              scheduleSlotDate
+              scheduleSlotStartTime
             }
             bpjs {
               referralNumber

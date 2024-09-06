@@ -2,7 +2,7 @@ import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AlertInformation } from 'src/components/alert-information';
 import { CardBanner } from 'src/components/card-banner';
-import { LabelTextContainer, type LabelTextProps } from 'src/components/label-text';
+import { LabelTextContainer } from 'src/components/label-text';
 import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
 import { fAsterisk } from 'src/utils/helper';
 import type { SuccessOutpatientType } from '../model/types';

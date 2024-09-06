@@ -1,4 +1,4 @@
-import { LoadingButtonProps } from '@mui/lab';
+import type { LoadingButtonProps } from '@mui/lab';
 import type { CardProps, TypographyProps } from '@mui/material';
 
 export type LabelTextProps = {

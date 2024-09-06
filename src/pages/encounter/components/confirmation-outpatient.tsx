@@ -14,7 +14,7 @@ import type {
 } from '../model/types';
 import { getPaymentType } from '../model/variables';
 import { useTranslate } from 'src/locales';
-import { Nullable } from 'src/types/common';
+import type { Nullable } from 'src/types/common';
 import { fCurrency } from 'src/utils/format-number';
 
 const ConfirmationOutpatient = ({

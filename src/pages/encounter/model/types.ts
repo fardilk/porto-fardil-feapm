@@ -1,9 +1,7 @@
 import type { ButtonProps } from '@mui/material';
-import { Dispatch } from '@reduxjs/toolkit';
-import { SetStateAction } from 'react';
-import { FieldValues, UseFormSetValue, UseFormWatch } from 'react-hook-form';
+import type { FieldValues, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import type { CardBannerProps } from 'src/components/card-banner/types';
-import { Nullable } from 'src/types/common';
+import type { Nullable } from 'src/types/common';
 
 export type SelectEncounterTypeProps = {
   items: CardBannerProps[];

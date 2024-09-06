@@ -1,7 +1,5 @@
-import { AppBar, Box, Button, IconButton, Toolbar, Typography } from "@mui/material"
+import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material"
 import { useMemo, type ReactNode } from "react"
-import { CloseIcon } from "yet-another-react-lightbox"
-import { Iconify } from "src/components/iconify"
 import { useTranslate } from "src/locales"
 
 type WindowContainerProps = {

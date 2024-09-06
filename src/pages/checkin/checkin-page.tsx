@@ -10,7 +10,7 @@ import { toast } from 'src/components/snackbar';
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslate } from 'src/locales';
 import { getCheckin } from './model/functions';
-import { CheckinResponse } from './model/types';
+import type { CheckinResponse } from './model/types';
 
 const CheckinPage = () => {
   const navigate = useNavigate();

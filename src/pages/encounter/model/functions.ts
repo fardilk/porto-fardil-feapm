@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request';
 import GqlClient from 'src/utils/gql';
-import {
+import type {
   AvailableDoctorResponse,
   GetPatientByNIKResponse,
   ListDoctorResponse,
@@ -16,7 +16,7 @@ export const getPatientByNIK = async ({
   NIK: string;
 }): Promise<GetPatientByNIKResponse> => {
   const req = new GqlClient({
-    endpoint: '/v1/patient/query',
+    module: 'patient',
   });
 
   const res = await req.request(
@@ -57,7 +57,7 @@ export const getDoctorList = async ({
   keyword: string;
 }): Promise<ListDoctorResponse> => {
   const req = new GqlClient({
-    endpoint: '/v1/doctor/query',
+    module: 'doctor',
   });
 
   const res = await req.request(
@@ -94,7 +94,7 @@ export const getMCUPackage = async ({
   keyword: string;
 }): Promise<ListMCUPackageResponse> => {
   const req = new GqlClient({
-    endpoint: '/v1/healthcare-service/query',
+    module: 'healthcare-service',
   });
 
   const res = await req.request(
@@ -126,7 +126,7 @@ export const getPolyList = async ({
   keyword: string;
 }): Promise<ListPolyResponse> => {
   const req = new GqlClient({
-    endpoint: '/v1/department/query',
+    module: 'department',
   });
 
   const res = await req.request(
@@ -154,7 +154,7 @@ export const getAvailableDoctor = async ({
   polyID: string;
 }): Promise<AvailableDoctorResponse> => {
   const req = new GqlClient({
-    endpoint: '/v1/doctor/query',
+    module: 'doctor',
   });
 
   const res = await req.request(
@@ -198,7 +198,7 @@ export const createBooking = async ({
   patientId: string;
 }): Promise<AvailableDoctorResponse> => {
   const req = new GqlClient({
-    endpoint: '/v1/appointment/query',
+    module: 'appointment',
   });
 
   const res = await req.request(
@@ -259,7 +259,7 @@ export const getLabPackage = async ({
   keyword: string;
 }): Promise<ListLabPackageResponse> => {
   const req = new GqlClient({
-    endpoint: '/v1/healthcare-service/query',
+    module: 'healthcare-service',
   });
 
   const res = await req.request(
@@ -286,7 +286,7 @@ export const getRadiologyPackage = async ({
   keyword: string;
 }): Promise<ListRadiologyPackageResponse> => {
   const req = new GqlClient({
-    endpoint: '/v1/healthcare-service/query',
+    module: 'healthcare-service',
   });
 
   const res = await req.request(

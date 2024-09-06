@@ -8,17 +8,16 @@ import { typography } from "src/theme/core"
 import { RHFSwitch, RHFTextField } from "src/components/hook-form"
 import { Keyboard } from "src/components/keyboard"
 import { useTranslate } from "src/locales"
-import { InsertIdentifierProps } from "./types"
 import { ErrorAlert } from "../error-alert"
+import type { InsertIdentifierProps } from "./types"
 
-const InsertIdentifier = ({errorMessage} : InsertIdentifierProps) => {
+const InsertIdentifier = ({ errorMessage }: InsertIdentifierProps) => {
 
   const { watch } = useFormContext()
   const isForeign = watch("citizenship")
   const { t, onChangeLang } = useTranslate()
 
   const theme = useTheme()
-  const [elementName, _setElementName] = useState("nik")
   const [keyboardType, setKeyboardType] = useState(isForeign ? "text" : "numberOnly")
 
   const inputRef = useRef<any>({})
@@ -73,15 +72,11 @@ const InsertIdentifier = ({errorMessage} : InsertIdentifierProps) => {
       />
       <Divider />
 
-      {
-        elementName && (
-          <Keyboard
-            ref={inputRef.current}
-            elementName={elementName}
-            inputType={keyboardType}
-          />
-        )
-      }
+      <Keyboard
+        ref={inputRef.current}
+        elementName="nik"
+        inputType={keyboardType}
+      />
     </Stack>
   )
 }

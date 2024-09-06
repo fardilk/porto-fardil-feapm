@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import { formStepsRegistrationMethodByPhone } from './variables';
-import { RegistrationIForm } from './types';
+import type { RegistrationIForm } from './types';
 import { useTranslate } from 'src/locales';
 
 const useValidationSchemas = () => {

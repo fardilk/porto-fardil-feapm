@@ -1,16 +1,15 @@
-import { Divider, Stack, Typography, useTheme, Box } from '@mui/material';
-import { type FC, useRef, useState } from 'react';
+import { Box, Divider, Stack, Typography, useTheme } from '@mui/material';
+import { type FC, useRef } from 'react';
+import { ErrorAlert } from 'src/components/error-alert';
 import { RHFTextField } from 'src/components/hook-form';
 import { Keyboard } from 'src/components/keyboard';
-import { typography } from 'src/theme/core';
-import { ErrorAlert } from 'src/components/error-alert';
-import { type InsertBookingProps } from '../model/types';
 import { useTranslate } from 'src/locales';
+import { typography } from 'src/theme/core';
+import { type InsertBookingProps } from '../model/types';
 
 const InsertBookingNumber: FC<InsertBookingProps> = ({ errorMessage }) => {
   const theme = useTheme();
-  const [elementName, _setElementName] = useState('booking_number');
-  const {t} = useTranslate()
+  const { t } = useTranslate()
 
   const inputRef = useRef<any>({});
 
@@ -40,9 +39,7 @@ const InsertBookingNumber: FC<InsertBookingProps> = ({ errorMessage }) => {
       />
       <Divider />
 
-      {elementName && (
-        <Keyboard ref={inputRef.current} elementName="booking_number" inputType="number" />
-      )}
+      <Keyboard ref={inputRef.current} elementName="booking_number" inputType="number" />
     </Stack>
   );
 };

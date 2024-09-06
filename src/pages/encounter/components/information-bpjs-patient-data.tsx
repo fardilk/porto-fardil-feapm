@@ -1,6 +1,6 @@
 import { Box, Button, Grid, Stack, Typography } from "@mui/material"
-import { useMemo, useState } from "react"
-import { LabelTextCard, type LabelTextCardProps, LabelTextContainer, type LabelTextProps } from "src/components/label-text"
+import { useMemo } from "react"
+import { LabelTextCard, type LabelTextCardProps, LabelTextContainer } from "src/components/label-text"
 import { fAsterisk } from "src/utils/helper"
 import type { InformationBPJSPatientDataProps } from "../model/types"
 import { fDate } from "src/utils/format-time"

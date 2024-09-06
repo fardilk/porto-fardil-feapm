@@ -67,7 +67,7 @@ import {
   getPolyList,
   getRadiologyPackage,
 } from './model/functions';
-import { Nullable } from 'src/types/common';
+import type { Nullable } from 'src/types/common';
 
 const EncounterPage = () => {
   const { t } = useTranslate();

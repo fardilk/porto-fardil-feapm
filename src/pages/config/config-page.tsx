@@ -5,14 +5,8 @@ import {
   Divider,
   Grid,
   Stack,
-  Table,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
   Typography,
 } from '@mui/material';
-import { ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
@@ -23,7 +17,7 @@ import { WindowContainer } from 'src/components/window-container';
 import { setConfig } from 'src/store/slices/config';
 import { dispatch, useSelector } from 'src/store/store';
 import { timeout } from 'src/utils/timeout';
-import { ConfigIForm } from './model/types';
+import type { ConfigIForm } from './model/types';
 import { useTranslate } from 'src/locales';
 
 const ConfigPage = () => {

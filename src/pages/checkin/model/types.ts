@@ -1,4 +1,4 @@
-import { Nullable } from "src/types/common";
+import type { Nullable } from "src/types/common";
 
 export type InsertBookingProps = {
   errorMessage?: string;
