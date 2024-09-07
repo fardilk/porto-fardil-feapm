@@ -1,6 +1,7 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, Grid, Stack, Typography } from '@mui/material';
-import { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import type { FC} from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AlertInformation } from 'src/components/alert-information';
 import { CardBanner } from 'src/components/card-banner';
 import { LabelTextContainer } from 'src/components/label-text';
@@ -11,10 +12,10 @@ import { fAsterisk } from 'src/utils/helper';
 import { useNavigate } from 'react-router';
 import { buttonStyle } from '../model/variables';
 import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
-import { type InformationType } from '../model/types';
+import { BookingType } from '../model/types';
 import { useTranslate } from 'src/locales';
 
-const InformationBooking: FC<InformationType> = ({ data }) => {
+const InformationBooking = ({ data }: { data: BookingType }) => {
   const navigate = useNavigate();
   const { t } = useTranslate();
 
@@ -32,61 +33,63 @@ const InformationBooking: FC<InformationType> = ({ data }) => {
 
   const [openPrint, setOpenPrint] = useState(false);
 
-  const headerData = useMemo(() => {
-    if (data.booking.payplanClass === 'BPJS') {
-      return [
-        { title: 'NIK', body: fAsterisk(data.booking.patient.nik) },
-        { title: t('global.complete_name'), body: data.booking.patient.name },
-        { title: t('global.gender'), body: data.booking.patient.gender },
-        {
-          title: `${t('global.location')}, ${t('global.birthdate')}`,
-          body: `${data.booking.patient.birthPlace}, ${fDate(data.booking.patient.birthDttm, 'DD-MM-YYYY')}`,
-        },
-        { title: t('global.card_number'), body: data.booking.bpjs?.subscriberNumber ?? "-"},
-        { title: t('global.class'), body: data.booking.bpjs?.referralNumber ?? "-" },
-        { title: t('global.first_faskes'), body: data.booking.bpjs?.subscriberInstitution ?? "-" },
-        { title: t('global.user_type'), body: data.booking.bpjs?.subscriberCategory ?? "-" },
-        { title: t('global.user_status'), body: data.booking.bpjs?.subscriberStatus ?? "-" },
-      ];
-    }
+  console.log('berhasil');
 
-    if (data.booking.payplanClass === 'COMPANY' || data.booking.payplanClass === 'INSURANCE') {
-      return [
-        { title: 'NIK', body: fAsterisk(data.booking.patient.nik) },
-        { title: t('global.complete_name'), body: data.booking.patient.name },
-        { title: t('global.birthdate'), body: fDate(data.booking.patient.birthDttm, 'DD-MM-YYYY') },
-        { title: t('global.phone_number'), body: fAsterisk(data.booking.patient.phone) },
-        { title: t('global.blood_type'), body: data.booking.patient.bloodType },
-        { title: 'Rhesus', body: data.booking.patient.bloodRhesus },
-        { title: 'Email', body: data.booking.patient.email },
-        {
-          title: t('global.address'),
-          body: data.booking.patient.address,
-        },
-        {
-          title:t('assurance.policy_no'),
-          body: "not provided"
-        },
-        {
-          title:t('assurance.guarantor_type'),
-          body: "not provided"
-        },
-        {
-          title:t('assurance.insurance_company'),
-          body: "not provided"
-        },
-      ];
-    }
+  const headerData = useMemo(() => {
+    // if (data.booking.payplanClass === 'BPJS') {
+    //   return [
+    //     { title: 'NIK', body: fAsterisk(data.booking.patient.nik) },
+    //     { title: t('global.complete_name'), body: data.booking.patient.name },
+    //     { title: t('global.gender'), body: data.booking.patient.gender },
+    //     {
+    //       title: `${t('global.location')}, ${t('global.birthdate')}`,
+    //       body: `${data.booking.patient.birthPlace}, ${fDate(data.booking.patient.birthDttm, 'DD-MM-YYYY')}`,
+    //     },
+    //     { title: t('global.card_number'), body: data.booking.bpjs?.subscriberNumber ?? '-' },
+    //     { title: t('global.class'), body: data.booking.bpjs?.referralNumber ?? '-' },
+    //     { title: t('global.first_faskes'), body: data.booking.bpjs?.subscriberInstitution ?? '-' },
+    //     { title: t('global.user_type'), body: data.booking.bpjs?.subscriberCategory ?? '-' },
+    //     { title: t('global.user_status'), body: data.booking.bpjs?.subscriberStatus ?? '-' },
+    //   ];
+    // }
+
+    // if (data.booking.payplanClass === 'COMPANY' || data.booking.payplanClass === 'INSURANCE') {
+    //   return [
+    //     { title: 'NIK', body: fAsterisk(data.booking.patient.nik) },
+    //     { title: t('global.complete_name'), body: data.booking.patient.name },
+    //     { title: t('global.birthdate'), body: fDate(data.booking.patient.birthDttm, 'DD-MM-YYYY') },
+    //     { title: t('global.phone_number'), body: fAsterisk(data.booking.patient.phone) },
+    //     { title: t('global.blood_type'), body: data.booking.patient.bloodType },
+    //     { title: 'Rhesus', body: data.booking.patient.bloodRhesus },
+    //     { title: 'Email', body: data.booking.patient.email },
+    //     {
+    //       title: t('global.address'),
+    //       body: data.booking.patient.address,
+    //     },
+    //     {
+    //       title: t('assurance.policy_no'),
+    //       body: 'not provided',
+    //     },
+    //     {
+    //       title: t('assurance.guarantor_type'),
+    //       body: 'not provided',
+    //     },
+    //     {
+    //       title: t('assurance.insurance_company'),
+    //       body: 'not provided',
+    //     },
+    //   ];
+    // }
 
     return [
-      { title: 'NIK', body: fAsterisk(data.booking.patient.nik) },
-      { title: t('global.complete_name'), body: data.booking.patient.name },
-      { title: t('global.birthdate'), body: fDate(data.booking.patient.birthDttm, 'DD-MM-YYYY') },
-      { title: t('global.phone_number'), body: fAsterisk(data.booking.patient.phone) },
-      { title: 'Email', body: data.booking.patient.email },
+      { title: 'NIK', body: fAsterisk(data.patient.identifierValue || '') },
+      { title: t('global.complete_name'), body: data.patient.name },
+      { title: t('global.birthdate'), body: fDate(data.patient.birthDttm, 'DD-MM-YYYY') },
+      { title: t('global.phone_number'), body: fAsterisk(data.patient.phone) },
+      { title: 'Email', body: data.patient.email },
       {
         title: t('global.address'),
-        body: data.booking.patient.address,
+        body: data.patient.address,
         colSpan: 2,
       },
     ];
@@ -96,45 +99,50 @@ const InformationBooking: FC<InformationType> = ({ data }) => {
     return [
       {
         title: t('checkin.service_destination'),
-        body: data.booking.encounter.healthcareServiceName,
+        body: data.encounter.healthcareServiceName,
         localIcon: 'stethoscope',
       },
       {
         title: t('checkin.examining_doctor'),
-        body: data.booking.encounter.practitionerName,
+        body: data.encounter.practitionerName,
         localIcon: 'doctor',
       },
       {
         title: t('global.payment_type'),
         body:
-          data.booking.payplanClass === 'BPJS'
-            ? 'BPJS'
-            : data.booking.payplanClass === 'INSURANCE'
-              ? 'Asuransi'
-              : data.booking.payplanClass === 'COMPANY'
-                ? 'Perusahaan'
-                : 'Umum',
+          // data.booking.payplanClass === 'BPJS'
+          //   ? 'BPJS'
+          //   : data.booking.payplanClass === 'INSURANCE'
+          //     ? 'Asuransi'
+          //     : data.booking.payplanClass === 'COMPANY'
+          //       ? 'Perusahaan'
+          //       :
+          'Umum',
         localIcon:
-          data.booking.payplanClass === 'BPJS'
-            ? 'bpjs'
-            : data.booking.payplanClass === 'INSURANCE'
-              ? 'asuransi'
-              : data.booking.payplanClass === 'COMPANY'
-                ? 'perusahaan'
-                : 'pembayaran-umum',
+          // data.booking.payplanClass === 'BPJS'
+          //   ? 'bpjs'
+          //   : data.booking.payplanClass === 'INSURANCE'
+          //     ? 'asuransi'
+          //     : data.booking.payplanClass === 'COMPANY'
+          //       ? 'perusahaan'
+          //       :
+          'pembayaran-umum',
       },
       {
         title: t('global.service_time'),
-        body: `${data.booking.encounter.scheduleSlotDate}, ${data.booking.encounter.scheduleSlotStartTime}`,
+        body: `${data.encounter.scheduleSlotDate}`,
         localIcon: 'jadwal',
       },
     ];
   }, [t, data]);
 
   const referenceData: LabelTextProps[] = [
-    { title: t('global.referral_num'), body: fAsterisk(data.booking.bpjs?.referralNumber ?? "-") },
-    { title: t('global.referral_date'), body: fDate(data.booking.bpjs?.referralDate ?? "-", 'DD-MM-YYYY') },
-    { title: t('global.poli'), body: data.booking.bpjs?.performerServiceName ?? "-" },
+    { title: t('global.referral_num'), body: fAsterisk(data.bpjs?.referralNumber ?? '-') },
+    {
+      title: t('global.referral_date'),
+      body: fDate(data.bpjs?.referralDate ?? '-', 'DD-MM-YYYY'),
+    },
+    { title: t('global.poli'), body: data.bpjs?.performerServiceName ?? '-' },
   ];
 
   const getCountdown15 = useMemo(() => {
@@ -187,11 +195,8 @@ const InformationBooking: FC<InformationType> = ({ data }) => {
 
   return (
     <Stack gap={4}>
-      <AlertInformation
-        title={t('checkin.title_success')}
-        body={data.booking.notes}
-      />
-      <Grid container spacing={2}>
+      <AlertInformation title={t('checkin.title_success')} body={data.notes} />
+      {/* <Grid container spacing={2}>
         {data.booking.payplanClass === 'BPJS' && (
           <Grid item xs={12} md={4}>
             <Typography variant="h5" gutterBottom>
@@ -208,7 +213,7 @@ const InformationBooking: FC<InformationType> = ({ data }) => {
 
           <LabelTextContainer listText={headerData} />
         </Grid>
-      </Grid>
+      </Grid> */}
 
       <Box>
         <Typography variant="h5" gutterBottom>

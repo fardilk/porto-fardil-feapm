@@ -1,9 +1,9 @@
 import { LoadingButton } from "@mui/lab";
 import { Box, ButtonBase, Card, CardActions, CardContent, Typography } from "@mui/material";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Iconify } from "../iconify";
 import LabelTextContainer from "./label-text-container";
-import { LabelTextCardProps, LabelTextCardWrapperProps } from "./types";
+import type { LabelTextCardProps, LabelTextCardWrapperProps } from "./types";
 
 
 const LabelTextCard = (props: LabelTextCardProps) => {

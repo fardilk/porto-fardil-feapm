@@ -7,10 +7,19 @@ import { CONFIG } from 'src/config-global';
 class GqlClient extends GraphQLClient {
   auth: boolean;
 
-  constructor({ auth = true, endpoint }: { auth?: boolean; endpoint: string }) {
-    super(new URL(`/api/${endpoint}`.replaceAll("//","/"), CONFIG.app.graphqlPath).toString());
-    this.auth = auth;
-    if (auth) {
+  constructor(props?: { auth?: boolean; module?: string }) {
+    const mod = () => {
+      if (Boolean(props?.module)) {
+        return `/${props?.module}/`;
+      }
+
+      return `/`;
+    };
+
+    super(`${CONFIG.app.graphqlPath}${mod()}query`);
+    this.auth = props?.auth ?? true;
+
+    if (props?.auth ?? true) {
       const token = GetAccessToken();
       if (token === null) {
         return;
@@ -18,8 +27,7 @@ class GqlClient extends GraphQLClient {
       if (isValidToken(token)) {
         this.setHeader('Authorization', `Bearer ${token}`);
       } else {
-        this.setHeader('Authorization', `Bearer`);
-        // this.handleLogout();
+        this.handleLogout();
       }
     }
   }

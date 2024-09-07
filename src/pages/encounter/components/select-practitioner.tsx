@@ -6,7 +6,6 @@ import type { SelectPractitionerProps } from '../model/types';
 import { Keyboard } from 'src/components/keyboard';
 import { RHFTextField } from 'src/components/hook-form';
 import { useTranslate } from 'src/locales';
-import { useFormContext } from 'react-hook-form';
 import { getAvailableDoctor } from '../model/functions';
 
 const SelectPractitioner = ({

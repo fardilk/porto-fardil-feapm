@@ -1,6 +1,5 @@
-import { Alert, Box, Button, TableCell, TableContainer, Typography } from "@mui/material"
-import { useState } from "react"
-import { LabelTextContainer, LabelTextProps } from "src/components/label-text"
+import { Alert, Box, Button, TableContainer } from "@mui/material"
+import { LabelTextContainer } from "src/components/label-text"
 import { fAsterisk } from "src/utils/helper"
 import type { InformationProps } from "../model/types"
 import { useTranslate } from "src/locales"

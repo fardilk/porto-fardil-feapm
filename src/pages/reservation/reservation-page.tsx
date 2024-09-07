@@ -26,7 +26,7 @@ import {
   SelectPractitioner,
   SuccessOutpatient,
 } from './components';
-import type { ReservationType, Insurancetype, FormValues } from './model/types';
+import type { ReservationType, Insurancetype } from './model/types';
 import InsertEmployeeNumber from './components/insert-employee-number';
 import {
   formStepsMCUGeneral,

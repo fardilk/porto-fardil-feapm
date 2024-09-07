@@ -42,11 +42,21 @@ export type ConfigValue = {
 
 // ----------------------------------------------------------------------
 
+function getPath() {
+  const isUsePort = import.meta.env.VITE_APP_USE_PORT;
+  const backendHost = import.meta.env.VITE_APP_API_HOST;
+  const apiPort = import.meta.env.VITE_APP_API_PORT;
+
+  if (isUsePort === 'true') return `${backendHost}:${apiPort}`;
+
+  return backendHost;
+}
+
+// ----------------------------------------------------------------------
+
 export const CONFIG: ConfigValue = {
   app: {
-    graphqlPath: import.meta.env.VITE_APP_API_PORT
-      ? `${import.meta.env.VITE_APP_API_HOST}:${import.meta.env.VITE_APP_API_PORT}`
-      : import.meta.env.VITE_APP_API_HOST,
+    graphqlPath: getPath(),
     urlName: `${import.meta.env.VITE_APP_URL_NAME ?? ''}`,
     platformName: `${import.meta.env.VITE_APP_PLATFORM_NAME ?? ''}`,
     hospitalName: `${import.meta.env.VITE_APP_HOSPITAL_NAME ?? ''}`,

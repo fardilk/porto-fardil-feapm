@@ -1,6 +1,6 @@
 import { Grid, InputAdornment, Stack } from '@mui/material';
 import { CardBanner } from 'src/components/card-banner';
-import { SelectCompanyNewProps } from '../model/types';
+import type { SelectCompanyNewProps } from '../model/types';
 import { useRef, useState } from 'react';
 import { RHFTextField } from 'src/components/hook-form';
 import { Iconify } from 'src/components/iconify';
