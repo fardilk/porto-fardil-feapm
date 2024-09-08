@@ -55,13 +55,13 @@ const ReservationPage = () => {
     initialSteps: formStepsOutpatientGeneral,
   });
 
-  const {t} = useTranslate()
+  const { t } = useTranslate()
 
   const [errorMessage, setErrorMessage] = useState({ dateErr: '', bookTimeErr: '', unableErr: '' });
 
   const [reservationType, SetReservationType] = useState<ReservationType>(null);
 
-  const listReservationType : CardBannerProps[] = useMemo(() => [
+  const listReservationType: CardBannerProps[] = useMemo(() => [
     {
       title: t('encounter.outpatient.title'),
       body: t('encounter.outpatient.description'),
@@ -101,7 +101,7 @@ const ReservationPage = () => {
         handleChangePage({ action: 'next', newFormSteps: formStepsRadGeneral });
       },
     },
-  ],[t, SetReservationType, handleChangePage])
+  ], [t, SetReservationType, handleChangePage])
 
   const getListDataEmployee = useMemo(
     () => [
@@ -276,8 +276,8 @@ const ReservationPage = () => {
 
             {currentPage.value === 'information_outpatient_general' && (
               <InformationOutpatientGeneral
-              leftTextButton={t("appointment.patient.actions.invalid_button")}
-              rightTextButton={t("appointment.patient.actions.valid_button")}
+                leftTextButton={t("appointment.patient.actions.invalid_button")}
+                rightTextButton={t("appointment.patient.actions.valid_button")}
                 leftButtonProps={{
                   onClick: () => {
                     handleChangePage({ action: 'previous' });
@@ -313,7 +313,6 @@ const ReservationPage = () => {
 
                   if (watchDate && watchBookTime && watchUnable && selectedDate >= minDate)
                     handleChangePage({ action: 'next' });
-                  console.log(watchDate, watchBookTime, watchUnable);
                   if (!watchDate) {
                     setErrorMessage((prev) => ({ ...prev, dateErr: 'Tanggal Harus Diisi' }));
                   } else if (selectedDate < minDate) {

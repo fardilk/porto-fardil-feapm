@@ -1,6 +1,6 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, Grid, Stack, Typography } from '@mui/material';
-import type { FC} from 'react';
+import type { FC } from 'react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { AlertInformation } from 'src/components/alert-information';
 import { CardBanner } from 'src/components/card-banner';
@@ -32,68 +32,6 @@ const InformationBooking = ({ data }: { data: BookingType }) => {
   } = useCountdownSeconds(2 * 60);
 
   const [openPrint, setOpenPrint] = useState(false);
-
-  console.log('berhasil');
-
-  const headerData = useMemo(() => {
-    // if (data.booking.payplanClass === 'BPJS') {
-    //   return [
-    //     { title: 'NIK', body: fAsterisk(data.booking.patient.nik) },
-    //     { title: t('global.complete_name'), body: data.booking.patient.name },
-    //     { title: t('global.gender'), body: data.booking.patient.gender },
-    //     {
-    //       title: `${t('global.location')}, ${t('global.birthdate')}`,
-    //       body: `${data.booking.patient.birthPlace}, ${fDate(data.booking.patient.birthDttm, 'DD-MM-YYYY')}`,
-    //     },
-    //     { title: t('global.card_number'), body: data.booking.bpjs?.subscriberNumber ?? '-' },
-    //     { title: t('global.class'), body: data.booking.bpjs?.referralNumber ?? '-' },
-    //     { title: t('global.first_faskes'), body: data.booking.bpjs?.subscriberInstitution ?? '-' },
-    //     { title: t('global.user_type'), body: data.booking.bpjs?.subscriberCategory ?? '-' },
-    //     { title: t('global.user_status'), body: data.booking.bpjs?.subscriberStatus ?? '-' },
-    //   ];
-    // }
-
-    // if (data.booking.payplanClass === 'COMPANY' || data.booking.payplanClass === 'INSURANCE') {
-    //   return [
-    //     { title: 'NIK', body: fAsterisk(data.booking.patient.nik) },
-    //     { title: t('global.complete_name'), body: data.booking.patient.name },
-    //     { title: t('global.birthdate'), body: fDate(data.booking.patient.birthDttm, 'DD-MM-YYYY') },
-    //     { title: t('global.phone_number'), body: fAsterisk(data.booking.patient.phone) },
-    //     { title: t('global.blood_type'), body: data.booking.patient.bloodType },
-    //     { title: 'Rhesus', body: data.booking.patient.bloodRhesus },
-    //     { title: 'Email', body: data.booking.patient.email },
-    //     {
-    //       title: t('global.address'),
-    //       body: data.booking.patient.address,
-    //     },
-    //     {
-    //       title: t('assurance.policy_no'),
-    //       body: 'not provided',
-    //     },
-    //     {
-    //       title: t('assurance.guarantor_type'),
-    //       body: 'not provided',
-    //     },
-    //     {
-    //       title: t('assurance.insurance_company'),
-    //       body: 'not provided',
-    //     },
-    //   ];
-    // }
-
-    return [
-      { title: 'NIK', body: fAsterisk(data.patient.identifierValue || '') },
-      { title: t('global.complete_name'), body: data.patient.name },
-      { title: t('global.birthdate'), body: fDate(data.patient.birthDttm, 'DD-MM-YYYY') },
-      { title: t('global.phone_number'), body: fAsterisk(data.patient.phone) },
-      { title: 'Email', body: data.patient.email },
-      {
-        title: t('global.address'),
-        body: data.patient.address,
-        colSpan: 2,
-      },
-    ];
-  }, [t, data]);
 
   const detailData = useMemo(() => {
     return [

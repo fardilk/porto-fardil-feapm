@@ -1,4 +1,4 @@
-import type { TFunction } from "i18next";
+import type { TFunction } from 'i18next';
 
 export const buttonStyle: any = {
   fullWidth: true,
@@ -429,7 +429,6 @@ export const formStepsLabCompany = [
     },
   },
 ];
-
 
 export const formStepsRadGeneral = [
   ...initialStep,

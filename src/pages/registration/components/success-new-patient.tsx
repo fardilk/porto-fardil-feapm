@@ -8,23 +8,28 @@ import { fAsterisk } from "src/utils/helper"
 import { LabelTextContainer } from "src/components/label-text"
 
 import { AlertInformation } from "src/components/alert-information"
-import type { SuccessNewPatientProps } from "../model/types"
+import type { RegistrationIForm, SuccessNewPatientProps } from "../model/types"
 import { useTranslate } from "src/locales"
+import { useFormContext } from "react-hook-form"
 
 const SuccessNewPatient = (props: SuccessNewPatientProps) => {
 
   const { handleFinish } = props
 
-  const {t} = useTranslate()
+  const { t } = useTranslate()
 
-  const [headerData, _setHeaderData] = useState<{ title: string, body: string }[]>([
-    { title: t("registration.nik"), body: fAsterisk("100200300400") },
-    { title: t("registration.fullname"), body: "Hello World" },
-    { title: t("registration.born_place_date"), body: fDate("04-05-2001", "DD-MM-YYYY") },
-    { title: t("registration.phone_number"), body: fAsterisk("085157902550") },
-    { title: t("registration.email"), body: "helloworld@gmail.com" },
-    { title: t("registration.address_label"), body: t("registration.address") },
-  ])
+  const { watch } = useFormContext<RegistrationIForm>()
+
+  const values = watch()
+
+  const headerData = [
+    { title: values.citizenship ? 'Passport' : 'NIK/Medrec', body: fAsterisk(values.nik) },
+    { title: t("registration.fullname"), body: values.name },
+    { title: t("registration.born_place_date"), body: `${values.birthPlace} ${fDate(values.birthDate, "DD-MM-YYYY")}` },
+    { title: t("registration.phone_number"), body: fAsterisk(values.phoneNumber) },
+    { title: t("registration.email"), body: values.email },
+    { title: t("registration.address_label"), body: values.address },
+  ]
 
   return (
     <Stack spacing={2}>

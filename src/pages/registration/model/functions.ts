@@ -1,59 +1,96 @@
 import { gql } from 'graphql-request';
 import GqlClient from 'src/utils/gql';
-import type { additionalType, RegisterResponse } from './types';
+import { PatientQuery } from './query';
+import type { PatientCreateInput, PatientOne, RegisterResponse } from './types';
 
 const req = new GqlClient({
   module: 'patient',
 });
 
-type Params = {
-  data: {
-    nik: string;
-    passportNumber: string;
-    name: string;
-    gender: string;
-    birthPlace: string;
-    birthDttm: string;
-    phone: string;
-    email: string;
-    nationality: string;
-    address: string;
-    additional: additionalType;
-  };
-};
-
-export const postPatient = async ({ data }: Params): Promise<RegisterResponse> => {
+export const patientCreate = async (param: {
+  data: PatientCreateInput;
+}): Promise<RegisterResponse> => {
   const res = await req.request(
     gql`
       mutation patientCreate($data: PatientCreateInput!) {
         patientCreate(data: $data) {
-          patientID
-          nik
-          passportNumber
-          medrec
-          name
-          gender
-          birthPlace
-          birthDttm
-          phone
-          email
-          nationality
-          address
-          additional {
-            bloodType
-            bloodRhesus
+          status
+          message
+          data {
+            patientID
+            identifierTypeCode
+            identifierValue
+            medrec
+            name
+            gender
             religion
-            education
+            birthPlace
+            birthDttm
             maritalStatus
-            occupation
-            dailyLanguage
+            phone
+            email
+            nationality
+            address
+            additional {
+              bloodType
+              bloodRhesus
+              education
+              occupation
+              dailyLanguage
+            }
           }
         }
       }
     `,
-    {
-      data,
-    }
+    param
   );
   return res.patientCreate;
+};
+
+export const patientGet = async (param: {
+  identifierType: string;
+  identifier: string;
+}): Promise<PatientOne> => {
+  const client = new GqlClient({ module: 'patient' });
+  const request = await client.request(
+    gql`
+    query patientGet($identifierType: String!, $identifier: String!) {
+      patientGet(identifierType: $identifierType, identifier: $identifier) {
+        status
+        message
+        data { ${PatientQuery} }
+      }
+    }
+  `,
+    param
+  );
+
+  return request.patientGet;
+};
+
+export const patientUpdate = async (param: {
+  patientID: string;
+  data: {
+    phone: string;
+    email: string;
+  };
+}): Promise<PatientOne> => {
+  const client = new GqlClient({ module: 'patient' });
+  const request = await client.request(
+    gql`
+    mutation patientUpdate($patientID: ID!, $data: PatientUpdateInput!) {
+      patientUpdate(
+        patientID: $patientID
+        data: $data
+      ) {
+        status
+        message
+        data { ${PatientQuery} }
+      }
+    }
+  `,
+    param
+  );
+
+  return request.patientUpdate;
 };

@@ -3,11 +3,12 @@ import { Box } from '@mui/material';
 import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import { toast } from 'sonner';
 import { AppPage } from 'src/components/app-page';
 import { Form } from 'src/components/hook-form';
 import { InsertIdentifier } from 'src/components/insert-identifier';
 import { WindowContainer } from 'src/components/window-container';
-import { useStepper } from 'src/hooks';
+import { usePartialState, useStepper } from 'src/hooks';
 import { useTranslate } from 'src/locales';
 import { useSelector } from 'src/store/store';
 import {
@@ -20,22 +21,28 @@ import {
   SelectRegistrationMethod,
   SuccessNewPatient,
 } from './components';
-import { postPatient } from './model/functions';
+import { patientCreate, patientGet, patientUpdate } from './model/functions';
+import { patientToIForm, regIFormToInput } from './model/helper';
 import useValidationSchemas from './model/schema';
-import type { RegistrationIForm } from './model/types';
+import { Patient, PatientCreateInput, type RegistrationIForm } from './model/types';
 import {
   formStepsExistInInternal,
   formStepsExistInSatuSehat,
-  formStepsForeign,
   formStepsNotExistInSatuSehat,
   formStepsNotExistInternal,
-  formStepsRegistrationMethodByPhone,
+  formStepsRegistrationMethodByPhone
 } from './model/variables';
+import { timeout } from 'src/utils/timeout';
 
 const RegistrationPage = () => {
+
+  const [errors, setErrors] = usePartialState({ errorNIK: "" })
+
+  const [patientSuccess, setPatientSuccess] = useState<Patient | null>(null)
   const isSimplify = useSelector((root) => root.config.simplify);
 
   const defaultValues: RegistrationIForm = {
+    patientID: '',
     nik: '',
     citizenship: false,
     name: '',
@@ -64,7 +71,8 @@ const RegistrationPage = () => {
   const methodsDefault = useForm()
   const { watch } = methodsDefault
 
-  const isForeign = watch('citizenship');
+  const isForeign = watch('citizenship') === "WNA"
+
   const [isSatuSehat, setIsSatuSehat] = useState(false)
   const { getValidationSchema } = useValidationSchemas();
 
@@ -73,92 +81,88 @@ const RegistrationPage = () => {
     resolver: yupResolver(getValidationSchema(currentPage.value, isForeign, formSteps)),
   });
 
-  const { handleSubmit } = methods;
+  const { handleSubmit, reset, resetField } = methods;
+
+  const getTitle = useMemo(
+    () => (currentPage?.properties?.i18n ? t(currentPage?.properties?.i18n) : currentPage.label),
+    [currentPage, t]
+  );
 
   const createPatient = useCallback(
     async (payload: {
-      data: {
-        nik: string;
-        passportNumber: string;
-        name: string;
-        gender: string;
-        birthPlace: string;
-        birthDttm: string;
-        phone: string;
-        email: string;
-        nationality: string;
-        address: string;
-        additional: {
-          bloodType: string;
-          religion: string;
-          education: string;
-          maritalStatus: string;
-          occupation: string;
-          dailyLanguage: string;
-        };
-      };
+      data: PatientCreateInput
     }) => {
       try {
-        const response = await postPatient(payload);
+        const response = await patientCreate(payload);
+        setPatientSuccess(response.data)
         handleChangePage({ action: 'next' });
+        toast.success("Berhasil")
       } catch (e) {
-        // do something
+        toast.error("Gagal")
       }
     },
     [handleChangePage]
   );
 
-  const onSubmit = async (data: any) => {
+  const onSubmit = async (data: RegistrationIForm) => {
     try {
       if (currentPageIndex === 0) {
         if (data.nik.replace('\n', '') === '12') {
           setIsSatuSehat(true)
         }
-        if (isForeign) {
-          handleChangePage({ action: 'next', newFormSteps: formStepsForeign });
-        } else {
-          const dataNIK = data.nik.replace('\n', '');
-          // const resp = await getDummyData(dataNIK === '123' ? 'medrec_exist' : 'medrec_not_exist');
+        // if (isForeign) {
+        //   handleChangePage({ action: 'next', newFormSteps: formStepsForeign });
+        // } else {
+        // }
+        const dataNIK = data.nik.replace('\n', '');
 
-          const resp = dataNIK === '123' ? 'medrec_exist' : 'medrec_not_exist';
+        try {
 
-          if (resp === 'medrec_exist') {
-            handleChangePage({ action: 'next', newFormSteps: formStepsExistInInternal });
-          } else {
-            handleChangePage({ action: 'next', newFormSteps: formStepsNotExistInternal });
+          const wni = !data.citizenship
+
+          if (wni && (dataNIK.length < 16)) {
+            setErrors({ errorNIK: "NIK Harus Terdiri Dari 16 Digit" })
+            timeout(2000).then(() => { setErrors({ errorNIK: "" }) })
+            return
           }
+
+          const res = await patientGet({ identifier: dataNIK, identifierType: 'Identifier' })
+
+          const newData = res.data
+          reset(patientToIForm({ data: newData }))
+
+          handleChangePage({ action: 'next', newFormSteps: formStepsExistInInternal });
+
+        } catch (error) {
+          handleChangePage({ action: 'next', newFormSteps: formStepsNotExistInternal });
+          toast.info("Anda Belum Terdaftar, Silahkan mendaftar")
         }
+
       } else if (currentPageIndex !== 0) {
         if (currentPage.value === 'insert_email') {
-          handleChangePage({ toSpecificPage: 'information' });
+          try {
+            const email = data.email.replace('\n', '')
+            const phone = data.phoneNumber.replace('\n', '');
+            await patientUpdate({ data: { email, phone }, patientID: data.patientID || '' }).then((res) => {
+              resetField("email", { defaultValue: res.data.email })
+              resetField("phoneNumber", { defaultValue: res.data.phone })
+            })
+
+            handleChangePage({ toSpecificPage: 'information' });
+
+            toast.success("Berhasil")
+          } catch (error) {
+            toast.error("Gagal")
+          }
+
         } else if (
           currentPage.value === 'confirmation_new_patient' ||
           (currentPage.value === 'insert_phone_number' &&
             formSteps === formStepsRegistrationMethodByPhone)
         ) {
-          const payload = {
-            data: {
-              nik: isForeign ? '' : data.nik.replace('\n', ''),
-              passportNumber: isForeign ? data.nik.replace('\n', '') : '',
-              name: data.name,
-              gender: data.gender.value,
-              birthPlace: data.birthPlace,
-              birthDttm: data.birthDate,
-              phone: data.phoneNumber.replace('\n', ''),
-              email: data.email,
-              nationality: isForeign ? 'WNA' : 'WNI',
-              address: data.address,
-              additional: {
-                bloodType: data.bloodType.value,
-                religion: data.religion.value,
-                education: data.study.value,
-                maritalStatus: data.marriage.value,
-                occupation: data.job.value,
-                dailyLanguage: data.language.value,
-              },
-            },
-          };
-          createPatient(payload);
+
+          const newData = regIFormToInput({ data })
+          await createPatient({ data: newData });
         }
         else if (currentPage.value === 'create_new_patient' && isSimplify) {
           handleChangePage({ toSpecificPage: 'confirmation_new_patient' });
@@ -169,14 +173,10 @@ const RegistrationPage = () => {
       }
     }
     catch (error) {
-      // Log the error if submission fails
+      console.log(error)
+      toast.error("Something Wrong...")
     }
   };
-
-  const getTitle = useMemo(
-    () => (currentPage?.properties?.i18n ? t(currentPage?.properties?.i18n) : currentPage.label),
-    [currentPage, t]
-  );
 
   return (
     <AppPage>
@@ -187,16 +187,20 @@ const RegistrationPage = () => {
           handleCloseNavigation={() => navigate('/', { replace: true })}
           hideBackNavigation={currentPage.properties?.hideBack}
           hideCloseNavigation={currentPage.properties?.hideClose}
+          size={currentPage.properties?.containerSize}
         >
           <Box sx={{ p: 4 }}>
-            {currentPage.value === 'insert_nik' && <InsertIdentifier />}
+            {currentPage.value === 'insert_nik' && <InsertIdentifier errorMessage={errors.errorNIK} />}
 
             {currentPage.value === 'information' && (
               <PatientInformation
                 leftTextButton={t('registration.button.back_to_home')}
                 rigthTextButton={t('registration.button.edit_phone_email')}
                 leftButtonProps={{
-                  onClick: () => handleChangePage({ toSpecificPage: 'insert_nik' }),
+                  onClick: () => {
+                    reset(defaultValues)
+                    handleChangePage({ toSpecificPage: 'insert_nik' })
+                  },
                 }}
               />
             )}
@@ -262,7 +266,10 @@ const RegistrationPage = () => {
             )}
 
             {currentPage.value === 'success_new_patient' && (
-              <SuccessNewPatient handleFinish={() => navigate('/')} />
+              <SuccessNewPatient
+                data={patientSuccess}
+                handleFinish={() => navigate('/')}
+              />
             )}
           </Box>
         </WindowContainer>

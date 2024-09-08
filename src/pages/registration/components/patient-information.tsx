@@ -1,12 +1,14 @@
 import { Alert, Box, Button, TableContainer } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import type { LabelTextProps } from 'src/components/label-text';
 import { LabelTextContainer } from 'src/components/label-text';
-import { fAsterisk } from 'src/utils/helper';
-import type { PatientInformationProps } from '../model/types';
 import { useTranslate } from 'src/locales';
 import { useSelector } from 'src/store/store';
+import { fAsterisk } from 'src/utils/helper';
+import type { PatientInformationProps, RegistrationIForm } from '../model/types';
+import { terminologyCodeMapper } from 'src/utils/terminology';
+import { LoadingButton } from '@mui/lab';
 
 const PatientInformation = (props: PatientInformationProps) => {
   const { leftButtonProps, leftTextButton, rigthTextButton } = props;
@@ -14,36 +16,41 @@ const PatientInformation = (props: PatientInformationProps) => {
   const isSimplify = useSelector((root) => root.config.simplify);
 
   const { t } = useTranslate();
-  const { watch } = useFormContext();
+  const { watch, formState: { isSubmitting } } = useFormContext<RegistrationIForm>();
+  const values = watch()
   const isForeign = watch('citizenship');
 
-  const [detailData, _setDetailData] = useState<LabelTextProps[]>([]);
+  const [detailData, setDetailData] = useState<LabelTextProps[]>([]);
 
-  const [initData, setInitData] = useState<LabelTextProps[]>([
-    { title: isForeign ? 'Passport' : 'NIK/Medrec', body: fAsterisk('100200300400') },
-    { title: t('registration.fullname'), body: 'Anisa Redina' },
-    { title: t('registration.gender'), body: 'Perempuan' },
-    { title: t('registration.born_place_date'), body: 'Malaysia, 11-04-2000' },
-    { title: t('registration.address_label'), body: t('registration.address') },
-    { title: t('registration.phone_number'), body: fAsterisk('085157902550') },
-    { title: t('registration.email'), body: 'anisa@gmail.com' },
-  ]);
+  const initData = useMemo(() => {
+    return [
+      { title: isForeign ? 'Passport' : 'NIK/Medrec', body: fAsterisk(values.nik) },
+      { title: t('registration.fullname'), body: values.name },
+      { title: t('registration.gender'), body: terminologyCodeMapper({ code: values.gender?.value || '', key: 'terminology.gender' }) },
+      { title: t('registration.born_place_date'), body: values.birthPlace },
+      { title: t('registration.address_label'), body: values.address },
+      { title: t('registration.phone_number'), body: fAsterisk(values.phoneNumber) },
+      { title: t('registration.email'), body: values.email },
+    ]
+  }, [values, isForeign])
 
-  const [moreData, setMoreData] = useState<LabelTextProps[]>([
-    { title: t('registration.blood_type'), body: 'B' },
-    { title: t('registration.religion'), body: 'Islam' },
-    { title: t('registration.education'), body: t('registration.bachelor_degree') },
-    { title: t('registration.marital_status'), body: t('registration.single') },
-    { title: t('registration.occupation'), body: t('registration.private_employee') },
-    { title: t('registration.daily_language'), body: t('registration.indonesian_language') },
-  ]);
+  const moreData = useMemo(() => {
+    return [
+      { title: t('registration.blood_type'), body: terminologyCodeMapper({ code: values.bloodType?.value || '', key: 'terminology.bloodType' }) },
+      { title: t('registration.religion'), body: terminologyCodeMapper({ code: values.religion?.value || '', key: 'terminology.religion' }) },
+      { title: t('registration.education'), body: terminologyCodeMapper({ code: values.study?.value || '', key: 'terminology.education' }) },
+      { title: t('registration.marital_status'), body: terminologyCodeMapper({ code: values.marriage?.value || '', key: 'terminology.marital' }) },
+      { title: t('registration.occupation'), body: terminologyCodeMapper({ code: values.job?.value || '', key: 'terminology.job' }) },
+      { title: t('registration.daily_language'), body: terminologyCodeMapper({ code: values.language?.value || '', key: 'terminology.language' }) },
+    ]
+  }, [values])
 
   useEffect(() => {
     if (!isSimplify) {
-      _setDetailData([...initData, ...moreData]);
+      setDetailData([...initData, ...moreData]);
     }
-    else{
-      _setDetailData([...initData])
+    else {
+      setDetailData([...initData])
     }
   }, [isSimplify, initData, moreData]);
 
@@ -60,9 +67,16 @@ const PatientInformation = (props: PatientInformationProps) => {
         <Button size="large" variant="outlined" fullWidth color="secondary" {...leftButtonProps}>
           {leftTextButton}
         </Button>
-        <Button size="large" variant="contained" fullWidth color="secondary" type='submit'>
+        <LoadingButton
+          loading={isSubmitting}
+          size="large"
+          variant="contained"
+          fullWidth
+          color="secondary"
+          type='submit'
+        >
           {rigthTextButton}
-        </Button>
+        </LoadingButton>
       </Box>
     </>
   );

@@ -25,7 +25,8 @@ module.exports = {
    * 2 ~ 'error'
    */
   rules: {
-    '*': 'off',
+    // '*': 'off',
+    'new-cap': 0,
     'prefer-template': 'off',
     'arrow-body-style': 'off',
     'react/jsx-curly-brace-presence': 'off',
@@ -62,6 +63,7 @@ module.exports = {
     'react/jsx-no-duplicate-props': [1, { ignoreCase: false }],
     'react/jsx-no-useless-fragment': [1, { allowExpressions: true }],
     'react/no-unstable-nested-components': [1, { allowAsProps: true }],
+    'react-hooks/exhaustive-deps': 1,
     // jsx-a11y
     'jsx-a11y/anchor-is-valid': 0,
     'jsx-a11y/control-has-associated-label': 0,

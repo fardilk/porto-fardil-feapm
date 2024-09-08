@@ -7,6 +7,11 @@ import { Form } from 'src/components/hook-form';
 import { InsertIdentifier } from 'src/components/insert-identifier';
 import { WindowContainer } from 'src/components/window-container';
 import { useStepper } from 'src/hooks';
+import { useTranslate } from 'src/locales';
+import type { Nullable } from 'src/types/common';
+import { fDate, formatStr } from 'src/utils/format-time';
+import { fAsterisk } from 'src/utils/helper';
+import { patientGet } from '../registration/model/functions';
 import {
   ConfirmationOutpatient,
   ConfirmationOutpatientMCU,
@@ -25,6 +30,17 @@ import {
   SelectPractitioner,
   SuccessOutpatient,
 } from './components';
+import InsertEmployeeNumber from './components/insert-employee-number';
+import SelectLabPackage from './components/select-lab-package';
+import SelectRadService from './components/select-rad-service';
+import {
+  createBooking,
+  getDoctorList,
+  getLabPackage,
+  getMCUPackage,
+  getPolyList,
+  getRadiologyPackage
+} from './model/functions';
 import type {
   EncounterType,
   GetPatientByNIKResponse,
@@ -38,36 +54,21 @@ import type {
   SelectedPractioner,
   SelectedRadiologyPackage,
 } from './model/types';
-import InsertEmployeeNumber from './components/insert-employee-number';
 import {
+  formStepsLabCompany,
+  formStepsLabGeneral,
+  formStepsLabInsurance,
+  formStepsMCUAssurance,
+  formStepsMCUCompany,
   formStepsMCUGeneral,
   formStepsOutpatientBPJS,
   formStepsOutpatientCompany,
   formStepsOutpatientGeneral,
   formStepsOutpatientInsurance,
-  formStepsLabGeneral,
-  formStepsLabCompany,
-  formStepsLabInsurance,
-  formStepsRadGeneral,
   formStepsRadCompany,
+  formStepsRadGeneral,
   formStepsRadInsurance,
-  formStepsMCUAssurance,
-  formStepsMCUCompany,
 } from './model/variables';
-import { fAsterisk } from 'src/utils/helper';
-import SelectLabPackage from './components/select-lab-package';
-import SelectRadService from './components/select-rad-service';
-import { useTranslate } from 'src/locales';
-import {
-  createBooking,
-  getDoctorList,
-  getLabPackage,
-  getMCUPackage,
-  getPatientByNIK,
-  getPolyList,
-  getRadiologyPackage,
-} from './model/functions';
-import type { Nullable } from 'src/types/common';
 
 const EncounterPage = () => {
   const { t } = useTranslate();
@@ -309,21 +310,21 @@ const EncounterPage = () => {
       await createBooking({
         ...(encounterType === 'RJ'
           ? {
-              doctorId: getValues()?.practionerId ?? '-',
-              polyId: getValues()?.departmentId ?? '-',
-            }
+            doctorId: getValues()?.practionerId ?? '-',
+            polyId: getValues()?.departmentId ?? '-',
+          }
           : encounterType === 'MCU'
             ? {
-                packageMCUId: getValues()?.MCUPackageId ?? '-',
-              }
+              packageMCUId: getValues()?.MCUPackageId ?? '-',
+            }
             : encounterType === 'LAB'
               ? {
-                  packageLabId: getValues()?.LabPackageId,
-                }
+                packageLabId: getValues()?.LabPackageId,
+              }
               : encounterType === 'RAD'
                 ? {
-                    packageRadiologyId: getValues()?.radPackageId,
-                  }
+                  packageRadiologyId: getValues()?.radPackageId,
+                }
                 : {}),
         patientId: getValues()?.patientId ?? '-',
         payplanClass: getValues()?.payplan ?? '-',
@@ -336,13 +337,30 @@ const EncounterPage = () => {
     }
   }, [getValues, handleChangePage, encounterType]);
 
-  const handleGetPatientByNIK = async (NIK: string) => {
+  const handleGetPatientByNIK = async (identifierValue: string) => {
     try {
-      const res = await getPatientByNIK({
-        NIK,
+      const { data: newData } = await patientGet({
+        identifier: identifierValue, identifierType: 'NNIDN'
       });
-      setPatientData(res);
-      setValue('patientId', res.patientID);
+
+      setPatientData({
+        additional: {
+          bloodRhesus: newData.additional.bloodRhesus,
+          bloodType: newData.additional.bloodType
+        },
+        address: newData.address,
+        birthDttm: fDate(newData.birthDttm, formatStr.paramCase.date),
+        birthPlace: newData.birthPlace,
+        email: newData.email,
+        gender: newData.gender,
+        name: newData.name,
+        nik: newData.identifierValue,
+        passportNumber: newData.identifierValue,
+        patientID: newData.patientID,
+        phone: newData.phone
+      });
+
+      setValue('patientId', newData.patientID);
     } catch (e) {
       Promise.reject(e);
     }
@@ -451,7 +469,7 @@ const EncounterPage = () => {
       <Form methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <WindowContainer
           title={t(currentPage.label)}
-          size={currentPage.properties?.containerSize || 'large'}
+          size={currentPage.properties?.containerSize}
           handleBackNavigation={() => {
             handleChangePage({ action: 'previous' });
           }}
