@@ -7,8 +7,6 @@ import { useTranslate } from "src/locales"
 const InformationOutpatientGeneral = (props: InformationProps) => {
   const { t } = useTranslate()
 
-  console.log("informasi outpatient")
-
   const { leftButtonProps, rightButtonProps, leftTextButton, rightTextButton, data } = props
 
   const detailData = [

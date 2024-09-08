@@ -13,7 +13,6 @@ export const formStepsNotExistInternal = [
     value: 'select_registration_method',
     properties: {
       hideBack: true,
-      containerSize: 'superlarge',
       i18n: 'registration.title.select_registration_type',
     },
   },
@@ -52,6 +51,7 @@ export const formStepsExistInSatuSehat = [
     value: 'create_new_patient',
     properties: {
       i18n: 'registration.title.fill_new_patient_data',
+      containerSize: 'superlarge',
     },
   },
   {
@@ -59,6 +59,7 @@ export const formStepsExistInSatuSehat = [
     value: 'create_detail_new_patient',
     properties: {
       i18n: 'registration.title.fill_new_patient_data',
+      containerSize: 'superlarge',
     },
   },
   {

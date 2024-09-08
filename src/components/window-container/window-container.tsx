@@ -9,7 +9,7 @@ type WindowContainerProps = {
   children?: ReactNode
   hideBackNavigation?: boolean;
   hideCloseNavigation?: boolean
-  size?: "medium" | "large" | "superLarge"
+  size?: "medium" | "large" | "superLarge" | "superSmall"
 }
 
 const WindowContainer = (props: WindowContainerProps) => {
@@ -23,6 +23,10 @@ const WindowContainer = (props: WindowContainerProps) => {
 
     if (size === "superLarge") {
       return { xs: "90%", md: "95%", lg: "85%" }
+    }
+
+    if (size === "superSmall") {
+      return { xs: "40%", md: "20%", lg: "10%" }
     }
 
     return { xs: "90%", md: "70%", lg: "65%" }

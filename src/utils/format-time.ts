@@ -27,6 +27,7 @@ export const formatStr = {
   paramCase: {
     dateTime: 'DD-MM-YYYY h:mm a', // 17-04-2022 12:00 am
     date: 'DD-MM-YYYY', // 17-04-2022
+    mysqlDate: 'YYYY-MM-DD',
   },
 };
 
