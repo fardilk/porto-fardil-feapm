@@ -34,7 +34,7 @@ const DetailNewPatient: FC<NewPatientProps> = ({ handleNextPage, handlePreviousP
     [t]
   );
 
-  const { data: mariageData } = useFetch({ attributePath: "Patient.maritalStatus", codeSystem: "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus", valueSet: "" }, terminologyGet)
+  const { data: mariageData } = useFetch({ attributePath: "", codeSystem: "", valueSet: "Patient.maritalStatus" }, terminologyGet)
   const { data: bloodType } = useFetch({ attributePath: "Patient.blood.type", codeSystem: "http://loinc.org" }, terminologyGet)
   const { data: education } = useFetch({ attributePath: "Person.education", codeSystem: "xhis.code.education.level", valueSet: "" }, terminologyGet)
   const { data: jobClass } = useFetch({ attributePath: "Person.job.ktp.class", codeSystem: "xhis.code.job.category.ktp", valueSet: "" }, terminologyGet)
