@@ -44,6 +44,7 @@ export const initialStep = [
     value: 'select_encounter_type',
     properties: {
       disableBack: true,
+      containerSize: 'large',
     },
   },
   {
@@ -73,6 +74,7 @@ export const formStepsOutpatientGeneral = [
     value: 'select_healthcare_practitioner',
     properties: {
       disableBack: true,
+      containerSize: 'superLarge',
     },
   },
   {

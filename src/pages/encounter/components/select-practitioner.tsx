@@ -1,12 +1,12 @@
 import { Alert, Box, Button, Grid, Stack } from '@mui/material';
 import { useEffect, useRef, useState } from 'react';
 import { CardBanner, CardBannerProfile } from 'src/components/card-banner';
-import { Iconify } from 'src/components/iconify';
-import type { SelectPractitionerProps } from '../model/types';
-import { Keyboard } from 'src/components/keyboard';
 import { RHFTextField } from 'src/components/hook-form';
+import { Iconify } from 'src/components/iconify';
+import { Keyboard } from 'src/components/keyboard';
 import { useTranslate } from 'src/locales';
-import { getAvailableDoctor } from '../model/functions';
+import type { SelectPractitionerProps } from '../model/types';
+import { doctorAvailable } from 'src/pages/doctor/model/functions';
 
 const SelectPractitioner = ({
   onCardSelect,
@@ -24,20 +24,28 @@ const SelectPractitioner = ({
   const [afterFirstSearch, setAfterFirstSearch] = useState(false);
   const [elementName, setElementName] = useState('');
 
-  const [_currentIndex, setCurrentIndex] = useState(0);
+  const [_currentIndex, setCurrentIndex] = useState(1);
 
   const searchRef = useRef<any>({});
 
   const handleChangePagination = ({ action }: { action: 'prev' | 'next' }) => {
-    const nextIndex = isPractitioner ? 6 : 16;
-    setCurrentIndex((prev) => (action === 'prev' ? prev - nextIndex : prev + nextIndex));
+    setCurrentIndex((prev) => {
+      const page = (action === 'prev' ? prev - 1 : prev + 1)
+
+      handleGetDoctor(searchPractioner || "", page);
+
+      return page
+    });
   };
 
   const handleSelectedByPoly = async (id: string) => {
     try {
-      const response = await getAvailableDoctor({
-        polyID: id,
+      const tempRes = await doctorAvailable({
+        departmentID: id
       });
+
+      const response = tempRes.data
+
       setFormValue('practionerId', response.doctorID);
       setFormValue('departmentId', id);
       setSelectedPractitioner({
