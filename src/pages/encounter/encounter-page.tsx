@@ -1,16 +1,21 @@
 import { Box } from '@mui/material';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import { toast } from 'sonner';
 import { AppPage } from 'src/components/app-page';
 import { Form } from 'src/components/hook-form';
 import { InsertIdentifier } from 'src/components/insert-identifier';
 import { WindowContainer } from 'src/components/window-container';
-import { useStepper } from 'src/hooks';
+import { usePartialState, useStepper } from 'src/hooks';
 import { useTranslate } from 'src/locales';
 import type { Nullable } from 'src/types/common';
 import { fDate, formatStr } from 'src/utils/format-time';
 import { fAsterisk } from 'src/utils/helper';
+import { timeout } from 'src/utils/timeout';
+import { BookingInput } from '../appointment/model/types';
+import { departmentList } from '../department/model/functions';
+import { doctorList } from '../doctor/model/functions';
 import { patientGet } from '../registration/model/functions';
 import {
   ConfirmationOutpatient,
@@ -34,11 +39,8 @@ import InsertEmployeeNumber from './components/insert-employee-number';
 import SelectLabPackage from './components/select-lab-package';
 import SelectRadService from './components/select-rad-service';
 import {
-  createBooking,
-  getDoctorList,
   getLabPackage,
   getMCUPackage,
-  getPolyList,
   getRadiologyPackage
 } from './model/functions';
 import type {
@@ -69,19 +71,21 @@ import {
   formStepsRadGeneral,
   formStepsRadInsurance,
 } from './model/variables';
+import { bookingCreate } from '../appointment/model/functions';
 
 const EncounterPage = () => {
   const { t } = useTranslate();
   const methods = useForm();
   const { handleSubmit, watch, setValue, getValues } = methods;
+  const values = watch()
 
   const navigate = useNavigate();
   const { currentPage, currentPageIndex, handleChangePage } = useStepper({
     initialSteps: formStepsOutpatientGeneral,
   });
 
+  const [errors, setErrors] = usePartialState({ errorIdentifier: "" })
   const [selectedPractioner, setSelectedPractioner] = useState<Nullable<SelectedPractioner>>(null);
-  const [errorIdentifier, setErrorIdentifier] = useState<string>();
   const [selectedPackageMCUName, setSelectedPackageMCUName] = useState<Nullable<string>>(null);
   const [selectedPackageLab, setSelectedPackageLab] = useState<Nullable<SelectedLabPackage>>(null);
   const [selectedPackageRadiology, setSelectedPackageRadiology] =
@@ -242,12 +246,13 @@ const EncounterPage = () => {
 
   const handleGetListDoctor = useCallback(async (keyword: string, page: number) => {
     try {
-      const response = await getDoctorList({
+      const response = await doctorList({
         page,
         keyword,
+        take: 9
       });
 
-      setListDoctor(response);
+      setListDoctor(response.data);
     } catch (e) {
       console.log(e);
     }
@@ -255,12 +260,13 @@ const EncounterPage = () => {
 
   const handleGetListPoly = useCallback(async (keyword: string, page: number) => {
     try {
-      const response = await getPolyList({
+      const response = await departmentList({
+        take: 9,
         page,
         keyword,
       });
 
-      setListPoly(response);
+      setListPoly(response.data);
     } catch (e) {
       console.log(e);
     }
@@ -307,32 +313,50 @@ const EncounterPage = () => {
 
   const handleCreateBooking = useCallback(async () => {
     try {
-      await createBooking({
-        ...(encounterType === 'RJ'
-          ? {
-            doctorId: getValues()?.practionerId ?? '-',
-            polyId: getValues()?.departmentId ?? '-',
-          }
-          : encounterType === 'MCU'
-            ? {
-              packageMCUId: getValues()?.MCUPackageId ?? '-',
-            }
-            : encounterType === 'LAB'
-              ? {
-                packageLabId: getValues()?.LabPackageId,
-              }
-              : encounterType === 'RAD'
-                ? {
-                  packageRadiologyId: getValues()?.radPackageId,
-                }
-                : {}),
-        patientId: getValues()?.patientId ?? '-',
-        payplanClass: getValues()?.payplan ?? '-',
-        serviceType: getValues()?.serviceType ?? '-',
-      });
+      // await createBooking({
+      //   ...(encounterType === 'RJ'
+      //     ? {
+      //       doctorId: getValues()?.practionerId ?? '-',
+      //       polyId: getValues()?.departmentId ?? '-',
+      //     }
+      //     : encounterType === 'MCU'
+      //       ? {
+      //         packageMCUId: getValues()?.MCUPackageId ?? '-',
+      //       }
+      //       : encounterType === 'LAB'
+      //         ? {
+      //           packageLabId: getValues()?.LabPackageId,
+      //         }
+      //         : encounterType === 'RAD'
+      //           ? {
+      //             packageRadiologyId: getValues()?.radPackageId,
+      //           }
+      //           : {}),
+      //   patientId: getValues()?.patientId ?? '-',
+      //   payplanClass: getValues()?.payplan ?? '-',
+      //   serviceType: getValues()?.serviceType ?? '-',
+      // });
+
+      const patientID = values.patientId || ""
+
+      const newData: BookingInput = {
+        serviceType: values.serviceType,
+        serviceParamOutpatient: {
+          departmentID: values.practionerId || '',
+          doctorID: values.departmentId || ''
+        },
+        payorParam: {
+          payplanClass: values.payplan || '',
+        },
+      }
+
+      await bookingCreate({ data: newData, patientID })
+
+      toast.success("Berhasil")
 
       handleChangePage({ action: 'next' });
     } catch (e) {
+      toast.error("Gagal")
       console.log(e);
     }
   }, [getValues, handleChangePage, encounterType]);
@@ -340,7 +364,7 @@ const EncounterPage = () => {
   const handleGetPatientByNIK = async (identifierValue: string) => {
     try {
       const { data: newData } = await patientGet({
-        identifier: identifierValue, identifierType: 'NNIDN'
+        identifier: identifierValue, identifierType: 'Identifier'
       });
 
       setPatientData({
@@ -431,7 +455,8 @@ const EncounterPage = () => {
     if (currentPageIndex === 1) {
       const nik = data?.nik?.replaceAll('\n', '');
       if (nik.length < 16) {
-        setErrorIdentifier('NIK minimal 16 karakter');
+        setErrors({ errorIdentifier: 'NIK minimal 16 karakter' });
+        timeout(2000).then(() => { setErrors({ errorIdentifier: "" }) })
       } else {
         try {
           await handleGetPatientByNIK(nik);
@@ -458,12 +483,6 @@ const EncounterPage = () => {
     }
   };
 
-  const watchNIK = watch('nik');
-
-  useEffect(() => {
-    setErrorIdentifier(undefined);
-  }, [watchNIK]);
-
   return (
     <AppPage>
       <Form methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -488,7 +507,7 @@ const EncounterPage = () => {
             )}
 
             {currentPage.value === 'insert_nik' && (
-              <InsertIdentifier errorMessage={errorIdentifier} />
+              <InsertIdentifier errorMessage={errors.errorIdentifier} />
             )}
 
             {currentPage.value === 'information_outpatient_general' && patientData && (

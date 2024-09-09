@@ -1,6 +1,7 @@
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material"
 import { useMemo, type ReactNode } from "react"
 import { useTranslate } from "src/locales"
+import { useSelector } from "src/store/store"
 
 type WindowContainerProps = {
   title: string,
@@ -33,7 +34,7 @@ const WindowContainer = (props: WindowContainerProps) => {
   }, [size])
 
   return (
-    <Box sx={{ display: "flex", placeContent: "center", px: 4, width: "100%" }}>
+    <Box sx={{ display: "flex", placeContent: "center", px: 4, width: "100%", maxHeight: '80vh' }}>
       <Box sx={{ width: containerWidth, overflowY: "auto", bgcolor: (theme) => theme.palette.background.paper, borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
         <AppBar position="sticky" sx={{ bgcolor: (theme) => theme.palette.grey[300], borderTopLeftRadius: 8, borderTopRightRadius: 8, top: 0 }}>
           <Toolbar>
