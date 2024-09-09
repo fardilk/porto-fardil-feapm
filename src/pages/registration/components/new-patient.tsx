@@ -33,7 +33,7 @@ const NewPatient = (props: NewPatientProps) => {
   const isForeign = watch('citizenship');
   const { t } = useTranslate();
 
-  const { data: dataGender } = useFetch({ attributePath: "Patient.gender", codeSystem: "http://hl7.org/fhir/administrative-gender", valueSet: "" }, terminologyGet)
+  const { data: dataGender } = useFetch({ attributePath: "", codeSystem: "", valueSet: "Patient.contact.gender" }, terminologyGet)
 
   const listGender = terminologyArrayMapper({ data: dataGender?.data, key: "terminology.gender" })
 
