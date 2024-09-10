@@ -110,39 +110,42 @@ const EncounterPage = () => {
         handleChangePage({ action: 'next', newFormSteps: formStepsOutpatientGeneral });
       },
     },
-    {
-      title: t('encounter.mcu.title'),
-      body: t('encounter.mcu.description'),
-      localIcon: 'medical-checkup',
-      onClick: () => {
-        setEncounterType('MCU');
-        setValue('serviceType', 'MCU');
-        handleChangePage({
-          action: 'next',
-          newFormSteps: formStepsMCUGeneral,
-        });
-      },
-    },
-    {
-      title: t('encounter.laboratory.title'),
-      body: t('encounter.laboratory.description'),
-      localIcon: 'blood-test',
-      onClick: () => {
-        setEncounterType('LAB');
-        setValue('serviceType', 'LABORATORY');
-        handleChangePage({ action: 'next', newFormSteps: formStepsLabGeneral });
-      },
-    },
-    {
-      title: t('encounter.radiology.title'),
-      body: t('encounter.radiology.description'),
-      localIcon: 'x-rays',
-      onClick: () => {
-        setEncounterType('RAD');
-        setValue('serviceType', 'RADIOLOGY');
-        handleChangePage({ action: 'next', newFormSteps: formStepsRadGeneral });
-      },
-    },
+    /**
+     * @todo Uncomment me later...
+     */
+    // {
+    //   title: t('encounter.mcu.title'),
+    //   body: t('encounter.mcu.description'),
+    //   localIcon: 'medical-checkup',
+    //   onClick: () => {
+    //     setEncounterType('MCU');
+    //     setValue('serviceType', 'MCU');
+    //     handleChangePage({
+    //       action: 'next',
+    //       newFormSteps: formStepsMCUGeneral,
+    //     });
+    //   },
+    // },
+    // {
+    //   title: t('encounter.laboratory.title'),
+    //   body: t('encounter.laboratory.description'),
+    //   localIcon: 'blood-test',
+    //   onClick: () => {
+    //     setEncounterType('LAB');
+    //     setValue('serviceType', 'LABORATORY');
+    //     handleChangePage({ action: 'next', newFormSteps: formStepsLabGeneral });
+    //   },
+    // },
+    // {
+    //   title: t('encounter.radiology.title'),
+    //   body: t('encounter.radiology.description'),
+    //   localIcon: 'x-rays',
+    //   onClick: () => {
+    //     setEncounterType('RAD');
+    //     setValue('serviceType', 'RADIOLOGY');
+    //     handleChangePage({ action: 'next', newFormSteps: formStepsRadGeneral });
+    //   },
+    // },
   ];
 
   const getListDataEmployee = useMemo(
@@ -365,7 +368,12 @@ const EncounterPage = () => {
     try {
       const { data: newData } = await patientGet({
         identifier: identifierValue, identifierType: 'Identifier'
-      });
+      })
+
+      if (!newData) {
+        console.log(!newData)
+        throw Error("NOT_FOUND")
+      }
 
       setPatientData({
         additional: {
@@ -386,7 +394,7 @@ const EncounterPage = () => {
 
       setValue('patientId', newData.patientID);
     } catch (e) {
-      Promise.reject(e);
+      throw Error("INI_MAH_NORMAL")
     }
   };
 
@@ -459,10 +467,15 @@ const EncounterPage = () => {
         timeout(2000).then(() => { setErrors({ errorIdentifier: "" }) })
       } else {
         try {
-          await handleGetPatientByNIK(nik);
+          await handleGetPatientByNIK(nik)
           handleChangePage({ action: 'next' });
         } catch (e) {
-          console.log(e);
+          if (e?.message === "INI_MAH_NORMAL") {
+            toast.error("Something Wrong...")
+          }
+          if (e?.message === "NOT_FOUND") {
+            toast.info("Anda Belum Terdaftar. Silahkan Daftar Terlebih Dahulu")
+          }
         }
       }
     } else {
@@ -588,7 +601,7 @@ const EncounterPage = () => {
                 handleBack={() => {
                   handleChangePage({ action: 'previous' });
                 }}
-                handleConfirm={() => {
+                handleConfirm={async () => {
                   handleChangePage({ action: 'next' });
                 }}
                 type="insurance"
@@ -712,7 +725,7 @@ const EncounterPage = () => {
                 handleBack={() => {
                   handleChangePage({ action: 'previous' });
                 }}
-                handleConfirm={() => {
+                handleConfirm={async () => {
                   handleChangePage({ action: 'next' });
                 }}
                 type="company"
@@ -758,7 +771,7 @@ const EncounterPage = () => {
                   handleChangePage({ action: 'previous' });
                 }}
                 type="bpjs"
-                handleConfirm={() => {
+                handleConfirm={async () => {
                   handleChangePage({ action: 'next' });
                 }}
               />

@@ -44,7 +44,7 @@ export const initialStep = [
     value: 'select_encounter_type',
     properties: {
       disableBack: true,
-      containerSize: 'large',
+      containerSize: 'medium',
     },
   },
   {
