@@ -47,7 +47,18 @@ export const PatientQuery = `
 
   additional { ${PatientAdditionalDataQuery} }
 
-  payorDetails { ${PayorDetailsQuery} }
+  payorDetails {
+  ... on PayorDetailsInsurance {
+      policyNo
+      payplanName
+      providerName
+    }
+    ... on PayorDetailsCompany {
+      employeeNo
+      payplanName
+      companyName
+    }
+  }
 `;
 
 export const BookingQuery = `

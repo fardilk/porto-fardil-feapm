@@ -7,7 +7,7 @@ export const bookingCreate = async (param: {
   patientID: string;
   data: BookingInput;
 }): Promise<Booking> => {
-  const client = new GqlClient({ module: 'department' });
+  const client = new GqlClient({ module: 'appointment' });
   const res = await client.request(
     gql`
     mutation bookingCreate($patientID: ID!, $data: BookingInput!) {
