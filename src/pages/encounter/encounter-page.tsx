@@ -345,8 +345,8 @@ const EncounterPage = () => {
       const newData: BookingInput = {
         serviceType: values.serviceType,
         serviceParamOutpatient: {
-          departmentID: values.practionerId || '',
-          doctorID: values.departmentId || ''
+          departmentID: values.departmentId || '',
+          doctorID: values.practionerId || ''
         },
         payorParam: {
           payplanClass: values.payplan || '',
