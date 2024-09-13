@@ -71,36 +71,36 @@ const ReservationPage = () => {
         handleChangePage({ action: 'next', newFormSteps: formStepsOutpatientGeneral });
       },
     },
-    {
-      title: t('encounter.mcu.title'),
-      body: t('encounter.mcu.description'),
-      localIcon: 'medical-checkup',
-      onClick: () => {
-        SetReservationType('MCU');
-        handleChangePage({
-          action: 'next',
-          newFormSteps: formStepsMCUGeneral,
-        });
-      },
-    },
-    {
-      title: t('encounter.laboratory.title'),
-      body: t('encounter.laboratory.description'),
-      localIcon: 'blood-test',
-      onClick: () => {
-        SetReservationType('LAB');
-        handleChangePage({ action: 'next', newFormSteps: formStepsLabGeneral });
-      },
-    },
-    {
-      title: t('encounter.radiology.title'),
-      body: t('encounter.radiology.description'),
-      localIcon: 'x-rays',
-      onClick: () => {
-        SetReservationType('RAD');
-        handleChangePage({ action: 'next', newFormSteps: formStepsRadGeneral });
-      },
-    },
+    // {
+    //   title: t('encounter.mcu.title'),
+    //   body: t('encounter.mcu.description'),
+    //   localIcon: 'medical-checkup',
+    //   onClick: () => {
+    //     SetReservationType('MCU');
+    //     handleChangePage({
+    //       action: 'next',
+    //       newFormSteps: formStepsMCUGeneral,
+    //     });
+    //   },
+    // },
+    // {
+    //   title: t('encounter.laboratory.title'),
+    //   body: t('encounter.laboratory.description'),
+    //   localIcon: 'blood-test',
+    //   onClick: () => {
+    //     SetReservationType('LAB');
+    //     handleChangePage({ action: 'next', newFormSteps: formStepsLabGeneral });
+    //   },
+    // },
+    // {
+    //   title: t('encounter.radiology.title'),
+    //   body: t('encounter.radiology.description'),
+    //   localIcon: 'x-rays',
+    //   onClick: () => {
+    //     SetReservationType('RAD');
+    //     handleChangePage({ action: 'next', newFormSteps: formStepsRadGeneral });
+    //   },
+    // },
   ], [t, SetReservationType, handleChangePage])
 
   const getListDataEmployee = useMemo(

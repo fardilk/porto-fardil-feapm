@@ -1,4 +1,4 @@
-import type { TFunction } from "i18next";
+import type { TFunction } from 'i18next';
 
 export const buttonStyle: any = {
   fullWidth: true,
@@ -8,7 +8,6 @@ export const buttonStyle: any = {
 };
 
 export const getPaymentType = (type: string, t: TFunction<string>) => {
-
   switch (type) {
     case 'general':
       return {
@@ -45,6 +44,7 @@ export const initialStep = [
     value: 'select_reservation_type',
     properties: {
       disableBack: true,
+      containerSize: 'medium',
     },
   },
   {
@@ -497,7 +497,6 @@ export const formStepsLabCompany = [
     },
   },
 ];
-
 
 export const formStepsRadGeneral = [
   ...initialStep,
