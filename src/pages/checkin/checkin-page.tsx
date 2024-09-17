@@ -28,7 +28,6 @@ const CheckinPage = () => {
 
   const onSubmit = async (data: { booking_number?: string }): Promise<void> => {
     const bookingNumber = data.booking_number?.replaceAll('\n', '');
-    console.log(bookingNumber);
 
     if (!bookingNumber) {
       toast.error(t('checkin.error.empty_booking_number'));
@@ -40,7 +39,7 @@ const CheckinPage = () => {
         });
         toast.success('Berhasil Lapor Kehadiran');
         setDataCheckin(response);
-        console.log(response);
+
         handleChangePage({ action: 'next' });
       } catch (e) {
         toast.error('Gagal Lapor Kehadiran');

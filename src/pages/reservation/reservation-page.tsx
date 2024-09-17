@@ -55,13 +55,13 @@ const ReservationPage = () => {
     initialSteps: formStepsOutpatientGeneral,
   });
 
-  const {t} = useTranslate()
+  const { t } = useTranslate()
 
   const [errorMessage, setErrorMessage] = useState({ dateErr: '', bookTimeErr: '', unableErr: '' });
 
   const [reservationType, SetReservationType] = useState<ReservationType>(null);
 
-  const listReservationType : CardBannerProps[] = useMemo(() => [
+  const listReservationType: CardBannerProps[] = useMemo(() => [
     {
       title: t('encounter.outpatient.title'),
       body: t('encounter.outpatient.description'),
@@ -71,37 +71,37 @@ const ReservationPage = () => {
         handleChangePage({ action: 'next', newFormSteps: formStepsOutpatientGeneral });
       },
     },
-    {
-      title: t('encounter.mcu.title'),
-      body: t('encounter.mcu.description'),
-      localIcon: 'medical-checkup',
-      onClick: () => {
-        SetReservationType('MCU');
-        handleChangePage({
-          action: 'next',
-          newFormSteps: formStepsMCUGeneral,
-        });
-      },
-    },
-    {
-      title: t('encounter.laboratory.title'),
-      body: t('encounter.laboratory.description'),
-      localIcon: 'blood-test',
-      onClick: () => {
-        SetReservationType('LAB');
-        handleChangePage({ action: 'next', newFormSteps: formStepsLabGeneral });
-      },
-    },
-    {
-      title: t('encounter.radiology.title'),
-      body: t('encounter.radiology.description'),
-      localIcon: 'x-rays',
-      onClick: () => {
-        SetReservationType('RAD');
-        handleChangePage({ action: 'next', newFormSteps: formStepsRadGeneral });
-      },
-    },
-  ],[t, SetReservationType, handleChangePage])
+    // {
+    //   title: t('encounter.mcu.title'),
+    //   body: t('encounter.mcu.description'),
+    //   localIcon: 'medical-checkup',
+    //   onClick: () => {
+    //     SetReservationType('MCU');
+    //     handleChangePage({
+    //       action: 'next',
+    //       newFormSteps: formStepsMCUGeneral,
+    //     });
+    //   },
+    // },
+    // {
+    //   title: t('encounter.laboratory.title'),
+    //   body: t('encounter.laboratory.description'),
+    //   localIcon: 'blood-test',
+    //   onClick: () => {
+    //     SetReservationType('LAB');
+    //     handleChangePage({ action: 'next', newFormSteps: formStepsLabGeneral });
+    //   },
+    // },
+    // {
+    //   title: t('encounter.radiology.title'),
+    //   body: t('encounter.radiology.description'),
+    //   localIcon: 'x-rays',
+    //   onClick: () => {
+    //     SetReservationType('RAD');
+    //     handleChangePage({ action: 'next', newFormSteps: formStepsRadGeneral });
+    //   },
+    // },
+  ], [t, SetReservationType, handleChangePage])
 
   const getListDataEmployee = useMemo(
     () => [
@@ -276,8 +276,8 @@ const ReservationPage = () => {
 
             {currentPage.value === 'information_outpatient_general' && (
               <InformationOutpatientGeneral
-              leftTextButton={t("appointment.patient.actions.invalid_button")}
-              rightTextButton={t("appointment.patient.actions.valid_button")}
+                leftTextButton={t("appointment.patient.actions.invalid_button")}
+                rightTextButton={t("appointment.patient.actions.valid_button")}
                 leftButtonProps={{
                   onClick: () => {
                     handleChangePage({ action: 'previous' });
@@ -313,7 +313,6 @@ const ReservationPage = () => {
 
                   if (watchDate && watchBookTime && watchUnable && selectedDate >= minDate)
                     handleChangePage({ action: 'next' });
-                  console.log(watchDate, watchBookTime, watchUnable);
                   if (!watchDate) {
                     setErrorMessage((prev) => ({ ...prev, dateErr: 'Tanggal Harus Diisi' }));
                   } else if (selectedDate < minDate) {

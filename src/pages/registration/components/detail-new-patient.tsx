@@ -8,266 +8,59 @@ import {
   TableRow,
   Typography,
 } from '@mui/material';
-import type { FC, ReactNode} from 'react';
+import type { FC, ReactNode } from 'react';
 import { useMemo } from 'react';
 import { RHFTimePils } from 'src/components/hook-form';
-import type { NewPatientProps} from '../model/types';
 import { useTranslate } from 'src/locales';
+import type { NewPatientProps } from '../model/types';
+import { useFetch } from 'src/hooks/use-fetch';
+import { terminologyGet } from 'src/pages/terminology/model/functions';
+import { terminologyArrayMapper } from 'src/utils/terminology';
 
 const DetailNewPatient: FC<NewPatientProps> = ({ handleNextPage, handlePreviousPage }) => {
   const { t } = useTranslate();
-
-  const bloodType = useMemo(
-    () => [
-      {
-        label: 'AB-',
-        value: 'ab-',
-      },
-      {
-        label: 'B-',
-        value: 'b-',
-      },
-      {
-        label: 'A-',
-        value: 'a-',
-      },
-      {
-        label: 'O',
-        value: 'o',
-      },
-      {
-        label: 'AB+',
-        value: 'ab+',
-      },
-      {
-        label: 'B+',
-        value: 'b+',
-      },
-      {
-        label: 'A+',
-        value: 'a+',
-      },
-      {
-        label: 'A',
-        value: 'a',
-      },
-      {
-        label: 'B',
-        value: 'b',
-      },
-      {
-        label: 'AB',
-        value: 'ab',
-      },
-      {
-        label: 'O-',
-        value: 'o-',
-      },
-    ],
-    []
-  );
-
-  const study = useMemo(
-    () => [
-      {
-        label: t('registration.unknown'),
-        value: 'tidak_diketahui',
-      },
-      {
-        label: t('registration.preschool'),
-        value: 'pre_sekolah',
-      },
-      {
-        label: t('registration.elementary_school'),
-        value: 'sd',
-      },
-      {
-        label: t('registration.middle_school'),
-        value: 'smp',
-      },
-      {
-        label: t('registration.high_school'),
-        value: 'sma',
-      },
-      {
-        label: t('registration.d1'),
-        value: 'd1',
-      },
-      {
-        label: t('registration.d2'),
-        value: 'd2',
-      },
-      {
-        label: t('registration.d3'),
-        value: 'd3',
-      },
-      {
-        label: t('registration.d4'),
-        value: 'd4',
-      },
-      {
-        label: t('registration.bachelor_degree'),
-        value: 's1',
-      },
-      {
-        label: t('registration.master_degree'),
-        value: 's2',
-      },
-      {
-        label: t('registration.doctoral_degree'),
-        value: 's3',
-      },
-    ],
-    [t]
-  );
-
-  const marriage = useMemo(
-    () => [
-      {
-        label: t('registration.divorced'),
-        value: 'cerai',
-      },
-      {
-        label: t('registration.married'),
-        value: 'menikah',
-      },
-      {
-        label: t('registration.single'),
-        value: 'belum_menikah',
-      },
-    ],
-    [t]
-  );
 
   const language = useMemo(
     () => [
       {
         label: t('registration.indonesian_language'),
-        value: 'indonesia',
+        value: 'id-ID',
       },
       {
         label: t('registration.english_language'),
-        value: 'english',
+        value: 'en',
       },
     ],
     [t]
   );
 
-  const job = useMemo(
-    () => [
-      {
-        label: t('registration.unemployed'),
-        value: 'tidak_bekerja',
-      },
-      {
-        label: t('registration.entrepreneur'),
-        value: 'wirausaha',
-      },
-      {
-        label: t('registration.student'),
-        value: 'pelajar/mahasiswa',
-      },
-      {
-        label: t('registration.private_employee'),
-        value: 'karyawan_swasta',
-      },
-      {
-        label: t('registration.civil_servant'),
-        value: 'PNS',
-      },
-      {
-        label: t('registration.housewife'),
-        value: 'mengurus_rumah_tangga',
-      },
-      {
-        label: t('registration.army'),
-        value: 'TNI',
-      },
-      {
-        label: t('registration.police'),
-        value: 'POLRI',
-      },
-      {
-        label: t('registration.farmer'),
-        value: 'Petani',
-      },
-      {
-        label: t('registration.breeder'),
-        value: 'peternak',
-      },
-      {
-        label: t('registration.state_enterprise_employee'),
-        value: 'karyawan_BUMN/BUMD',
-      },
-      {
-        label: t('registration.teacher'),
-        value: 'guru',
-      },
-      {
-        label: t('registration.domestic_worker'),
-        value: 'asisten_rumah_tangga',
-      },
-      {
-        label: t('registration.laborer'),
-        value: 'buruh',
-      },
-      {
-        label: t('registration.retired'),
-        value: 'pensiunan',
-      },
-      {
-        label: t('registration.fisherman'),
-        value: 'nelayan',
-      },
-      {
-        label: t('registration.construction_worker'),
-        value: 'konstruksi',
-      },
-      {
-        label: t('registration.trade_worker'),
-        value: 'perdagangan',
-      },
-      {
-        label: t('registration.transport_worker'),
-        value: 'transportasi',
-      },
-      {
-        label: t('registration.honorary_worker'),
-        value: 'honorer',
-      },
-      {
-        label: t('registration.journalist'),
-        value: 'wartawan',
-      },
-      {
-        label: t('registration.lecturer'),
-        value: 'dosen',
-      },
-    ],
-    [t]
-  );
+  const { data: mariageData } = useFetch({ attributePath: "", codeSystem: "", valueSet: "Patient.maritalStatus" }, terminologyGet)
+  const { data: bloodType } = useFetch({ attributePath: "Patient.blood.type", codeSystem: "http://loinc.org" }, terminologyGet)
+  const { data: education } = useFetch({ attributePath: "Person.education", codeSystem: "xhis.code.education.level", valueSet: "" }, terminologyGet)
+  const { data: jobClass } = useFetch({ attributePath: "Person.job.ktp.class", codeSystem: "xhis.code.job.category.ktp", valueSet: "" }, terminologyGet)
+  // const { data } = useFetch({ attributePath: "", codeSystem: "", valueSet: "" }, terminologyGet)
 
   const listType = useMemo(
     () => [
       {
         label: t('registration.blood_type'),
         name: 'bloodType',
-        options: bloodType,
+        options: terminologyArrayMapper({ data: bloodType?.data, key: "terminology.bloodType" }),
       },
       {
         label: t('registration.education'),
         name: 'study',
-        options: study,
+        options: terminologyArrayMapper({ data: education?.data, key: "terminology.education" }),
       },
       {
         label: t('registration.marital_status'),
         name: 'marriage',
-        options: marriage,
+        options: terminologyArrayMapper({ data: mariageData?.data, key: "terminology.marital" }),
       },
       {
         label: t('registration.occupation'),
         name: 'job',
-        options: job,
+        options: terminologyArrayMapper({ data: jobClass?.data, key: "terminology.job" }),
       },
       {
         label: t('registration.daily_language'),
@@ -275,8 +68,9 @@ const DetailNewPatient: FC<NewPatientProps> = ({ handleNextPage, handlePreviousP
         options: language,
       },
     ],
-    [bloodType, job, language, marriage, study, t]
+    [bloodType, jobClass, language, mariageData, education, t]
   );
+
 
   return (
     <>

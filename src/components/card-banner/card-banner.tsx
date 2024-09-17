@@ -3,11 +3,11 @@ import type { ReactNode } from "react";
 import { Iconify } from "../iconify";
 import type { ButtonBaseOverrideProps, CardBannerContentCardProps, CardBannerProps } from "./types";
 
-export const ButtonBaseOverride = ({ clickable, onClick, children }: ButtonBaseOverrideProps & { children?: ReactNode }) => {
+export const ButtonBaseOverride = ({ clickable, onClick, children, disabled }: ButtonBaseOverrideProps & { children?: ReactNode }) => {
 
   if (clickable) {
     return (
-      <ButtonBase onClick={onClick} sx={{ width: '100%', height: '100%' }}>
+      <ButtonBase onClick={onClick} sx={{ width: '100%', height: '100%' }} disabled={disabled}>
         {children}
       </ButtonBase>
     )
@@ -46,11 +46,11 @@ export const VerticalItem = (props: CardBannerContentCardProps) => {
 }
 
 const CardBanner = (props: CardBannerProps) => {
-  const { cardProps, clickable, onClick, orientation = "horizontal", ...contentProps } = props
+  const { cardProps, clickable, onClick, orientation = "horizontal", disabled, ...contentProps } = props
 
   return (
-    <ButtonBaseOverride clickable={clickable} onClick={onClick}>
-      <Card {...cardProps} sx={{ height: "100%", width: '100%', alignItems: "center", ...cardProps?.sx }}>
+    <ButtonBaseOverride clickable={clickable} onClick={onClick} disabled={disabled}>
+      <Card {...cardProps} sx={{ height: "100%", width: '100%', alignItems: "center", bgcolor: disabled ? (theme) => theme.palette.grey[300] : undefined, ...cardProps?.sx }}>
         {
           orientation === "horizontal" && <HorizontalItem {...contentProps} />
         }

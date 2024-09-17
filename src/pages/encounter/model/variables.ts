@@ -1,4 +1,4 @@
-import type { TFunction } from "i18next";
+import type { TFunction } from 'i18next';
 
 export const buttonStyle: any = {
   fullWidth: true,
@@ -44,6 +44,7 @@ export const initialStep = [
     value: 'select_encounter_type',
     properties: {
       disableBack: true,
+      containerSize: 'medium',
     },
   },
   {
@@ -73,6 +74,7 @@ export const formStepsOutpatientGeneral = [
     value: 'select_healthcare_practitioner',
     properties: {
       disableBack: true,
+      containerSize: 'superLarge',
     },
   },
   {
@@ -429,7 +431,6 @@ export const formStepsLabCompany = [
     },
   },
 ];
-
 
 export const formStepsRadGeneral = [
   ...initialStep,

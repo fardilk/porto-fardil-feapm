@@ -18,6 +18,9 @@ import { Keyboard } from 'src/components/keyboard';
 
 import { useTranslate } from 'src/locales';
 import type { NewPatientProps } from '../model/types';
+import { terminologyGet } from 'src/pages/terminology/model/functions';
+import { useFetch } from 'src/hooks/use-fetch';
+import { terminologyArrayMapper } from 'src/utils/terminology';
 
 const NewPatient = (props: NewPatientProps) => {
   const { handlePreviousPage } = props;
@@ -29,6 +32,10 @@ const NewPatient = (props: NewPatientProps) => {
   const { watch, setError, formState: { errors } } = useFormContext();
   const isForeign = watch('citizenship');
   const { t } = useTranslate();
+
+  const { data: dataGender } = useFetch({ attributePath: "", codeSystem: "", valueSet: "Patient.contact.gender" }, terminologyGet)
+
+  const listGender = terminologyArrayMapper({ data: dataGender?.data, key: "terminology.gender" })
 
   const listReligion = useMemo(
     () => [
@@ -64,37 +71,19 @@ const NewPatient = (props: NewPatientProps) => {
     [t]
   );
 
-  const listGender = useMemo(
-    () => [
-      {
-        label: t('registration.male'),
-        value: 'laki-laki',
-      },
-      {
-        label: t('registration.female'),
-        value: 'perempuan',
-      },
-    ],
-    [t]
-  );
-
-  const listMarriage = useMemo(
-    () => [
-      {
-        label: t('registration.divorced'),
-        value: 'cerai',
-      },
-      {
-        label: t('registration.married'),
-        value: 'menikah',
-      },
-      {
-        label: t('registration.single'),
-        value: 'belum_menikah',
-      },
-    ],
-    [t]
-  );
+  // const listGender = useMemo(
+  //   () => [
+  //     {
+  //       label: t('registration.male'),
+  //       value: 'laki-laki',
+  //     },
+  //     {
+  //       label: t('registration.female'),
+  //       value: 'perempuan',
+  //     },
+  //   ],
+  //   [t]
+  // );
 
   return (
     <>

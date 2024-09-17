@@ -1,6 +1,7 @@
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material"
 import { useMemo, type ReactNode } from "react"
 import { useTranslate } from "src/locales"
+import { useSelector } from "src/store/store"
 
 type WindowContainerProps = {
   title: string,
@@ -9,7 +10,7 @@ type WindowContainerProps = {
   children?: ReactNode
   hideBackNavigation?: boolean;
   hideCloseNavigation?: boolean
-  size?: "medium" | "large" | "superLarge"
+  size?: "medium" | "large" | "superLarge" | "superSmall"
 }
 
 const WindowContainer = (props: WindowContainerProps) => {
@@ -25,11 +26,15 @@ const WindowContainer = (props: WindowContainerProps) => {
       return { xs: "90%", md: "95%", lg: "85%" }
     }
 
+    if (size === "superSmall") {
+      return { xs: "40%", md: "20%", lg: "10%" }
+    }
+
     return { xs: "90%", md: "70%", lg: "65%" }
   }, [size])
 
   return (
-    <Box sx={{ display: "flex", placeContent: "center", px: 4, width: "100%" }}>
+    <Box sx={{ display: "flex", placeContent: "center", px: 4, width: "100%", maxHeight: '80vh' }}>
       <Box sx={{ width: containerWidth, overflowY: "auto", bgcolor: (theme) => theme.palette.background.paper, borderTopLeftRadius: 8, borderTopRightRadius: 8 }}>
         <AppBar position="sticky" sx={{ bgcolor: (theme) => theme.palette.grey[300], borderTopLeftRadius: 8, borderTopRightRadius: 8, top: 0 }}>
           <Toolbar>

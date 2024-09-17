@@ -4,9 +4,9 @@
     "next": "next",
     "cancel": "cancel",
     "doctor": "Doctor",
-    "MCU" : "MCU",
-    "laboratory" : "Laboratory",
-    "radiology" : "Radiology",
+    "MCU": "MCU",
+    "laboratory": "Laboratory",
+    "radiology": "Radiology",
     "patient_detail": "Patient Detail",
     "doctor_detail": "Doctor Detail",
     "specialist": "Specialist",
@@ -35,7 +35,7 @@
     "reprint": "Reprint",
     "blood_type": "Blood type",
     "choose": "Choose",
-    "payment_method" : "Choose Payment Method"
+    "payment_method": "Choose Payment Method"
   },
   "home": {
     "menu": {
@@ -155,24 +155,24 @@
     "steps": {
       "select_encounter_type": "Select Encounter Type",
       "insert_nik": "Insert NIK",
-      "information_outpatient_general" : "Patient Information",
-      "payment_method" : "Choose Payment Method",
-      "select_healthcare_practitioner" : "Choose Specialist",
-      "confirmation_patient_registration" : "Confirm Patient Registration",
-      "select_mcu_package" : "Select the Health Checkup Package you want",
-      "confirmation_patient_registration_mcu" : "Confirm Patient Registration",
-      "select_lab_package" : "Select the Laboratory Package you want",
-      "select_rad_service" : "Select the Radiology Service you want",
-      "registration_success" : "Registration Success",
-      "select_insurance" : "Select Insurance",
-      "insert_polis_number" : "Enter Insurance Policy Number",
-      "information_data_patient_insurance" : "Patient Insurance Information",
-      "select_company" : "Select Company",
-      "select_company_new" : "Select Company",
+      "information_outpatient_general": "Patient Information",
+      "payment_method": "Choose Payment Method",
+      "select_healthcare_practitioner": "Choose Specialist",
+      "confirmation_patient_registration": "Confirm Patient Registration",
+      "select_mcu_package": "Select the Health Checkup Package you want",
+      "confirmation_patient_registration_mcu": "Confirm Patient Registration",
+      "select_lab_package": "Select the Laboratory Package you want",
+      "select_rad_service": "Select the Radiology Service you want",
+      "registration_success": "Registration Success",
+      "select_insurance": "Select Insurance",
+      "insert_polis_number": "Enter Insurance Policy Number",
+      "information_data_patient_insurance": "Patient Insurance Information",
+      "select_company": "Select Company",
+      "select_company_new": "Select Company",
       "insert_employee_number": "Enter Employee Number",
-      "information_data_employee" : "Employee Information",
-      "insert_bpjs_number" : "Enter / Scan BPJS Card Number",
-      "information_patient_data_bpjs" : "Patient BPJS Information",
+      "information_data_employee": "Employee Information",
+      "insert_bpjs_number": "Enter / Scan BPJS Card Number",
+      "information_patient_data_bpjs": "Patient BPJS Information",
       "select_time": "Choose Schedule"
     }
   },
@@ -184,95 +184,95 @@
       "doctor_unknown": "Don't know the doctor yet? Choose Healthcare Service & Find Nearest Doctor",
       "doctor_known": "Already know the doctor? Choose doctor",
       "department_find": "Find Healthcare Service",
-      "general" : {
-        "select_healthcare_practitioner" : "Choose Specialist",
-        "confirmation_patient_registration" : "Confirm Patient Registration",
-        "registration_success" : "Registration Success"
+      "general": {
+        "select_healthcare_practitioner": "Choose Specialist",
+        "confirmation_patient_registration": "Confirm Patient Registration",
+        "registration_success": "Registration Success"
       },
-      "insurance" : {
-        "select_insurance" : "Select Insurance",
-        "insert_polis_number" : "Enter Insurance Policy Number",
-        "information_data_patient_insurance" : "Patient Insurance Information"
+      "insurance": {
+        "select_insurance": "Select Insurance",
+        "insert_polis_number": "Enter Insurance Policy Number",
+        "information_data_patient_insurance": "Patient Insurance Information"
       },
-      "company" : {
-        "select_company" : "Select Company",
-        "select_company_new" : "Select Company",
+      "company": {
+        "select_company": "Select Company",
+        "select_company_new": "Select Company",
         "insert_employee_number": "Enter Employee Number",
-        "information_data_employee" : "Employee Information"
+        "information_data_employee": "Employee Information"
       },
-      "bpjs" : {
-        "insert_bpjs_number" : "Enter / Scan BPJS Card Number",
-        "information_patient_data_bpjs" : "Patient BPJS Information"
+      "bpjs": {
+        "insert_bpjs_number": "Enter / Scan BPJS Card Number",
+        "information_patient_data_bpjs": "Patient BPJS Information"
       }
     },
     "mcu": {
       "title": "MEDICAL CHECK UP",
       "description": "A series of routine health tests to check the overall health of the body and anticipate disease risks.",
       "package_find": "Find MCU",
-      "general" : {
-        "select_mcu_package" : "Select the Health Checkup Package you want",
-        "confirmation_patient_registration_mcu" : "Confirm Patient Registration",
-        "registration_success" : "Registration Success"
+      "general": {
+        "select_mcu_package": "Select the Health Checkup Package you want",
+        "confirmation_patient_registration_mcu": "Confirm Patient Registration",
+        "registration_success": "Registration Success"
       },
-      "insurance" : {
-        "select_insurance" : "Select Insurance",
-        "insert_polis_number" : "Enter Insurance Policy Number",
-        "information_data_patient_insurance" : "Patient Insurance Information"
+      "insurance": {
+        "select_insurance": "Select Insurance",
+        "insert_polis_number": "Enter Insurance Policy Number",
+        "information_data_patient_insurance": "Patient Insurance Information"
       },
-      "company" : {
-        "select_company" : "Select Company",
-        "select_company_new" : "Select Company",
+      "company": {
+        "select_company": "Select Company",
+        "select_company_new": "Select Company",
         "insert_employee_number": "Enter Employee Number",
-        "information_data_employee" : "Employee Information"
+        "information_data_employee": "Employee Information"
       }
     },
     "laboratory": {
       "title": "LABORATORY",
       "description": "Facilities that provide diagnostic tests to support health evaluation, diagnosis, and routine medical check-ups without the need for hospitalization.",
       "package_find": "Find Lab Package",
-      "general" : {
-        "select_lab_package" : "Select the Laboratory Package you want",
-        "confirmation_patient_registration" : "Confirm Patient Registration",
-        "registration_success" : "Registration Success"
+      "general": {
+        "select_lab_package": "Select the Laboratory Package you want",
+        "confirmation_patient_registration": "Confirm Patient Registration",
+        "registration_success": "Registration Success"
       },
-      "insurance" : {
-        "select_insurance" : "Select Insurance",
-        "insert_polis_number" : "Enter Insurance Policy Number",
-        "information_data_patient_insurance" : "Patient Insurance Information"
+      "insurance": {
+        "select_insurance": "Select Insurance",
+        "insert_polis_number": "Enter Insurance Policy Number",
+        "information_data_patient_insurance": "Patient Insurance Information"
       },
-      "company" : {
-        "select_company" : "Select Company",
-        "select_company_new" : "Select Company",
+      "company": {
+        "select_company": "Select Company",
+        "select_company_new": "Select Company",
         "insert_employee_number": "Enter Employee Number",
-        "information_data_employee" : "Employee Information"
+        "information_data_employee": "Employee Information"
       }
     },
     "radiology": {
       "title": "RADIOLOGY",
       "description": "Medical services that provide imaging tests such as X-ray, CT scan, and MRI to support diagnosis and treatment without requiring hospitalization.",
       "package_find": "Find Radiology",
-      "general" : {
-        "select_rad_service" : "Select the Radiology Service you want",
-        "confirmation_patient_registration" : "Confirm Patient Registration",
-        "registration_success" : "Registration Success"
+      "general": {
+        "select_rad_service": "Select the Radiology Service you want",
+        "confirmation_patient_registration": "Confirm Patient Registration",
+        "registration_success": "Registration Success"
       },
-      "insurance" : {
-        "select_insurance" : "Select Insurance",
-        "insert_polis_number" : "Enter Insurance Policy Number",
-        "information_data_patient_insurance" : "Patient Insurance Information"
+      "insurance": {
+        "select_insurance": "Select Insurance",
+        "insert_polis_number": "Enter Insurance Policy Number",
+        "information_data_patient_insurance": "Patient Insurance Information"
       },
-      "company" : {
-        "select_company" : "Select Company",
-        "select_company_new" : "Select Company",
+      "company": {
+        "select_company": "Select Company",
+        "select_company_new": "Select Company",
         "insert_employee_number": "Enter Employee Number",
-        "information_data_employee" : "Employee Information"
+        "information_data_employee": "Employee Information"
       }
     }
   },
   "reservation": {
     "visit_date": "Date Visit",
     "visit_hour": "Time Visit",
-    "if_doctor_can't_arrived" : "If the doctor is unavailable during these hours",
+    "if_doctor_can't_arrived": "If the doctor is unavailable during these hours",
     "change_schedule": "Change Schedule",
     "cancel_visit": "Cancel Visit",
     "examining_doctor": "Examining Doctor"
@@ -386,7 +386,6 @@
       "enter_employee_number": "Enter Your Employee Number",
       "detail_data": "Patient Insurance Data Details",
       "detail_data_employee": "Employee Data Detail"
-
     },
     "button": {
       "incorrect_data": "Incorrect data, refill the policy number",
@@ -442,5 +441,159 @@
     "marital_status_required": "Marital status is required",
     "occupation_required": "Occupation is required",
     "language_required": "Language is required"
+  },
+
+  "terminology": {
+    "marital": {
+      "A": "Annulled",
+      "D": "Divorced",
+      "I": "Interlocutory",
+      "L": "Legally Separated",
+      "M": "Married",
+      "P": "Polygamous",
+      "S": "Never Married",
+      "T": "Domestic partner",
+      "U": "Unmarried",
+      "W": "Widowed",
+      "UNK": "unknown"
+    },
+
+    "gender": {
+      "male": "Male",
+      "female": "Female",
+      "other": "Other",
+      "unknown": "Unknown"
+    },
+
+    "religion": {
+      "Budha": "Buddha",
+      "Hindhu": "Hindu",
+      "Islam": "Islam",
+      "Katholik": "Catholic",
+      "Konghucu": "Confucius",
+      "Kristen": "Protestan",
+      "Lainnya": "Other",
+      "budha": "Buddha",
+      "hindhu": "Hindu",
+      "islam": "Islam",
+      "katholik": "Catholic",
+      "konghucu": "Confucius",
+      "kristen": "Protestan",
+      "lainnya": "Other"
+    },
+
+    "language": {
+      "id-ID": "Indonesia",
+      "ar": "Arabic",
+      "bn": "Bengali",
+      "cs": "Czech",
+      "da": "Danish",
+      "de": "German",
+      "de-AT": "German (Austria)",
+      "de-CH": "German (Switzerland)",
+      "de-DE": "German (Germany)",
+      "el": "Greek",
+      "en": "English",
+      "en-AU": "English (Australia)",
+      "en-CA": "English (Canada)",
+      "en-GB": "English (Great Britain)",
+      "en-IN": "English (India)",
+      "en-NZ": "English (New Zealand)",
+      "en-SG": "English (Singapore)",
+      "en-US": "English (United States)",
+      "es": "Spanish",
+      "es-AR": "Spanish (Argentina)",
+      "es-ES": "Spanish (Spain)",
+      "es-UY": "Spanish (Uruguay)",
+      "fi": "Finnish",
+      "fr": "French",
+      "fr-BE": "French (Belgium)",
+      "fr-CH": "French (Switzerland)",
+      "fr-FR": "French (France)",
+      "fr-CA": "French (Canada)",
+      "fy": "Frysian",
+      "fy-NL": "Frysian (Netherlands)",
+      "hi": "Hindi",
+      "hr": "Croatian",
+      "it": "Italian",
+      "it-CH": "Italian (Switzerland)",
+      "it-IT": "Italian (Italy)",
+      "ja": "Japanese",
+      "ko": "Korean",
+      "nl": "Dutch",
+      "nl-BE": "Dutch (Belgium)",
+      "nl-NL": "Dutch (Netherlands)",
+      "no": "Norwegian",
+      "no-NO": "Norwegian (Norway)",
+      "pa": "Punjabi",
+      "pl": "Polish",
+      "pt": "Portuguese",
+      "pt-BR": "Portuguese (Brazil)",
+      "ru": "Russian",
+      "ru-RU": "Russian (Russia)",
+      "sr": "Serbian",
+      "sr-RS": "Serbian (Serbia)",
+      "sv": "Swedish",
+      "sv-SE": "Swedish (Sweden)",
+      "te": "Telegu",
+      "zh": "Chinese",
+      "zh-CN": "Chinese (China)",
+      "zh-HK": "Chinese (Hong Kong)",
+      "zh-SG": "Chinese (Singapore)",
+      "zh-TW": "Chinese (Taiwan)"
+    },
+
+    "bloodType": {
+      "LA19708-9": "O",
+      "LA19710-5": "A",
+      "LA19709-7": "B",
+      "LA28449-9": "AB"
+    },
+
+    "education": {
+      "D1": "Diploma 1",
+      "D2": "Diploma 2",
+      "D3": "Diploma 3",
+      "D4": "Diploma 4",
+      "ES": "Primary school",
+      "HS": "Junior high school",
+      "PS": "Preschool",
+      "S1": "Bachelor",
+      "S2": "Master",
+      "S3": "Doctor",
+      "SHS": "Senior High School",
+      "unknow": "Unknown",
+      "VHS": "Vocational High School"
+    },
+
+    "job": {
+      "9999.01": "Not working/ Unemployed",
+      "9999.02": "Household",
+      "9999.03": "Student",
+      "9999.04": "Retired",
+      "9999.05": "Civil Servant",
+      "9999.06": "Indonesian National Army",
+      "9999.07": "Indonesian Police",
+      "9999.08": "Trade",
+      "9999.09": "Farmer/ Planter",
+      "9999.10": "Livestock Farmer",
+      "9999.11": "Fisherman/ Fisheries",
+      "9999.12": "Industry",
+      "9999.13": "Construction",
+      "9999.14": "Transportation",
+      "9999.15": "Private Employee",
+      "9999.16": "State-Owned Enterprise/ Regional-Owned Enterprise Employee",
+      "9999.17": "Laborer",
+      "9999.18": "Honorary Employee",
+      "9999.19": "Casual Laborer",
+      "9999.20": "Agricultural Laborer",
+      "9999.21": "Fisherman Laborer",
+      "9999.22": "Livestock Laborer",
+      "9999.23": "Household Assistant",
+      "9999.24": "Journalist",
+      "9999.25": "Lecturer",
+      "9999.26": "Teacher",
+      "9999.27": "Entrepreneur"
+    }
   }
 }
