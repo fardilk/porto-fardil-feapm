@@ -15,7 +15,7 @@ const HomePage = () => {
 
   const navigate = useNavigate()
   const config = useSelector((root) => root.config)
-  const {t, onChangeLang} = useTranslate()
+  const { t, onChangeLang } = useTranslate()
 
   const listCard = [
     {
@@ -54,7 +54,7 @@ const HomePage = () => {
 
   useEffect(() => {
     onChangeLang("id")
-  },[]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <Stack sx={{ px: 8, gap: 2, height: `calc(100vh - ${Header_Height}px)`, pb: 2 }}>
@@ -63,9 +63,10 @@ const HomePage = () => {
         sx={{
           display: "block",
           mx: "auto",
+          height: '60%'
         }} />
 
-      <Box>
+      <Box sx={{ height: '40%' }}>
         <CardWrapper listCard={listCard} mode={config.mode} />
       </Box>
     </Stack>
@@ -82,11 +83,11 @@ const CardWrapper = ({ mode, listCard }: { mode: string, listCard: any[] }) => {
 
   if (mode === "fixed") {
     return (
-      <Grid container spacing={2} sx={{ placeContent: "center" }}>
+      <Grid container spacing={2} sx={{ placeContent: "center", height: "100%" }}>
         {
           activeCard.map((row, index) => {
             return (
-              <Grid item xs={12} md={3} key={index}>
+              <Grid item xs={12} md={3} key={index} sx={{ height: "100%" }}>
                 <CardBanner
                   key={index}
                   clickable
@@ -94,6 +95,15 @@ const CardWrapper = ({ mode, listCard }: { mode: string, listCard: any[] }) => {
                   body={row.body}
                   onClick={row.handleClick}
                   localIcon={row.icon}
+                  orientation="vertical"
+                  cardProps={{
+                    sx: {
+                      display: 'flex',
+                      placeItems: 'center',
+                      placeContent: 'center'
+                    }
+                  }}
+                  iconProps={{ sx: { height: '100%', width: 90 } }}
                 />
               </Grid>
             )
