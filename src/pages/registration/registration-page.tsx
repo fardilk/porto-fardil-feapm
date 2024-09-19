@@ -43,6 +43,7 @@ const RegistrationPage = () => {
 
   const defaultValues: RegistrationIForm = {
     patientID: '',
+    isRegistered: false,
     nik: '',
     citizenship: false,
     name: '',
@@ -81,7 +82,7 @@ const RegistrationPage = () => {
     resolver: yupResolver(getValidationSchema(currentPage.value, isForeign, formSteps)),
   });
 
-  const { handleSubmit, reset, resetField } = methods;
+  const { handleSubmit, reset, resetField, setValue } = methods;
 
   const getTitle = useMemo(
     () => (currentPage?.properties?.i18n ? t(currentPage?.properties?.i18n) : currentPage.label),
@@ -135,6 +136,7 @@ const RegistrationPage = () => {
 
         } catch (error) {
           handleChangePage({ action: 'next', newFormSteps: formStepsNotExistInternal });
+          setValue("isRegistered", false)
           toast.info("Anda Belum Terdaftar, Silahkan mendaftar")
         }
 
