@@ -163,7 +163,11 @@ const NewPatient = (props: NewPatientProps) => {
           </Typography>
         </Grid>
         <Grid item xs={4}>
-          <RHFMobileDatePicker name="birthDate" format="DD/MM/YYYY" />
+          <RHFMobileDatePicker
+            name="birthDate"
+            format="DD/MM/YYYY"
+            disableFuture
+          />
         </Grid>
         <Grid item xs={2} display={'flex'} alignItems={'center'}>
           <Typography variant="subtitle1" color="grey.600">

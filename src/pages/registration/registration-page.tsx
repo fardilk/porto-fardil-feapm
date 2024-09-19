@@ -80,6 +80,7 @@ const RegistrationPage = () => {
   const methods = useForm<RegistrationIForm>({
     defaultValues,
     resolver: yupResolver(getValidationSchema(currentPage.value, isForeign, formSteps)),
+    mode: "onChange"
   });
 
   const { handleSubmit, reset, resetField, setValue } = methods;
