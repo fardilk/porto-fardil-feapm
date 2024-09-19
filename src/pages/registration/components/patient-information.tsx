@@ -57,7 +57,7 @@ const PatientInformation = (props: PatientInformationProps) => {
   return (
     <>
       <Alert color="warning" severity="warning">
-        {t('registration.registered_patient')}
+        {values.isRegistered ? t('registration.registered_patient') : t('registration.unregistered_patient')}
       </Alert>
       <TableContainer sx={{ my: 2 }}>
         <LabelTextContainer disableOutline orientation="horizontal" listText={detailData} col={1} />
