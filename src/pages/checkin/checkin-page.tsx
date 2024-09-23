@@ -42,7 +42,7 @@ const CheckinPage = () => {
 
         handleChangePage({ action: 'next' });
       } catch (e) {
-        toast.error('Gagal Lapor Kehadiran');
+        toast.error('Nomor Booking Tidak Ditemukan. Silahkan Cek Ulang Nomor Booking');
       } finally {
         nProgress.done();
       }
