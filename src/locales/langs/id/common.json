@@ -40,19 +40,19 @@
   "home": {
     "menu": {
       "checkin": {
-        "title": "Lapor Kehadiran",
+        "title": "CHECK-IN",
         "description": "Siapkan kode booking yang sudah didapat melalui website booking online"
       },
       "doctor_visit": {
-        "title": "Kunjungan Dokter",
+        "title": "WALK-IN",
         "description": "Pendaftaran kunjungan pasien lama, siapkan nomor NIK"
       },
       "reservation": {
-        "title": "Reservasi",
+        "title": "RESERVASI",
         "description": "Pesan jadwal kunjungan anda, siapkan data-data anda"
       },
       "registration": {
-        "title": "Registrasi Pasien Baru",
+        "title": "REGISTRASI PASIEN BARU",
         "description": "Registrasi Pasien Baru, Siapkan data-data anda"
       }
     }
