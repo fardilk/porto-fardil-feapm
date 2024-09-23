@@ -40,6 +40,7 @@ const KeyboardWrapper = React.forwardRef((props: KeyboardWrapperProps, inputRef:
       }
 
       (dialogRef as any).value = newInput
+      setValue(elementName, newInput)
     }
   }
 
@@ -69,6 +70,19 @@ const KeyboardWrapper = React.forwardRef((props: KeyboardWrapperProps, inputRef:
                   paddingBottom: theme.spacing(3),
                   backgroundColor: theme.palette.background.neutral,
                   ...typography.h3
+                }
+              }}
+              onChange={(event) => {
+                if (inputType === "number") {
+                  try {
+                    const num = Number(event.target.value)
+                    if (Number.isNaN(num)) throw Error("Apalah Beliau Ini");
+                    setValue(elementName, num)
+                  } catch (error) {
+                    console.log(error)
+                  }
+                } else {
+                  setValue(elementName, event.target.value)
                 }
               }}
             />
