@@ -56,6 +56,10 @@ export interface RegistrationIForm {
     label: string;
     value: string;
   } | null;
+  nationality: {
+    label: string;
+    value: string;
+  } | null;
 }
 
 export type SelectRegistrationMethodProps = {

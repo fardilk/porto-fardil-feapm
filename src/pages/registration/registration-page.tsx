@@ -59,6 +59,7 @@ const RegistrationPage = () => {
     marriage: null,
     job: null,
     language: null,
+    nationality: null
   };
 
   const { t } = useTranslate();
