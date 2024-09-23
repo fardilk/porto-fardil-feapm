@@ -14,7 +14,7 @@ export const regIFormToInput = ({ data }: { data: RegistrationIForm }): PatientC
     maritalStatus: data.marriage?.value || '',
     phone: data.phoneNumber,
     email: data.email,
-    nationality: data.citizenship ? '' : 'ID',
+    nationality: data.citizenship ? data.nationality?.value || '' : 'ID',
     address: data.address,
     additional: {
       bloodType: data.bloodType?.value || '',
@@ -28,7 +28,18 @@ export const regIFormToInput = ({ data }: { data: RegistrationIForm }): PatientC
 
 export const patientToIForm = ({ data: newData }: { data: Patient }): RegistrationIForm => {
   const newDef: RegistrationIForm = {
+    nationality:
+      newData.identifierTypeCode === 'NNIDN'
+        ? {
+            label: 'Indonesia',
+            value: 'ID',
+          }
+        : {
+            label: newData.nationality,
+            value: newData.nationality,
+          },
     patientID: newData.patientID,
+    isRegistered: true,
     nik: newData.identifierValue,
     citizenship: newData.identifierTypeCode === 'NNIDN',
     name: newData.name,

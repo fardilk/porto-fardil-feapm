@@ -373,6 +373,7 @@
     "occupation": "Pekerjaan",
     "daily_language": "Bahasa Sehari-hari",
     "registered_patient": "Anda sudah terdaftar sebagai pasien di RS Primaya Tangerang dengan data sebagai berikut :",
+    "unregistered_patient": "Pastikan Data Dibawah Sudah Benar :",
     "registration_received": "Pendaftaran Anda telah kami terima.",
     "activate_medical_record": "Silakan menuju ke bagian administrasi untuk mengaktifkan rekam medis Anda.",
     "patient_details": "Detail Pasien",

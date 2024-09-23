@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 
 import {
+  RHFAutocomplete,
   RHFMobileDatePicker,
   RHFTextField,
   RHFTimePils
@@ -34,8 +35,10 @@ const NewPatient = (props: NewPatientProps) => {
   const { t } = useTranslate();
 
   const { data: dataGender } = useFetch({ attributePath: "", codeSystem: "", valueSet: "Patient.contact.gender" }, terminologyGet)
+  const { data: dataNationality } = useFetch({ attributePath: "Address.country", codeSystem: "urn:iso:std:iso:3166" }, terminologyGet)
 
   const listGender = terminologyArrayMapper({ data: dataGender?.data, key: "terminology.gender" })
+  const listNationality = terminologyArrayMapper({ data: dataNationality?.data }).filter((row) => row.value !== "ID")
 
   const listReligion = useMemo(
     () => [
@@ -87,7 +90,7 @@ const NewPatient = (props: NewPatientProps) => {
 
   return (
     <>
-      <Grid container rowSpacing={2} my={2} columnSpacing={3}>
+      <Grid container rowSpacing={2} mb={1} columnSpacing={3}>
         <Grid item xs={2} display={'flex'} alignItems={'center'}>
           <Typography variant="subtitle1" color="grey.600">
             {isForeign ? 'Passport' : 'NIK/Medrec'}
@@ -163,7 +166,11 @@ const NewPatient = (props: NewPatientProps) => {
           </Typography>
         </Grid>
         <Grid item xs={4}>
-          <RHFMobileDatePicker name="birthDate" format="DD/MM/YYYY" />
+          <RHFMobileDatePicker
+            name="birthDate"
+            format="DD/MM/YYYY"
+            disableFuture
+          />
         </Grid>
         <Grid item xs={2} display={'flex'} alignItems={'center'}>
           <Typography variant="subtitle1" color="grey.600">
@@ -178,6 +185,33 @@ const NewPatient = (props: NewPatientProps) => {
             getOptionEqualToValue={(opt, value) => opt.value === value?.value}
           />
         </Grid>
+        {
+          isForeign && (
+            <>
+              <Grid item xs={2} display={'flex'} alignItems={'center'}>
+                <Typography variant="subtitle1" color="grey.600">
+                  Nationality
+                </Typography>
+              </Grid>
+              <Grid item xs={10}>
+                <RHFAutocomplete
+                  options={listNationality}
+                  label="Negara"
+                  name="Nationality"
+                  onSelect={(country) => {
+                    console.log(country)
+                    // if (valCitizenship === "WNA" && country?.codingCode !== "ID") {
+                    //   console.log('country')
+                    // } else {
+                    //   setValue('identifierValue', "")
+                    //   setValue('identifierType', null)
+                    // }
+                  }}
+                />
+              </Grid>
+            </>
+          )
+        }
         <Grid item xs={2} display={'flex'} alignItems={'center'}>
           <Typography variant="subtitle1" color="grey.600">
             {t('registration.phone_number')}

@@ -19,6 +19,7 @@ export type SuccessNewPatientProps = {
 
 export interface RegistrationIForm {
   patientID?: string;
+  isRegistered: boolean;
   nik: string;
   citizenship: boolean;
   name: string;
@@ -52,6 +53,10 @@ export interface RegistrationIForm {
     value: string;
   } | null;
   language: {
+    label: string;
+    value: string;
+  } | null;
+  nationality: {
     label: string;
     value: string;
   } | null;

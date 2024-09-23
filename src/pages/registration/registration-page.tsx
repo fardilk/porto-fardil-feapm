@@ -43,6 +43,7 @@ const RegistrationPage = () => {
 
   const defaultValues: RegistrationIForm = {
     patientID: '',
+    isRegistered: false,
     nik: '',
     citizenship: false,
     name: '',
@@ -58,6 +59,7 @@ const RegistrationPage = () => {
     marriage: null,
     job: null,
     language: null,
+    nationality: null
   };
 
   const { t } = useTranslate();
@@ -79,9 +81,10 @@ const RegistrationPage = () => {
   const methods = useForm<RegistrationIForm>({
     defaultValues,
     resolver: yupResolver(getValidationSchema(currentPage.value, isForeign, formSteps)),
+    mode: "onChange"
   });
 
-  const { handleSubmit, reset, resetField } = methods;
+  const { handleSubmit, reset, resetField, setValue } = methods;
 
   const getTitle = useMemo(
     () => (currentPage?.properties?.i18n ? t(currentPage?.properties?.i18n) : currentPage.label),
@@ -135,6 +138,7 @@ const RegistrationPage = () => {
 
         } catch (error) {
           handleChangePage({ action: 'next', newFormSteps: formStepsNotExistInternal });
+          setValue("isRegistered", false)
           toast.info("Anda Belum Terdaftar, Silahkan mendaftar")
         }
 
