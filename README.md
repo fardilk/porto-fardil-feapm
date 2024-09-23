@@ -94,6 +94,8 @@ npm publish --registry=https://repository.sismedika.online/repository/his-librar
 * Adding sub module to this repo
   ```shell
   git submodule add -f git@github.com:developersismedika/apem-graphql-http-files.git _resources/http-requests && git submodule update --remote
+  git submodule add -f git@github.com:developersismedika/apem-json-resources.git _resources/json && git submodule update --remote
+  git submodule add -f git@github.com:developersismedika/apem-json-resources.git _resources/json && git submodule update --remote
   ```
 * Adding Git SubModule for http files (first time ONLY)
   ```shell
