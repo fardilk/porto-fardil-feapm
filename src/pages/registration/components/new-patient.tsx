@@ -30,7 +30,7 @@ const NewPatient = (props: NewPatientProps) => {
   const [keyboardType, setKeyboardType] = useState('');
   const inputRef = useRef<any>({});
 
-  const { watch, setError, formState: { errors } } = useFormContext();
+  const { watch } = useFormContext();
   const isForeign = watch('citizenship');
   const { t } = useTranslate();
 
