@@ -1,8 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box } from '@mui/material';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { toast } from 'sonner';
 import { AppPage } from 'src/components/app-page';
 import { Form } from 'src/components/hook-form';
@@ -33,6 +33,7 @@ import {
   formStepsRegistrationMethodByPhone
 } from './model/variables';
 import { timeout } from 'src/utils/timeout';
+import { deBase64 } from 'src/utils/helper';
 
 const RegistrationPage = () => {
 
@@ -40,11 +41,12 @@ const RegistrationPage = () => {
 
   const [patientSuccess, setPatientSuccess] = useState<Patient | null>(null)
   const isSimplify = useSelector((root) => root.config.simplify);
+  const { encryptedNIK } = useParams()
 
   const defaultValues: RegistrationIForm = {
     patientID: '',
     isRegistered: false,
-    nik: '',
+    nik: deBase64(encryptedNIK) || '',
     citizenship: false,
     name: '',
     gender: null,
@@ -106,6 +108,20 @@ const RegistrationPage = () => {
     },
     [handleChangePage]
   );
+
+  useEffect(() => {
+    const enc = Boolean(encryptedNIK)
+    if (enc) {
+      setValue("isRegistered", false)
+      handleChangePage({
+        action: 'next',
+        newFormSteps: formStepsNotExistInSatuSehat,
+        toSpecificPage: "create_new_patient"
+      });
+    }
+  }, [encryptedNIK])
+
+  console.log(formSteps)
 
   const onSubmit = async (data: RegistrationIForm) => {
     try {

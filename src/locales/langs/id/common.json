@@ -155,6 +155,7 @@
     "steps": {
       "select_encounter_type": "Pilih Jenis Kunjungan",
       "insert_nik": "Masukkan NIK",
+      "nik_not_found": "NIK Tidak Ditemukan",
       "information_outpatient_general": "Informasi Data Pasien",
       "payment_method": "Pilih Metode Pembayaran",
       "select_healthcare_practitioner": "Pilih Dokter Poli",
