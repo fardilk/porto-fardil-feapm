@@ -28,6 +28,7 @@ export const formatStr = {
     dateTime: 'DD-MM-YYYY h:mm a', // 17-04-2022 12:00 am
     date: 'DD-MM-YYYY', // 17-04-2022
     mysqlDate: 'YYYY-MM-DD',
+    dayDateTime: 'dddd, DD-MM-YYYY, HH:mm-HH:mm',
   },
 };
 

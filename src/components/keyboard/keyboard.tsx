@@ -14,7 +14,7 @@ const KeyboardWrapper = React.forwardRef((props: KeyboardWrapperProps, inputRef:
 
   const dialogInputRef = useRef<HTMLInputElement | null>(null)
 
-  const { setValue, watch } = useFormContext();
+  const { setValue, watch, trigger } = useFormContext();
   const theme = useTheme()
   const values = watch(elementName)
 
@@ -32,7 +32,7 @@ const KeyboardWrapper = React.forwardRef((props: KeyboardWrapperProps, inputRef:
         newCursorPosition = Math.max(0, cursorPosition - 1);
       } else if (key === 'Enter' || key === 'ENTER') {
         setValue(elementName, currentInput)
-        onClose && onClose()
+        onClose && onClose(); trigger(elementName)
         return;
       } else {
         newInput = currentInput.slice(0, cursorPosition) + key + currentInput.slice(cursorPosition);

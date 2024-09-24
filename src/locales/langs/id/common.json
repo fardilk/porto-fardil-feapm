@@ -40,19 +40,19 @@
   "home": {
     "menu": {
       "checkin": {
-        "title": "Lapor Kehadiran",
+        "title": "CHECK-IN",
         "description": "Siapkan kode booking yang sudah didapat melalui website booking online"
       },
       "doctor_visit": {
-        "title": "Kunjungan Dokter",
+        "title": "WALK-IN",
         "description": "Pendaftaran kunjungan pasien lama, siapkan nomor NIK"
       },
       "reservation": {
-        "title": "Reservasi",
+        "title": "RESERVASI",
         "description": "Pesan jadwal kunjungan anda, siapkan data-data anda"
       },
       "registration": {
-        "title": "Registrasi Pasien Baru",
+        "title": "REGISTRASI PASIEN BARU",
         "description": "Registrasi Pasien Baru, Siapkan data-data anda"
       }
     }
@@ -155,6 +155,7 @@
     "steps": {
       "select_encounter_type": "Pilih Jenis Kunjungan",
       "insert_nik": "Masukkan NIK",
+      "nik_not_found": "NIK Tidak Ditemukan",
       "information_outpatient_general": "Informasi Data Pasien",
       "payment_method": "Pilih Metode Pembayaran",
       "select_healthcare_practitioner": "Pilih Dokter Poli",

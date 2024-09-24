@@ -30,49 +30,51 @@ const NewPatient = (props: NewPatientProps) => {
   const [keyboardType, setKeyboardType] = useState('');
   const inputRef = useRef<any>({});
 
-  const { watch, setError, formState: { errors } } = useFormContext();
+  const { watch } = useFormContext();
   const isForeign = watch('citizenship');
   const { t } = useTranslate();
 
   const { data: dataGender } = useFetch({ attributePath: "", codeSystem: "", valueSet: "Patient.contact.gender" }, terminologyGet)
   const { data: dataNationality } = useFetch({ attributePath: "Address.country", codeSystem: "urn:iso:std:iso:3166" }, terminologyGet)
+  const { data: dataReligion } = useFetch({ attributePath: "Patient.religion.code", codeSystem: "xhis.code.religion" }, terminologyGet)
 
   const listGender = terminologyArrayMapper({ data: dataGender?.data, key: "terminology.gender" })
   const listNationality = terminologyArrayMapper({ data: dataNationality?.data }).filter((row) => row.value !== "ID")
+  const listReligion = terminologyArrayMapper({ data: dataReligion?.data, key: "terminology.religion" })
 
-  const listReligion = useMemo(
-    () => [
-      {
-        label: 'Islam',
-        value: 'islam',
-      },
-      {
-        label: t('registration.protestant'),
-        value: 'kristen_protestan',
-      },
-      {
-        label: t('registration.catholic'),
-        value: 'katholik',
-      },
-      {
-        label: 'Hindu',
-        value: 'hindu',
-      },
-      {
-        label: t('registration.buddhist'),
-        value: 'budha',
-      },
-      {
-        label: t('registration.confucian'),
-        value: 'konghucu',
-      },
-      {
-        label: t('registration.other'),
-        value: 'lainnya',
-      },
-    ],
-    [t]
-  );
+  // const listReligion = useMemo(
+  //   () => [
+  //     {
+  //       label: 'Islam',
+  //       value: 'islam',
+  //     },
+  //     {
+  //       label: t('registration.protestant'),
+  //       value: 'kristen_protestan',
+  //     },
+  //     {
+  //       label: t('registration.catholic'),
+  //       value: 'katholik',
+  //     },
+  //     {
+  //       label: 'Hindu',
+  //       value: 'hindu',
+  //     },
+  //     {
+  //       label: t('registration.buddhist'),
+  //       value: 'budha',
+  //     },
+  //     {
+  //       label: t('registration.confucian'),
+  //       value: 'konghucu',
+  //     },
+  //     {
+  //       label: t('registration.other'),
+  //       value: 'lainnya',
+  //     },
+  //   ],
+  //   [t]
+  // );
 
   // const listGender = useMemo(
   //   () => [

@@ -11,8 +11,9 @@ import { usePartialState, useStepper } from 'src/hooks';
 import { useTranslate } from 'src/locales';
 import type { Nullable } from 'src/types/common';
 import { fDate, formatStr } from 'src/utils/format-time';
-import { fAsterisk } from 'src/utils/helper';
+import { enBase64, fAsterisk } from 'src/utils/helper';
 import { timeout } from 'src/utils/timeout';
+import { bookingCreate } from '../appointment/model/functions';
 import { BookingInput } from '../appointment/model/types';
 import { departmentList } from '../department/model/functions';
 import { doctorList } from '../doctor/model/functions';
@@ -20,6 +21,7 @@ import { patientGet } from '../registration/model/functions';
 import {
   ConfirmationOutpatient,
   ConfirmationOutpatientMCU,
+  IdentifierNotFound,
   InformationBPJSPatientData,
   InformationOutpatientGeneral,
   InformationPatient,
@@ -58,20 +60,16 @@ import type {
 } from './model/types';
 import {
   formStepsLabCompany,
-  formStepsLabGeneral,
   formStepsLabInsurance,
   formStepsMCUAssurance,
   formStepsMCUCompany,
-  formStepsMCUGeneral,
   formStepsOutpatientBPJS,
   formStepsOutpatientCompany,
   formStepsOutpatientGeneral,
   formStepsOutpatientInsurance,
   formStepsRadCompany,
-  formStepsRadGeneral,
-  formStepsRadInsurance,
+  formStepsRadInsurance
 } from './model/variables';
-import { bookingCreate } from '../appointment/model/functions';
 
 const EncounterPage = () => {
   const { t } = useTranslate();
@@ -468,10 +466,11 @@ const EncounterPage = () => {
       } else {
         try {
           await handleGetPatientByNIK(nik)
-          handleChangePage({ action: 'next' });
+          handleChangePage({ toSpecificPage: "information_outpatient_general" });
         } catch (e) {
           if (e?.message === "INI_MAH_NORMAL") {
-            toast.error("Something Wrong...")
+            toast.error(`NIK dengan nomor ${fAsterisk(nik)} tidak ditemukan.`)
+            handleChangePage({ action: 'next' });
           }
           if (e?.message === "NOT_FOUND") {
             toast.info("Anda Belum Terdaftar. Silahkan Daftar Terlebih Dahulu")
@@ -521,6 +520,16 @@ const EncounterPage = () => {
 
             {currentPage.value === 'insert_nik' && (
               <InsertIdentifier errorMessage={errors.errorIdentifier} />
+            )}
+
+            {currentPage.value === 'nik_not_found' && (
+              <IdentifierNotFound
+                identifier={values.nik}
+                handleClick={(param) => {
+                  if (param === "search") handleChangePage({ action: "previous" });
+                  if (param === "anjungan") navigate(`/registration/${enBase64(values.nik)}`)
+                }}
+              />
             )}
 
             {currentPage.value === 'information_outpatient_general' && patientData && (

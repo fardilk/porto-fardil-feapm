@@ -75,6 +75,7 @@ export const formStepsExistInSatuSehat = [
     value: 'success_new_patient',
     properties: {
       hideBack: true,
+      hideClose: true,
       i18n: 'registration.title.registration_successful',
     },
   },
@@ -131,6 +132,7 @@ export const formStepsNotExistInSatuSehat = [
     value: 'success_new_patient',
     properties: {
       hideBack: true,
+      hideClose: true,
       i18n: 'registration.title.registration_successful',
     },
   },
@@ -165,6 +167,7 @@ export const formStepsForeign = [
     value: 'success_new_patient',
     properties: {
       hideBack: true,
+      hideClose: true,
       i18n: 'registration.title.registration_successful',
     },
   },

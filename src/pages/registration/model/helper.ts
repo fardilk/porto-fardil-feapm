@@ -1,12 +1,13 @@
 import { fDate, formatStr } from 'src/utils/format-time';
 import { Patient, PatientCreateInput, RegistrationIForm } from './types';
+import { capitalizeFirstLetter } from 'src/utils/helper';
 
 export const regIFormToInput = ({ data }: { data: RegistrationIForm }): PatientCreateInput => {
   const dataNIK = data.nik.replace('\n', '');
   return {
     identifierTypeCode: data.citizenship ? '' : 'NNIDN',
     identifierValue: dataNIK,
-    name: data.name,
+    name: capitalizeFirstLetter(data.name),
     gender: data.gender?.value || '',
     religion: data.religion?.value || '',
     birthPlace: data.birthPlace,
