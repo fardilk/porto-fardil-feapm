@@ -1,4 +1,5 @@
 import { Buffer } from 'buffer';
+import lodash from 'lodash';
 
 /**
  * https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore?tab=readme-ov-file#_flatten
@@ -196,3 +197,7 @@ export const deBase64 = (param?: string | number) => {
 
   return ret;
 };
+
+export function capitalizeFirstLetter(string: string) {
+  return lodash.startCase(lodash.toLower(string));
+}
