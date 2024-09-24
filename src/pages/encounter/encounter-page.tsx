@@ -471,7 +471,7 @@ const EncounterPage = () => {
           handleChangePage({ action: 'next' });
         } catch (e) {
           if (e?.message === "INI_MAH_NORMAL") {
-            toast.error("Something Wrong...")
+            toast.error(`NIK dengan nomor ${fAsterisk(nik)} tidak ditemukan.`)
           }
           if (e?.message === "NOT_FOUND") {
             toast.info("Anda Belum Terdaftar. Silahkan Daftar Terlebih Dahulu")
