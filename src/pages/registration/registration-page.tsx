@@ -1,8 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box } from '@mui/material';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { toast } from 'sonner';
 import { AppPage } from 'src/components/app-page';
 import { Form } from 'src/components/hook-form';
@@ -33,6 +33,8 @@ import {
   formStepsRegistrationMethodByPhone
 } from './model/variables';
 import { timeout } from 'src/utils/timeout';
+import { deBase64 } from 'src/utils/helper';
+import { nikParser } from 'src/utils/nik-parser';
 
 const RegistrationPage = () => {
 
@@ -40,11 +42,12 @@ const RegistrationPage = () => {
 
   const [patientSuccess, setPatientSuccess] = useState<Patient | null>(null)
   const isSimplify = useSelector((root) => root.config.simplify);
+  const { encryptedNIK } = useParams()
 
   const defaultValues: RegistrationIForm = {
     patientID: '',
     isRegistered: false,
-    nik: '',
+    nik: deBase64(encryptedNIK) || '',
     citizenship: false,
     name: '',
     gender: null,
@@ -107,6 +110,20 @@ const RegistrationPage = () => {
     [handleChangePage]
   );
 
+  useEffect(() => {
+    const enc = Boolean(encryptedNIK)
+    if (enc) {
+      setValue("isRegistered", false)
+      handleChangePage({
+        action: 'next',
+        newFormSteps: formStepsNotExistInSatuSehat,
+        toSpecificPage: "create_new_patient"
+      });
+    }
+  }, [encryptedNIK])
+
+  console.log(formSteps)
+
   const onSubmit = async (data: RegistrationIForm) => {
     try {
       if (currentPageIndex === 0) {
@@ -137,6 +154,25 @@ const RegistrationPage = () => {
           handleChangePage({ action: 'next', newFormSteps: formStepsExistInInternal });
 
         } catch (error) {
+          const fNik = nikParser(dataNIK)
+          if (fNik.isValid()) {
+            // gender
+            setValue(
+              'gender',
+              {
+                label: fNik.kelamin() === 'pria' ? 'Laki-laki' : 'Perempuan',
+                value: fNik.kelamin() === 'pria' ? 'male' : 'female'
+              },
+              { shouldValidate: true }
+            );
+
+            // tgl lahir
+            const day = fNik.lahir().toLocaleString('id-ID', { day: '2-digit' });
+            const month = fNik.lahir().toLocaleString('id-ID', { month: '2-digit' });
+            const year = fNik.lahir().toLocaleString('id-ID', { year: 'numeric' });
+            setValue('birthDate', `${month}-${day}-${year}`);
+          }
+
           handleChangePage({ action: 'next', newFormSteps: formStepsNotExistInternal });
           setValue("isRegistered", false)
           toast.info("Anda Belum Terdaftar, Silahkan mendaftar")

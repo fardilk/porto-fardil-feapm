@@ -52,6 +52,10 @@ export const initialStep = [
     value: 'insert_nik',
   },
   {
+    label: 'appointment.steps.nik_not_found',
+    value: 'nik_not_found',
+  },
+  {
     label: 'appointment.steps.information_outpatient_general',
     value: 'information_outpatient_general',
     properties: {
@@ -82,6 +86,7 @@ export const formStepsOutpatientGeneral = [
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
+      containerSize: 'superLarge',
     },
   },
   {
@@ -127,6 +132,7 @@ export const formStepsOutpatientInsurance = [
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
+      containerSize: 'superLarge',
     },
   },
   {
@@ -172,6 +178,7 @@ export const formStepsOutpatientCompany = [
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
+      containerSize: 'superLarge',
     },
   },
   {
@@ -204,6 +211,7 @@ export const formStepsOutpatientBPJS = [
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
+      containerSize: 'superLarge',
     },
   },
   {
@@ -331,6 +339,7 @@ export const formStepsLabGeneral = [
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
+      containerSize: 'superLarge',
     },
   },
   {
@@ -376,6 +385,7 @@ export const formStepsLabInsurance = [
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
+      containerSize: 'superLarge',
     },
   },
   {
@@ -421,6 +431,7 @@ export const formStepsLabCompany = [
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
+      containerSize: 'superLarge',
     },
   },
   {
@@ -446,6 +457,7 @@ export const formStepsRadGeneral = [
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
+      containerSize: 'superLarge',
     },
   },
   {
@@ -491,6 +503,7 @@ export const formStepsRadInsurance = [
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
+      containerSize: 'superLarge',
     },
   },
   {
@@ -536,6 +549,7 @@ export const formStepsRadCompany = [
     value: 'confirmation_patient_registration',
     properties: {
       disableBlack: true,
+      containerSize: 'superLarge',
     },
   },
   {

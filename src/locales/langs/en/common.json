@@ -155,6 +155,7 @@
     "steps": {
       "select_encounter_type": "Select Encounter Type",
       "insert_nik": "Insert NIK",
+      "nik_not_found": "Identity Not Found",
       "information_outpatient_general": "Patient Information",
       "payment_method": "Choose Payment Method",
       "select_healthcare_practitioner": "Choose Specialist",

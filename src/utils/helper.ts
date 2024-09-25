@@ -1,3 +1,6 @@
+import { Buffer } from 'buffer';
+import lodash from 'lodash';
+
 /**
  * https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore?tab=readme-ov-file#_flatten
  * https://github.com/you-dont-need-x/you-dont-need-lodash
@@ -174,3 +177,27 @@ export const getGridLayoutMappedValue = (input: number) => {
 export const getIconsPath = (iconName: string) => {
   return `assets/icons/apm/${iconName}.svg`;
 };
+
+export const enBase64 = (param?: string | number) => {
+  let ret = '';
+  if (param) {
+    ret = param.toString();
+    ret = Buffer.from(ret, 'utf8').toString('base64');
+  }
+
+  return ret;
+};
+
+export const deBase64 = (param?: string | number) => {
+  let ret = '';
+  if (param) {
+    ret = param.toString();
+    ret = Buffer.from(ret, 'base64').toString('utf8');
+  }
+
+  return ret;
+};
+
+export function capitalizeFirstLetter(string: string) {
+  return lodash.startCase(lodash.toLower(string));
+}

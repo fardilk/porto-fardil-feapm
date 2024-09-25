@@ -40,6 +40,10 @@ const appRoute = [
         element: <RegistrationPage />
       },
       {
+        path: 'registration/:encryptedNIK',
+        element: <RegistrationPage />
+      },
+      {
         path: 'checkin',
         element: <CheckinPage />
       },
