@@ -7,6 +7,8 @@ import { Keyboard } from 'src/components/keyboard';
 import { useTranslate } from 'src/locales';
 import type { SelectPractitionerProps } from '../model/types';
 import { doctorAvailable } from 'src/pages/doctor/model/functions';
+import { fDate, formatStr } from 'src/utils/format-time';
+import dayjs from 'dayjs';
 
 const SelectPractitioner = ({
   onCardSelect,
@@ -51,11 +53,7 @@ const SelectPractitioner = ({
       setSelectedPractitioner({
         doctor: response.doctorName,
         polyName: response.departmentName,
-        serviceTime: `${new Date().toLocaleDateString('id-ID', {
-          day: '2-digit',
-          month: '2-digit',
-          year: 'numeric',
-        })}, ${response.scheduleStart} - ${response.scheduleEnd}`,
+        serviceTime: `${fDate(dayjs(), formatStr.paramCase.dayDate)}, ${response.scheduleStart} - ${response.scheduleEnd}`,
       });
 
       onCardSelect();
@@ -123,11 +121,7 @@ const SelectPractitioner = ({
                     setSelectedPractitioner({
                       doctor: doctor.doctorName,
                       polyName: doctor.departmentName,
-                      serviceTime: `${new Date().toLocaleDateString('id-ID', {
-                        day: '2-digit',
-                        month: '2-digit',
-                        year: 'numeric',
-                      })},${doctor.scheduleStart}-${doctor.scheduleEnd}`,
+                      serviceTime: `${fDate(dayjs(), formatStr.paramCase.dayDate)}, ${doctor.scheduleStart} - ${doctor.scheduleEnd}`,
                     });
                     onCardSelect();
                   }}
