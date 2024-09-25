@@ -34,6 +34,7 @@ import {
 } from './model/variables';
 import { timeout } from 'src/utils/timeout';
 import { deBase64 } from 'src/utils/helper';
+import { nikParser } from 'src/utils/nik-parser';
 
 const RegistrationPage = () => {
 
@@ -153,6 +154,25 @@ const RegistrationPage = () => {
           handleChangePage({ action: 'next', newFormSteps: formStepsExistInInternal });
 
         } catch (error) {
+          const fNik = nikParser(dataNIK)
+          if (fNik.isValid()) {
+            // gender
+            setValue(
+              'gender',
+              {
+                label: fNik.kelamin() === 'pria' ? 'Laki-laki' : 'Perempuan',
+                value: fNik.kelamin() === 'pria' ? 'male' : 'female'
+              },
+              { shouldValidate: true }
+            );
+
+            // tgl lahir
+            const day = fNik.lahir().toLocaleString('id-ID', { day: '2-digit' });
+            const month = fNik.lahir().toLocaleString('id-ID', { month: '2-digit' });
+            const year = fNik.lahir().toLocaleString('id-ID', { year: 'numeric' });
+            setValue('birthDate', `${month}-${day}-${year}`);
+          }
+
           handleChangePage({ action: 'next', newFormSteps: formStepsNotExistInternal });
           setValue("isRegistered", false)
           toast.info("Anda Belum Terdaftar, Silahkan mendaftar")

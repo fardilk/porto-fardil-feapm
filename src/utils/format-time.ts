@@ -3,11 +3,14 @@ import type { Dayjs, OpUnitType } from 'dayjs';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
-
+import updateLocal from 'dayjs/plugin/updateLocale';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 // ----------------------------------------------------------------------
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
+dayjs.extend(updateLocal);
+dayjs.extend(localizedFormat);
 
 // ----------------------------------------------------------------------
 
@@ -28,6 +31,7 @@ export const formatStr = {
     dateTime: 'DD-MM-YYYY h:mm a', // 17-04-2022 12:00 am
     date: 'DD-MM-YYYY', // 17-04-2022
     mysqlDate: 'YYYY-MM-DD',
+    dayDate: 'dddd, DD-MM-YYYY',
     dayDateTime: 'dddd, DD-MM-YYYY, HH:mm-HH:mm',
   },
 };
@@ -58,6 +62,12 @@ export function fDate(date: DatePickerFormat, format?: string) {
   if (!date) {
     return '';
   }
+
+  dayjs.updateLocale('en', {
+    weekdays: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
+  });
+
+  console.log(dayjs.locale());
 
   const isValid = dayjs(date).isValid();
 

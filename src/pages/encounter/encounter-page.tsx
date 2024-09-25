@@ -539,7 +539,7 @@ const EncounterPage = () => {
                 leftButtonProps={{
                   onClick: () => {
                     setPatientData(null);
-                    handleChangePage({ action: 'previous' });
+                    handleChangePage({ toSpecificPage: "insert_nik" });
                   },
                 }}
                 rightButtonProps={{
