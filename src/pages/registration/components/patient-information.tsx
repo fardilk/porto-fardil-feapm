@@ -9,6 +9,7 @@ import { fAsterisk } from 'src/utils/helper';
 import type { PatientInformationProps, RegistrationIForm } from '../model/types';
 import { terminologyCodeMapper } from 'src/utils/terminology';
 import { LoadingButton } from '@mui/lab';
+import { fDate, formatStr } from 'src/utils/format-time';
 
 const PatientInformation = (props: PatientInformationProps) => {
   const { leftButtonProps, leftTextButton, rigthTextButton } = props;
@@ -27,7 +28,7 @@ const PatientInformation = (props: PatientInformationProps) => {
       { title: isForeign ? 'Passport' : 'NIK/Medrec', body: fAsterisk(values.nik) },
       { title: t('registration.fullname'), body: values.name },
       { title: t('registration.gender'), body: terminologyCodeMapper({ code: values.gender?.value || '', key: 'terminology.gender' }) },
-      { title: t('registration.born_place_date'), body: values.birthPlace },
+      { title: t('registration.born_place_date'), body: `${values.birthPlace}, ${fDate(values.birthDate, formatStr.paramCase.date)}` },
       { title: t('registration.address_label'), body: values.address },
       { title: t('registration.phone_number'), body: fAsterisk(values.phoneNumber) },
       { title: t('registration.email'), body: values.email },
