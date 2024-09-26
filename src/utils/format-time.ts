@@ -1,16 +1,16 @@
 import type { Dayjs, OpUnitType } from 'dayjs';
 
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import updateLocal from 'dayjs/plugin/updateLocale';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
 // ----------------------------------------------------------------------
 
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 dayjs.extend(updateLocal);
-dayjs.extend(localizedFormat);
+dayjs.extend(customParseFormat);
 
 // ----------------------------------------------------------------------
 
@@ -63,11 +63,11 @@ export function fDate(date: DatePickerFormat, format?: string) {
     return '';
   }
 
-  dayjs.updateLocale('en', {
+  dayjs.extend(customParseFormat);
+
+  dayjs.updateLocale('id', {
     weekdays: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],
   });
-
-  console.log(dayjs.locale());
 
   const isValid = dayjs(date).isValid();
 

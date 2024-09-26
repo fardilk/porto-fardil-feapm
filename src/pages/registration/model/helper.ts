@@ -49,7 +49,7 @@ export const patientToIForm = ({ data: newData }: { data: Patient }): Registrati
       value: newData.gender,
     },
     birthPlace: newData.birthPlace,
-    birthDate: fDate(newData.birthDttm, formatStr.paramCase.date),
+    birthDate: newData.birthDttm,
     phoneNumber: newData.phone,
     email: newData.email,
     address: newData.address,
