@@ -1,15 +1,16 @@
+import { LoadingButton } from '@mui/lab';
 import { Alert, Box, Button, TableContainer } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
-import type { LabelTextProps } from 'src/components/label-text';
 import { LabelTextContainer } from 'src/components/label-text';
 import { useTranslate } from 'src/locales';
 import { useSelector } from 'src/store/store';
-import { fAsterisk } from 'src/utils/helper';
-import type { PatientInformationProps, RegistrationIForm } from '../model/types';
-import { terminologyCodeMapper } from 'src/utils/terminology';
-import { LoadingButton } from '@mui/lab';
 import { fDate, formatStr } from 'src/utils/format-time';
+import { fAsterisk } from 'src/utils/helper';
+import { terminologyCodeMapper } from 'src/utils/terminology';
+import type { PatientInformationProps, RegistrationIForm } from '../model/types';
 
 const PatientInformation = (props: PatientInformationProps) => {
   const { leftButtonProps, leftTextButton, rigthTextButton } = props;
@@ -21,22 +22,21 @@ const PatientInformation = (props: PatientInformationProps) => {
   const values = watch()
   const isForeign = watch('citizenship');
 
-  const [detailData, setDetailData] = useState<LabelTextProps[]>([]);
-
   const initData = useMemo(() => {
-    return [
+    const simple = [
       { title: isForeign ? 'Passport' : 'NIK/Medrec', body: fAsterisk(values.nik) },
       { title: t('registration.fullname'), body: values.name },
       { title: t('registration.gender'), body: terminologyCodeMapper({ code: values.gender?.value || '', key: 'terminology.gender' }) },
-      { title: t('registration.born_place_date'), body: `${values.birthPlace}, ${fDate(values.birthDate, formatStr.paramCase.date)}` },
+      { title: t('registration.born_place_date'), body: `${values.birthPlace}, ${fDate(values.birthDate)}` },
       { title: t('registration.address_label'), body: values.address },
       { title: t('registration.phone_number'), body: fAsterisk(values.phoneNumber) },
       { title: t('registration.email'), body: values.email },
     ]
-  }, [values, isForeign])
-
-  const moreData = useMemo(() => {
+    if (isSimplify) {
+      return simple
+    }
     return [
+      ...simple,
       { title: t('registration.blood_type'), body: terminologyCodeMapper({ code: values.bloodType?.value || '', key: 'terminology.bloodType' }) },
       { title: t('registration.religion'), body: terminologyCodeMapper({ code: values.religion?.value || '', key: 'terminology.religion' }) },
       { title: t('registration.education'), body: terminologyCodeMapper({ code: values.study?.value || '', key: 'terminology.education' }) },
@@ -44,16 +44,7 @@ const PatientInformation = (props: PatientInformationProps) => {
       { title: t('registration.occupation'), body: terminologyCodeMapper({ code: values.job?.value || '', key: 'terminology.job' }) },
       { title: t('registration.daily_language'), body: terminologyCodeMapper({ code: values.language?.value || '', key: 'terminology.language' }) },
     ]
-  }, [values])
-
-  useEffect(() => {
-    if (!isSimplify) {
-      setDetailData([...initData, ...moreData]);
-    }
-    else {
-      setDetailData([...initData])
-    }
-  }, [isSimplify, initData, moreData]);
+  }, [values, isForeign, isSimplify, fDate])
 
   return (
     <>
@@ -61,7 +52,7 @@ const PatientInformation = (props: PatientInformationProps) => {
         {values.isRegistered ? t('registration.registered_patient') : t('registration.unregistered_patient')}
       </Alert>
       <TableContainer sx={{ my: 2 }}>
-        <LabelTextContainer disableOutline orientation="horizontal" listText={detailData} col={1} />
+        <LabelTextContainer disableOutline orientation="horizontal" listText={initData} col={1} />
       </TableContainer>
 
       <Box sx={{ display: 'flex', placeContent: 'space-between', gap: 2 }}>
