@@ -3,6 +3,7 @@ import { LabelTextContainer } from "src/components/label-text"
 import { fAsterisk } from "src/utils/helper"
 import type { InformationProps } from "../model/types"
 import { useTranslate } from "src/locales"
+import { Iconify } from "src/components/iconify"
 
 const InformationOutpatientGeneral = (props: InformationProps) => {
   const { t } = useTranslate()
@@ -10,11 +11,11 @@ const InformationOutpatientGeneral = (props: InformationProps) => {
   const { leftButtonProps, rightButtonProps, leftTextButton, rightTextButton, data } = props
 
   const detailData = [
-    { title: t("appointment.patient.nik"), body: fAsterisk(data.nik ?? data.passportNumber ?? "-") },
-    { title: t("appointment.patient.fullname"), body: data.name },
+    { title: t("appointment.patient.nik"), body: fAsterisk(data.identifierValue ?? "-") },
+    { title: t("appointment.patient.fullname"), body: `${data.name} ${<Iconify icon={`ic:baseline-${data.gender}`} color={data.gender === 'male' ? 'secondary' : 'error'} />}` },
     { title: t("appointment.patient.birthdateplace"), body: `${data.birthPlace}, ${data.birthDttm}` },
-    { title: t("appointment.patient.blood_type"), body: data.additional.bloodType },
-    { title: t("appointment.patient.blood_rhesus"), body: data.additional.bloodRhesus },
+    { title: t("appointment.patient.blood_type"), body: data.additional.bloodTypeDisplay || '' },
+    { title: t("appointment.patient.blood_rhesus"), body: data.additional.bloodRhesusDisplay || '' },
     { title: t("appointment.patient.address"), body: data.address },
     { title: t("appointment.patient.phone"), body: fAsterisk(data.phone) },
     { title: t("appointment.patient.email"), body: data.email },

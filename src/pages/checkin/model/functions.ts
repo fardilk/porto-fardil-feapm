@@ -35,6 +35,7 @@ export const getCheckin = async ({
             name
             gender
             religion
+            genderDisplay
             birthPlace
             birthDttm
             maritalStatus

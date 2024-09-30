@@ -3,10 +3,10 @@ import { useState } from 'react';
 import { CardBanner } from 'src/components/card-banner';
 import { LabelTextContainer, type LabelTextProps } from 'src/components/label-text';
 import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
-import { fAsterisk } from 'src/utils/helper';
 import { useTranslate } from 'src/locales';
+import { Patient } from 'src/pages/patient/model/types';
+import { fAsterisk } from 'src/utils/helper';
 import { getPaymentType } from '../model/variables';
-import type { GetPatientByNIKResponse } from '../model/types';
 
 const ConfirmationOutpatientMCU = ({
   handleBack,
@@ -16,7 +16,7 @@ const ConfirmationOutpatientMCU = ({
 }: {
   handleBack: () => void;
   handleConfirm: () => void;
-  patientDetail: GetPatientByNIKResponse;
+  patientDetail: Patient;
   packageName: string;
 }) => {
   const { t } = useTranslate();
@@ -27,15 +27,15 @@ const ConfirmationOutpatientMCU = ({
   const detailData: LabelTextProps[] = [
     {
       title: t('appointment.patient.nik'),
-      body: fAsterisk(patientDetail.nik ?? patientDetail.passportNumber ?? '-'),
+      body: fAsterisk(patientDetail.identifierValue ?? '-'),
     },
     { title: t('appointment.patient.fullname'), body: patientDetail.name },
     {
       title: t('appointment.patient.birthdateplace'),
       body: `${patientDetail.birthPlace}, ${patientDetail.birthDttm}`,
     },
-    { title: t('appointment.patient.blood_type'), body: patientDetail.additional.bloodType },
-    { title: t('appointment.patient.blood_rhesus'), body: patientDetail.additional.bloodRhesus },
+    { title: t('appointment.patient.blood_type'), body: patientDetail.additional.bloodTypeDisplay || '' },
+    { title: t('appointment.patient.blood_rhesus'), body: patientDetail.additional.bloodRhesusDisplay || '' },
     {
       title: t('appointment.patient.address'),
       body: patientDetail.address,

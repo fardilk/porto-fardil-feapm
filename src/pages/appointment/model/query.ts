@@ -36,6 +36,7 @@ export const PatientQuery = `
   medrec
   name
   gender
+  genderDisplay
   religion
   birthPlace
   birthDttm

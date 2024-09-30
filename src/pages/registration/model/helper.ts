@@ -1,6 +1,7 @@
 import { fDate, formatStr } from 'src/utils/format-time';
-import { Patient, PatientCreateInput, RegistrationIForm } from './types';
+import { RegistrationIForm } from './types';
 import { capitalizeFirstLetter } from 'src/utils/helper';
+import { Patient, PatientCreateInput } from 'src/pages/patient/model/types';
 
 export const regIFormToInput = ({ data }: { data: RegistrationIForm }): PatientCreateInput => {
   const dataNIK = data.nik.replace('\n', '');
@@ -41,7 +42,7 @@ export const patientToIForm = ({ data: newData }: { data: Patient }): Registrati
           },
     patientID: newData.patientID,
     isRegistered: true,
-    nik: newData.identifierValue,
+    nik: newData.identifierValue || '',
     citizenship: newData.identifierTypeCode === 'NNIDN',
     name: newData.name,
     gender: {
@@ -54,28 +55,28 @@ export const patientToIForm = ({ data: newData }: { data: Patient }): Registrati
     email: newData.email,
     address: newData.address,
     bloodType: {
-      label: newData.additional.bloodType,
-      value: newData.additional.bloodType,
+      label: newData.additional.bloodType || '',
+      value: newData.additional.bloodType || '',
     },
     religion: {
       label: newData.religion,
       value: newData.religion,
     },
     study: {
-      label: newData.additional.education,
-      value: newData.additional.education,
+      label: newData.additional.education || '',
+      value: newData.additional.education || '',
     },
     marriage: {
       label: newData.maritalStatus,
       value: newData.maritalStatus,
     },
     job: {
-      label: newData.additional.occupation,
-      value: newData.additional.occupation,
+      label: newData.additional.occupation || '',
+      value: newData.additional.occupation || '',
     },
     language: {
-      label: newData.additional.dailyLanguage,
-      value: newData.additional.dailyLanguage,
+      label: newData.additional.dailyLanguage || '',
+      value: newData.additional.dailyLanguage || '',
     },
   };
 
