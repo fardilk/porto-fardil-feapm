@@ -1,3 +1,5 @@
+import { Patient } from 'src/pages/patient/model/types';
+
 export type Package = {
   packageID: string;
   packageName: string;
@@ -27,27 +29,6 @@ export type PayorDetails = {
   providerName: string;
   employeeNo: string;
   companyName: string;
-};
-
-export type Patient = {
-  patientID: string;
-  identifierTypeCode: string;
-  identifierValue: string;
-  medrec: string;
-  name: string;
-  gender: string;
-  religion: string;
-  birthPlace: string;
-  birthDttm: string;
-  maritalStatus: string;
-  phone: string;
-  email: string;
-  nationality: string;
-  address: string;
-
-  additional: PatientAdditionalData;
-
-  payorDetails: PayorDetails;
 };
 
 export type Booking = {

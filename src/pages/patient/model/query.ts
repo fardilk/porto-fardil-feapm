@@ -1,3 +1,13 @@
+export const PatientAdditionalDataQuery = `
+  bloodType
+  bloodTypeDisplay
+  bloodRhesus
+  bloodRhesusDisplay
+  education
+  occupation
+  dailyLanguage
+`;
+
 export const PatientQuery = `
   patientID
   identifierTypeCode
@@ -15,11 +25,5 @@ export const PatientQuery = `
   nationality
   address
 
-  additional {
-    bloodType
-    bloodRhesus
-    education
-    occupation
-    dailyLanguage
-  }
+  additional { ${PatientAdditionalDataQuery} }
 `;

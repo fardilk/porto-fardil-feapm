@@ -1,6 +1,7 @@
 import type { ButtonProps } from '@mui/material';
 import type { FieldValues, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import type { CardBannerProps } from 'src/components/card-banner/types';
+import { Patient } from 'src/pages/patient/model/types';
 import type { Nullable } from 'src/types/common';
 
 export type SelectEncounterTypeProps = {
@@ -23,6 +24,7 @@ export type GetPatientByNIKResponse = {
   phone: string;
   name: string;
   gender: string;
+  genderDisplay?: string;
   additional: {
     bloodType: string;
     bloodRhesus: string;
@@ -52,13 +54,13 @@ export type ListLabPackageResponse = {
   packageID: string;
   packageName: string;
   price: number;
-}[]
+}[];
 
 export type ListRadiologyPackageResponse = {
   packageID: string;
   packageName: string;
   price: number;
-}[]
+}[];
 
 export type AvailableDoctorResponse = {
   doctorID: string;
@@ -79,7 +81,7 @@ export type InformationProps = {
   rightTextButton: string;
   leftButtonProps?: ButtonProps;
   rightButtonProps?: ButtonProps;
-  data: GetPatientByNIKResponse;
+  data: Patient;
 };
 
 export type PaymentMethodProps = {
@@ -96,13 +98,13 @@ export type SelectedPractioner = {
 
 export type SelectedLabPackage = {
   name: string;
-  price: number
-}
+  price: number;
+};
 
 export type SelectedRadiologyPackage = {
   name: string;
-  price: number
-}
+  price: number;
+};
 
 export type SelectPractitionerProps = {
   onCardSelect: () => void;
@@ -130,11 +132,11 @@ export type OutpatientType = 'general' | 'insurance' | 'company' | 'bpjs';
 export type SuccessOutpatientType = {
   type: OutpatientType;
   encounterType: EncounterType;
-  patientData: GetPatientByNIKResponse;
-  practitioner: Nullable<SelectedPractioner>
-  MCUPackageName: Nullable<string>
-  labPackage: Nullable<SelectedLabPackage>
-  radiologyPackage: Nullable<SelectedRadiologyPackage>
+  patientData: Patient;
+  practitioner: Nullable<SelectedPractioner>;
+  MCUPackageName: Nullable<string>;
+  labPackage: Nullable<SelectedLabPackage>;
+  radiologyPackage: Nullable<SelectedRadiologyPackage>;
 };
 
 export type SelectInsuranceNewProps = {

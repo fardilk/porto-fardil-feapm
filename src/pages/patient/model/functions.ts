@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request';
 import GqlClient from 'src/utils/gql';
 import { PatientQuery } from './query';
-import type { PatientCreateInput, PatientOne, RegisterResponse } from './types';
+import { PatientCreateInput, PatientOne, RegisterResponse } from './types';
 
 const req = new GqlClient({
   module: 'patient',
@@ -16,29 +16,7 @@ export const patientCreate = async (param: {
         patientCreate(data: $data) {
           status
           message
-          data {
-            patientID
-            identifierTypeCode
-            identifierValue
-            medrec
-            name
-            gender
-            religion
-            birthPlace
-            birthDttm
-            maritalStatus
-            phone
-            email
-            nationality
-            address
-            additional {
-              bloodType
-              bloodRhesus
-              education
-              occupation
-              dailyLanguage
-            }
-          }
+          data { ${PatientQuery} }
         }
       }
     `,

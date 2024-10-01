@@ -21,10 +21,10 @@ import {
   SelectRegistrationMethod,
   SuccessNewPatient,
 } from './components';
-import { patientCreate, patientGet, patientUpdate } from './model/functions';
+import { patientCreate, patientGet, patientUpdate } from '../patient/model/functions';
 import { patientToIForm, regIFormToInput } from './model/helper';
 import useValidationSchemas from './model/schema';
-import { Patient, PatientCreateInput, type RegistrationIForm } from './model/types';
+import { type RegistrationIForm } from './model/types';
 import {
   formStepsExistInInternal,
   formStepsExistInSatuSehat,
@@ -35,6 +35,7 @@ import {
 import { timeout } from 'src/utils/timeout';
 import { deBase64 } from 'src/utils/helper';
 import { nikParser } from 'src/utils/nik-parser';
+import { Patient, PatientCreateInput } from '../patient/model/types';
 
 const RegistrationPage = () => {
 
