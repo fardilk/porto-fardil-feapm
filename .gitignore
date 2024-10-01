@@ -47,3 +47,6 @@ build
 .eslintcache
 .unimportedrc.json
 tsconfig.tsbuildinfo
+
+# fokin yarn
+.yarn/*

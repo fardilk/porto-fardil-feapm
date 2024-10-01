@@ -2,52 +2,12 @@ import { gql } from 'graphql-request';
 import GqlClient from 'src/utils/gql';
 import type {
   AvailableDoctorResponse,
-  GetPatientByNIKResponse,
   ListDoctorResponse,
   ListLabPackageResponse,
   ListMCUPackageResponse,
   ListPolyResponse,
   ListRadiologyPackageResponse,
 } from './types';
-
-export const getPatientByNIK = async ({
-  NIK,
-}: {
-  NIK: string;
-}): Promise<GetPatientByNIKResponse> => {
-  const req = new GqlClient({
-    module: 'patient',
-  });
-
-  const res = await req.request(
-    gql`
-      query patientGet($identifierType: String!, $identifier: String!) {
-        patientGet(identifierType: $identifierType, identifier: $identifier) {
-          patientID
-          nik
-          passportNumber
-          birthPlace
-          birthDttm
-          address
-          email
-          name
-          phone
-          gender
-          additional {
-            bloodType
-            bloodRhesus
-          }
-        }
-      }
-    `,
-    {
-      identifierType: 'NIK',
-      identifier: NIK,
-    }
-  );
-
-  return res.patientGet;
-};
 
 export const getDoctorList = async ({
   page,

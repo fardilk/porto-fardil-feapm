@@ -17,7 +17,7 @@ import { bookingCreate } from '../appointment/model/functions';
 import { BookingInput } from '../appointment/model/types';
 import { departmentList } from '../department/model/functions';
 import { doctorList } from '../doctor/model/functions';
-import { patientGet } from '../registration/model/functions';
+import { patientGet } from '../patient/model/functions';
 import {
   ConfirmationOutpatient,
   ConfirmationOutpatientMCU,
@@ -70,6 +70,7 @@ import {
   formStepsRadCompany,
   formStepsRadInsurance
 } from './model/variables';
+import { Patient } from '../patient/model/types';
 
 const EncounterPage = () => {
   const { t } = useTranslate();
@@ -89,7 +90,7 @@ const EncounterPage = () => {
   const [selectedPackageRadiology, setSelectedPackageRadiology] =
     useState<Nullable<SelectedRadiologyPackage>>(null);
   const [encounterType, setEncounterType] = useState<EncounterType>(null);
-  const [patientData, setPatientData] = useState<Nullable<GetPatientByNIKResponse>>(null);
+  const [patientData, setPatientData] = useState<Nullable<Patient>>(null);
   const [listDoctor, setListDoctor] = useState<ListDoctorResponse>([]);
   const [mcuPackageList, setMCUPackageList] = useState<ListMCUPackageResponse>([]);
   const [labPackageList, setLabPackageList] = useState<ListLabPackageResponse>([]);
@@ -373,22 +374,7 @@ const EncounterPage = () => {
         throw Error("NOT_FOUND")
       }
 
-      setPatientData({
-        additional: {
-          bloodRhesus: newData.additional.bloodRhesus,
-          bloodType: newData.additional.bloodType
-        },
-        address: newData.address,
-        birthDttm: fDate(newData.birthDttm, formatStr.paramCase.date),
-        birthPlace: newData.birthPlace,
-        email: newData.email,
-        gender: newData.gender,
-        name: newData.name,
-        nik: newData.identifierValue,
-        passportNumber: newData.identifierValue,
-        patientID: newData.patientID,
-        phone: newData.phone
-      });
+      setPatientData(newData);
 
       setValue('patientId', newData.patientID);
     } catch (e) {

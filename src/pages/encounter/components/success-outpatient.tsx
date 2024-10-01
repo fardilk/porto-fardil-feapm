@@ -39,15 +39,15 @@ const SuccessOutpatient = ({
 
   const detailData = useMemo(
     () => [
-      { title: 'NIK', body: fAsterisk(patientData.nik ?? patientData.passportNumber ?? '-') },
+      { title: 'NIK', body: fAsterisk(patientData.identifierValue ?? '-') },
       { title: t('global.complete_name'), body: patientData.name },
       {
         title: `${t('global.location')}, ${t('global.birthdate')}`,
         body: `${patientData.birthPlace}, ${patientData.birthDttm}`,
       },
       { title: t('global.phone_number'), body: fAsterisk(patientData.phone) },
-      { title: t('global.blood_type'), body: patientData.additional.bloodType },
-      { title: 'Rhesus', body: patientData.additional.bloodRhesus },
+      { title: t('global.blood_type'), body: patientData.additional.bloodTypeDisplay || '' },
+      { title: 'Rhesus', body: patientData.additional.bloodRhesusDisplay || '' },
       { title: 'Email', body: patientData.email },
       {
         title: t('global.address'),
@@ -60,51 +60,64 @@ const SuccessOutpatient = ({
   const listCard = [
     ...(encounterType === 'RJ' && practitioner
       ? [
-          {
-            title: t('appointment.service_destination'),
-            body: practitioner.polyName,
-            localIcon: 'stethoscope',
-          },
-          {
-            title: t('appointment.examining_doctor'),
-            body: practitioner.doctor,
-            localIcon: 'doctor',
-          },
-        ]
+        {
+          title: t('appointment.service_destination'),
+          body: practitioner.polyName,
+          localIcon: 'stethoscope',
+        },
+        {
+          title: t('appointment.examining_doctor'),
+          body: practitioner.doctor,
+          localIcon: 'doctor',
+        },
+      ]
       : encounterType === 'MCU' && MCUPackageName
         ? [
-            {
-              title: t('appointment.encounter.service_type'),
-              body: MCUPackageName,
-              localIcon: 'medical-checkup',
-            },
-          ]
+          {
+            title: t('appointment.encounter.service_type'),
+            body: MCUPackageName,
+            localIcon: 'medical-checkup',
+          },
+        ]
         : encounterType === 'LAB'
           ? [
-              {
-                title: t('appointment.service_destination'),
-                body: 'Laboratorium',
-                localIcon: 'blood-test',
-              },
-            ]
+            {
+              title: t('appointment.service_destination'),
+              body: 'Laboratorium',
+              localIcon: 'blood-test',
+            },
+          ]
           : encounterType === 'RAD'
             ? [
-                {
-                  title: t('appointment.service_destination'),
-                  body: 'Radiologi',
-                  localIcon: 'x-rays',
-                },
-              ]
+              {
+                title: t('appointment.service_destination'),
+                body: 'Radiologi',
+                localIcon: 'x-rays',
+              },
+            ]
             : []),
     {
       ...getPaymentType(type, t),
     },
     ...(encounterType === 'LAB' && labPackage
       ? [
+        {
+          title: labPackage.name,
+          body: fCurrency(labPackage.price),
+          localIcon: 'blood-test',
+          titleProps: { variant: 'subtitle1', sx: { color: 'primary.darker' } },
+          bodyProps: {
+            variant: 'subtitle2',
+            sx: { color: 'primary.darker', fontWeight: '500' },
+          },
+        },
+      ]
+      : encounterType === 'RAD' && radiologyPackage
+        ? [
           {
-            title: labPackage.name,
-            body: fCurrency(labPackage.price),
-            localIcon: 'blood-test',
+            title: radiologyPackage.name,
+            body: fCurrency(radiologyPackage.price),
+            localIcon: 'x-rays',
             titleProps: { variant: 'subtitle1', sx: { color: 'primary.darker' } },
             bodyProps: {
               variant: 'subtitle2',
@@ -112,19 +125,6 @@ const SuccessOutpatient = ({
             },
           },
         ]
-      : encounterType === 'RAD' && radiologyPackage
-        ? [
-            {
-              title: radiologyPackage.name,
-              body: fCurrency(radiologyPackage.price),
-              localIcon: 'x-rays',
-              titleProps: { variant: 'subtitle1', sx: { color: 'primary.darker' } },
-              bodyProps: {
-                variant: 'subtitle2',
-                sx: { color: 'primary.darker', fontWeight: '500' },
-              },
-            },
-          ]
         : []),
   ];
 
