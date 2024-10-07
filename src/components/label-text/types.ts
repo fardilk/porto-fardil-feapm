@@ -1,9 +1,10 @@
 import type { LoadingButtonProps } from '@mui/lab';
 import type { CardProps, TypographyProps } from '@mui/material';
+import { ReactNode } from 'react';
 
 export type LabelTextProps = {
   title: string;
-  body: string;
+  body: ReactNode;
   titleProps?: TypographyProps;
   bodyProps?: TypographyProps;
   colSpan?: number;

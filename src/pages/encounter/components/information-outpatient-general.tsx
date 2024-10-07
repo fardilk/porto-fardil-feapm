@@ -12,7 +12,7 @@ const InformationOutpatientGeneral = (props: InformationProps) => {
 
   const detailData = [
     { title: t("appointment.patient.nik"), body: fAsterisk(data.identifierValue ?? "-") },
-    { title: t("appointment.patient.fullname"), body: `${data.name} ${<Iconify icon={`ic:baseline-${data.gender}`} color={data.gender === 'male' ? 'secondary' : 'error'} />}` },
+    { title: t("appointment.patient.fullname"), body: <>{data.name} {<Iconify icon={`ic:baseline-${data.gender}`} color={data.gender === 'male' ? 'secondary.main' : 'error.main'} />}</> },
     { title: t("appointment.patient.birthdateplace"), body: `${data.birthPlace}, ${data.birthDttm}` },
     { title: t("appointment.patient.blood_type"), body: data.additional.bloodTypeDisplay || '' },
     { title: t("appointment.patient.blood_rhesus"), body: data.additional.bloodRhesusDisplay || '' },
