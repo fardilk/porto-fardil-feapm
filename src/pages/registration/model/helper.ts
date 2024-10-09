@@ -19,7 +19,7 @@ export const regIFormToInput = ({ data }: { data: RegistrationIForm }): PatientC
     nationality: data.citizenship ? data.nationality?.value || '' : 'ID',
     address: data.address,
     additional: {
-      bloodType: data.bloodType?.value || '',
+      bloodType: data.bloodType?.value || undefined,
       bloodRhesus: '',
       education: data.study?.value || '',
       occupation: data.job?.value || '',
@@ -55,8 +55,8 @@ export const patientToIForm = ({ data: newData }: { data: Patient }): Registrati
     email: newData.email,
     address: newData.address,
     bloodType: {
-      label: newData.additional.bloodType || '',
-      value: newData.additional.bloodType || '',
+      label: newData.additional.bloodType || '-',
+      value: newData.additional.bloodType || '-',
     },
     religion: {
       label: newData.religion,

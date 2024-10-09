@@ -15,7 +15,7 @@ const InsertPhone = () => {
   const [keyboardType, setKeyboardType] = useState("number")
 
   const inputRef = useRef<any>({})
-  const {t} = useTranslate()
+  const { t } = useTranslate()
 
   return (
     <Stack gap={2}>
@@ -27,7 +27,7 @@ const InsertPhone = () => {
         variant="filled"
         onClick={() => {
           setElementName("phoneNumber")
-          setKeyboardType("number")
+          setKeyboardType("numberOnly")
         }}
         inputRef={(ref) => { inputRef.current.phoneNumber = ref }}
         inputProps={{
