@@ -26,7 +26,7 @@ const PatientInformation = (props: PatientInformationProps) => {
     const simple = [
       { title: isForeign ? 'Passport' : 'NIK/Medrec', body: fAsterisk(values.nik) },
       { title: t('registration.fullname'), body: values.name },
-      { title: t('registration.gender'), body: terminologyCodeMapper({ code: values.gender?.value || '', key: 'terminology.gender' }) },
+      { title: t('registration.gender'), body: (terminologyCodeMapper({ code: values.gender?.value || '', key: 'terminology.gender' })) || '-' },
       { title: t('registration.born_place_date'), body: `${values.birthPlace}, ${fDate(values.birthDate)}` },
       { title: t('registration.address_label'), body: values.address },
       { title: t('registration.phone_number'), body: fAsterisk(values.phoneNumber) },
@@ -37,14 +37,14 @@ const PatientInformation = (props: PatientInformationProps) => {
     }
     return [
       ...simple,
-      { title: t('registration.blood_type'), body: terminologyCodeMapper({ code: values.bloodType?.value || '', key: 'terminology.bloodType' }) },
+      { title: t('registration.blood_type'), body: terminologyCodeMapper({ code: values.bloodType?.value || '', key: 'terminology.bloodType' }) || '-' },
       { title: t('registration.religion'), body: terminologyCodeMapper({ code: values.religion?.value || '', key: 'terminology.religion' }) },
       { title: t('registration.education'), body: terminologyCodeMapper({ code: values.study?.value || '', key: 'terminology.education' }) },
       { title: t('registration.marital_status'), body: terminologyCodeMapper({ code: values.marriage?.value || '', key: 'terminology.marital' }) },
       { title: t('registration.occupation'), body: terminologyCodeMapper({ code: values.job?.value || '', key: 'terminology.job' }) },
       { title: t('registration.daily_language'), body: terminologyCodeMapper({ code: values.language?.value || '', key: 'terminology.language' }) },
     ]
-  }, [values, isForeign, isSimplify, fDate])
+  }, [values, isForeign, isSimplify, t])
 
   return (
     <>

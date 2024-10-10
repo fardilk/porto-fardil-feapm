@@ -229,7 +229,7 @@ const NewPatient = (props: NewPatientProps) => {
             }}
             onClick={() => {
               setElementName('phoneNumber');
-              setKeyboardType('number');
+              setKeyboardType('numberOnly');
             }}
           />
         </Grid>
