@@ -2,7 +2,7 @@ import { t } from 'i18next';
 import { TerminologyValue } from 'src/pages/terminology/model/types';
 
 export const terminologyCodeMapper = ({ code, key }: { code: string; key: string }): string => {
-  return `${t(`${key}.${code}`)}`;
+  return !code ? code : `${t(`${key}.${code}`)}`;
 };
 
 export const terminologyMapper = ({
@@ -13,7 +13,7 @@ export const terminologyMapper = ({
   key?: string;
 }): { label: string; value: string } => {
   return {
-    label: key ? t(`${key}.${data.code}`) : data.display,
+    label: key && !!data.code ? t(`${key}.${data.code}`) : data.display,
     value: data.code,
   };
 };
@@ -21,12 +21,18 @@ export const terminologyMapper = ({
 export const terminologyArrayMapper = ({
   data,
   key,
+  additional,
 }: {
   data?: TerminologyValue[];
   key?: string;
+  additional?: TerminologyValue[];
 }): { label: string; value: string }[] => {
   if (data) {
-    return data?.map((row) => terminologyMapper({ data: row, key }));
+    let newData = data;
+    if (additional) {
+      newData = [...data, ...additional];
+    }
+    return newData.map((row) => terminologyMapper({ data: row, key }));
   }
 
   return [];

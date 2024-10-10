@@ -45,7 +45,7 @@ const DetailNewPatient: FC<NewPatientProps> = ({ handleNextPage, handlePreviousP
       {
         label: t('registration.blood_type'),
         name: 'bloodType',
-        options: terminologyArrayMapper({ data: bloodType?.data, key: "terminology.bloodType" }),
+        options: terminologyArrayMapper({ data: bloodType?.data, key: "terminology.bloodType", additional: [{ code: "", display: "-" } as any] }),
       },
       {
         label: t('registration.education'),
