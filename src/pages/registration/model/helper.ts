@@ -3,6 +3,8 @@ import { RegistrationIForm } from './types';
 import { capitalizeFirstLetter } from 'src/utils/helper';
 import { Patient, PatientCreateInput } from 'src/pages/patient/model/types';
 
+// nationality: data.citizenship ? data.nationality?.value || '' : 'ID',
+
 export const regIFormToInput = ({ data }: { data: RegistrationIForm }): PatientCreateInput => {
   const dataNIK = data.nik.replace('\n', '');
   return {
@@ -16,7 +18,7 @@ export const regIFormToInput = ({ data }: { data: RegistrationIForm }): PatientC
     maritalStatus: data.marriage?.value || '',
     phone: data.phoneNumber,
     email: data.email,
-    nationality: data.citizenship ? data.nationality?.value || '' : 'ID',
+    nationality: data.citizenship ? 'WNA' : 'WNI',
     address: data.address,
     additional: {
       bloodType: data.bloodType?.value || undefined,
