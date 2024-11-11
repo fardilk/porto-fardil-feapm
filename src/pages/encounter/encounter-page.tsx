@@ -10,14 +10,14 @@ import { WindowContainer } from 'src/components/window-container';
 import { usePartialState, useStepper } from 'src/hooks';
 import { useTranslate } from 'src/locales';
 import type { Nullable } from 'src/types/common';
-import { fDate, formatStr } from 'src/utils/format-time';
 import { enBase64, fAsterisk } from 'src/utils/helper';
 import { timeout } from 'src/utils/timeout';
-import { bookingCreate } from '../appointment/model/functions';
+import { bookingCreateNoQuery } from '../appointment/model/functions';
 import { BookingInput } from '../appointment/model/types';
 import { departmentList } from '../department/model/functions';
 import { doctorList } from '../doctor/model/functions';
 import { patientGet } from '../patient/model/functions';
+import { Patient } from '../patient/model/types';
 import {
   ConfirmationOutpatient,
   ConfirmationOutpatientMCU,
@@ -47,7 +47,6 @@ import {
 } from './model/functions';
 import type {
   EncounterType,
-  GetPatientByNIKResponse,
   Insurancetype,
   ListDoctorResponse,
   ListLabPackageResponse,
@@ -56,7 +55,7 @@ import type {
   ListRadiologyPackageResponse,
   SelectedLabPackage,
   SelectedPractioner,
-  SelectedRadiologyPackage,
+  SelectedRadiologyPackage
 } from './model/types';
 import {
   formStepsLabCompany,
@@ -70,7 +69,6 @@ import {
   formStepsRadCompany,
   formStepsRadInsurance
 } from './model/variables';
-import { Patient } from '../patient/model/types';
 
 const EncounterPage = () => {
   const { t } = useTranslate();
@@ -348,18 +346,17 @@ const EncounterPage = () => {
           doctorID: values.practionerId || ''
         },
         payorParam: {
-          payplanClass: values.payplan || '',
+          payplanClass: ((values.payplan || '') as string).toLowerCase(),
         },
       }
 
-      await bookingCreate({ data: newData, patientID })
+      await bookingCreateNoQuery({ data: newData, patientID })
 
       toast.success("Berhasil")
 
       handleChangePage({ action: 'next' });
     } catch (e) {
-      toast.error("Gagal")
-      console.log(e);
+      toast.error(e?.message || "Gagal")
     }
   }, [getValues, handleChangePage, encounterType]);
 
