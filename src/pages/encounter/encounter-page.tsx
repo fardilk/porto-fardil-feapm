@@ -356,8 +356,7 @@ const EncounterPage = () => {
 
       handleChangePage({ action: 'next' });
     } catch (e) {
-      toast.error("Gagal")
-      console.log(e);
+      toast.error(e?.message || "Gagal")
     }
   }, [getValues, handleChangePage, encounterType]);
 
