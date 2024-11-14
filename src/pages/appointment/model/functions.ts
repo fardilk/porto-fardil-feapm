@@ -27,3 +27,25 @@ export const bookingCreate = async (param: {
 
   return res.bookingCreate;
 };
+
+export const bookingCreateNoQuery = async (param: {
+  data: BookingInput;
+  patientID: string;
+}): Promise<Booking> => {
+  const client = new GqlClient({ module: 'appointment' });
+  const res = await client.request(
+    gql`
+      mutation bookingCreate($patientID: ID!, $data: BookingInput!) {
+        bookingCreate(patientID: $patientID, data: $data) {
+          bookingID
+        }
+      }
+    `,
+    {
+      patientID: param.patientID,
+      data: param.data,
+    }
+  );
+
+  return res.bookingCreate;
+};
