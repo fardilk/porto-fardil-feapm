@@ -16,6 +16,7 @@ import { bookingCreateNoQuery } from '../appointment/model/functions';
 import { BookingInput } from '../appointment/model/types';
 import { departmentList } from '../department/model/functions';
 import { doctorList } from '../doctor/model/functions';
+import { Doctor } from '../doctor/model/types';
 import { patientGet } from '../patient/model/functions';
 import { Patient } from '../patient/model/types';
 import {
@@ -48,7 +49,6 @@ import {
 import type {
   EncounterType,
   Insurancetype,
-  ListDoctorResponse,
   ListLabPackageResponse,
   ListMCUPackageResponse,
   ListPolyResponse,
@@ -89,7 +89,7 @@ const EncounterPage = () => {
     useState<Nullable<SelectedRadiologyPackage>>(null);
   const [encounterType, setEncounterType] = useState<EncounterType>(null);
   const [patientData, setPatientData] = useState<Nullable<Patient>>(null);
-  const [listDoctor, setListDoctor] = useState<ListDoctorResponse>([]);
+  const [listDoctor, setListDoctor] = useState<Doctor[]>([]);
   const [mcuPackageList, setMCUPackageList] = useState<ListMCUPackageResponse>([]);
   const [labPackageList, setLabPackageList] = useState<ListLabPackageResponse>([]);
   const [radiologyPackageList, setRadiologyPackageList] = useState<ListRadiologyPackageResponse>(
@@ -342,8 +342,9 @@ const EncounterPage = () => {
       const newData: BookingInput = {
         serviceType: values.serviceType,
         serviceParamOutpatient: {
-          departmentID: values.departmentId || '',
-          doctorID: values.practionerId || ''
+          // departmentID: values.departmentId || '',
+          // doctorID: values.practionerId || ''
+          scheduleID: values.scheduleID || ''
         },
         payorParam: {
           payplanClass: ((values.payplan || '') as string).toLowerCase(),

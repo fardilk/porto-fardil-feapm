@@ -6,6 +6,7 @@ export type Doctor = {
   doctorImage: string;
   departmentID: string;
   departmentName: string;
+  scheduleID: string;
   scheduleStart: string;
   scheduleEnd: string;
   patientQueued: number;
