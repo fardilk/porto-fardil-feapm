@@ -118,6 +118,7 @@ const SelectPractitioner = ({
                   onClick={() => {
                     setFormValue('practionerId', doctor.doctorID);
                     setFormValue('departmentId', doctor.departmentID);
+                    setFormValue('scheduleID', doctor.scheduleID)
                     setSelectedPractitioner({
                       doctor: doctor.doctorName,
                       polyName: doctor.departmentName,

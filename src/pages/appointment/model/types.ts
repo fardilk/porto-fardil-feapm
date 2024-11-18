@@ -44,8 +44,7 @@ export type Booking = {
 };
 
 export type BookingInputServiceParamOutpatient = {
-  doctorID: string;
-  departmentID: string;
+  scheduleID: string;
 };
 
 export type BookingInputServiceParamMcu = {
