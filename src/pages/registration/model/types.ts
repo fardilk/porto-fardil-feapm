@@ -1,5 +1,4 @@
 import type { ButtonProps } from '@mui/material';
-import { NonPaginationType, PaginationType } from 'src/@types/global';
 import { Patient } from 'src/pages/patient/model/types';
 
 export type PatientInformationProps = {

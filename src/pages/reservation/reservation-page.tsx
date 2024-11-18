@@ -29,15 +29,12 @@ import {
 import type { ReservationType, Insurancetype } from './model/types';
 import InsertEmployeeNumber from './components/insert-employee-number';
 import {
-  formStepsMCUGeneral,
   formStepsOutpatientBPJS,
   formStepsOutpatientCompany,
   formStepsOutpatientGeneral,
   formStepsOutpatientInsurance,
-  formStepsLabGeneral,
   formStepsLabCompany,
   formStepsLabInsurance,
-  formStepsRadGeneral,
   formStepsRadCompany,
   formStepsRadInsurance,
   formStepsMCUAssurance,
