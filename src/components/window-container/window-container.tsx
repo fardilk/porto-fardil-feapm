@@ -1,7 +1,6 @@
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material"
 import { useMemo, type ReactNode } from "react"
 import { useTranslate } from "src/locales"
-import { useSelector } from "src/store/store"
 
 type WindowContainerProps = {
   title: string,
