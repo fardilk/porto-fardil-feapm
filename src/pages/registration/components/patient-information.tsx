@@ -1,13 +1,11 @@
 import { LoadingButton } from '@mui/lab';
 import { Alert, Box, Button, TableContainer } from '@mui/material';
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { useMemo } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { LabelTextContainer } from 'src/components/label-text';
 import { useTranslate } from 'src/locales';
 import { useSelector } from 'src/store/store';
-import { fDate, formatStr } from 'src/utils/format-time';
+import { fDate } from 'src/utils/format-time';
 import { fAsterisk } from 'src/utils/helper';
 import { terminologyCodeMapper } from 'src/utils/terminology';
 import type { PatientInformationProps, RegistrationIForm } from '../model/types';

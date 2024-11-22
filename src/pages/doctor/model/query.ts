@@ -6,6 +6,7 @@ export const DoctorQuery = `
   doctorImage
   departmentID
   departmentName
+  scheduleID
   scheduleStart
   scheduleEnd
   patientQueued
