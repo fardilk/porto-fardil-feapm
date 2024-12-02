@@ -1,7 +1,7 @@
 import { useController, useFormContext } from "react-hook-form";
 import type { TimePilsContainerProps } from "../time-pils/types";
 import TimePilsContainer from "../time-pils/time-pils-container";
-import { Box, Typography } from "@mui/material";
+import { Box, Skeleton, Typography } from "@mui/material";
 
 export type RHFTimePilsProps<T> = Omit<TimePilsContainerProps<T>, 'getIsSelected' | 'onClick'> & {
   getOptionEqualToValue: (option: T, value: T | null) => boolean
@@ -9,10 +9,11 @@ export type RHFTimePilsProps<T> = Omit<TimePilsContainerProps<T>, 'getIsSelected
   multiple?: boolean
   errorText?: string
   label?: string
+  loading?: boolean
 }
 
 export function RHFTimePils<T>(props: RHFTimePilsProps<T>) {
-  const { name, options, multiple, errorText, label, getOptionEqualToValue, getOptionLabel } = props
+  const { name, options, multiple, errorText, label, loading, getOptionEqualToValue, getOptionLabel, getOptionDisabled } = props
 
   const { clearErrors, watch, setValue, control } = useFormContext()
   const { fieldState: { error } } = useController({ name, control })
@@ -28,6 +29,10 @@ export function RHFTimePils<T>(props: RHFTimePilsProps<T>) {
     return getOptionEqualToValue(option, value)
   }
 
+  if (loading) {
+    return <Skeleton sx={{ width: '100%', height: 42 }} />
+  }
+
   return (
     <Box>
       <Typography>{label}</Typography>
@@ -35,6 +40,7 @@ export function RHFTimePils<T>(props: RHFTimePilsProps<T>) {
         getIsSelected={(opt) => Boolean(isSelected(opt))}
         getOptionLabel={getOptionLabel}
         error={Boolean(error?.message)}
+        getOptionDisabled={getOptionDisabled}
         onClick={(newValue) => {
           clearErrors(name)
           const isExist = isSelected(newValue)

@@ -351,7 +351,11 @@ const EncounterPage = () => {
         },
       }
 
-      await bookingCreateNoQuery({ data: newData, patientID })
+      const resp = await bookingCreateNoQuery({ data: newData, patientID })
+
+      if (!resp.status) {
+        throw Error(resp.message)
+      }
 
       toast.success("Berhasil")
 

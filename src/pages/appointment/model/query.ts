@@ -61,6 +61,17 @@ export const PatientQuery = `
   }
 `;
 
+export const BpjsQuery = `
+  subscriberNumber
+  subscriberClass
+  subscriberCategory
+  subscriberInstitution
+  subscriberStatus
+  referralNumber
+  referralDate
+  performerServiceName
+`;
+
 export const BookingQuery = `
   bookingID
   bookingNumber
@@ -69,4 +80,27 @@ export const BookingQuery = `
   notes
   encounter { ${EncounterQuery} }
   patient { ${PatientQuery} }
+  bpjs { ${BpjsQuery} }
+`;
+
+export const BookingCreateResultOneQuery = `
+  status
+  message
+  data { ${BookingQuery} }
+`;
+
+export const ScheduleQuery = `
+  date
+  slotTime
+`;
+
+export const AppointmentQuery = `
+  booking { ${BookingQuery} }
+  schedule { ${ScheduleQuery} }
+`;
+
+export const AppointmentCreateResultOneQuery = `
+  status
+  message
+  data { ${AppointmentQuery} }
 `;

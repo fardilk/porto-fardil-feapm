@@ -10,6 +10,7 @@ export type ConfigValue = {
     urlName: string;
     platformName: string;
     hospitalName: string;
+    restUrl: string;
   };
   site: {
     name: string;
@@ -60,6 +61,7 @@ export const CONFIG: ConfigValue = {
     urlName: `${import.meta.env.VITE_APP_URL_NAME ?? ''}`,
     platformName: `${import.meta.env.VITE_APP_PLATFORM_NAME ?? ''}`,
     hospitalName: `${import.meta.env.VITE_APP_HOSPITAL_NAME ?? ''}`,
+    restUrl: `${import.meta.env.VITE_APP_API_HOST_REST ?? 'https://belum.disetting.com'}`,
   },
   site: {
     name: 'Minimals',
