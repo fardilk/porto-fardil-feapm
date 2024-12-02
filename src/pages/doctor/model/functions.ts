@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request';
 import GqlClient from 'src/utils/gql';
-import { DoctorResultList, DoctorResultOne } from './types';
 import { DoctorResultListQuery, DoctorResultOneQuery } from './query';
+import { DoctorResultList, DoctorResultOne } from './types';
 
 export const doctorList = async (param: {
   keyword: string;
@@ -24,14 +24,14 @@ export const doctorList = async (param: {
 };
 
 export const doctorOne = async (param: {
-  departmentID: string;
-  doctorID: string;
+  scheduleID: string;
+  date?: string;
 }): Promise<DoctorResultOne> => {
   const client = new GqlClient({ module: 'doctor' });
   const res = await client.request(
     gql`
-    query doctorOne($doctorID: String!, $departmentID: Int!) {
-      doctorOne(doctorID: $doctorID, departmentID: $departmentID) {
+    query doctorOne($scheduleID: String!, $date: String) {
+      doctorOne(scheduleID: $scheduleID, date: $date) {
         ${DoctorResultOneQuery}
       }
     }

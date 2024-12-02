@@ -1,5 +1,11 @@
 import { PaginationInfoQuery } from 'src/@types/query';
 
+export const PractitionerSlotQuery = `
+  slotId
+  slotTime
+  isDisabled
+`;
+
 export const DoctorQuery = `
   doctorID
   doctorName
@@ -12,6 +18,7 @@ export const DoctorQuery = `
   patientQueued
   patientCapacity
   gender
+  slot { ${PractitionerSlotQuery} }
 `;
 
 export const DoctorResultListQuery = `
@@ -24,5 +31,5 @@ export const DoctorResultListQuery = `
 export const DoctorResultOneQuery = `
   status
   message
-  data ${DoctorQuery}
+  data { ${DoctorQuery} }
 `;
