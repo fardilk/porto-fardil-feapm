@@ -52,6 +52,10 @@ export const initialStep = [
     value: 'insert_nik',
   },
   {
+    label: 'appointment.steps.nik_not_found',
+    value: 'nik_not_found',
+  },
+  {
     label: 'appointment.steps.information_outpatient_general',
     value: 'information_outpatient_general',
     properties: {

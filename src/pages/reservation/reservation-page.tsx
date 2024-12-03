@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
@@ -11,17 +12,20 @@ import { WindowContainer } from 'src/components/window-container';
 import { usePartialState, useStepper } from 'src/hooks';
 import { useTranslate } from 'src/locales';
 import { Nullable } from 'src/types/common';
-import { fAsterisk } from 'src/utils/helper';
+import { fDate, formatStr } from 'src/utils/format-time';
+import { enBase64, fAsterisk } from 'src/utils/helper';
 import { timeout } from 'src/utils/timeout';
+import { appointmentCreate } from '../appointment/model/functions';
 import { departmentList } from '../department/model/functions';
 import { doctorList } from '../doctor/model/functions';
 import { Doctor } from '../doctor/model/types';
-import { EncounterType, ListPolyResponse, SelectedLabPackage, SelectedPractioner, SelectedRadiologyPackage } from '../encounter/model/types';
+import { ListPolyResponse, SelectedLabPackage, SelectedPractioner, SelectedRadiologyPackage } from '../encounter/model/types';
 import { patientGet } from '../patient/model/functions';
 import { Patient } from '../patient/model/types';
 import {
   ConfirmationOutpatient,
   ConfirmationOutpatientMCU,
+  IndentifierNotFound,
   InformationBPJSPatientData,
   InformationOutpatientGeneral,
   InformationPatient,
@@ -54,9 +58,6 @@ import {
   formStepsRadCompany,
   formStepsRadInsurance,
 } from './model/variables';
-import dayjs from 'dayjs';
-import { appointmentCreate } from '../appointment/model/functions';
-import { fDate, formatStr } from 'src/utils/format-time';
 
 const ReservationPage = () => {
   const navigate = useNavigate();
@@ -155,7 +156,7 @@ const ReservationPage = () => {
 
   const methods = useForm();
 
-  const { handleSubmit, watch, setValue, getValues } = methods;
+  const { handleSubmit, watch, setValue } = methods;
 
   const values = watch()
 
@@ -350,7 +351,6 @@ const ReservationPage = () => {
         }
       }
 
-      handleChangePage({ action: 'next' });
     } else {
       if (currentPage.value === 'insert_polis_number') {
         // await getDummyData('');
@@ -394,13 +394,24 @@ const ReservationPage = () => {
 
             {currentPage.value === 'insert_nik' && <InsertIdentifier errorMessage={errors.errorIdentifier} />}
 
+            {currentPage.value === 'nik_not_found' && (
+              <IndentifierNotFound
+                identifier={values.nik}
+                handleClick={(param) => {
+                  if (param === "search") handleChangePage({ action: "previous" });
+                  if (param === "anjungan") navigate(`/registration/${enBase64(values.nik)}`)
+                }}
+              />
+            )}
+
             {currentPage.value === 'information_outpatient_general' && patientData && (
               <InformationOutpatientGeneral
                 leftTextButton={t("appointment.patient.actions.invalid_button")}
                 rightTextButton={t("appointment.patient.actions.valid_button")}
                 leftButtonProps={{
                   onClick: () => {
-                    handleChangePage({ action: 'previous' });
+                    setPatientData(null);
+                    handleChangePage({ toSpecificPage: "insert_nik" });
                   },
                 }}
                 rightButtonProps={{
