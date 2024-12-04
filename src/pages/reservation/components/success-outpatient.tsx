@@ -1,20 +1,28 @@
 import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { AlertInformation } from 'src/components/alert-information';
 import { CardBanner } from 'src/components/card-banner';
 import { LabelTextContainer } from 'src/components/label-text';
 import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
+import { useCountdownSeconds } from 'src/hooks';
+import { useTranslate } from 'src/locales';
+import axiosInstance from 'src/utils/axios';
+import { fCurrency } from 'src/utils/format-number';
 import { fAsterisk } from 'src/utils/helper';
 import type { SuccessOutpatientType } from '../model/types';
 import { buttonStyle, getPaymentType } from '../model/variables';
-import { useCountdownSeconds } from 'src/hooks';
-import { useNavigate } from 'react-router';
-import { useTranslate } from 'src/locales';
+import { useFormContext } from 'react-hook-form';
 
 const SuccessOutpatient = (props: SuccessOutpatientType) => {
+  const { type, reservationType, patientDetail, doctorInfo, labPackage, radPackage } = props;
+
   const navigate = useNavigate();
   const { t } = useTranslate();
-  const { type, reservationType } = props;
+  const { watch } = useFormContext()
+
+  const values = watch()
+
   const {
     startCountdown: startCountdown15,
     countdown: countdown15,
@@ -25,50 +33,86 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
     startCountdown: startCountdown2min,
     countdown: countdown2min,
     counting: counting2min,
-  } = useCountdownSeconds(2*60);
+  } = useCountdownSeconds(2 * 60);
 
   const [openPrint, setOpenPrint] = useState(false)
   const detailData = useMemo(() => [
-    { title: 'NIK', body: fAsterisk('100200300400') },
-    { title: t("global.complete_name"), body: 'Anisa Redina' },
-    { title: `${t("global.location")}, ${t("global.birthdate")}`, body: 'Malaysia, 11-04-2000' },
-    { title: t("global.phone_number"), body: fAsterisk('085157902550') },
-    { title: t("global.blood_type"), body: 'B' },
-    { title: 'Rhesus', body: 'Negatif' },
-    { title: 'Email', body: 'anisa@gmail.com' },
     {
-      title: t("global.address"),
-      body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
+      title: t('appointment.patient.nik'),
+      body: fAsterisk(patientDetail?.identifierValue ?? '-'),
     },
-  ],[t])
+    { title: t('appointment.patient.fullname'), body: patientDetail?.name },
+    {
+      title: t('appointment.patient.birthdateplace'),
+      body: `${patientDetail?.birthPlace}, ${patientDetail?.birthDttm}`,
+    },
+    { title: t('appointment.patient.blood_type'), body: patientDetail?.additional.bloodTypeDisplay || '' },
+    { title: t('appointment.patient.blood_rhesus'), body: patientDetail?.additional.bloodRhesusDisplay || '' },
+    {
+      title: t('appointment.patient.address'),
+      body: patientDetail?.address,
+    },
+    { title: t('appointment.patient.phone'), body: fAsterisk(patientDetail?.phone) },
+    { title: t('appointment.patient.email'), body: patientDetail?.email },
+  ], [t])
 
   const listCard = [
-    ... reservationType === "RJ" ? [
-      {
-        title: t("appointment.service_destination"),
-        body: 'Poli Mata',
-        localIcon: 'stethoscope',
-      },
-      {
-        title: t("appointment.examining_doctor"),
-        body: 'dr. Inas Shabrina,Sp.M',
-        localIcon: 'doctor',
-      }
-    ] : reservationType === "MCU" ? [
-      {
-        title: t("appointment.encounter.service_type"),
-        body: "Paket Perimetal Wanita",
-        localIcon: "medical-checkup"
-      }
-    ] : [],
-    {
-      ...getPaymentType(type, t),
-    },
-    {
-      title: t("appointment.encounter.schedule"),
-      body: 'Senin, 30-01-2022, 10:00-14:00',
-      localIcon: 'jadwal',
-    },
+    ...(reservationType === 'RJ' && doctorInfo
+      ? [
+        {
+          title: t('appointment.encounter.healthcare_service'),
+          body: doctorInfo.polyName,
+          localIcon: 'stethoscope',
+        },
+        {
+          title: t('appointment.encounter.practitioner'),
+          body: doctorInfo.doctor,
+          localIcon: 'doctor',
+        },
+      ]
+      : reservationType === 'LAB' && labPackage
+        ? [
+          {
+            title: t('appointment.encounter.healthcare_service'),
+            body: 'Laboratorium',
+            localIcon: 'blood-test',
+          },
+          {
+            title: labPackage.name,
+            body: fCurrency(labPackage.price),
+            localIcon: 'blood-test',
+            titleProps: { variant: 'subtitle1', sx: { color: 'primary.darker' } },
+            bodyProps: {
+              variant: 'subtitle2',
+              sx: { color: 'primary.darker', fontWeight: '500' },
+            },
+          },
+        ]
+        : reservationType === 'RAD' && radPackage ? [{
+          title: t('appointment.encounter.healthcare_service'),
+          body: 'Radiologi',
+          localIcon: 'x-rays',
+        },
+        {
+          title: radPackage.name,
+          body: fCurrency(radPackage.price),
+          localIcon: 'x-rays',
+          titleProps: { variant: 'subtitle1', sx: { color: 'primary.darker' } },
+          bodyProps: {
+            variant: 'subtitle2',
+            sx: { color: 'primary.darker', fontWeight: '500' },
+          },
+        },] : []),
+    { ...getPaymentType(type, t) },
+    ...(reservationType === 'RJ' && doctorInfo
+      ? [
+        {
+          title: t('appointment.encounter.schedule'),
+          body: doctorInfo.serviceTime,
+          localIcon: 'jadwal',
+        },
+      ]
+      : []),
   ];
 
   const getCountdown15 = useMemo(() => {
@@ -94,30 +138,31 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
         </Typography>
       </Box>
     );
-  }, [getCountdown2min,t]);
+  }, [getCountdown2min, t]);
 
   const actionList = [
     {
       label: t("global.back_to_dashboard"),
       buttonProps: { ...buttonStyle },
-      action: () => navigate('/', { replace: true}),
+      action: () => navigate('/', { replace: true }),
     },
     {
       label: t("global.reprint"),
       buttonProps: { ...buttonStyle, variant: 'outlined', disabled: counting15 },
       action: () => {
+        axiosInstance({ url: `/struk-kunjungan/${values?.resBookingID || "-"}` })
         startCountdown15();
       },
     },
   ];
 
   useEffect(() => {
-    if(countdown2min === 5) {
+    if (countdown2min === 5) {
       setTimeout(() => {
         navigate('/', { replace: true });
-      },5000)
+      }, 5000)
     }
-  },[countdown2min, navigate])
+  }, [countdown2min, navigate])
 
   return (
     <Stack gap={4}>
@@ -161,6 +206,7 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
           fullWidth
           color="secondary"
           onClick={() => {
+            axiosInstance({ url: `/struk-kunjungan/${values?.resBookingID || "-"}` })
             setOpenPrint(true);
             startCountdown15();
             startCountdown2min();

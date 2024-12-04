@@ -11,7 +11,8 @@ export { default as SelectCompany } from './select-company';
 export { default as SelectCompanyNew } from './select-company-new';
 export { default as InsertBPJSNumber } from './insert-bpjs-number';
 export { default as InformationBPJSPatientData } from './information-bpjs-patient-data';
-export { default as SelectMCUPackage} from './select-mcu-package';
+export { default as SelectMCUPackage } from './select-mcu-package';
 export { default as LabelListTextCard } from './label-list-text-card';
-export { default as InformationPatient } from './information-patient'
-export { default as ConfirmationOutpatientMCU} from './confirmation-outpatient-mcu'
+export { default as InformationPatient } from './information-patient';
+export { default as ConfirmationOutpatientMCU } from './confirmation-outpatient-mcu';
+export { default as IndentifierNotFound } from './identifier-not-found';

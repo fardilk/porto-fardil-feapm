@@ -1,56 +1,57 @@
-import type { ReactNode} from 'react';
-import { useMemo } from 'react';
-import type { SelectTimeProps } from '../model/types';
-import { RHFMobileDatePicker, RHFTimePils } from 'src/components/hook-form';
 import {
+  Box,
   Button,
   Grid,
-  Typography,
   Stack,
-  Box,
-  TableContainer,
-  TableBody,
   Table,
+  TableBody,
   TableCell,
+  TableContainer,
   TableRow,
+  Typography,
 } from '@mui/material';
+import dayjs from 'dayjs';
+import type { ReactNode } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { RHFMobileDatePicker, RHFTimePils } from 'src/components/hook-form';
 import type { LabelTextProps } from 'src/components/label-text';
 import { LabelTextContainer } from 'src/components/label-text';
+import { useFetch } from 'src/hooks/use-fetch';
 import { useTranslate } from 'src/locales';
+import { doctorOne } from 'src/pages/doctor/model/functions';
+import { fDate, formatStr } from 'src/utils/format-time';
+import type { SelectTimeProps } from '../model/types';
 
 const SelectTime = (props: SelectTimeProps) => {
-  const { reservationType, handleBack, handleConfirm, errorMessage } = props;
+  const { reservationType, handleBack, handleConfirm, errorMessage, doctorInfo } = props;
+
   const { t } = useTranslate()
+  const { watch, setValue } = useFormContext()
 
-  const headerData : LabelTextProps[] = useMemo(() => [
-    { title: t("global.doctor_name"), body: "dr. Inas Shabrina Sp.M'", colSpan: 2 },
-    { title: t("global.specialist"), body: 'Spesialis Mata', colSpan: 2 },
-  ],[t])
+  const values = watch()
 
+  const headerData: LabelTextProps[] = useMemo(() => [
+    { title: t("global.doctor_name"), body: doctorInfo?.doctor, colSpan: 2 },
+    { title: t("global.specialist"), body: doctorInfo?.polyName, colSpan: 2 },
+  ], [t])
 
-  const timeOpt = [
-    {
-      label: '10:00',
-      value: '10.00',
-    },
-    {
-      label: '11:30',
-      value: '11.30',
-    },
-    {
-      label: '12:45',
-      value: '12.45',
-    },
-  ];
+  const { data, isLoading, refetch } = useFetch({ scheduleID: values?.scheduleID || "", date: fDate(dayjs().add(1, 'day'), formatStr.paramCase.mysqlDate) }, doctorOne)
+
+  const timeOpt = data?.data.slot.map((it) => ({
+    label: it.slotTime,
+    value: it.slotId,
+    disabled: it.isDisabled
+  })) || []
 
   const unableOpt = [
     {
       label: t("reservation.change_schedule"),
-      value: 'pindah',
+      value: 'batal kunjungan',
     },
     {
       label: t("reservation.cancel_visit"),
-      value: 'batal',
+      value: 'pindah jadwal',
     },
   ];
 
@@ -61,6 +62,10 @@ const SelectTime = (props: SelectTimeProps) => {
     if (reservationType === 'RAD') return t("radiology");
     return '';
   };
+
+  useEffect(() => {
+    setValue("date", dayjs().add(1, 'day'))
+  }, [])
 
   return (
     <Stack gap={4}>
@@ -82,7 +87,15 @@ const SelectTime = (props: SelectTimeProps) => {
             <TableRow>
               <TableCellBody titleText={t("reservation.visit_date")} />
               <TableCellBody>
-                <RHFMobileDatePicker name="date" format="DD/MM/YYYY" />
+                <RHFMobileDatePicker
+                  name="date"
+                  format="DD/MM/YYYY"
+                  onSelect={(val) => {
+                    refetch({ scheduleID: values?.scheduleID || "", date: fDate(val, formatStr.paramCase.mysqlDate) })
+                  }}
+                  disablePast
+                  shouldDisableDate={(date) => fDate(date, formatStr.paramCase.mysqlDate) === fDate(dayjs(), formatStr.paramCase.mysqlDate)}
+                />
                 {errorMessage?.dateErr && (
                   <Typography variant="caption" color="error.main">
                     {errorMessage.dateErr}
@@ -99,6 +112,8 @@ const SelectTime = (props: SelectTimeProps) => {
                   getOptionLabel={(opt) => opt.label}
                   name="bookTime"
                   errorText={errorMessage?.bookTimeErr}
+                  loading={isLoading}
+                  getOptionDisabled={(opt) => opt.disabled}
                 />
               </TableCellBody>
             </TableRow>

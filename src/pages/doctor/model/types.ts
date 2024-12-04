@@ -12,6 +12,13 @@ export type Doctor = {
   patientQueued: number;
   patientCapacity: number;
   gender: string;
+  slot: PractitionerSlot[];
+};
+
+export type PractitionerSlot = {
+  slotId: string;
+  slotTime: string;
+  isDisabled: boolean;
 };
 
 export type DoctorResultList = PaginationType & {

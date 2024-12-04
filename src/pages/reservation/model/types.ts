@@ -1,9 +1,19 @@
 import type { ButtonProps } from '@mui/material';
+import { FieldValues, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import type { CardBannerProps } from 'src/components/card-banner/types';
+import { Doctor } from 'src/pages/doctor/model/types';
+import {
+  ListPolyResponse,
+  SelectedLabPackage,
+  SelectedPractioner,
+  SelectedRadiologyPackage,
+} from 'src/pages/encounter/model/types';
+import { Patient } from 'src/pages/patient/model/types';
+import { Nullable } from 'src/types/common';
 
 export type SelectReservationTypeProps = {
   items: CardBannerProps[];
-  handleResetReservationType: () => void
+  handleResetReservationType: () => void;
 };
 
 export type InformationProps = {
@@ -11,20 +21,28 @@ export type InformationProps = {
   rightTextButton: string;
   leftButtonProps?: ButtonProps;
   rightButtonProps?: ButtonProps;
+  data?: Patient;
 };
 
 export type Insurancetype = 'bpjs' | 'insurance' | 'company';
 
-export type ReservationType = null | "RJ" | "MCU" | "LAB" | "RAD"
+export type ReservationType = null | 'RJ' | 'MCU' | 'LAB' | 'RAD';
 
 export type PaymentMethodProps = {
   handleGeneral: () => void;
   handleAssurance: (param: Insurancetype) => void;
-  reservationType: ReservationType
+  reservationType: ReservationType;
 };
 
 export type SelectPractitionerProps = {
   onCardSelect: () => void;
+  handleGetDoctor: (keyword: string, page: number) => Promise<void>;
+  handleGetPoly: (keyword: string, page: number) => Promise<void>;
+  setSelectedPractitioner: (data: Nullable<SelectedPractioner>) => void;
+  listDoctor: Doctor[];
+  listPoly: ListPolyResponse;
+  setFormValue: UseFormSetValue<FieldValues>;
+  watchFormValue: UseFormWatch<FieldValues>;
 };
 
 export type SelectInsuranceProps = {
@@ -40,9 +58,13 @@ export type SelectCompanyProps = {
 export type OutpatientType = 'general' | 'insurance' | 'company' | 'bpjs';
 
 export type SuccessOutpatientType = {
-  type: OutpatientType
-  reservationType: ReservationType
-}
+  patientDetail: Patient | null;
+  type: OutpatientType;
+  reservationType: ReservationType;
+  doctorInfo: Nullable<SelectedPractioner>;
+  labPackage: Nullable<SelectedLabPackage>;
+  radPackage: Nullable<SelectedRadiologyPackage>;
+};
 
 export type SelectInsuranceNewProps = {
   handleSelect: () => void;
@@ -68,25 +90,25 @@ export type InformationBPJSPatientDataProps = {
 };
 
 export type SelectMCUPackageProps = {
-  handleSelect: () => void
-}
+  handleSelect: () => void;
+};
 
 export type LabelListTextCardProps = {
   listText: string[];
   headerText: string;
-  sectionBottom: React.ReactNode
-  action: () => void
-}
+  sectionBottom: React.ReactNode;
+  action: () => void;
+};
 
 export type InformationPatientProps = {
   title: string;
   handleBack: () => void;
   handleNext: () => void;
   detailData: {
-    title: string
-    body: string
-  }[]
-}
+    title: string;
+    body: string;
+  }[];
+};
 
 export type SelectLabPackageProps = {
   onCardSelect: () => void;
@@ -97,20 +119,21 @@ export type SelectRadServiceProps = {
 };
 
 export type errMes = {
-  dateErr: string,
-  bookTimeErr: string,
-  unableErr: string
-}
+  dateErr: string;
+  bookTimeErr: string;
+  unableErr: string;
+};
 
 export type SelectTimeProps = {
   handleBack: () => void;
   handleConfirm: () => void;
-  reservationType: ReservationType
-  errorMessage?: errMes
-}
+  reservationType: ReservationType;
+  doctorInfo: Nullable<SelectedPractioner>;
+  errorMessage?: errMes;
+};
 
 export type FormValues = {
   date: Date;
   unable: string;
   bookTime: number[];
-}
+};

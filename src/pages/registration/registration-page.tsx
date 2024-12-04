@@ -48,7 +48,7 @@ const RegistrationPage = () => {
   const defaultValues: RegistrationIForm = {
     patientID: '',
     isRegistered: false,
-    nik: deBase64(encryptedNIK) || '',
+    nik: '',
     citizenship: false,
     name: '',
     gender: null,
@@ -114,6 +114,7 @@ const RegistrationPage = () => {
   useEffect(() => {
     const enc = Boolean(encryptedNIK)
     if (enc) {
+      parseNIK(deBase64(encryptedNIK))
       setValue("isRegistered", false)
       handleChangePage({
         action: 'next',
@@ -123,7 +124,31 @@ const RegistrationPage = () => {
     }
   }, [encryptedNIK])
 
-  console.log(formSteps)
+  const parseNIK = (nik?: string) => {
+    if (nik === undefined) {
+      return ""
+    }
+
+    const fNik = nikParser(nik)
+
+    setValue('nik', nik)
+
+    setValue(
+      'gender',
+      {
+        label: fNik.kelamin() === 'pria' ? 'Laki-laki' : 'Perempuan',
+        value: fNik.kelamin() === 'pria' ? 'male' : 'female'
+      },
+      { shouldValidate: true }
+    );
+
+    const day = fNik.lahir().toLocaleString('id-ID', { day: '2-digit' });
+    const month = fNik.lahir().toLocaleString('id-ID', { month: '2-digit' });
+    const year = fNik.lahir().toLocaleString('id-ID', { year: 'numeric' });
+    setValue('birthDate', `${month}-${day}-${year}`);
+
+    return ""
+  }
 
   const onSubmit = async (data: RegistrationIForm) => {
     try {
@@ -155,24 +180,8 @@ const RegistrationPage = () => {
           handleChangePage({ action: 'next', newFormSteps: formStepsExistInInternal });
 
         } catch (error) {
-          const fNik = nikParser(dataNIK)
-          if (fNik.isValid()) {
-            // gender
-            setValue(
-              'gender',
-              {
-                label: fNik.kelamin() === 'pria' ? 'Laki-laki' : 'Perempuan',
-                value: fNik.kelamin() === 'pria' ? 'male' : 'female'
-              },
-              { shouldValidate: true }
-            );
 
-            // tgl lahir
-            const day = fNik.lahir().toLocaleString('id-ID', { day: '2-digit' });
-            const month = fNik.lahir().toLocaleString('id-ID', { month: '2-digit' });
-            const year = fNik.lahir().toLocaleString('id-ID', { year: 'numeric' });
-            setValue('birthDate', `${month}-${day}-${year}`);
-          }
+          parseNIK(dataNIK)
 
           handleChangePage({ action: 'next', newFormSteps: formStepsNotExistInternal });
           setValue("isRegistered", false)
