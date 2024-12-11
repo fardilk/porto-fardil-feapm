@@ -10,6 +10,7 @@ export type ConfigValue = {
     urlName: string;
     platformName: string;
     hospitalName: string;
+    appVersion: string;
     restUrl: string;
   };
   site: {
@@ -58,10 +59,11 @@ function getPath() {
 export const CONFIG: ConfigValue = {
   app: {
     graphqlPath: getPath(),
-    urlName: `${import.meta.env.VITE_APP_URL_NAME ?? ''}`,
-    platformName: `${import.meta.env.VITE_APP_PLATFORM_NAME ?? ''}`,
-    hospitalName: `${import.meta.env.VITE_APP_HOSPITAL_NAME ?? ''}`,
-    restUrl: `${import.meta.env.VITE_APP_API_HOST_REST ?? 'https://belum.disetting.com'}`,
+    urlName: import.meta.env.VITE_APP_URL_NAME ?? '',
+    platformName: import.meta.env.VITE_APP_PLATFORM_NAME ?? '',
+    hospitalName: import.meta.env.VITE_APP_HOSPITAL_NAME ?? '',
+    appVersion: import.meta.env.VITE_APP_VERSION || '1',
+    restUrl: import.meta.env.VITE_APP_API_HOST_REST ?? 'https://belum.disetting.com',
   },
   site: {
     name: 'Minimals',
