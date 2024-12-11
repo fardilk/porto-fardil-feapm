@@ -1,5 +1,31 @@
 import { Patient } from 'src/pages/patient/model/types';
 
+export type AppointmentInput = {
+  booking: BookingInput;
+  serviceParamOutpatient: AppointmentInputServiceParamOutpatient;
+  scheduleDate: string;
+};
+
+export type AppointmentInputServiceParamOutpatient = {
+  doctorUnavailableAction: string;
+};
+
+export type AppointmentCreateResultOne = {
+  status: boolean;
+  message: string;
+  data: Appointment;
+};
+
+export type Appointment = {
+  booking: Booking;
+  schedule: Schedule;
+};
+
+export type Schedule = {
+  date: string;
+  slotTime: string;
+};
+
 export type Package = {
   packageID: string;
   packageName: string;
@@ -31,6 +57,17 @@ export type PayorDetails = {
   companyName: string;
 };
 
+export type Bpjs = {
+  subscriberNumber: string;
+  subscriberClass: string;
+  subscriberCategory: string;
+  subscriberInstitution: string;
+  subscriberStatus: string;
+  referralNumber: string;
+  referralDate: string;
+  performerServiceName: string;
+};
+
 export type Booking = {
   bookingID: string;
   bookingNumber: string;
@@ -40,11 +77,12 @@ export type Booking = {
 
   encounter: Encounter;
   patient: Patient;
-  // bpjs: Bpjs
+  bpjs: Bpjs;
 };
 
 export type BookingInputServiceParamOutpatient = {
   scheduleID: string;
+  slotID?: string;
 };
 
 export type BookingInputServiceParamMcu = {
@@ -86,4 +124,10 @@ export type BookingInput = {
   serviceParamLaboratory?: BookingInputServiceParamLaboratory;
   serviceParamRadiology?: BookingInputServiceParamRadiology;
   payorParam: BookingInputPayorParam;
+};
+
+export type BookingCreateResultOne = {
+  status: boolean;
+  message: string;
+  data: Booking;
 };

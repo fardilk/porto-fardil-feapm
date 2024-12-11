@@ -1,16 +1,31 @@
 import { Box } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
+import dayjs from 'dayjs';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
+import { toast } from 'sonner';
 import { AppPage } from 'src/components/app-page';
 import type { CardBannerProps } from 'src/components/card-banner/types';
 import { Form } from 'src/components/hook-form';
 import { InsertIdentifier } from 'src/components/insert-identifier';
 import { WindowContainer } from 'src/components/window-container';
-import { useStepper } from 'src/hooks';
+import { usePartialState, useStepper } from 'src/hooks';
+import { useTranslate } from 'src/locales';
+import { Nullable } from 'src/types/common';
+import { fDate, formatStr } from 'src/utils/format-time';
+import { enBase64, fAsterisk } from 'src/utils/helper';
+import { timeout } from 'src/utils/timeout';
+import { appointmentCreate } from '../appointment/model/functions';
+import { departmentList } from '../department/model/functions';
+import { doctorList } from '../doctor/model/functions';
+import { Doctor } from '../doctor/model/types';
+import { ListPolyResponse, SelectedLabPackage, SelectedPractioner, SelectedRadiologyPackage } from '../encounter/model/types';
+import { patientGet } from '../patient/model/functions';
+import { Patient } from '../patient/model/types';
 import {
   ConfirmationOutpatient,
   ConfirmationOutpatientMCU,
+  IndentifierNotFound,
   InformationBPJSPatientData,
   InformationOutpatientGeneral,
   InformationPatient,
@@ -19,32 +34,30 @@ import {
   PaymentMethod,
   SelectCompany,
   SelectCompanyNew,
-  SelectReservationType,
   SelectInsurance,
   SelectInsuranceNew,
   SelectMCUPackage,
   SelectPractitioner,
+  SelectReservationType,
   SuccessOutpatient,
 } from './components';
-import type { ReservationType, Insurancetype } from './model/types';
 import InsertEmployeeNumber from './components/insert-employee-number';
+import SelectLabPackage from './components/select-lab-package';
+import SelectRadService from './components/select-rad-service';
+import SelectTime from './components/select-time';
+import type { Insurancetype, ReservationType } from './model/types';
 import {
+  formStepsLabCompany,
+  formStepsLabInsurance,
+  formStepsMCUAssurance,
+  formStepsMCUCompany,
   formStepsOutpatientBPJS,
   formStepsOutpatientCompany,
   formStepsOutpatientGeneral,
   formStepsOutpatientInsurance,
-  formStepsLabCompany,
-  formStepsLabInsurance,
   formStepsRadCompany,
   formStepsRadInsurance,
-  formStepsMCUAssurance,
-  formStepsMCUCompany,
 } from './model/variables';
-import { fAsterisk } from 'src/utils/helper';
-import SelectLabPackage from './components/select-lab-package';
-import SelectRadService from './components/select-rad-service';
-import SelectTime from './components/select-time';
-import { useTranslate } from 'src/locales';
 
 const ReservationPage = () => {
   const navigate = useNavigate();
@@ -54,7 +67,15 @@ const ReservationPage = () => {
 
   const { t } = useTranslate()
 
+  const [errors, setErrors] = usePartialState({ errorIdentifier: "" })
   const [errorMessage, setErrorMessage] = useState({ dateErr: '', bookTimeErr: '', unableErr: '' });
+  const [patientData, setPatientData] = useState<Nullable<Patient>>(null);
+  const [listDoctor, setListDoctor] = useState<Doctor[]>([]);
+  const [selectedPractioner, setSelectedPractioner] = useState<Nullable<SelectedPractioner>>(null);
+  const [listPoly, setListPoly] = useState<ListPolyResponse>([]);
+  const [selectedPackageLab, setSelectedPackageLab] = useState<Nullable<SelectedLabPackage>>(null);
+  const [selectedPackageRadiology, setSelectedPackageRadiology] =
+    useState<Nullable<SelectedRadiologyPackage>>(null);
 
   const [reservationType, SetReservationType] = useState<ReservationType>(null);
 
@@ -64,6 +85,7 @@ const ReservationPage = () => {
       body: t('encounter.outpatient.description'),
       localIcon: 'stethoscope',
       onClick: () => {
+        setValue("serviceType", "OUTPATIENT")
         SetReservationType('RJ');
         handleChangePage({ action: 'next', newFormSteps: formStepsOutpatientGeneral });
       },
@@ -134,7 +156,9 @@ const ReservationPage = () => {
 
   const methods = useForm();
 
-  const { handleSubmit, watch } = methods;
+  const { handleSubmit, watch, setValue } = methods;
+
+  const values = watch()
 
   const watchDate = watch('date');
   const watchBookTime = watch('bookTime');
@@ -223,11 +247,110 @@ const ReservationPage = () => {
     }
   };
 
+  const handleGetListDoctor = useCallback(async (keyword: string, page: number) => {
+    try {
+      const response = await doctorList({
+        page,
+        keyword,
+        take: 9
+      });
+
+      setListDoctor(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+
+  const handleGetListPoly = useCallback(async (keyword: string, page: number) => {
+    try {
+      const response = await departmentList({
+        take: 9,
+        page,
+        keyword,
+      });
+
+      setListPoly(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+  const handleGetPatientByNIK = async (identifierValue: string) => {
+    try {
+      const { data: newData } = await patientGet({
+        identifier: identifierValue, identifierType: 'Identifier'
+      })
+
+      if (!newData) {
+        console.log(!newData)
+        throw Error("NOT_FOUND")
+      }
+
+      setPatientData(newData);
+
+      setValue('patientId', newData.patientID);
+    } catch (e) {
+      throw Error("INI_MAH_NORMAL")
+    }
+  };
+
+  const handleCreate = async () => {
+    try {
+      const resp = await appointmentCreate({
+        data: {
+          booking: {
+            payorParam: {
+              payplanClass: ((values.payplan || '') as string).toLowerCase(),
+            },
+            serviceType: values.serviceType,
+            serviceParamOutpatient: {
+              scheduleID: '',
+              slotID: values?.bookTime?.value
+            },
+          },
+          scheduleDate: values?.date ? fDate(dayjs(values.date), formatStr.paramCase.mysqlDate) : '',
+          serviceParamOutpatient: {
+            doctorUnavailableAction: values?.unable?.value || ''
+          }
+        }, patientID: patientData?.patientID || ''
+      })
+
+      if (!resp.status) {
+        throw Error(resp.message)
+      }
+
+      toast.success("Berhasil")
+
+      setValue("resBookingID", resp.data.booking.bookingID)
+
+    } catch (error) {
+      toast.error(error?.message || "Gagal")
+      throw Error("...")
+    }
+  }
+
   const onSubmit = async (data: any) => {
     if (currentPageIndex === 1) {
-      // await getDummyData('company');
+      const nik = data?.nik?.replaceAll('\n', '');
+      if ((nik.length < 16 || nik.length > 16) && !values.citizenship) {
+        setErrors({ errorIdentifier: 'NIK Harus Terdiri Dari 16 Digit' });
+        timeout(2000).then(() => { setErrors({ errorIdentifier: "" }) })
+      } else {
+        try {
+          await handleGetPatientByNIK(nik)
+          handleChangePage({ toSpecificPage: "information_outpatient_general" });
+        } catch (e) {
+          if (e?.message === "INI_MAH_NORMAL") {
+            toast.error(`NIK dengan nomor ${fAsterisk(nik)} tidak ditemukan.`)
+            handleChangePage({ action: 'next' });
+          }
+          if (e?.message === "NOT_FOUND") {
+            toast.info("Anda Belum Terdaftar. Silahkan Daftar Terlebih Dahulu")
+          }
+        }
+      }
 
-      handleChangePage({ action: 'next' });
     } else {
       if (currentPage.value === 'insert_polis_number') {
         // await getDummyData('');
@@ -269,15 +392,26 @@ const ReservationPage = () => {
               />
             )}
 
-            {currentPage.value === 'insert_nik' && <InsertIdentifier />}
+            {currentPage.value === 'insert_nik' && <InsertIdentifier errorMessage={errors.errorIdentifier} />}
 
-            {currentPage.value === 'information_outpatient_general' && (
+            {currentPage.value === 'nik_not_found' && (
+              <IndentifierNotFound
+                identifier={values.nik}
+                handleClick={(param) => {
+                  if (param === "search") handleChangePage({ action: "previous" });
+                  if (param === "anjungan") navigate(`/registration/${enBase64(values.nik)}`)
+                }}
+              />
+            )}
+
+            {currentPage.value === 'information_outpatient_general' && patientData && (
               <InformationOutpatientGeneral
                 leftTextButton={t("appointment.patient.actions.invalid_button")}
                 rightTextButton={t("appointment.patient.actions.valid_button")}
                 leftButtonProps={{
                   onClick: () => {
-                    handleChangePage({ action: 'previous' });
+                    setPatientData(null);
+                    handleChangePage({ toSpecificPage: "insert_nik" });
                   },
                 }}
                 rightButtonProps={{
@@ -285,12 +419,14 @@ const ReservationPage = () => {
                     handleChangePage({ action: 'next' });
                   },
                 }}
+                data={patientData}
               />
             )}
 
             {currentPage.value === 'payment_method' && (
               <PaymentMethod
                 handleGeneral={() => {
+                  setValue('payplan', 'GENERAL');
                   handleChangePage({ action: 'next' });
                 }}
                 reservationType={reservationType}
@@ -300,17 +436,17 @@ const ReservationPage = () => {
 
             {currentPage.value === 'select_time' && (
               <SelectTime
+                doctorInfo={selectedPractioner}
                 handleBack={() => {
                   handleChangePage({ action: 'previous' });
                 }}
                 handleConfirm={() => {
-                  const today = new Date();
-                  const selectedDate = new Date(watchDate);
-                  const minDate = new Date(today.setDate(today.getDate()));
+                  const selectedDate = watchDate ? dayjs(watchDate) : dayjs()
+                  const minDate = dayjs()
 
                   if (watchDate && watchBookTime && watchUnable && selectedDate >= minDate)
                     handleChangePage({ action: 'next' });
-                  if (!watchDate) {
+                  if (!selectedDate) {
                     setErrorMessage((prev) => ({ ...prev, dateErr: 'Tanggal Harus Diisi' }));
                   } else if (selectedDate < minDate) {
                     setErrorMessage((prev) => ({
@@ -331,16 +467,37 @@ const ReservationPage = () => {
             )}
 
             {currentPage.value === 'select_healthcare_practitioner' && (
-              <SelectPractitioner onCardSelect={onPractitionerSelect} />
+              <SelectPractitioner
+                setFormValue={setValue}
+                watchFormValue={watch}
+                onCardSelect={onPractitionerSelect}
+                handleGetDoctor={handleGetListDoctor}
+                handleGetPoly={handleGetListPoly}
+                setSelectedPractitioner={setSelectedPractioner}
+                listDoctor={listDoctor}
+                listPoly={listPoly}
+              />
             )}
 
             {currentPage.value === 'confirmation_patient_registration' && (
               <ConfirmationOutpatient
+                patientDetail={patientData}
+                radPackage={selectedPackageRadiology}
+                doctorInfo={selectedPractioner}
+                reservationType={reservationType || ""}
+                labPackage={selectedPackageLab}
                 handleBack={() => {
                   handleChangePage({ action: 'previous' });
                 }}
-                handleConfirm={() => {
-                  handleChangePage({ action: 'next' });
+                handleConfirm={async () => {
+                  try {
+                    await handleCreate()
+
+                    handleChangePage({ action: 'next' });
+                  } catch (error) {
+                    console.log(error)
+                    throw Error("...")
+                  }
                 }}
                 type="general"
               />
@@ -359,10 +516,15 @@ const ReservationPage = () => {
 
             {currentPage.value === 'confirmation_patient_registration_insurance' && (
               <ConfirmationOutpatient
+                patientDetail={patientData}
+                radPackage={selectedPackageRadiology}
+                doctorInfo={selectedPractioner}
+                reservationType={reservationType || ""}
+                labPackage={selectedPackageLab}
                 handleBack={() => {
                   handleChangePage({ action: 'previous' });
                 }}
-                handleConfirm={() => {
+                handleConfirm={async () => {
                   handleChangePage({ action: 'next' });
                 }}
                 type="insurance"
@@ -370,15 +532,27 @@ const ReservationPage = () => {
             )}
 
             {currentPage.value === 'registration_success' && (
-              <SuccessOutpatient reservationType={reservationType} type="general" />
+              <SuccessOutpatient
+                radPackage={selectedPackageRadiology}
+                labPackage={selectedPackageLab}
+                doctorInfo={selectedPractioner}
+                patientDetail={patientData} reservationType={reservationType} type="general" />
             )}
 
             {currentPage.value === 'registration_success_insurance' && (
-              <SuccessOutpatient reservationType={reservationType} type="insurance" />
+              <SuccessOutpatient
+                radPackage={selectedPackageRadiology}
+                labPackage={selectedPackageLab}
+                doctorInfo={selectedPractioner}
+                patientDetail={patientData} reservationType={reservationType} type="insurance" />
             )}
 
             {currentPage.value === 'registration_success_company' && (
-              <SuccessOutpatient reservationType={reservationType} type="company" />
+              <SuccessOutpatient
+                radPackage={selectedPackageRadiology}
+                labPackage={selectedPackageLab}
+                doctorInfo={selectedPractioner}
+                patientDetail={patientData} reservationType={reservationType} type="company" />
             )}
 
             {currentPage.value === 'select_insurance' && (
@@ -454,10 +628,15 @@ const ReservationPage = () => {
 
             {currentPage.value === 'confirmation_patient_registration_company' && (
               <ConfirmationOutpatient
+                patientDetail={patientData}
+                radPackage={selectedPackageRadiology}
+                doctorInfo={selectedPractioner}
+                reservationType={reservationType || ""}
+                labPackage={selectedPackageLab}
                 handleBack={() => {
                   handleChangePage({ action: 'previous' });
                 }}
-                handleConfirm={() => {
+                handleConfirm={async () => {
                   handleChangePage({ action: 'next' });
                 }}
                 type="company"
@@ -494,18 +673,28 @@ const ReservationPage = () => {
 
             {currentPage.value === 'confirmation_patient_registration_bpjs' && (
               <ConfirmationOutpatient
+                patientDetail={patientData}
+                radPackage={selectedPackageRadiology}
+                labPackage={selectedPackageLab}
+                doctorInfo={selectedPractioner}
+                reservationType={reservationType || ""}
                 handleBack={() => {
                   handleChangePage({ action: 'previous' });
                 }}
                 type="bpjs"
-                handleConfirm={() => {
+                handleConfirm={async () => {
                   handleChangePage({ action: 'next' });
                 }}
               />
             )}
 
             {currentPage.value === 'registration_success_bpjs' && (
-              <SuccessOutpatient reservationType={reservationType} type="bpjs" />
+              <SuccessOutpatient
+                radPackage={selectedPackageRadiology}
+                labPackage={selectedPackageLab}
+                doctorInfo={selectedPractioner}
+                patientDetail={patientData}
+                reservationType={reservationType} type="bpjs" />
             )}
 
             {currentPage.value === 'select_mcu_package' && (

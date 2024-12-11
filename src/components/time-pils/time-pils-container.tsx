@@ -3,7 +3,7 @@ import TimePils from "./time-pils"
 import type { TimePilsContainerProps } from "./types"
 
 const TimePilsContainer = <T,>(props: TimePilsContainerProps<T>) => {
-  const { options, getIsSelected, getOptionLabel, onClick, error } = props
+  const { options, getIsSelected, getOptionLabel, onClick, getOptionDisabled, error } = props
 
   return (
     <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
@@ -16,6 +16,7 @@ const TimePilsContainer = <T,>(props: TimePilsContainerProps<T>) => {
               text={getOptionLabel(row)}
               onClick={() => onClick(row)}
               selected={getIsSelected(row)}
+              disabled={getOptionDisabled?.(row)}
             />
           )
         })

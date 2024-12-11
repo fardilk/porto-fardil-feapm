@@ -142,7 +142,10 @@ export const merge = (target: any, ...sources: any[]): any => {
  * @param param The input string
  * @returns The processed string with asterisks and trimmed characters
  */
-export const fAsterisk = (param: string): string => {
+export const fAsterisk = (param?: string): string => {
+  if (param === undefined) {
+    return '';
+  }
   // Generate a string of asterisks (*) based on the length of the input parameter
   const ast = '*'.repeat(param.length > 8 ? 8 : param.length);
 

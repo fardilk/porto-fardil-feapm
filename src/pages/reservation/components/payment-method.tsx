@@ -11,7 +11,7 @@ const PaymentMethod = (props: PaymentMethodProps) => {
   const [openAssurance, setOpenAssurance] = useState(false)
   const { t } = useTranslate()
 
-  const paymentMethod : CardBannerProps[] = useMemo(() => [
+  const paymentMethod: CardBannerProps[] = useMemo(() => [
     {
       title: t("appointment.payment.general.title"),
       body: t("appointment.payment.general.description"),
@@ -22,12 +22,13 @@ const PaymentMethod = (props: PaymentMethodProps) => {
       title: t("appointment.payment.assurance.title"),
       body: t("appointment.payment.assurance.description"),
       localIcon: "jaminan",
-      onClick: () => { setOpenAssurance(true) }
+      onClick: () => { setOpenAssurance(true) },
+      disabled: true
     }
-  ],[t, handleGeneral, setOpenAssurance])
+  ], [t, handleGeneral, setOpenAssurance])
 
-  const assurancePaymentMethod : CardBannerProps[] = useMemo(() => [
-    ... reservationType === "RJ" ? [{
+  const assurancePaymentMethod: CardBannerProps[] = useMemo(() => [
+    ...reservationType === "RJ" ? [{
       title: t("appointment.payment.assurance.bpjs.title"),
       body: t("appointment.payment.assurance.bpjs.description"),
       localIcon: "bpjs",
@@ -45,7 +46,7 @@ const PaymentMethod = (props: PaymentMethodProps) => {
       localIcon: "perusahaan",
       onClick: () => { handleAssurance("company") }
     },
-  ],[t, handleAssurance, reservationType])
+  ], [t, handleAssurance, reservationType])
 
   return (
     <Grid container spacing={2}>
@@ -64,7 +65,7 @@ const PaymentMethod = (props: PaymentMethodProps) => {
         openAssurance && assurancePaymentMethod.map((row, index) => {
 
           return (
-            <Grid item xs={12} md={12/assurancePaymentMethod.length} key={index}>
+            <Grid item xs={12} md={12 / assurancePaymentMethod.length} key={index}>
               <CardBanner {...row} cardProps={{ sx: { py: 4 }, variant: "outlined" }} clickable onClick={row.onClick} />
             </Grid>
           )

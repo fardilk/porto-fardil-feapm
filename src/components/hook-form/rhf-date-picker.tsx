@@ -91,11 +91,13 @@ export function RHFMobileDateTimePicker({
 
 type RHFMobileDatePickerProps = MobileDatePickerProps<Dayjs> & {
   name: string;
+  onSelect?: (param: any) => void
 };
 
 export function RHFMobileDatePicker({
   name,
   slotProps,
+  onSelect,
   ...other
 }: RHFMobileDatePickerProps) {
   const { control } = useFormContext();
@@ -108,7 +110,10 @@ export function RHFMobileDatePicker({
         <MobileDatePicker
           {...field}
           value={dayjs(field.value)}
-          onChange={(newValue) => field.onChange(dayjs(newValue).format())}
+          onChange={(newValue) => {
+            field.onChange(dayjs(newValue).format())
+            onSelect?.(newValue)
+          }}
           format={formatStr.split.dateTime}
           slotProps={{
             textField: {
@@ -121,7 +126,8 @@ export function RHFMobileDatePicker({
           }}
           {...other}
         />
-      )}
+      )
+      }
     />
   );
 }
