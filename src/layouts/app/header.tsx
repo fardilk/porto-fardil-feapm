@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
-import { Box, Switch, Typography, useTheme } from "@mui/material";
+import { Box, Stack, Switch, Typography, useTheme } from '@mui/material';
 
-import { Header_Height } from "src/utils/variables";
+import { Header_Height } from 'src/utils/variables';
 
-import { Image } from "src/components/image";
-import { Iconify } from "src/components/iconify";
-import { useTranslate } from "src/locales";
-import { CONFIG } from "src/config-global";
+import { Image } from 'src/components/image';
+import { Iconify } from 'src/components/iconify';
+import { useTranslate } from 'src/locales';
+import { CONFIG } from 'src/config-global';
 
 const Header = () => {
-
   /* Function */
   const getCurrentDate = () => {
     const date = new Date();
@@ -20,9 +19,9 @@ const Header = () => {
     return `${day} ${month.toUpperCase()} ${year}`;
   };
 
-  const { onChangeLang, currentLang } = useTranslate()
+  const { onChangeLang, currentLang } = useTranslate();
 
-  const theme = useTheme()
+  const theme = useTheme();
 
   /* State */
   const [time, setTime] = useState<string>('');
@@ -41,31 +40,43 @@ const Header = () => {
     return () => clearInterval(timerId);
   }, []);
 
-  const PlatformName = "Anjungan " + CONFIG.app.platformName
-  const HospitalName = "RS " + CONFIG.app.hospitalName
+  const PlatformName = 'Anjungan ' + CONFIG.app.platformName;
+  const HospitalName = 'RS ' + CONFIG.app.hospitalName;
+  const AppVersion = `(Versi ${CONFIG.app.appVersion})`;
 
   return (
-    <Box sx={{
-      height: Header_Height,
-      p: 4,
-      bgcolor: "white",
-      display: 'flex',
-      alignItems: 'center',
-      gap: 2,
-    }}>
+    <Box
+      sx={{
+        height: Header_Height,
+        p: 4,
+        bgcolor: 'white',
+        display: 'flex',
+        alignItems: 'center',
+        gap: 2,
+      }}
+    >
       <Image src="/logo/logo.png" alt="logo_rs" />
 
       <Box sx={{ flexGrow: 1 }}>
-        <Typography variant="h6" color={'grey'}>{PlatformName.toUpperCase()}</Typography>
-        <Typography variant="h6" color={'secondary.darker'} noWrap textOverflow="ellipsis">{HospitalName.toUpperCase()}</Typography>
+        <Stack direction="row" spacing={1}>
+          <Typography variant="h6" color="grey">
+            {PlatformName.toUpperCase()}
+          </Typography>
+          <Typography variant="body2" color="secondary.main" sx={{ fontWeight: 'bold' }}>
+            {AppVersion}
+          </Typography>
+        </Stack>
+        <Typography variant="h6" color="secondary.darker" noWrap textOverflow="ellipsis">
+          {HospitalName.toUpperCase()}
+        </Typography>
       </Box>
 
       <Box
         sx={{
-          display: "flex",
+          display: 'flex',
           gap: 1.5,
-          placeItems: "center",
-          width: "fit-content",
+          placeItems: 'center',
+          width: 'fit-content',
           pl: 2,
           pr: 2,
           borderRadius: 1,
@@ -74,16 +85,16 @@ const Header = () => {
       >
         <Iconify icon="flagpack:id" />
         <Switch
-          checked={currentLang.value === "en"}
+          checked={currentLang.value === 'en'}
           onChange={(event) => {
-            if(event.target.checked){
-              onChangeLang("en")
+            if (event.target.checked) {
+              onChangeLang('en');
             } else {
-              onChangeLang("id")
+              onChangeLang('id');
             }
           }}
         />
-        <Iconify icon="flagpack:gb-ukm"/>
+        <Iconify icon="flagpack:gb-ukm" />
       </Box>
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'end', width: 120 }}>
@@ -91,7 +102,7 @@ const Header = () => {
         <Typography variant="h3">{time}</Typography>
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;
