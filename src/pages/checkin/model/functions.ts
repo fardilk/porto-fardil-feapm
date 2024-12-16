@@ -10,56 +10,61 @@ export const getCheckin = async ({
   bookingNumber,
 }: {
   bookingNumber: string;
-}): Promise<BookingType> => {
+}): Promise<{ data: { booking: BookingType } }> => {
   const res = await req.request(
     gql`
       query bookingGet($bookingNumber: String!) {
         bookingGet(bookingNumber: $bookingNumber) {
-          bookingID
-          bookingNumber
-          notes
-          encounter {
-            healthcareServiceName
-            practitionerName
-            scheduleSlotDate
-            package {
-              packageID
-              packageName
+          status
+          message
+          data {
+            booking {
+              bookingID
+              bookingNumber
+              notes
+              encounter {
+                healthcareServiceName
+                practitionerName
+                scheduleSlotDate
+                package {
+                  packageID
+                  packageName
+                }
+              }
+              patient {
+                patientID
+                identifierTypeCode
+                identifierValue
+                medrec
+                name
+                gender
+                religion
+                birthPlace
+                birthDttm
+                maritalStatus
+                phone
+                email
+                nationality
+                address
+                additional {
+                  bloodType
+                  bloodRhesus
+                  education
+                  occupation
+                  dailyLanguage
+                }
+              }
+              bpjs {
+                subscriberNumber
+                subscriberClass
+                subscriberCategory
+                subscriberInstitution
+                subscriberStatus
+                referralNumber
+                referralDate
+                performerServiceName
+              }
             }
-          }
-          patient {
-            patientID
-            identifierTypeCode
-            identifierValue
-            medrec
-            name
-            gender
-            religion
-            genderDisplay
-            birthPlace
-            birthDttm
-            maritalStatus
-            phone
-            email
-            nationality
-            address
-            additional {
-              bloodType
-              bloodRhesus
-              education
-              occupation
-              dailyLanguage
-            }
-          }
-          bpjs {
-            subscriberNumber
-            subscriberClass
-            subscriberCategory
-            subscriberInstitution
-            subscriberStatus
-            referralNumber
-            referralDate
-            performerServiceName
           }
         }
       }

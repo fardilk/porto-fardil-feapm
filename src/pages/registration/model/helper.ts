@@ -8,7 +8,7 @@ import { Patient, PatientCreateInput } from 'src/pages/patient/model/types';
 export const regIFormToInput = ({ data }: { data: RegistrationIForm }): PatientCreateInput => {
   const dataNIK = data.nik.replace('\n', '');
   return {
-    identifierTypeCode: data.citizenship ? '' : 'NNIDN',
+    identifierTypeCode: data.citizenship ? 'PPN' : 'NNIDN',
     identifierValue: dataNIK,
     name: capitalizeFirstLetter(data.name),
     gender: data.gender?.value || '',

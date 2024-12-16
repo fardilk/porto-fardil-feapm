@@ -38,7 +38,7 @@ const CheckinPage = () => {
           bookingNumber,
         });
         toast.success('Berhasil Lapor Kehadiran');
-        setDataCheckin(response);
+        setDataCheckin(response.data.booking);
 
         handleChangePage({ action: 'next' });
       } catch (e) {
