@@ -26,7 +26,7 @@ const SelectPractitioner = ({
   const [afterFirstSearch, setAfterFirstSearch] = useState(false);
   const [elementName, setElementName] = useState('');
 
-  const [_currentIndex, setCurrentIndex] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState(1);
 
   const searchRef = useRef<any>({});
 
@@ -36,7 +36,7 @@ const SelectPractitioner = ({
 
       handleGetDoctor(searchPractioner || "", page);
 
-      return page
+      return page === 0 ? prev : page
     });
   };
 
@@ -152,6 +152,7 @@ const SelectPractitioner = ({
             onClick={() => {
               handleChangePagination({ action: 'prev' });
             }}
+            disabled={currentIndex === 1}
           >
             <Iconify icon="fluent:chevron-left-12-regular" />
           </Button>

@@ -1,5 +1,6 @@
 import { Box, Button, Checkbox, FormControlLabel, Grid, Stack, Typography } from '@mui/material';
 import { useMemo, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { CardBanner } from 'src/components/card-banner';
 import { LabelTextContainer, type LabelTextProps } from 'src/components/label-text';
 import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
@@ -8,6 +9,7 @@ import { SelectedLabPackage, SelectedPractioner, SelectedRadiologyPackage } from
 import { Patient } from 'src/pages/patient/model/types';
 import { Nullable } from 'src/types/common';
 import { fCurrency } from 'src/utils/format-number';
+import { fDate, formatStr } from 'src/utils/format-time';
 import { fAsterisk } from 'src/utils/helper';
 import type { OutpatientType } from '../model/types';
 import { getPaymentType } from '../model/variables';
@@ -36,6 +38,10 @@ const ConfirmationOutpatient = ({
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [acceptedTerm, setAcceptedTerm] = useState(false);
   const { t } = useTranslate()
+
+  const { watch } = useFormContext()
+
+  const values = watch()
 
   const detailData: LabelTextProps[] = useMemo(() => [
     {
@@ -109,7 +115,7 @@ const ConfirmationOutpatient = ({
       ? [
         {
           title: t('appointment.encounter.schedule'),
-          body: doctorInfo.serviceTime,
+          body: `${fDate(values.date, "dddd-MM-YYYY")} ${doctorInfo.serviceTime}`,
           localIcon: 'jadwal',
         },
       ]

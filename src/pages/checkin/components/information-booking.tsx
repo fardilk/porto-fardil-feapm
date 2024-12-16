@@ -66,7 +66,7 @@ const InformationBooking = ({ data }: { data: BookingType }) => {
       },
       {
         title: t('global.service_time'),
-        body: `${data.encounter.scheduleSlotDate}`,
+        body: `${fDate(data.encounter.scheduleSlotDate, "dddd MMMM YYYY")}`,
         localIcon: 'jadwal',
       },
     ];
