@@ -166,6 +166,12 @@ const RegistrationPage = () => {
 
           const wni = !data.citizenship
 
+          if (dataNIK.length === 0) {
+            setErrors({ errorNIK: "Required" })
+            timeout(2000).then(() => { setErrors({ errorNIK: "" }) })
+            return
+          }
+
           if (wni && (dataNIK.length < 16 || dataNIK.length > 16)) {
             setErrors({ errorNIK: "NIK Harus Terdiri Dari 16 Digit" })
             timeout(2000).then(() => { setErrors({ errorNIK: "" }) })
