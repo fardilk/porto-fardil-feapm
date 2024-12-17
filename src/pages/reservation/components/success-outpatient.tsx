@@ -109,7 +109,21 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
       ? [
         {
           title: t('appointment.encounter.schedule'),
-          body: `${fDate(values.date, "dddd-MM-YYYY")} ${doctorInfo.serviceTime}`,
+          body: (
+            <Box>
+              <Typography>
+                {fDate(values.date, "dddd")}
+              </Typography>
+
+              <Typography>
+                {fDate(values.date, "DD-MM-YYYY")}
+              </Typography>
+
+              <Typography>
+                {doctorInfo.serviceTime}
+              </Typography>
+            </Box>
+          ),
           localIcon: 'jadwal',
         },
       ]

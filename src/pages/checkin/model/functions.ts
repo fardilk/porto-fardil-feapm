@@ -10,7 +10,7 @@ export const getCheckin = async ({
   bookingNumber,
 }: {
   bookingNumber: string;
-}): Promise<{ data: { booking: BookingType } }> => {
+}): Promise<{ status: boolean; data: { booking: BookingType } }> => {
   const res = await req.request(
     gql`
       query bookingGet($bookingNumber: String!) {
