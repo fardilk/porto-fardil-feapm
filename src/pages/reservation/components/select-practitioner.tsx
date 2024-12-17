@@ -114,9 +114,11 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
               <Grid item xs={12} md={4} key={doctor.doctorID}>
                 <CardBannerProfile
                   heathcareServiceName={doctor.departmentName}
-                  count={`${doctor.patientQueued}/${doctor.patientCapacity}`}
+                  // count={`${doctor.patientQueued}/${doctor.patientCapacity}`}
+                  // slots={`${doctor.scheduleStart}-${doctor.scheduleEnd}`}
                   name={doctor.doctorName}
-                  slots={`${doctor.scheduleStart}-${doctor.scheduleEnd}`}
+                  slots=""
+                  count=""
                   clickable
                   onClick={() => {
                     setFormValue('practionerId', doctor.doctorID);

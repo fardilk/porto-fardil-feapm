@@ -22,8 +22,8 @@ const InsertBookingNumber: FC<InsertBookingProps> = ({ errorMessage }) => {
         {errorMessage && <ErrorAlert message={errorMessage} />}
       </Box>
       <RHFTextField
-        id="nik"
-        name="nik"
+        id="booking_number"
+        name="booking_number"
         placeholder={t("checkin.placeholder_input_number")}
         variant="filled"
         inputRef={(ref) => {

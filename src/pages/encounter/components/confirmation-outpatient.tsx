@@ -116,7 +116,21 @@ const ConfirmationOutpatient = ({
       ? [
         {
           title: t('appointment.encounter.schedule'),
-          body: `${fDate(today(), "dddd-MM-YYYY")} ${doctorInfo.serviceTime}`,
+          body: (
+            <Box>
+              <Typography>
+                {fDate(today(), "dddd")}
+              </Typography>
+
+              <Typography>
+                {fDate(today(), "DD-MM-YYYY")}
+              </Typography>
+
+              <Typography>
+                {doctorInfo.serviceTime}
+              </Typography>
+            </Box>
+          ),
           localIcon: 'jadwal',
         },
       ]
