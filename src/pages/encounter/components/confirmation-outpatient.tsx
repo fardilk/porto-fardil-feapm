@@ -16,6 +16,7 @@ import type {
   SelectedRadiologyPackage
 } from '../model/types';
 import { getPaymentType } from '../model/variables';
+import { fDate, today } from 'src/utils/format-time';
 
 const ConfirmationOutpatient = ({
   handleBack,
@@ -115,7 +116,21 @@ const ConfirmationOutpatient = ({
       ? [
         {
           title: t('appointment.encounter.schedule'),
-          body: doctorInfo.serviceTime,
+          body: (
+            <Box>
+              <Typography>
+                {fDate(today(), "dddd")}
+              </Typography>
+
+              <Typography>
+                {fDate(today(), "DD-MM-YYYY")}
+              </Typography>
+
+              <Typography>
+                {doctorInfo.serviceTime}
+              </Typography>
+            </Box>
+          ),
           localIcon: 'jadwal',
         },
       ]

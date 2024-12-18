@@ -1,4 +1,5 @@
 import type { CardProps, TypographyProps } from '@mui/material';
+import { ReactNode } from 'react';
 import type { IconifyProps } from '../iconify';
 
 export type ButtonBaseOverrideProps = {
@@ -11,7 +12,7 @@ export type CardBannerContentCardProps = {
   icon?: string;
   localIcon?: string;
   title?: string;
-  body?: string;
+  body?: string | ReactNode;
   titleProps?: TypographyProps;
   bodyProps?: TypographyProps;
   iconProps?: IconifyProps;

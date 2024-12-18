@@ -37,8 +37,12 @@ const CheckinPage = () => {
         const response = await getCheckin({
           bookingNumber,
         });
+
+        if (!response.status) {
+          throw Error("Not Found")
+        }
         toast.success('Berhasil Lapor Kehadiran');
-        setDataCheckin(response);
+        setDataCheckin(response.data.booking);
 
         handleChangePage({ action: 'next' });
       } catch (e) {

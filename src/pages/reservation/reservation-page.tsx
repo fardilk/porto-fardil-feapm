@@ -333,6 +333,11 @@ const ReservationPage = () => {
   const onSubmit = async (data: any) => {
     if (currentPageIndex === 1) {
       const nik = data?.nik?.replaceAll('\n', '');
+      if (nik.length === 0) {
+        setErrors({ errorIdentifier: "Required" })
+        timeout(2000).then(() => { setErrors({ errorIdentifier: "" }) })
+        return
+      }
       if ((nik.length < 16 || nik.length > 16) && !values.citizenship) {
         setErrors({ errorIdentifier: 'NIK Harus Terdiri Dari 16 Digit' });
         timeout(2000).then(() => { setErrors({ errorIdentifier: "" }) })

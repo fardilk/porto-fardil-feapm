@@ -1,9 +1,9 @@
 import { Box, Card, CardContent, Stack, Typography, useTheme } from "@mui/material";
+import { getIconsPath } from "src/utils/helper";
 import { Iconify } from "../iconify";
 import { Image } from "../image";
 import { ButtonBaseOverride } from "./card-banner";
 import type { CardBannerProfileProps } from "./types";
-import { getIconsPath } from "src/utils/helper";
 
 const CardBannerProfile = (props: CardBannerProfileProps) => {
   const { heathcareServiceName, count, name, slots, icon, cardProps, clickable, onClick } = props
@@ -41,28 +41,36 @@ const CardBannerProfile = (props: CardBannerProfileProps) => {
                   <Iconify icon="streamline:medical-cross-sign-healthcare" sx={{ width: 14 }} />
                   <Typography variant="subtitle2" noWrap>{heathcareServiceName}</Typography>
                 </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    width: '100%',
-                    px: 1,
-                    py: 0.2,
-                    borderRadius: 0.4,
-                    gap: 1,
-                    placeItems: "center",
-                    bgcolor: theme.palette.success.lighter,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                  }}>
-                  <Iconify icon="streamline:medical-cross-sign-healthcare" sx={{ width: 14 }} />
-                  <Typography noWrap variant="subtitle2">{slots}</Typography>
-                </Box>
+                {
+                  slots && (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        width: '100%',
+                        px: 1,
+                        py: 0.2,
+                        borderRadius: 0.4,
+                        gap: 1,
+                        placeItems: "center",
+                        bgcolor: theme.palette.success.lighter,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}>
+                      <Iconify icon="streamline:medical-cross-sign-healthcare" sx={{ width: 14 }} />
+                      <Typography noWrap variant="subtitle2">{slots}</Typography>
+                    </Box>
+                  )
+                }
               </Box>
 
-              <Box>
-                <Typography color="grey">Jumlah Pasien</Typography>
-                <Typography variant="subtitle2" textAlign="start">{count}</Typography>
-              </Box>
+              {
+                count && (
+                  <Box>
+                    <Typography color="grey">Jumlah Pasien</Typography>
+                    <Typography variant="subtitle2" textAlign="start">{count}</Typography>
+                  </Box>
+                )
+              }
             </Stack>
           </Box>
         </CardContent>

@@ -21,7 +21,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
   const [afterFirstSearch, setAfterFirstSearch] = useState(false);
   const [elementName, setElementName] = useState('');
 
-  const [_currentIndex, setCurrentIndex] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState(1);
 
   const searchRef = useRef<any>({});
 
@@ -35,7 +35,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
         handleGetPoly(searchPractioner || "", page)
       }
 
-      return page
+      return page === 0 ? prev : page
     });
   };
 
@@ -114,9 +114,11 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
               <Grid item xs={12} md={4} key={doctor.doctorID}>
                 <CardBannerProfile
                   heathcareServiceName={doctor.departmentName}
-                  count={`${doctor.patientQueued}/${doctor.patientCapacity}`}
+                  // count={`${doctor.patientQueued}/${doctor.patientCapacity}`}
+                  // slots={`${doctor.scheduleStart}-${doctor.scheduleEnd}`}
                   name={doctor.doctorName}
-                  slots={`${doctor.scheduleStart}-${doctor.scheduleEnd}`}
+                  slots=""
+                  count=""
                   clickable
                   onClick={() => {
                     setFormValue('practionerId', doctor.doctorID);
@@ -125,7 +127,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
                     setSelectedPractitioner({
                       doctor: doctor.doctorName,
                       polyName: doctor.departmentName,
-                      serviceTime: `${fDate(dayjs(), formatStr.paramCase.dayDate)}, ${doctor.scheduleStart} - ${doctor.scheduleEnd}`,
+                      serviceTime: `${doctor.scheduleStart} - ${doctor.scheduleEnd}`,
                     });
                     onCardSelect();
                   }}
@@ -155,6 +157,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
             onClick={() => {
               handleChangePagination({ action: 'prev' });
             }}
+            disabled={currentIndex === 1}
           >
             <Iconify icon="fluent:chevron-left-12-regular" />
           </Button>

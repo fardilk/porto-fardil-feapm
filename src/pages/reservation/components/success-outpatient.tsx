@@ -13,6 +13,7 @@ import { fAsterisk } from 'src/utils/helper';
 import type { SuccessOutpatientType } from '../model/types';
 import { buttonStyle, getPaymentType } from '../model/variables';
 import { useFormContext } from 'react-hook-form';
+import { fDate } from 'src/utils/format-time';
 
 const SuccessOutpatient = (props: SuccessOutpatientType) => {
   const { type, reservationType, patientDetail, doctorInfo, labPackage, radPackage } = props;
@@ -108,7 +109,21 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
       ? [
         {
           title: t('appointment.encounter.schedule'),
-          body: doctorInfo.serviceTime,
+          body: (
+            <Box>
+              <Typography>
+                {fDate(values.date, "dddd")}
+              </Typography>
+
+              <Typography>
+                {fDate(values.date, "DD-MM-YYYY")}
+              </Typography>
+
+              <Typography>
+                {doctorInfo.serviceTime}
+              </Typography>
+            </Box>
+          ),
           localIcon: 'jadwal',
         },
       ]
