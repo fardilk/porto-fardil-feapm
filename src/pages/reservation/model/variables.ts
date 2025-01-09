@@ -84,7 +84,7 @@ export const formStepsOutpatientGeneral = [
     label: 'appointment.steps.select_time',
     value: 'select_time',
     properties: {
-      disableBack: true,
+      containerSize: 'superLarge',
     },
   },
   {

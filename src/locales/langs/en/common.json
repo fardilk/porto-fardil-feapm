@@ -35,7 +35,8 @@
     "reprint": "Reprint",
     "blood_type": "Blood type",
     "choose": "Choose",
-    "payment_method": "Choose Payment Method"
+    "payment_method": "Choose Payment Method",
+    "select_this_practitioner": "Select Doctor"
   },
   "home": {
     "menu": {

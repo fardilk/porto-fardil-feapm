@@ -95,6 +95,7 @@ export type SelectedPractioner = {
   polyName: string;
   doctor: string;
   serviceTime: string;
+  person?: Doctor | null;
 };
 
 export type SelectedLabPackage = {

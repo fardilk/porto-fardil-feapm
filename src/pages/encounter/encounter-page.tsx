@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
@@ -69,12 +69,16 @@ import {
   formStepsRadCompany,
   formStepsRadInsurance
 } from './model/variables';
+import SelectTime from './components/select-time';
+import dayjs from 'dayjs';
 
 const EncounterPage = () => {
   const { t } = useTranslate();
   const methods = useForm();
   const { handleSubmit, watch, setValue, getValues } = methods;
   const values = watch()
+
+  const watchBookTime = watch('bookTime');
 
   const navigate = useNavigate();
   const { currentPage, currentPageIndex, handleChangePage } = useStepper({
@@ -95,6 +99,7 @@ const EncounterPage = () => {
   const [radiologyPackageList, setRadiologyPackageList] = useState<ListRadiologyPackageResponse>(
     []
   );
+  const [errorMessage, setErrorMessage] = useState({ dateErr: '', bookTimeErr: '', unableErr: '' });
   const [listPoly, setListPoly] = useState<ListPolyResponse>([]);
   const listEncounterType = [
     {
@@ -144,6 +149,17 @@ const EncounterPage = () => {
     //   },
     // },
   ];
+
+  useEffect(() => {
+    const subs = watch((val) => {
+      console.log(val)
+      if (val.bookTime) {
+        setErrorMessage({ bookTimeErr: '', dateErr: '', unableErr: '' })
+      }
+    })
+
+    return () => subs.unsubscribe()
+  }, [watch])
 
   const getListDataEmployee = useMemo(
     () => [
@@ -564,6 +580,25 @@ const EncounterPage = () => {
                 setSelectedPractitioner={setSelectedPractioner}
                 listDoctor={listDoctor}
                 listPoly={listPoly}
+              />
+            )}
+
+            {currentPage.value === 'select_time' && (
+              <SelectTime
+                doctorInfo={selectedPractioner}
+                handleBack={() => {
+                  handleChangePage({ action: 'previous' });
+                }}
+                handleConfirm={() => {
+                  if (!watchBookTime) {
+                    setErrorMessage((prev) => ({ ...prev, bookTimeErr: 'Jam Harus Diisi' }));
+                  } else {
+                    handleChangePage({ action: 'next' });
+                    setErrorMessage({ bookTimeErr: '', dateErr: '', unableErr: '' })
+                  }
+                }}
+                reservationType={"RJ"}
+                errorMessage={errorMessage}
               />
             )}
 

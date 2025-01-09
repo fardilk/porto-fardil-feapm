@@ -3,10 +3,10 @@ import TimePils from "./time-pils"
 import type { TimePilsContainerProps } from "./types"
 
 const TimePilsContainer = <T,>(props: TimePilsContainerProps<T>) => {
-  const { options, getIsSelected, getOptionLabel, onClick, getOptionDisabled, error } = props
+  const { options, getIsSelected, getOptionLabel, onClick, getOptionDisabled, error, sx } = props
 
   return (
-    <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
+    <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', ...sx }}>
       {
         options.map((row, index) => {
           return (

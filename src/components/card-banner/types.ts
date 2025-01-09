@@ -32,3 +32,10 @@ export type CardBannerProfileProps = ButtonBaseOverrideProps & {
   slots: string;
   count: string;
 };
+
+export type CardBannerProfileReservationProps = ButtonBaseOverrideProps & {
+  icon?: string;
+  cardProps?: CardProps;
+  name: string;
+  heathcareServiceName: string;
+};
