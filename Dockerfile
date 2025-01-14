@@ -1,14 +1,16 @@
+# Description: Dockerfile for apem-frontend
 FROM node:lts-iron as react-build
 
+# set workdir
 WORKDIR /app
 
 # captures argument
 ARG APP_VERSION=v0.0.1
-ARG API_URL=https://dev-apm-api-hisv3.sismedika.online
-ARG BASE_URL=https://APM.com/$VITE_APP_PLATFORM_NAME/VITE_APP_HOSPITAL_NAME
+ARG API_URL=http://localhost/api-apem/v1
+ARG BASE_URL=http://localhost:81
 ARG PLATFORM_NAME='Mandiri'
 ARG HOSPITAL_NAME='Primaya Hospital'
-ARG PUBLIC_KEY="INI PUB KEY"
+ARG PUBLIC_KEY="WARN: PUBLIC KEY NOT SET"
 ARG GIT_COMMIT=NA
 # e.g. latest, development, production
 ARG VERSION=development
@@ -22,6 +24,7 @@ ENV VITE_APP_HOSPITAL_NAME=$HOSPITAL_NAME
 ENV VITE_APP_PLATFORM_NAME=$PLATFORM_NAME
 ENV VITE_APP_PUBLIC_KEY=$PUBLIC_KEY
 
+# debug environment
 RUN echo "set ARG: [APP_VERSION] as $APP_VERSION"
 RUN echo "set ARG: [API_URL] as $API_URL"
 RUN echo "set ARG: [URL_NAME] as $URL_NAME"
@@ -45,23 +48,27 @@ COPY . ./
 # expects to echo only the first 8 chars of the git hash commit
 RUN echo "${VERSION} -> ${GIT_COMMIT}" > BUILD.txt
 
-# install
+# install dependencies
 RUN npm install
 RUN npm install -g vite
 
-# Builds node application
+# build
 RUN npm run build
 
-# how to test: docker run --name apem-frontend --rm -it apem-frontend/1.0 bash
-
-# ==== Final Image
+# production image
 FROM nginx:alpine
 
+# add timezone and set timezone
 RUN apk add --no-cache tzdata
 ENV TZ="Asia/Jakarta"
 
-# how to test: docker run --name apem-frontend --rm apem-frontend/1.0 date
+# copy build
 COPY --from=react-build /app/dist /usr/share/nginx/html
 COPY --from=react-build /app/BUILD.txt /usr/share/nginx/html
+
+# expose port
 EXPOSE 80
+
 CMD ["nginx", "-g", "daemon off;"]
+
+# how to test: docker run --name apem-frontend --rm -it apem-frontend/1.0 bash
