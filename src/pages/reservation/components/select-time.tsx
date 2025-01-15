@@ -73,7 +73,7 @@ const SelectTime = (props: SelectTimeProps) => {
             <Box sx={{ display: 'flex', gap: 2, placeItems: 'center' }}>
               <Image
                 sx={{ width: 128, height: 128, borderRadius: 1 }}
-                src='https://images.pexels.com/photos/617278/pexels-photo-617278.jpeg?auto=compress&cs=tinysrgb&h=350'
+                src={doctorInfo?.person?.doctorImage}
               />
               <Box>
                 <Box sx={{ display: 'flex', placeItems: 'center', gap: 1 }}>
@@ -94,7 +94,7 @@ const SelectTime = (props: SelectTimeProps) => {
                     <Typography variant='h6'>Publikasi / Seminar Kerja</Typography>
                     <List>
                       {
-                        doctorInfo?.person?.doctorProfile.doctorDocument.map((row, index) => {
+                        doctorInfo?.person?.doctorProfile?.doctorDocument?.map((row, index) => {
 
                           return (
                             <ListItem sx={{ mb: 1 }} disablePadding key={index}>
@@ -107,7 +107,7 @@ const SelectTime = (props: SelectTimeProps) => {
                               </ListItemText>
                             </ListItem>
                           )
-                        })
+                        }) || "-"
                       }
                     </List>
                   </Box>
@@ -116,7 +116,7 @@ const SelectTime = (props: SelectTimeProps) => {
                   <Typography variant='h6'>Informasi Keilmuan</Typography>
                   <List>
                     {
-                      doctorInfo?.person?.doctorProfile.doctorEducation.map((row, index) => {
+                      doctorInfo?.person?.doctorProfile?.doctorEducation?.map((row, index) => {
 
                         return (
                           <ListItem sx={{ mb: 1 }} disablePadding key={index}>
@@ -126,7 +126,7 @@ const SelectTime = (props: SelectTimeProps) => {
                             <ListItemText disableTypography>{row.education}</ListItemText>
                           </ListItem>
                         )
-                      })
+                      }) || "-"
                     }
                   </List>
                 </Grid>
@@ -134,7 +134,7 @@ const SelectTime = (props: SelectTimeProps) => {
                   <Typography variant='h6'>Pengalaman Kerja</Typography>
                   <List>
                     {
-                      doctorInfo?.person?.doctorProfile.doctorExperience.map((row, index) => {
+                      doctorInfo?.person?.doctorProfile?.doctorExperience?.map((row, index) => {
 
                         return (
                           <ListItem sx={{ mb: 1 }} disablePadding key={index}>
@@ -148,7 +148,7 @@ const SelectTime = (props: SelectTimeProps) => {
                             </ListItemText>
                           </ListItem>
                         )
-                      })
+                      }) || "-"
                     }
                   </List>
                 </Grid>
@@ -158,7 +158,7 @@ const SelectTime = (props: SelectTimeProps) => {
               <Typography variant='h6'>Publikasi / Seminar Kerja</Typography>
               <List>
                 {
-                  doctorInfo?.person?.doctorProfile.doctorPublication.map((row, index) => {
+                  doctorInfo?.person?.doctorProfile?.doctorPublication?.map((row, index) => {
 
                     return (
                       <ListItem sx={{ mb: 1 }} disablePadding key={index}>
@@ -171,7 +171,7 @@ const SelectTime = (props: SelectTimeProps) => {
                         </ListItemText>
                       </ListItem>
                     )
-                  })
+                  }) || "-"
                 }
               </List>
             </Box>
