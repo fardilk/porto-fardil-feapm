@@ -6,6 +6,34 @@ export const PractitionerSlotQuery = `
   isDisabled
 `;
 
+export const DoctorDocumentQuery = `
+  documentType
+  documentNo
+`;
+
+export const DoctorEducationQuery = `
+  education
+`;
+
+export const DoctorExperienceQuery = `
+  experiencePlace
+  experienceJobDesk
+  experienceTime
+  experienceLength
+`;
+
+export const DoctorPublicationQuery = `
+  publicationTitle
+  publicationPlace
+`;
+
+export const DoctorProfileQuery = `
+  doctorDocument { ${DoctorDocumentQuery} }
+  doctorEducation { ${DoctorEducationQuery} }
+  doctorExperience { ${DoctorExperienceQuery} }
+  doctorPublication { ${DoctorPublicationQuery} }
+`;
+
 export const DoctorQuery = `
   doctorID
   doctorName
@@ -18,7 +46,9 @@ export const DoctorQuery = `
   patientQueued
   patientCapacity
   gender
+  experienceYears
   slot { ${PractitionerSlotQuery} }
+  doctorProfile { ${DoctorProfileQuery} }
 `;
 
 export const DoctorResultListQuery = `

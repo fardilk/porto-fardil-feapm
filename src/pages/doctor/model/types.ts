@@ -1,11 +1,40 @@
 import { NonPaginationType, PaginationInfoType, PaginationType } from 'src/@types/global';
 
+export type DoctorProfile = {
+  doctorDocument: DoctorDocument[];
+  doctorEducation: DoctorEducation[];
+  doctorExperience: DoctorExperience[];
+  doctorPublication: DoctorPublication[];
+};
+
+export type DoctorDocument = {
+  documentType: string;
+  documentNo: string;
+};
+
+export type DoctorEducation = {
+  education: string;
+};
+
+export type DoctorExperience = {
+  experiencePlace: string;
+  experienceJobDesk: string;
+  experienceTime: string;
+  experienceLength: string;
+};
+
+export type DoctorPublication = {
+  publicationTitle: string;
+  publicationPlace: string;
+};
+
 export type Doctor = {
   doctorID: string;
   doctorName: string;
   doctorImage: string;
   departmentID: string;
   departmentName: string;
+  experienceYears?: string;
   scheduleID: string;
   scheduleStart: string;
   scheduleEnd: string;
@@ -13,6 +42,7 @@ export type Doctor = {
   patientCapacity: number;
   gender: string;
   slot: PractitionerSlot[];
+  doctorProfile: DoctorProfile;
 };
 
 export type PractitionerSlot = {

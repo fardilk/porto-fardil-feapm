@@ -1,18 +1,23 @@
 import { Alert, Box, Button, Grid, Stack } from '@mui/material';
 import dayjs from 'dayjs';
 import { useEffect, useRef, useState } from 'react';
-import { CardBanner, CardBannerProfile } from 'src/components/card-banner';
+import { toast } from 'sonner';
+import { CardBanner } from 'src/components/card-banner';
+import CardBannerProfileReservation from 'src/components/card-banner/card-banner-profile-reservation';
 import { RHFTextField } from 'src/components/hook-form';
 import { Iconify } from 'src/components/iconify';
 import { Keyboard } from 'src/components/keyboard';
 import { useTranslate } from 'src/locales';
 import { doctorAvailable } from 'src/pages/doctor/model/functions';
+import { Doctor } from 'src/pages/doctor/model/types';
 import { fDate, formatStr } from 'src/utils/format-time';
 import type { SelectPractitionerProps } from '../model/types';
 
 const SelectPractitioner = (props: SelectPractitionerProps) => {
   const {
-    handleGetDoctor, handleGetPoly, listDoctor, listPoly, onCardSelect, setFormValue, setSelectedPractitioner, watchFormValue
+    listDoctor, listPoly,
+    handleGetDoctor, handleGetPoly, onCardSelect,
+    setFormValue, setSelectedPractitioner, watchFormValue,
   } = props
 
   const { t } = useTranslate();
@@ -54,13 +59,27 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
         doctor: response.doctorName,
         polyName: response.departmentName,
         serviceTime: `${fDate(dayjs(), formatStr.paramCase.dayDate)}, ${response.scheduleStart} - ${response.scheduleEnd}`,
+        person: response
       });
 
       onCardSelect();
     } catch (e) {
-      console.log(e);
+      toast.error(e?.message)
     }
   };
+
+  const handleSelectedByPractitioner = (doctor: Doctor) => {
+    setFormValue('practionerId', doctor.doctorID);
+    setFormValue('departmentId', doctor.departmentID);
+    setFormValue('scheduleID', doctor.scheduleID)
+    setSelectedPractitioner({
+      doctor: doctor.doctorName,
+      polyName: doctor.departmentName,
+      serviceTime: `${doctor.scheduleStart} - ${doctor.scheduleEnd}`,
+      person: doctor
+    });
+    onCardSelect();
+  }
 
   const searchPractioner = watchFormValue('searchPractioner');
 
@@ -112,25 +131,11 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
           {isPractitioner &&
             listDoctor.map((doctor) => (
               <Grid item xs={12} md={4} key={doctor.doctorID}>
-                <CardBannerProfile
+                <CardBannerProfileReservation
                   heathcareServiceName={doctor.departmentName}
-                  // count={`${doctor.patientQueued}/${doctor.patientCapacity}`}
-                  // slots={`${doctor.scheduleStart}-${doctor.scheduleEnd}`}
                   name={doctor.doctorName}
-                  slots=""
-                  count=""
                   clickable
-                  onClick={() => {
-                    setFormValue('practionerId', doctor.doctorID);
-                    setFormValue('departmentId', doctor.departmentID);
-                    setFormValue('scheduleID', doctor.scheduleID)
-                    setSelectedPractitioner({
-                      doctor: doctor.doctorName,
-                      polyName: doctor.departmentName,
-                      serviceTime: `${doctor.scheduleStart} - ${doctor.scheduleEnd}`,
-                    });
-                    onCardSelect();
-                  }}
+                  onClick={() => { handleSelectedByPractitioner(doctor) }}
                 />
               </Grid>
             ))}
