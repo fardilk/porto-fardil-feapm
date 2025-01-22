@@ -48,7 +48,7 @@ export const doctorAvailable = async (param: {
   const client = new GqlClient({ module: 'doctor' });
   const res = await client.request(
     gql`
-    query doctorAvailable($departmentID: Int!) {
+    query doctorAvailable($departmentID: String!) {
       doctorAvailable(departmentID: $departmentID) {
         ${DoctorResultOneQuery}
       }

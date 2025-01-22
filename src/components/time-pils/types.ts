@@ -1,3 +1,5 @@
+import { BoxProps } from '@mui/material';
+
 export type TimePilsContainerProps<T> = {
   options: T[];
   getOptionLabel: (option: T) => string;
@@ -5,4 +7,5 @@ export type TimePilsContainerProps<T> = {
   getIsSelected: (option: T) => boolean;
   onClick: (option: T) => void;
   error?: boolean;
+  sx?: BoxProps['sx'];
 };

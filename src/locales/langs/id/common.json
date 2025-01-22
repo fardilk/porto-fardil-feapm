@@ -35,7 +35,8 @@
     "reprint": "Cetak ulang",
     "blood_type": "Golongan Darah",
     "choose": "Pilih",
-    "payment_method": "Pilih Metode Pembayaran"
+    "payment_method": "Pilih Metode Pembayaran",
+    "select_this_practitioner": "Pilih Dokter Ini"
   },
   "home": {
     "menu": {
