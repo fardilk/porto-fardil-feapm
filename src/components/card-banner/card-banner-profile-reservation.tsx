@@ -12,7 +12,7 @@ const CardBannerProfileReservation = (props: CardBannerProfileReservationProps) 
 
   return (
     <ButtonBaseOverride clickable={clickable} onClick={onClick} >
-      <Card variant="outlined" sx={{ width: '100%', borderRadius: 0.8, ...cardProps?.sx }} {...cardProps}>
+      <Card variant="outlined" sx={{ width: '100%', height: '100%', borderRadius: 0.8, ...cardProps?.sx }} {...cardProps}>
         <CardContent>
           <Box sx={{ display: 'flex', gap: 1, placeContent: 'space-between' }}>
             <Box>
