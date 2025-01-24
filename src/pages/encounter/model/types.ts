@@ -110,11 +110,7 @@ export type SelectedRadiologyPackage = {
 
 export type SelectPractitionerProps = {
   onCardSelect: () => void;
-  handleGetDoctor: (keyword: string, page: number) => Promise<void>;
-  handleGetPoly: (keyword: string, page: number) => Promise<void>;
   setSelectedPractitioner: (data: Nullable<SelectedPractioner>) => void;
-  listDoctor: Doctor[];
-  listPoly: ListPolyResponse;
   setFormValue: UseFormSetValue<FieldValues>;
   watchFormValue: UseFormWatch<FieldValues>;
 };

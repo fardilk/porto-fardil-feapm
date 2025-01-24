@@ -93,14 +93,12 @@ const EncounterPage = () => {
     useState<Nullable<SelectedRadiologyPackage>>(null);
   const [encounterType, setEncounterType] = useState<EncounterType>(null);
   const [patientData, setPatientData] = useState<Nullable<Patient>>(null);
-  const [listDoctor, setListDoctor] = useState<Doctor[]>([]);
   const [mcuPackageList, setMCUPackageList] = useState<ListMCUPackageResponse>([]);
   const [labPackageList, setLabPackageList] = useState<ListLabPackageResponse>([]);
   const [radiologyPackageList, setRadiologyPackageList] = useState<ListRadiologyPackageResponse>(
     []
   );
   const [errorMessage, setErrorMessage] = useState({ dateErr: '', bookTimeErr: '', unableErr: '' });
-  const [listPoly, setListPoly] = useState<ListPolyResponse>([]);
   const listEncounterType = [
     {
       title: t('encounter.outpatient.title'),
@@ -152,7 +150,6 @@ const EncounterPage = () => {
 
   useEffect(() => {
     const subs = watch((val) => {
-      console.log(val)
       if (val.bookTime) {
         setErrorMessage({ bookTimeErr: '', dateErr: '', unableErr: '' })
       }
@@ -259,34 +256,6 @@ const EncounterPage = () => {
       });
     }
   };
-
-  const handleGetListDoctor = useCallback(async (keyword: string, page: number) => {
-    try {
-      const response = await doctorList({
-        page,
-        keyword,
-        take: 9
-      });
-
-      setListDoctor(response.data);
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
-
-  const handleGetListPoly = useCallback(async (keyword: string, page: number) => {
-    try {
-      const response = await departmentList({
-        take: 9,
-        page,
-        keyword,
-      });
-
-      setListPoly(response.data);
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
 
   const handleGetListPackageMCU = useCallback(async (keyword: string, page: number) => {
     try {
@@ -402,10 +371,6 @@ const EncounterPage = () => {
 
   const handleSelectGeneralPayment = () => {
     setValue('payplan', 'GENERAL');
-    if (encounterType === 'RJ') {
-      handleGetListDoctor('', 1);
-      handleGetListPoly('', 1);
-    }
 
     if (encounterType === 'MCU') {
       handleGetListPackageMCU('', 1);
@@ -575,11 +540,7 @@ const EncounterPage = () => {
                 setFormValue={setValue}
                 watchFormValue={watch}
                 onCardSelect={onPractitionerSelect}
-                handleGetDoctor={handleGetListDoctor}
-                handleGetPoly={handleGetListPoly}
                 setSelectedPractitioner={setSelectedPractioner}
-                listDoctor={listDoctor}
-                listPoly={listPoly}
               />
             )}
 
