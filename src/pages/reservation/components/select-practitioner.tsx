@@ -1,43 +1,44 @@
-import { Alert, Box, Button, Grid, Stack } from '@mui/material';
+import { Alert, Box, Button, CircularProgress, Grid, Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { CardBanner } from 'src/components/card-banner';
 import CardBannerProfileReservation from 'src/components/card-banner/card-banner-profile-reservation';
 import { RHFTextField } from 'src/components/hook-form';
 import { Iconify } from 'src/components/iconify';
 import { Keyboard } from 'src/components/keyboard';
+import { useFetch } from 'src/hooks/use-fetch';
 import { useTranslate } from 'src/locales';
-import { doctorAvailable } from 'src/pages/doctor/model/functions';
+import { departmentList } from 'src/pages/department/model/functions';
+import { doctorAvailable, doctorList } from 'src/pages/doctor/model/functions';
 import { Doctor } from 'src/pages/doctor/model/types';
 import { fDate, formatStr } from 'src/utils/format-time';
 import type { SelectPractitionerProps } from '../model/types';
 
 const SelectPractitioner = (props: SelectPractitionerProps) => {
-  const {
-    listDoctor, listPoly,
-    handleGetDoctor, handleGetPoly, onCardSelect,
-    setFormValue, setSelectedPractitioner, watchFormValue,
-  } = props
+  const { onCardSelect, setFormValue, setSelectedPractitioner, watchFormValue, } = props
 
   const { t } = useTranslate();
 
   const [isPractitioner, setIsPractitioner] = useState(true);
-  const [afterFirstSearch, setAfterFirstSearch] = useState(false);
   const [elementName, setElementName] = useState('');
 
   const [currentIndex, setCurrentIndex] = useState(1);
 
   const searchRef = useRef<any>({});
 
+  const { data, isLoading, refetch } = useFetch({ keyword: '', page: 1, take: 9 }, doctorList)
+
+  const { data: dataPoly, isLoading: loadingPoly, refetch: refetchPoly } = useFetch({ keyword: '', page: 1, take: 9 }, departmentList)
+
   const handleChangePagination = ({ action }: { action: 'prev' | 'next' }) => {
     setCurrentIndex((prev) => {
       const page = (action === 'prev' ? prev - 1 : prev + 1)
 
       if (isPractitioner) {
-        handleGetDoctor(searchPractioner || "", page);
+        refetch({ keyword: searchPractioner, page, take: 9 });
       } else {
-        handleGetPoly(searchPractioner || "", page)
+        refetchPoly({ keyword: searchPractioner, page, take: 9 })
       }
 
       return page === 0 ? prev : page
@@ -83,16 +84,13 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
 
   const searchPractioner = watchFormValue('searchPractioner');
 
-  useEffect(() => {
-    if (searchPractioner || afterFirstSearch) {
-      handleGetDoctor(searchPractioner, 1);
-      handleGetPoly(searchPractioner, 1);
-      setAfterFirstSearch(true);
+  const handleResetSearch = () => {
+    if (isPractitioner) {
+      refetch({ keyword: searchPractioner, page: 1, take: 9 });
+    } else {
+      refetchPoly({ keyword: searchPractioner, page: 1, take: 9 });
     }
-    if (!afterFirstSearch) {
-      handleGetDoctor(searchPractioner || "", 1)
-    }
-  }, [searchPractioner, handleGetDoctor, handleGetPoly, afterFirstSearch]);
+  }
 
   return (
     <>
@@ -128,8 +126,45 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
               }}
             />
           </Grid>
+
+          {
+            isLoading && isPractitioner && (
+              <Grid item xs={12}>
+                <Box sx={{ display: 'flex', placeContent: 'center' }}>
+                  <CircularProgress color='secondary' />
+                </Box>
+              </Grid>
+            )
+          }
+
+          {
+            loadingPoly && !isPractitioner && (
+              <Grid item xs={12}>
+                <Box sx={{ display: 'flex', placeContent: 'center' }}>
+                  <CircularProgress color='secondary' />
+                </Box>
+              </Grid>
+            )
+          }
+
+          {
+            !isLoading && isPractitioner && data?.data.length === 0 && (
+              <Grid item xs={12}>
+                <Typography variant='button' textAlign="center">Data Tidak Ditemukan. Coba Dengan Kata Kunci Lain</Typography>
+              </Grid>
+            )
+          }
+
+          {
+            !loadingPoly && !isPractitioner && dataPoly?.data.length === 0 && (
+              <Grid item xs={12}>
+                <Typography variant='button' textAlign="center">Data Tidak Ditemukan. Coba Dengan Kata Kunci Lain</Typography>
+              </Grid>
+            )
+          }
+
           {isPractitioner &&
-            listDoctor.map((doctor) => (
+            data?.data.map((doctor) => (
               <Grid item xs={12} md={4} key={doctor.doctorID}>
                 <CardBannerProfileReservation
                   heathcareServiceName={doctor.departmentName}
@@ -140,7 +175,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
               </Grid>
             ))}
           {!isPractitioner &&
-            listPoly.map((poly) => {
+            dataPoly?.data.map((poly) => {
               return (
                 <Grid item xs={12} md={4} key={poly.departmentID}>
                   <CardBanner
@@ -175,7 +210,8 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
             onClick={() => {
               setIsPractitioner((prev) => !prev);
               setCurrentIndex(0);
-              handleGetPoly(searchPractioner || "", 1)
+              setFormValue("searchPractioner", "")
+              handleResetSearch()
             }}
           >
             {isPractitioner
@@ -200,7 +236,10 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
           withDialog
           elementName={elementName}
           open={Boolean(elementName)}
-          onClose={() => setElementName('')}
+          onClose={() => {
+            handleResetSearch()
+            setCurrentIndex(0); setElementName('')
+          }}
           ref={searchRef.current}
           inputType="text"
         />
