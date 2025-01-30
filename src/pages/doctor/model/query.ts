@@ -47,6 +47,7 @@ export const DoctorQuery = `
   patientCapacity
   gender
   experienceYears
+  practitionerHealthcareServiceID
   slot { ${PractitionerSlotQuery} }
   doctorProfile { ${DoctorProfileQuery} }
 `;

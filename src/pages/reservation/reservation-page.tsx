@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import dayjs from 'dayjs';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
@@ -16,8 +16,7 @@ import { fDate, formatStr } from 'src/utils/format-time';
 import { enBase64, fAsterisk } from 'src/utils/helper';
 import { timeout } from 'src/utils/timeout';
 import { appointmentCreate } from '../appointment/model/functions';
-import { departmentList } from '../department/model/functions';
-import { ListPolyResponse, SelectedLabPackage, SelectedPractioner, SelectedRadiologyPackage } from '../encounter/model/types';
+import { SelectedLabPackage, SelectedPractioner, SelectedRadiologyPackage } from '../encounter/model/types';
 import { patientGet } from '../patient/model/functions';
 import { Patient } from '../patient/model/types';
 import {
