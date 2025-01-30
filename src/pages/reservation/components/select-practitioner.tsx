@@ -27,7 +27,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
 
   const searchRef = useRef<any>({});
 
-  const { data, isLoading, refetch } = useFetch({ keyword: '', page: 1, take: 9 }, doctorList)
+  const { data, isLoading, refetch } = useFetch({ keyword: '', page: 1, take: 9, }, doctorList)
 
   const { data: dataPoly, isLoading: loadingPoly, refetch: refetchPoly } = useFetch({ keyword: '', page: 1, take: 9 }, departmentList)
 
@@ -56,6 +56,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
       setFormValue('practionerId', response.doctorID);
       setFormValue('departmentId', id);
       setFormValue('scheduleID', response.scheduleID)
+      setFormValue('practitionerHealthcareServiceID', response.practitionerHealthcareServiceID)
       setSelectedPractitioner({
         doctor: response.doctorName,
         polyName: response.departmentName,
@@ -73,6 +74,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
     setFormValue('practionerId', doctor.doctorID);
     setFormValue('departmentId', doctor.departmentID);
     setFormValue('scheduleID', doctor.scheduleID)
+    setFormValue('practitionerHealthcareServiceID', doctor.practitionerHealthcareServiceID)
     setSelectedPractitioner({
       doctor: doctor.doctorName,
       polyName: doctor.departmentName,

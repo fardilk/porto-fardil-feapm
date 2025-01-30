@@ -41,6 +41,7 @@ export type Doctor = {
   patientQueued: number;
   patientCapacity: number;
   gender: string;
+  practitionerHealthcareServiceID: string;
   slot: PractitionerSlot[];
   doctorProfile: DoctorProfile;
 };
