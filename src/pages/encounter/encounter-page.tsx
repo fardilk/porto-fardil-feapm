@@ -12,11 +12,8 @@ import { useTranslate } from 'src/locales';
 import type { Nullable } from 'src/types/common';
 import { enBase64, fAsterisk } from 'src/utils/helper';
 import { timeout } from 'src/utils/timeout';
-import { bookingCreateNoQuery } from '../appointment/model/functions';
+import { appointmentCreate, bookingCreateNoQuery } from '../appointment/model/functions';
 import { BookingInput } from '../appointment/model/types';
-import { departmentList } from '../department/model/functions';
-import { doctorList } from '../doctor/model/functions';
-import { Doctor } from '../doctor/model/types';
 import { patientGet } from '../patient/model/functions';
 import { Patient } from '../patient/model/types';
 import {
@@ -41,6 +38,7 @@ import {
 import InsertEmployeeNumber from './components/insert-employee-number';
 import SelectLabPackage from './components/select-lab-package';
 import SelectRadService from './components/select-rad-service';
+import SelectTime from './components/select-time';
 import {
   getLabPackage,
   getMCUPackage,
@@ -51,7 +49,6 @@ import type {
   Insurancetype,
   ListLabPackageResponse,
   ListMCUPackageResponse,
-  ListPolyResponse,
   ListRadiologyPackageResponse,
   SelectedLabPackage,
   SelectedPractioner,
@@ -69,7 +66,7 @@ import {
   formStepsRadCompany,
   formStepsRadInsurance
 } from './model/variables';
-import SelectTime from './components/select-time';
+import { fDate, formatStr } from 'src/utils/format-time';
 import dayjs from 'dayjs';
 
 const EncounterPage = () => {
@@ -336,7 +333,25 @@ const EncounterPage = () => {
         },
       }
 
-      const resp = await bookingCreateNoQuery({ data: newData, patientID })
+      // const resp = await bookingCreateNoQuery({ data: newData, patientID })
+      const resp = await appointmentCreate({
+        data: {
+          booking: {
+            payorParam: {
+              payplanClass: ((values.payplan || '') as string).toLowerCase(),
+            },
+            serviceType: values.serviceType,
+            serviceParamOutpatient: {
+              scheduleID: '',
+              slotID: values?.bookTime?.value
+            },
+          },
+          scheduleDate: values?.date ? fDate(dayjs(values.date), formatStr.paramCase.mysqlDate) : '',
+          serviceParamOutpatient: {
+            doctorUnavailableAction: values?.unable?.value || ''
+          }
+        }, patientID: patientData?.patientID || ''
+      })
 
       if (!resp.status) {
         throw Error(resp.message)

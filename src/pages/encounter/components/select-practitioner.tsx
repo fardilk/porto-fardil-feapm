@@ -58,6 +58,7 @@ const SelectPractitioner = ({
 
       setFormValue('practionerId', response.doctorID);
       setFormValue('departmentId', id);
+      setFormValue('practitionerHealthcareServiceID', response.practitionerHealthcareServiceID)
       setSelectedPractitioner({
         doctor: response.doctorName,
         polyName: response.departmentName,
@@ -75,6 +76,7 @@ const SelectPractitioner = ({
     setFormValue('practionerId', doctor.doctorID);
     setFormValue('departmentId', doctor.departmentID);
     setFormValue('scheduleID', doctor.scheduleID)
+    setFormValue('practitionerHealthcareServiceID', doctor.practitionerHealthcareServiceID)
     setSelectedPractitioner({
       doctor: doctor.doctorName,
       polyName: doctor.departmentName,
