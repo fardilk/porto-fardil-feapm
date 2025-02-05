@@ -1,9 +1,7 @@
 import type { ButtonProps } from '@mui/material';
 import { FieldValues, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import type { CardBannerProps } from 'src/components/card-banner/types';
-import { Doctor } from 'src/pages/doctor/model/types';
 import {
-  ListPolyResponse,
   SelectedLabPackage,
   SelectedPractioner,
   SelectedRadiologyPackage,
@@ -36,11 +34,7 @@ export type PaymentMethodProps = {
 
 export type SelectPractitionerProps = {
   onCardSelect: () => void;
-  handleGetDoctor: (keyword: string, page: number) => Promise<void>;
-  handleGetPoly: (keyword: string, page: number) => Promise<void>;
   setSelectedPractitioner: (data: Nullable<SelectedPractioner>) => void;
-  listDoctor: Doctor[];
-  listPoly: ListPolyResponse;
   setFormValue: UseFormSetValue<FieldValues>;
   watchFormValue: UseFormWatch<FieldValues>;
 };

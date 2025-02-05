@@ -82,6 +82,13 @@ export const formStepsOutpatientGeneral = [
     },
   },
   {
+    label: 'appointment.steps.select_time',
+    value: 'select_time',
+    properties: {
+      containerSize: 'superLarge',
+    },
+  },
+  {
     label: 'appointment.steps.confirmation_patient_registration',
     value: 'confirmation_patient_registration',
     properties: {

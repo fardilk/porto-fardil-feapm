@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
@@ -12,11 +12,8 @@ import { useTranslate } from 'src/locales';
 import type { Nullable } from 'src/types/common';
 import { enBase64, fAsterisk } from 'src/utils/helper';
 import { timeout } from 'src/utils/timeout';
-import { bookingCreateNoQuery } from '../appointment/model/functions';
+import { appointmentCreate, bookingCreateNoQuery } from '../appointment/model/functions';
 import { BookingInput } from '../appointment/model/types';
-import { departmentList } from '../department/model/functions';
-import { doctorList } from '../doctor/model/functions';
-import { Doctor } from '../doctor/model/types';
 import { patientGet } from '../patient/model/functions';
 import { Patient } from '../patient/model/types';
 import {
@@ -41,6 +38,7 @@ import {
 import InsertEmployeeNumber from './components/insert-employee-number';
 import SelectLabPackage from './components/select-lab-package';
 import SelectRadService from './components/select-rad-service';
+import SelectTime from './components/select-time';
 import {
   getLabPackage,
   getMCUPackage,
@@ -51,7 +49,6 @@ import type {
   Insurancetype,
   ListLabPackageResponse,
   ListMCUPackageResponse,
-  ListPolyResponse,
   ListRadiologyPackageResponse,
   SelectedLabPackage,
   SelectedPractioner,
@@ -69,12 +66,16 @@ import {
   formStepsRadCompany,
   formStepsRadInsurance
 } from './model/variables';
+import { fDate, formatStr } from 'src/utils/format-time';
+import dayjs from 'dayjs';
 
 const EncounterPage = () => {
   const { t } = useTranslate();
   const methods = useForm();
   const { handleSubmit, watch, setValue, getValues } = methods;
   const values = watch()
+
+  const watchBookTime = watch('bookTime');
 
   const navigate = useNavigate();
   const { currentPage, currentPageIndex, handleChangePage } = useStepper({
@@ -89,13 +90,12 @@ const EncounterPage = () => {
     useState<Nullable<SelectedRadiologyPackage>>(null);
   const [encounterType, setEncounterType] = useState<EncounterType>(null);
   const [patientData, setPatientData] = useState<Nullable<Patient>>(null);
-  const [listDoctor, setListDoctor] = useState<Doctor[]>([]);
   const [mcuPackageList, setMCUPackageList] = useState<ListMCUPackageResponse>([]);
   const [labPackageList, setLabPackageList] = useState<ListLabPackageResponse>([]);
   const [radiologyPackageList, setRadiologyPackageList] = useState<ListRadiologyPackageResponse>(
     []
   );
-  const [listPoly, setListPoly] = useState<ListPolyResponse>([]);
+  const [errorMessage, setErrorMessage] = useState({ dateErr: '', bookTimeErr: '', unableErr: '' });
   const listEncounterType = [
     {
       title: t('encounter.outpatient.title'),
@@ -144,6 +144,16 @@ const EncounterPage = () => {
     //   },
     // },
   ];
+
+  useEffect(() => {
+    const subs = watch((val) => {
+      if (val.bookTime) {
+        setErrorMessage({ bookTimeErr: '', dateErr: '', unableErr: '' })
+      }
+    })
+
+    return () => subs.unsubscribe()
+  }, [watch])
 
   const getListDataEmployee = useMemo(
     () => [
@@ -244,34 +254,6 @@ const EncounterPage = () => {
     }
   };
 
-  const handleGetListDoctor = useCallback(async (keyword: string, page: number) => {
-    try {
-      const response = await doctorList({
-        page,
-        keyword,
-        take: 9
-      });
-
-      setListDoctor(response.data);
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
-
-  const handleGetListPoly = useCallback(async (keyword: string, page: number) => {
-    try {
-      const response = await departmentList({
-        take: 9,
-        page,
-        keyword,
-      });
-
-      setListPoly(response.data);
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
-
   const handleGetListPackageMCU = useCallback(async (keyword: string, page: number) => {
     try {
       const response = await getMCUPackage({
@@ -351,7 +333,25 @@ const EncounterPage = () => {
         },
       }
 
-      const resp = await bookingCreateNoQuery({ data: newData, patientID })
+      // const resp = await bookingCreateNoQuery({ data: newData, patientID })
+      const resp = await appointmentCreate({
+        data: {
+          booking: {
+            payorParam: {
+              payplanClass: ((values.payplan || '') as string).toLowerCase(),
+            },
+            serviceType: values.serviceType,
+            serviceParamOutpatient: {
+              scheduleID: '',
+              slotID: values?.bookTime?.value
+            },
+          },
+          scheduleDate: values?.date ? fDate(dayjs(values.date), formatStr.paramCase.mysqlDate) : '',
+          serviceParamOutpatient: {
+            doctorUnavailableAction: values?.unable?.value || ''
+          }
+        }, patientID: patientData?.patientID || ''
+      })
 
       if (!resp.status) {
         throw Error(resp.message)
@@ -386,10 +386,6 @@ const EncounterPage = () => {
 
   const handleSelectGeneralPayment = () => {
     setValue('payplan', 'GENERAL');
-    if (encounterType === 'RJ') {
-      handleGetListDoctor('', 1);
-      handleGetListPoly('', 1);
-    }
 
     if (encounterType === 'MCU') {
       handleGetListPackageMCU('', 1);
@@ -559,11 +555,26 @@ const EncounterPage = () => {
                 setFormValue={setValue}
                 watchFormValue={watch}
                 onCardSelect={onPractitionerSelect}
-                handleGetDoctor={handleGetListDoctor}
-                handleGetPoly={handleGetListPoly}
                 setSelectedPractitioner={setSelectedPractioner}
-                listDoctor={listDoctor}
-                listPoly={listPoly}
+              />
+            )}
+
+            {currentPage.value === 'select_time' && (
+              <SelectTime
+                doctorInfo={selectedPractioner}
+                handleBack={() => {
+                  handleChangePage({ action: 'previous' });
+                }}
+                handleConfirm={() => {
+                  if (!watchBookTime) {
+                    setErrorMessage((prev) => ({ ...prev, bookTimeErr: 'Jam Harus Diisi' }));
+                  } else {
+                    handleChangePage({ action: 'next' });
+                    setErrorMessage({ bookTimeErr: '', dateErr: '', unableErr: '' })
+                  }
+                }}
+                reservationType={"RJ"}
+                errorMessage={errorMessage}
               />
             )}
 

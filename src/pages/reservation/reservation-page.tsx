@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import dayjs from 'dayjs';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
@@ -16,10 +16,7 @@ import { fDate, formatStr } from 'src/utils/format-time';
 import { enBase64, fAsterisk } from 'src/utils/helper';
 import { timeout } from 'src/utils/timeout';
 import { appointmentCreate } from '../appointment/model/functions';
-import { departmentList } from '../department/model/functions';
-import { doctorList } from '../doctor/model/functions';
-import { Doctor } from '../doctor/model/types';
-import { ListPolyResponse, SelectedLabPackage, SelectedPractioner, SelectedRadiologyPackage } from '../encounter/model/types';
+import { SelectedLabPackage, SelectedPractioner, SelectedRadiologyPackage } from '../encounter/model/types';
 import { patientGet } from '../patient/model/functions';
 import { Patient } from '../patient/model/types';
 import {
@@ -70,9 +67,7 @@ const ReservationPage = () => {
   const [errors, setErrors] = usePartialState({ errorIdentifier: "" })
   const [errorMessage, setErrorMessage] = useState({ dateErr: '', bookTimeErr: '', unableErr: '' });
   const [patientData, setPatientData] = useState<Nullable<Patient>>(null);
-  const [listDoctor, setListDoctor] = useState<Doctor[]>([]);
   const [selectedPractioner, setSelectedPractioner] = useState<Nullable<SelectedPractioner>>(null);
-  const [listPoly, setListPoly] = useState<ListPolyResponse>([]);
   const [selectedPackageLab, setSelectedPackageLab] = useState<Nullable<SelectedLabPackage>>(null);
   const [selectedPackageRadiology, setSelectedPackageRadiology] =
     useState<Nullable<SelectedRadiologyPackage>>(null);
@@ -246,35 +241,6 @@ const ReservationPage = () => {
       });
     }
   };
-
-  const handleGetListDoctor = useCallback(async (keyword: string, page: number) => {
-    try {
-      const response = await doctorList({
-        page,
-        keyword,
-        take: 9
-      });
-
-      setListDoctor(response.data);
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
-
-
-  const handleGetListPoly = useCallback(async (keyword: string, page: number) => {
-    try {
-      const response = await departmentList({
-        take: 9,
-        page,
-        keyword,
-      });
-
-      setListPoly(response.data);
-    } catch (e) {
-      console.log(e);
-    }
-  }, []);
 
   const handleGetPatientByNIK = async (identifierValue: string) => {
     try {
@@ -476,11 +442,7 @@ const ReservationPage = () => {
                 setFormValue={setValue}
                 watchFormValue={watch}
                 onCardSelect={onPractitionerSelect}
-                handleGetDoctor={handleGetListDoctor}
-                handleGetPoly={handleGetListPoly}
                 setSelectedPractitioner={setSelectedPractioner}
-                listDoctor={listDoctor}
-                listPoly={listPoly}
               />
             )}
 

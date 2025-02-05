@@ -20,18 +20,18 @@ import { Label } from 'src/components/label';
 import { useFetch } from 'src/hooks/use-fetch';
 import { useTranslate } from 'src/locales';
 import { doctorOne } from 'src/pages/doctor/model/functions';
+import { SelectTimeProps } from 'src/pages/reservation/model/types';
 import { fDate, formatStr } from 'src/utils/format-time';
-import type { SelectTimeProps } from '../model/types';
 
 const SelectTime = (props: SelectTimeProps) => {
-  const { handleBack, handleConfirm, errorMessage, doctorInfo } = props;
+  const { handleConfirm, errorMessage, doctorInfo } = props;
 
   const { t } = useTranslate()
   const { watch, setValue } = useFormContext()
 
   const values = watch()
 
-  const { data, isLoading, refetch } = useFetch({ practitionerHealthcareServiceID: values?.practitionerHealthcareServiceID || '', date: fDate(dayjs().add(1, 'day'), formatStr.paramCase.mysqlDate) }, doctorOne)
+  const { data, isLoading, refetch } = useFetch({ practitionerHealthcareServiceID: values?.practitionerHealthcareServiceID || '', date: fDate(dayjs(), formatStr.paramCase.mysqlDate) }, doctorOne)
 
   const timeOpt = data?.data.slot.map((it) => ({
     label: it.slotTime,
@@ -39,27 +39,8 @@ const SelectTime = (props: SelectTimeProps) => {
     disabled: it.isDisabled
   })) || []
 
-  const unableOpt = [
-    {
-      label: t("reservation.change_schedule"),
-      value: 'batal kunjungan',
-    },
-    {
-      label: t("reservation.cancel_visit"),
-      value: 'pindah jadwal',
-    },
-  ];
-
-  // const getButtonText = () => {
-  //   if (reservationType === 'RJ') return t("global.doctor");
-  //   if (reservationType === 'MCU') return t("MCU");
-  //   if (reservationType === 'LAB') return t("laboratory");
-  //   if (reservationType === 'RAD') return t("radiology");
-  //   return '';
-  // };
-
   useEffect(() => {
-    setValue("date", dayjs().add(1, 'day'))
+    setValue("date", dayjs())
   }, [])
 
   return (
@@ -184,6 +165,7 @@ const SelectTime = (props: SelectTimeProps) => {
               <RHFDatePickerStatic
                 name="date"
                 format="DD/MM/YYYY"
+                disableFuture
                 onSelect={(val) => {
                   refetch({ practitionerHealthcareServiceID: values?.practitionerHealthcareServiceID || '', date: fDate(val, formatStr.paramCase.mysqlDate) })
                 }}
@@ -220,7 +202,6 @@ const SelectTime = (props: SelectTimeProps) => {
                     </Box>
                   ),
                 }}
-                shouldDisableDate={(date: any) => fDate(date, formatStr.paramCase.mysqlDate) === fDate(dayjs(), formatStr.paramCase.mysqlDate)}
               />
             </Box>
 
@@ -250,17 +231,6 @@ const SelectTime = (props: SelectTimeProps) => {
             </Box>
 
             <Divider />
-
-            <Box>
-              <Typography variant='button'>{t("reservation.if_doctor_can't_arrived")}</Typography>
-              <RHFTimePils
-                options={unableOpt}
-                getOptionEqualToValue={(opt, value) => opt.value === value?.value}
-                getOptionLabel={(opt) => opt.label}
-                name="unable"
-                errorText={errorMessage?.unableErr}
-              />
-            </Box>
 
             <Button
               fullWidth

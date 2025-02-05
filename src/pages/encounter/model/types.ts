@@ -95,6 +95,7 @@ export type SelectedPractioner = {
   polyName: string;
   doctor: string;
   serviceTime: string;
+  person?: Doctor | null;
 };
 
 export type SelectedLabPackage = {
@@ -109,11 +110,7 @@ export type SelectedRadiologyPackage = {
 
 export type SelectPractitionerProps = {
   onCardSelect: () => void;
-  handleGetDoctor: (keyword: string, page: number) => Promise<void>;
-  handleGetPoly: (keyword: string, page: number) => Promise<void>;
   setSelectedPractitioner: (data: Nullable<SelectedPractioner>) => void;
-  listDoctor: Doctor[];
-  listPoly: ListPolyResponse;
   setFormValue: UseFormSetValue<FieldValues>;
   watchFormValue: UseFormWatch<FieldValues>;
 };
