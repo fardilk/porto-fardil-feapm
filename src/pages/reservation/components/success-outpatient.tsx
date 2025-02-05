@@ -165,7 +165,7 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
       label: t("global.reprint"),
       buttonProps: { ...buttonStyle, variant: 'outlined', disabled: counting15 },
       action: () => {
-        axiosInstance({ url: `/struk-kunjungan/${values?.resBookingID || "-"}` })
+        axiosInstance({ url: `/struk-kunjungan-apm/${values?.resBookingID || "-"}` })
         startCountdown15();
       },
     },
@@ -221,7 +221,7 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
           fullWidth
           color="secondary"
           onClick={() => {
-            axiosInstance({ url: `/struk-kunjungan/${values?.resBookingID || "-"}` })
+            axiosInstance({ url: `/struk-kunjungan-apm/${values?.resBookingID || "-"}` })
             setOpenPrint(true);
             startCountdown15();
             startCountdown2min();
