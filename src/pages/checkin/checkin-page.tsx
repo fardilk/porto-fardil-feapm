@@ -39,14 +39,14 @@ const CheckinPage = () => {
         });
 
         if (!response.status) {
-          throw Error("Not Found")
+          throw Error(response.message)
         }
         toast.success('Berhasil Lapor Kehadiran');
         setDataCheckin(response.data.booking);
 
         handleChangePage({ action: 'next' });
       } catch (e) {
-        toast.error('Nomor Booking Tidak Ditemukan. Silahkan Cek Ulang Nomor Booking');
+        toast.error(e?.message);
       } finally {
         nProgress.done();
       }
