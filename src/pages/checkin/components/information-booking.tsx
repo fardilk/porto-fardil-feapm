@@ -126,7 +126,7 @@ const InformationBooking = ({ data }: { data: BookingType }) => {
       label: t('global.reprint'),
       buttonProps: { ...buttonStyle, variant: 'outlined', disabled: counting15 },
       action: () => {
-        printIt(birtUrlBuilder('struk-kunjungan-apm', [data?.bookingID || "-"]))
+        printIt(birtUrlBuilder('struk-kunjungan', [data?.bookingID || "-"]))
         startCountdown15();
       },
     },
