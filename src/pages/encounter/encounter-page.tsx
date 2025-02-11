@@ -357,6 +357,8 @@ const EncounterPage = () => {
         throw Error(resp.message)
       }
 
+      setValue("resBookingID", resp.data.booking.bookingID)
+
       toast.success("Berhasil")
 
       handleChangePage({ action: 'next' });
