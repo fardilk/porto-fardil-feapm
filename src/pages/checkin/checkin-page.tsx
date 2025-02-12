@@ -64,6 +64,37 @@ const CheckinPage = () => {
     setErrorMessage('');
   }, [watchBookingNumnber]);
 
+  useEffect(() => {
+    let keyEnter = '';
+    let timeoutId: NodeJS.Timeout;
+
+    const logKeyboard = (e: KeyboardEvent) => {
+      keyEnter = (keyEnter + e.key).toUpperCase();
+      clearTimeout(timeoutId);
+
+      timeoutId = setTimeout(() => {
+        keyEnter = '';
+      }, 1000);
+
+      if (e.key === 'Enter') {
+        const param = keyEnter.replace('ENTER', '').trim();
+
+        onSubmit({ booking_number: param }).then((_it) => {
+          keyEnter = '';
+        })
+
+      }
+    };
+
+    document.addEventListener('keypress', logKeyboard);
+
+    // Cleanup function
+    return () => {
+      clearTimeout(timeoutId);
+      document.removeEventListener('keypress', logKeyboard);
+    };
+  }, [watchBookingNumnber]);
+
   return (
     <AppPage>
       <Form methods={methods} onSubmit={handleSubmit(onSubmit)}>
