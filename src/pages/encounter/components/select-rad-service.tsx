@@ -7,8 +7,9 @@ import { fCurrency } from 'src/utils/format-number';
 import { Keyboard } from 'src/components/keyboard';
 import { RHFTextField } from 'src/components/hook-form';
 import { useTranslate } from 'src/locales';
+import { useWatch } from 'react-hook-form';
 
-const SelectRadService = ({data, handleGetPackage, onCardSelect, setFormValue, watchFormValue}: SelectRadServiceProps) => {
+const SelectRadService = ({ data, handleGetPackage, onCardSelect, }: SelectRadServiceProps) => {
   const { t } = useTranslate();
 
   const [elementName, setElementName] = useState('');
@@ -18,7 +19,7 @@ const SelectRadService = ({data, handleGetPackage, onCardSelect, setFormValue, w
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const searchLabPackage = watchFormValue('searchRadiologi');
+  const searchLabPackage = useWatch({ name: 'searchRadiologi' });
 
   const listRadPackage = useMemo(
     () =>

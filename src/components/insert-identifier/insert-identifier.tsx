@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { useFormContext } from "react-hook-form"
+import { useWatch } from "react-hook-form"
 
 import { Box, Divider, Stack, Typography, useTheme } from "@mui/material"
 
@@ -13,11 +13,14 @@ import type { InsertIdentifierProps } from "./types"
 
 const InsertIdentifier = ({ errorMessage }: InsertIdentifierProps) => {
 
-  const { watch } = useFormContext()
-  const isForeign = watch("citizenship")
+  const valCitizenship = useWatch({ name: "citizenship" })
+
+  const isForeign = valCitizenship === "WNA"
+
   const { t, onChangeLang } = useTranslate()
 
   const theme = useTheme()
+
   const [keyboardType, setKeyboardType] = useState(isForeign ? "text" : "numberOnly")
 
   const inputRef = useRef<any>({})

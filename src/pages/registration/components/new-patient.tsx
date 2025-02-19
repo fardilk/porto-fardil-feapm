@@ -1,6 +1,6 @@
 
 import { useRef, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useWatch } from 'react-hook-form';
 
 import {
   Box,
@@ -17,11 +17,11 @@ import {
 } from 'src/components/hook-form';
 import { Keyboard } from 'src/components/keyboard';
 
-import { useTranslate } from 'src/locales';
-import type { NewPatientProps } from '../model/types';
-import { terminologyGet } from 'src/pages/terminology/model/functions';
 import { useFetch } from 'src/hooks/use-fetch';
+import { useTranslate } from 'src/locales';
+import { terminologyGet } from 'src/pages/terminology/model/functions';
 import { terminologyArrayMapper } from 'src/utils/terminology';
+import type { NewPatientProps } from '../model/types';
 
 const NewPatient = (props: NewPatientProps) => {
   const { handlePreviousPage } = props;
@@ -30,8 +30,10 @@ const NewPatient = (props: NewPatientProps) => {
   const [keyboardType, setKeyboardType] = useState('');
   const inputRef = useRef<any>({});
 
-  const { watch } = useFormContext();
-  const isForeign = watch('citizenship');
+  const valCitizenship = useWatch({ name: "citizenship" })
+
+  const isForeign = valCitizenship === "WNA"
+
   const { t } = useTranslate();
 
   const { data: dataGender } = useFetch({ attributePath: "", codeSystem: "", valueSet: "Patient.contact.gender" }, terminologyGet)

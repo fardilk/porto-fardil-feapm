@@ -111,8 +111,6 @@ export type SelectedRadiologyPackage = {
 export type SelectPractitionerProps = {
   onCardSelect: () => void;
   setSelectedPractitioner: (data: Nullable<SelectedPractioner>) => void;
-  setFormValue: UseFormSetValue<FieldValues>;
-  watchFormValue: UseFormWatch<FieldValues>;
 };
 
 export type SelectInsuranceProps = {
@@ -164,8 +162,6 @@ export type SelectMCUPackageProps = {
   handleSelect: (params: { id: string; packageName: string }) => void;
   data: ListMCUPackageResponse;
   handleGetPackage: (keyword: string, page: number) => Promise<void>;
-  setFormValue: UseFormSetValue<FieldValues>;
-  watchFormValue: UseFormWatch<FieldValues>;
 };
 
 export type LabelListTextCardProps = {
@@ -189,14 +185,10 @@ export type SelectLabPackageProps = {
   onCardSelect: (params: { id: string } & SelectedLabPackage) => void;
   data: ListLabPackageResponse;
   handleGetPackage: (keyword: string, page: number) => Promise<void>;
-  setFormValue: UseFormSetValue<FieldValues>;
-  watchFormValue: UseFormWatch<FieldValues>;
 };
 
 export type SelectRadServiceProps = {
   onCardSelect: (params: { id: string } & SelectedLabPackage) => void;
   data: ListRadiologyPackageResponse;
   handleGetPackage: (keyword: string, page: number) => Promise<void>;
-  setFormValue: UseFormSetValue<FieldValues>;
-  watchFormValue: UseFormWatch<FieldValues>;
 };

@@ -2,7 +2,7 @@ import { LoadingButton } from "@mui/lab";
 import { Alert, Box, Button, CircularProgress, Dialog, DialogContent, Divider, Grid, IconButton, Stack, TextField, Typography, useTheme } from "@mui/material";
 import type { ReactNode } from "react";
 import React, { memo, useCallback, useMemo, useRef, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { typography } from "src/theme/core";
 import { Iconify } from "../iconify";
 import type { KeyboardType, KeyboardWrapperProps } from "./types";
@@ -14,9 +14,9 @@ const KeyboardWrapper = React.forwardRef((props: KeyboardWrapperProps, inputRef:
 
   const dialogInputRef = useRef<HTMLInputElement | null>(null)
 
-  const { setValue, watch, trigger } = useFormContext();
+  const { setValue, trigger } = useFormContext();
   const theme = useTheme()
-  const values = watch(elementName)
+  const values = useWatch({ name: elementName })
 
   const onInputChange = (key: string) => {
     if (dialogInputRef) {
@@ -128,8 +128,9 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
     }
   }, [theme])
 
-  const handleButtonClick = (key: string) => {
-    key = (shift || secondShift) ? key.toUpperCase() : key;
+  const handleButtonClick = (currentKey: string) => {
+
+    const key = (shift || secondShift) ? currentKey.toUpperCase() : currentKey;
 
     const currentRef = inputRef[elementName];
 

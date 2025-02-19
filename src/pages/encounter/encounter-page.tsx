@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { AppPage } from 'src/components/app-page';
@@ -72,10 +72,11 @@ import dayjs from 'dayjs';
 const EncounterPage = () => {
   const { t } = useTranslate();
   const methods = useForm();
-  const { handleSubmit, watch, setValue, getValues } = methods;
-  const values = watch()
+  const { handleSubmit, setValue, getValues, control } = methods;
 
-  const watchBookTime = watch('bookTime');
+  const values = useWatch({ control })
+
+  const watchBookTime = values.bookTime
 
   const navigate = useNavigate();
   const { currentPage, currentPageIndex, handleChangePage } = useStepper({
@@ -146,14 +147,10 @@ const EncounterPage = () => {
   ];
 
   useEffect(() => {
-    const subs = watch((val) => {
-      if (val.bookTime) {
-        setErrorMessage({ bookTimeErr: '', dateErr: '', unableErr: '' })
-      }
-    })
-
-    return () => subs.unsubscribe()
-  }, [watch])
+    if (values?.bookTime) {
+      setErrorMessage({ bookTimeErr: '', dateErr: '', unableErr: '' })
+    }
+  }, [values?.bookTime])
 
   const getListDataEmployee = useMemo(
     () => [
@@ -554,8 +551,6 @@ const EncounterPage = () => {
 
             {currentPage.value === 'select_healthcare_practitioner' && (
               <SelectPractitioner
-                setFormValue={setValue}
-                watchFormValue={watch}
                 onCardSelect={onPractitionerSelect}
                 setSelectedPractitioner={setSelectedPractioner}
               />
@@ -809,8 +804,6 @@ const EncounterPage = () => {
             {currentPage.value === 'select_mcu_package' && (
               <SelectMCUPackage
                 handleSelect={handleSelectMCUPackage}
-                watchFormValue={watch}
-                setFormValue={setValue}
                 data={mcuPackageList}
                 handleGetPackage={handleGetListPackageMCU}
               />
@@ -819,8 +812,6 @@ const EncounterPage = () => {
             {currentPage.value === 'select_lab_package' && (
               <SelectLabPackage
                 onCardSelect={handleSelectLabPackage}
-                watchFormValue={watch}
-                setFormValue={setValue}
                 data={labPackageList}
                 handleGetPackage={handleGetListPackageLab}
               />
@@ -829,8 +820,6 @@ const EncounterPage = () => {
             {currentPage.value === 'select_rad_service' && (
               <SelectRadService
                 onCardSelect={handleSelectRadiologyPackage}
-                watchFormValue={watch}
-                setFormValue={setValue}
                 data={radiologyPackageList}
                 handleGetPackage={handleGetListPackageRadiology}
               />

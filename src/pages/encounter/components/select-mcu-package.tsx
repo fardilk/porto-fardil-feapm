@@ -6,8 +6,9 @@ import LabelListTextCard from './label-list-text-card';
 import { RHFTextField } from 'src/components/hook-form';
 import { Keyboard } from 'src/components/keyboard';
 import { useTranslate } from 'src/locales';
+import { useWatch } from 'react-hook-form';
 
-const SelectMCUPackage: FC<SelectMCUPackageProps> = ({ handleSelect, data, handleGetPackage, setFormValue, watchFormValue }) => {
+const SelectMCUPackage: FC<SelectMCUPackageProps> = ({ handleSelect, data, handleGetPackage, }) => {
   const { t } = useTranslate();
 
   const [elementName, setElementName] = useState('');
@@ -19,7 +20,7 @@ const SelectMCUPackage: FC<SelectMCUPackageProps> = ({ handleSelect, data, handl
     console.log(action);
   };
 
-  const searchMCUPackage = watchFormValue('searchMCUPackage');
+  const searchMCUPackage = useWatch({ name: 'searchMCUPackage' });
 
   const listPackage = useMemo(() => data.map((pack) => ({
     name: pack.packageName,
@@ -32,14 +33,14 @@ const SelectMCUPackage: FC<SelectMCUPackageProps> = ({ handleSelect, data, handl
       id: pack.packageID,
       packageName: pack.packageName
     })
-  })),[data, handleSelect])
+  })), [data, handleSelect])
 
   useEffect(() => {
     if (searchMCUPackage || afterFirstSearch) {
       handleGetPackage(searchMCUPackage, 1);
       setAfterFirstSearch(true);
     }
-  },[handleGetPackage, searchMCUPackage, afterFirstSearch])
+  }, [handleGetPackage, searchMCUPackage, afterFirstSearch])
 
   return (
     <Grid container spacing={2}>

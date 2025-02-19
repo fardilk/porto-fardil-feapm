@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { AppPage } from 'src/components/app-page';
 import { Form } from 'src/components/hook-form';
 import { WindowContainer } from 'src/components/window-container';
@@ -21,10 +21,14 @@ const CheckinPage = () => {
   });
   const [dataCheckin, setDataCheckin] = useState<BookingType | null>(null);
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage] = useState('');
 
-  const methods = useForm();
-  const { handleSubmit, watch } = methods;
+  const methods = useForm({
+    defaultValues: {
+      booking_number: ""
+    }
+  });
+  const { handleSubmit, control } = methods;
 
   const onSubmit = async (data: { booking_number?: string }): Promise<void> => {
     const bookingNumber = data.booking_number?.replaceAll('\n', '');
@@ -53,16 +57,12 @@ const CheckinPage = () => {
     }
   };
 
-  const watchBookingNumnber = watch('booking_number');
+  const watchBookingNumnber = useWatch({ name: 'booking_number', control })
 
   const getTitle = useMemo(
     () => (currentPage?.properties?.i18n ? t(currentPage?.properties?.i18n) : currentPage.label),
     [currentPage, t]
   );
-
-  useEffect(() => {
-    setErrorMessage('');
-  }, [watchBookingNumnber]);
 
   useEffect(() => {
     let keyEnter = '';
