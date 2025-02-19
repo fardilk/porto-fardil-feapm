@@ -57,16 +57,16 @@ const HomePage = () => {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Stack sx={{ px: 8, gap: 2, height: `calc(100vh - ${Header_Height}px)`, pb: 2 }}>
-      <Image
+    <Stack sx={{ px: 8, gap: 2, height: `calc(100vh - ${Header_Height}px)`, pb: 2, placeContent: 'center' }}>
+      {/* <Image
         src="/assets/app/Banner-Medical-Check-Up-Primaya-Hospital.png"
         sx={{
           display: "block",
           mx: "auto",
           height: '60%'
-        }} />
+        }} /> */}
 
-      <Box sx={{ height: '40%' }}>
+      <Box sx={{ height: '50%' }}>
         <CardWrapper listCard={listCard} mode={config.mode} />
       </Box>
     </Stack>
