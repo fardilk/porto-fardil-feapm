@@ -9,10 +9,12 @@ export type StepperType = {
 
 export type useStepperProps = {
   initialSteps: StepperType[];
+  onChangeFormSteps?: (param: StepperType[]) => void;
+  onChangeCurrentPage?: (param: string) => void;
 };
 
 export function useStepper(props: useStepperProps) {
-  const { initialSteps } = props;
+  const { initialSteps, onChangeFormSteps, onChangeCurrentPage } = props;
 
   const [formSteps, setFormSteps] = useState(initialSteps);
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
@@ -32,7 +34,10 @@ export function useStepper(props: useStepperProps) {
     if (action === 'previous' && currentPageIndex === 0) navigate('/', { replace: true });
 
     const tempFormSteps = newFormSteps || formSteps;
-    if (newFormSteps) setFormSteps(newFormSteps);
+    if (newFormSteps) {
+      setFormSteps(newFormSteps);
+      onChangeFormSteps?.(newFormSteps);
+    }
 
     if (toSpecificPage) {
       const specificPageIndex = tempFormSteps.findIndex((row) => row.value === toSpecificPage);
@@ -40,11 +45,13 @@ export function useStepper(props: useStepperProps) {
       if (specificPageIndex >= 0) {
         setCurrentPageIndex(specificPageIndex);
         setCurrentPage(tempFormSteps[specificPageIndex]);
+        onChangeCurrentPage?.(tempFormSteps[specificPageIndex].value);
       }
     } else if (currentPageIndex >= 0 && currentPageIndex <= tempFormSteps.length) {
       const newCurrentPageIndex = currentPageIndex + (action === 'next' ? 1 : -1);
       setCurrentPageIndex(newCurrentPageIndex);
       setCurrentPage(tempFormSteps[newCurrentPageIndex]);
+      onChangeCurrentPage?.(tempFormSteps[newCurrentPageIndex].value);
     }
   };
 
