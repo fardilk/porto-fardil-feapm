@@ -14,19 +14,20 @@ import { Doctor } from 'src/pages/doctor/model/types';
 import { fDate, formatStr } from 'src/utils/format-time';
 import type { SelectPractitionerProps } from '../model/types';
 import { departmentList } from 'src/pages/department/model/functions';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 const SelectPractitioner = ({
   onCardSelect,
   setSelectedPractitioner,
-  setFormValue,
-  watchFormValue
 }: SelectPractitionerProps) => {
+
   const { t } = useTranslate();
 
   const [isPractitioner, setIsPractitioner] = useState(true);
   const [elementName, setElementName] = useState('');
-
   const [currentIndex, setCurrentIndex] = useState(1);
+
+  const { setValue: setFormValue } = useFormContext()
 
   const searchRef = useRef<any>({});
 
@@ -86,7 +87,7 @@ const SelectPractitioner = ({
     onCardSelect();
   }
 
-  const searchPractioner = watchFormValue('searchPractioner');
+  const searchPractioner = useWatch({ name: 'searchPractioner' });
 
   const handleResetSearch = () => {
     if (isPractitioner) {

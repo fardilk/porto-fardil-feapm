@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { AppPage } from 'src/components/app-page';
 import { Form } from 'src/components/hook-form';
 import { WindowContainer } from 'src/components/window-container';
@@ -21,10 +21,14 @@ const CheckinPage = () => {
   });
   const [dataCheckin, setDataCheckin] = useState<BookingType | null>(null);
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage] = useState('');
 
-  const methods = useForm();
-  const { handleSubmit, watch } = methods;
+  const methods = useForm({
+    defaultValues: {
+      booking_number: ""
+    }
+  });
+  const { handleSubmit, control } = methods;
 
   const onSubmit = async (data: { booking_number?: string }): Promise<void> => {
     const bookingNumber = data.booking_number?.replaceAll('\n', '');
@@ -39,21 +43,21 @@ const CheckinPage = () => {
         });
 
         if (!response.status) {
-          throw Error("Not Found")
+          throw Error(response.message)
         }
         toast.success('Berhasil Lapor Kehadiran');
         setDataCheckin(response.data.booking);
 
         handleChangePage({ action: 'next' });
       } catch (e) {
-        toast.error('Nomor Booking Tidak Ditemukan. Silahkan Cek Ulang Nomor Booking');
+        toast.error(e?.message);
       } finally {
         nProgress.done();
       }
     }
   };
 
-  const watchBookingNumnber = watch('booking_number');
+  const watchBookingNumnber = useWatch({ name: 'booking_number', control })
 
   const getTitle = useMemo(
     () => (currentPage?.properties?.i18n ? t(currentPage?.properties?.i18n) : currentPage.label),
@@ -61,7 +65,34 @@ const CheckinPage = () => {
   );
 
   useEffect(() => {
-    setErrorMessage('');
+    let keyEnter = '';
+    let timeoutId: NodeJS.Timeout;
+
+    const logKeyboard = (e: KeyboardEvent) => {
+      keyEnter = (keyEnter + e.key).toUpperCase();
+      clearTimeout(timeoutId);
+
+      timeoutId = setTimeout(() => {
+        keyEnter = '';
+      }, 1000);
+
+      if (e.key === 'Enter') {
+        const param = keyEnter.replace('ENTER', '').trim();
+
+        onSubmit({ booking_number: param }).then((_it) => {
+          keyEnter = '';
+        })
+
+      }
+    };
+
+    document.addEventListener('keypress', logKeyboard);
+
+    // Cleanup function
+    return () => {
+      clearTimeout(timeoutId);
+      document.removeEventListener('keypress', logKeyboard);
+    };
   }, [watchBookingNumnber]);
 
   return (

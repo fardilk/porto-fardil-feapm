@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import dayjs from 'dayjs';
 import { useEffect, useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { AppPage } from 'src/components/app-page';
@@ -149,15 +149,13 @@ const ReservationPage = () => {
     [t]
   );
 
-  const methods = useForm();
+  const methods = useForm({ defaultValues: { nik: '' } as any });
 
-  const { handleSubmit, watch, setValue } = methods;
+  const { handleSubmit, watch, setValue, control } = methods;
 
-  const values = watch()
+  const [watchDate, watchBookTime, watchUnable] = useWatch({ control, name: ["date", "bookTime", "unable"] })
 
-  const watchDate = watch('date');
-  const watchBookTime = watch('bookTime');
-  const watchUnable = watch('unable');
+  const values = useWatch({ control })
 
   useEffect(() => {
     setErrorMessage((prev) => ({ ...prev, dateErr: '' }));
@@ -439,8 +437,6 @@ const ReservationPage = () => {
 
             {currentPage.value === 'select_healthcare_practitioner' && (
               <SelectPractitioner
-                setFormValue={setValue}
-                watchFormValue={watch}
                 onCardSelect={onPractitionerSelect}
                 setSelectedPractitioner={setSelectedPractioner}
               />

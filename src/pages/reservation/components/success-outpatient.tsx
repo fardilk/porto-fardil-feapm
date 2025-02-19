@@ -1,5 +1,6 @@
 import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { AlertInformation } from 'src/components/alert-information';
 import { CardBanner } from 'src/components/card-banner';
@@ -7,13 +8,11 @@ import { LabelTextContainer } from 'src/components/label-text';
 import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
 import { useCountdownSeconds } from 'src/hooks';
 import { useTranslate } from 'src/locales';
-import axiosInstance from 'src/utils/axios';
 import { fCurrency } from 'src/utils/format-number';
-import { fAsterisk } from 'src/utils/helper';
+import { fDate } from 'src/utils/format-time';
+import { birtUrlBuilder, fAsterisk, openPrint as printIt } from 'src/utils/helper';
 import type { SuccessOutpatientType } from '../model/types';
 import { buttonStyle, getPaymentType } from '../model/variables';
-import { useFormContext } from 'react-hook-form';
-import { fDate } from 'src/utils/format-time';
 
 const SuccessOutpatient = (props: SuccessOutpatientType) => {
   const { type, reservationType, patientDetail, doctorInfo, labPackage, radPackage } = props;
@@ -165,7 +164,7 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
       label: t("global.reprint"),
       buttonProps: { ...buttonStyle, variant: 'outlined', disabled: counting15 },
       action: () => {
-        axiosInstance({ url: `/struk-kunjungan/${values?.resBookingID || "-"}` })
+        printIt(birtUrlBuilder('struk-kunjungan-apm', [values?.resBookingID || "-"]))
         startCountdown15();
       },
     },
@@ -221,7 +220,8 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
           fullWidth
           color="secondary"
           onClick={() => {
-            axiosInstance({ url: `/struk-kunjungan/${values?.resBookingID || "-"}` })
+            // axiosInstance({ url: `/struk-kunjungan-apm/${values?.resBookingID || "-"}` })
+            printIt(birtUrlBuilder('struk-kunjungan-apm', [values?.resBookingID || "-"]))
             setOpenPrint(true);
             startCountdown15();
             startCountdown2min();

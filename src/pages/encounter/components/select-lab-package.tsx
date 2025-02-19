@@ -7,13 +7,12 @@ import { RHFTextField } from 'src/components/hook-form';
 import { Keyboard } from 'src/components/keyboard';
 import type { SelectLabPackageProps } from '../model/types';
 import { useTranslate } from 'src/locales';
+import { useWatch } from 'react-hook-form';
 
 const SelectLabPackage = ({
   onCardSelect,
   data,
   handleGetPackage,
-  setFormValue,
-  watchFormValue,
 }: SelectLabPackageProps) => {
   const { t } = useTranslate();
 
@@ -24,7 +23,7 @@ const SelectLabPackage = ({
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const searchLabPackage = watchFormValue('searchLabPackage');
+  const searchLabPackage = useWatch({ name: 'searchLabPackage' });
 
   const listLabPackage = useMemo(
     () =>

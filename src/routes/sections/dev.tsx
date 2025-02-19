@@ -5,6 +5,7 @@ import { AppLayout } from "src/layouts/app"
 import { SplashScreen } from "src/components/loading-screen"
 
 const DevPage = lazy(() => import("src/pages/dev"))
+const PlaygroundPage = lazy(() => import("src/pages/playground/playground-page"))
 
 const devRoute = [
   {
@@ -19,6 +20,10 @@ const devRoute = [
         path: 'dev',
         element: <DevPage />,
         index: true
+      },
+      {
+        path: 'playground',
+        element: <PlaygroundPage />,
       },
     ]
   }

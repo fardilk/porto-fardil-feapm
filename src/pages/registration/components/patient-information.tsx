@@ -1,7 +1,7 @@
 import { LoadingButton } from '@mui/lab';
 import { Alert, Box, Button, TableContainer } from '@mui/material';
 import { useMemo } from 'react';
-import { useFormContext } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { LabelTextContainer } from 'src/components/label-text';
 import { useTranslate } from 'src/locales';
 import { useSelector } from 'src/store/store';
@@ -16,9 +16,11 @@ const PatientInformation = (props: PatientInformationProps) => {
   const isSimplify = useSelector((root) => root.config.simplify);
 
   const { t } = useTranslate();
-  const { watch, formState: { isSubmitting } } = useFormContext<RegistrationIForm>();
-  const values = watch()
-  const isForeign = watch('citizenship');
+  const { formState: { isSubmitting } } = useFormContext<RegistrationIForm>();
+
+  const values = useWatch()
+
+  const isForeign = values?.citizenship === "WNA"
 
   const initData = useMemo(() => {
     const simple = [

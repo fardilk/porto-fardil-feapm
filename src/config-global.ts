@@ -7,6 +7,7 @@ import packageJson from '../package.json';
 export type ConfigValue = {
   app: {
     graphqlPath: string;
+    birtHost: string;
     urlName: string;
     platformName: string;
     hospitalName: string;
@@ -59,6 +60,7 @@ function getPath() {
 export const CONFIG: ConfigValue = {
   app: {
     graphqlPath: getPath(),
+    birtHost: import.meta.env.VITE_APP_API_HOST_REST || '',
     urlName: import.meta.env.VITE_APP_URL_NAME ?? '',
     platformName: import.meta.env.VITE_APP_PLATFORM_NAME ?? '',
     hospitalName: import.meta.env.VITE_APP_HOSPITAL_NAME ?? '',

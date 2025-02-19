@@ -1,6 +1,7 @@
 import { Alert, Box, Button, CircularProgress, Grid, Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { useRef, useState } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { toast } from 'sonner';
 import { CardBanner } from 'src/components/card-banner';
 import CardBannerProfileReservation from 'src/components/card-banner/card-banner-profile-reservation';
@@ -16,7 +17,11 @@ import { fDate, formatStr } from 'src/utils/format-time';
 import type { SelectPractitionerProps } from '../model/types';
 
 const SelectPractitioner = (props: SelectPractitionerProps) => {
-  const { onCardSelect, setFormValue, setSelectedPractitioner, watchFormValue, } = props
+  const { onCardSelect, setSelectedPractitioner } = props
+
+  const { setValue: setFormValue } = useFormContext()
+
+  const searchPractioner = useWatch({ name: "searchPractioner" })
 
   const { t } = useTranslate();
 
@@ -83,8 +88,6 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
     });
     onCardSelect();
   }
-
-  const searchPractioner = watchFormValue('searchPractioner');
 
   const handleResetSearch = () => {
     if (isPractitioner) {

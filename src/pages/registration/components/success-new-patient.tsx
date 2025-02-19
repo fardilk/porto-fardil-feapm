@@ -6,10 +6,10 @@ import { fAsterisk } from "src/utils/helper"
 
 import { LabelTextContainer } from "src/components/label-text"
 
+import { useWatch } from "react-hook-form"
 import { AlertInformation } from "src/components/alert-information"
-import type { RegistrationIForm, SuccessNewPatientProps } from "../model/types"
 import { useTranslate } from "src/locales"
-import { useFormContext } from "react-hook-form"
+import type { SuccessNewPatientProps } from "../model/types"
 
 const SuccessNewPatient = (props: SuccessNewPatientProps) => {
 
@@ -17,9 +17,7 @@ const SuccessNewPatient = (props: SuccessNewPatientProps) => {
 
   const { t } = useTranslate()
 
-  const { watch } = useFormContext<RegistrationIForm>()
-
-  const values = watch()
+  const values = useWatch()
 
   const headerData = [
     { title: values.citizenship ? 'Passport' : 'NIK/Medrec', body: fAsterisk(values.nik) },

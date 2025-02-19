@@ -1,17 +1,17 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, Grid, Stack, Typography } from '@mui/material';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { AlertInformation } from 'src/components/alert-information';
 import { CardBanner } from 'src/components/card-banner';
 import type { LabelTextProps } from 'src/components/label-text/types';
-import { useCountdownSeconds } from 'src/hooks';
-import { fDate } from 'src/utils/format-time';
-import { fAsterisk } from 'src/utils/helper';
-import { useNavigate } from 'react-router';
-import { buttonStyle } from '../model/variables';
 import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
-import { BookingType } from '../model/types';
+import { useCountdownSeconds } from 'src/hooks';
 import { useTranslate } from 'src/locales';
+import { fDate } from 'src/utils/format-time';
+import { birtUrlBuilder, fAsterisk, openPrint as printIt } from 'src/utils/helper';
+import { BookingType } from '../model/types';
+import { buttonStyle } from '../model/variables';
 
 const InformationBooking = ({ data }: { data: BookingType }) => {
   const navigate = useNavigate();
@@ -126,6 +126,7 @@ const InformationBooking = ({ data }: { data: BookingType }) => {
       label: t('global.reprint'),
       buttonProps: { ...buttonStyle, variant: 'outlined', disabled: counting15 },
       action: () => {
+        printIt(birtUrlBuilder('struk-kunjungan', [data?.bookingID || "-"]))
         startCountdown15();
       },
     },

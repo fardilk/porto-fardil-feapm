@@ -1,16 +1,17 @@
 import { Box, Button, Grid, Stack, Typography } from '@mui/material';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { AlertInformation } from 'src/components/alert-information';
 import { CardBanner } from 'src/components/card-banner';
 import { LabelTextContainer } from 'src/components/label-text';
 import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
-import { fAsterisk } from 'src/utils/helper';
-import type { SuccessOutpatientType } from '../model/types';
-import { buttonStyle, getPaymentType } from '../model/variables';
 import { useCountdownSeconds } from 'src/hooks';
-import { useNavigate } from 'react-router';
 import { useTranslate } from 'src/locales';
 import { fCurrency } from 'src/utils/format-number';
+import { birtUrlBuilder, fAsterisk, openPrint as printIt } from 'src/utils/helper';
+import type { SuccessOutpatientType } from '../model/types';
+import { buttonStyle, getPaymentType } from '../model/variables';
+import { useFormContext } from 'react-hook-form';
 
 const SuccessOutpatient = ({
   type,
@@ -34,6 +35,10 @@ const SuccessOutpatient = ({
     counting: counting2min,
   } = useCountdownSeconds(2 * 60);
   const { t } = useTranslate();
+
+  const { watch } = useFormContext()
+
+  const values = watch()
 
   const [openPrint, setOpenPrint] = useState(false);
 
@@ -163,6 +168,7 @@ const SuccessOutpatient = ({
       label: t('global.reprint'),
       buttonProps: { ...buttonStyle, variant: 'outlined', disabled: counting15 },
       action: () => {
+        printIt(birtUrlBuilder('struk-kunjungan-apm', [values?.resBookingID || "-"]))
         startCountdown15();
       },
     },
@@ -223,6 +229,7 @@ const SuccessOutpatient = ({
           fullWidth
           color="secondary"
           onClick={() => {
+            printIt(birtUrlBuilder('struk-kunjungan-apm', [values?.resBookingID || "-"]))
             setOpenPrint(true);
             startCountdown15();
             startCountdown2min();

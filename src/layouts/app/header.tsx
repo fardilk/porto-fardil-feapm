@@ -98,7 +98,7 @@ const Header = () => {
       </Box>
 
       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'end', width: 120 }}>
-        <Typography variant="body2">{getCurrentDate()}</Typography>
+        <Typography variant="body2" noWrap>{getCurrentDate()}</Typography>
         <Typography variant="h3">{time}</Typography>
       </Box>
     </Box>
