@@ -1,4 +1,5 @@
 import type { ButtonProps } from '@mui/material';
+import { StepperType } from 'src/hooks';
 import { Patient } from 'src/pages/patient/model/types';
 
 export type PatientInformationProps = {
@@ -18,6 +19,8 @@ export type SuccessNewPatientProps = {
 };
 
 export interface RegistrationIForm {
+  currentPage: string;
+  formSteps: StepperType[];
   patientID?: string;
   isRegistered: boolean;
   nik: string;

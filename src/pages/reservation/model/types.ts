@@ -35,8 +35,6 @@ export type PaymentMethodProps = {
 export type SelectPractitionerProps = {
   onCardSelect: () => void;
   setSelectedPractitioner: (data: Nullable<SelectedPractioner>) => void;
-  setFormValue: UseFormSetValue<FieldValues>;
-  watchFormValue: UseFormWatch<FieldValues>;
 };
 
 export type SelectInsuranceProps = {

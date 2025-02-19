@@ -1,4 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { Box } from '@mui/material';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -11,6 +10,11 @@ import { WindowContainer } from 'src/components/window-container';
 import { usePartialState, useStepper } from 'src/hooks';
 import { useTranslate } from 'src/locales';
 import { useSelector } from 'src/store/store';
+import { deBase64 } from 'src/utils/helper';
+import { nikParser } from 'src/utils/nik-parser';
+import { timeout } from 'src/utils/timeout';
+import { patientCreate, patientGet, patientUpdate } from '../patient/model/functions';
+import { Patient, PatientCreateInput } from '../patient/model/types';
 import {
   BarcodePhone,
   DetailNewPatient,
@@ -21,9 +25,7 @@ import {
   SelectRegistrationMethod,
   SuccessNewPatient,
 } from './components';
-import { patientCreate, patientGet, patientUpdate } from '../patient/model/functions';
 import { patientToIForm, regIFormToInput } from './model/helper';
-import useValidationSchemas from './model/schema';
 import { type RegistrationIForm } from './model/types';
 import {
   formStepsExistInInternal,
@@ -32,17 +34,17 @@ import {
   formStepsNotExistInternal,
   formStepsRegistrationMethodByPhone
 } from './model/variables';
-import { timeout } from 'src/utils/timeout';
-import { deBase64 } from 'src/utils/helper';
-import { nikParser } from 'src/utils/nik-parser';
-import { Patient, PatientCreateInput } from '../patient/model/types';
+import { registrationSchema } from './model/schema';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 const RegistrationPage = () => {
 
-  const [errors, setErrors] = usePartialState({ errorNIK: "" })
+  const [{ errorNIK, isSatuSehat }, setState] = usePartialState({ errorNIK: "", isSatuSehat: false })
 
   const [patientSuccess, setPatientSuccess] = useState<Patient | null>(null)
+
   const isSimplify = useSelector((root) => root.config.simplify);
+
   const { encryptedNIK } = useParams()
 
   const defaultValues: RegistrationIForm = {
@@ -63,32 +65,32 @@ const RegistrationPage = () => {
     marriage: null,
     job: null,
     language: null,
-    nationality: null
+    nationality: null,
+    currentPage: "",
+    formSteps: []
   };
 
   const { t } = useTranslate();
 
   const navigate = useNavigate();
 
-  const { currentPage, currentPageIndex, handleChangePage, formSteps } = useStepper({
-    initialSteps: formStepsExistInInternal,
-  });
-
-  const methodsDefault = useForm()
-  const { watch } = methodsDefault
-
-  const isForeign = watch('citizenship') === "WNA"
-
-  const [isSatuSehat, setIsSatuSehat] = useState(false)
-  const { getValidationSchema } = useValidationSchemas();
-
   const methods = useForm<RegistrationIForm>({
     defaultValues,
-    resolver: yupResolver(getValidationSchema(currentPage.value, isForeign, formSteps)),
+    resolver: yupResolver(registrationSchema) as any,
     mode: "onChange"
   });
 
-  const { handleSubmit, reset, resetField, setValue } = methods;
+  const { handleSubmit, reset, resetField, setValue, } = methods;
+
+  const { currentPage, currentPageIndex, handleChangePage, formSteps } = useStepper({
+    initialSteps: formStepsExistInInternal,
+    onChangeFormSteps: (param) => {
+      setValue("formSteps", param)
+    },
+    onChangeCurrentPage: (param) => {
+      setValue("currentPage", param)
+    },
+  });
 
   const getTitle = useMemo(
     () => (currentPage?.properties?.i18n ? t(currentPage?.properties?.i18n) : currentPage.label),
@@ -151,15 +153,13 @@ const RegistrationPage = () => {
   }
 
   const onSubmit = async (data: RegistrationIForm) => {
+
     try {
       if (currentPageIndex === 0) {
         if (data.nik.replace('\n', '') === '12') {
-          setIsSatuSehat(true)
+          setState({ isSatuSehat: true })
         }
-        // if (isForeign) {
-        //   handleChangePage({ action: 'next', newFormSteps: formStepsForeign });
-        // } else {
-        // }
+
         const dataNIK = data.nik.replace('\n', '');
 
         try {
@@ -167,14 +167,14 @@ const RegistrationPage = () => {
           const wni = !data.citizenship
 
           if (dataNIK.length === 0) {
-            setErrors({ errorNIK: "Required" })
-            timeout(2000).then(() => { setErrors({ errorNIK: "" }) })
+            setState({ errorNIK: "Required" })
+            timeout(2000).then(() => { setState({ errorNIK: "" }) })
             return
           }
 
           if (wni && (dataNIK.length < 16 || dataNIK.length > 16)) {
-            setErrors({ errorNIK: "NIK Harus Terdiri Dari 16 Digit" })
-            timeout(2000).then(() => { setErrors({ errorNIK: "" }) })
+            setState({ errorNIK: "NIK Harus Terdiri Dari 16 Digit" })
+            timeout(2000).then(() => { setState({ errorNIK: "" }) })
             return
           }
 
@@ -246,7 +246,7 @@ const RegistrationPage = () => {
           size={currentPage.properties?.containerSize}
         >
           <Box sx={{ p: 4 }}>
-            {currentPage.value === 'insert_nik' && <InsertIdentifier errorMessage={errors.errorNIK} />}
+            {currentPage.value === 'insert_nik' && <InsertIdentifier errorMessage={errorNIK} />}
 
             {currentPage.value === 'information' && (
               <PatientInformation

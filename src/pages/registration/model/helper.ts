@@ -32,6 +32,8 @@ export const regIFormToInput = ({ data }: { data: RegistrationIForm }): PatientC
 
 export const patientToIForm = ({ data: newData }: { data: Patient }): RegistrationIForm => {
   const newDef: RegistrationIForm = {
+    currentPage: '',
+    formSteps: [],
     nationality:
       newData.identifierTypeCode === 'NNIDN'
         ? {
