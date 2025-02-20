@@ -57,7 +57,7 @@ const HomePage = () => {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Stack sx={{ px: 8, gap: 2, height: `calc(100vh - ${Header_Height}px)`, pb: 2, placeContent: 'center', }}>
+    <Stack sx={{ px: { lg: 8, md: 5, sm: 3, xs: 1 }, gap: 2, height: `calc(100vh - ${Header_Height}px)`, pb: 2, placeContent: 'center', }}>
       {/* <Image
         src="/assets/app/Banner-Medical-Check-Up-Primaya-Hospital.png"
         sx={{
@@ -66,7 +66,7 @@ const HomePage = () => {
           height: '60%'
         }} /> */}
 
-      <Box sx={{ height: '50%' }}>
+      <Box sx={{ height: { xs: '22%', sm: '23% ', md: '38%', lg: '50%' } }}>
         <CardWrapper listCard={listCard} mode={config.mode} />
       </Box>
     </Stack>
@@ -87,7 +87,7 @@ const CardWrapper = ({ mode, listCard }: { mode: string, listCard: any[] }) => {
         {
           activeCard.map((row, index) => {
             return (
-              <Grid item xs={12} md={3} key={index} sx={{ height: "100%" }}>
+              <Grid item xs={12} md={6} lg={3} key={index} sx={{ height: "100%" }}>
                 <CardBanner
                   key={index}
                   clickable
@@ -100,10 +100,10 @@ const CardWrapper = ({ mode, listCard }: { mode: string, listCard: any[] }) => {
                     sx: {
                       display: 'flex',
                       placeItems: 'center',
-                      placeContent: 'center'
+                      placeContent: 'center',
                     }
                   }}
-                  iconProps={{ sx: { height: '100%', width: 90 } }}
+                  iconProps={{ sx: { height: '100%', width: { xs: '15%', sm: '17%', md: '20%', lg: '25%' } } }}
                 />
               </Grid>
             )
