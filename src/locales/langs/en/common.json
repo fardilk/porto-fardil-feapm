@@ -425,7 +425,8 @@
     "mode": "Menu Display Mode",
     "save": "Save",
     "success": "Successfully Saved",
-    "active_label": "Active"
+    "active_label": "Active",
+    "use_keyboard": "Use Application Keyboard"
   },
 
   "validation": {
