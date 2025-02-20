@@ -5,4 +5,5 @@ export type ConfigIForm = {
   registration: boolean;
   simplify: boolean;
   mode: 'fluid' | 'fixed';
+  useKeyboard: boolean;
 };

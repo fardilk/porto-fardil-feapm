@@ -7,9 +7,13 @@ import { typography } from "src/theme/core";
 import { Iconify } from "../iconify";
 import type { KeyboardType, KeyboardWrapperProps } from "./types";
 import { keyNumber, keyNumberFirstLine, keyNumberFourthLine, keyNumberSecondLine, keyNumberThirdLine, keyTextFirstLine, keyTextFourthLineEmail, keyTextFourthLineText, keyTextSecondLine, keyTextThirdLine } from "./variables";
+import { useSelector } from "src/store/store";
 
 
 const KeyboardWrapper = React.forwardRef((props: KeyboardWrapperProps, inputRef: any) => {
+
+  const { useKeyboard } = useSelector((root) => root.config)
+
   const { elementName, withDialog, inputType, onClose, open } = props
 
   const dialogInputRef = useRef<HTMLInputElement | null>(null)
@@ -45,6 +49,8 @@ const KeyboardWrapper = React.forwardRef((props: KeyboardWrapperProps, inputRef:
   }
 
   const inputLabel = inputRef[elementName]?.placeholder || (inputRef[elementName]?.label || "")
+
+  if (!useKeyboard) { return null }
 
   if (withDialog) {
     return (
