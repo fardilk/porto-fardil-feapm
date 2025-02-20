@@ -182,6 +182,9 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
             unselectable="on"
             variant="outlined"
             fullWidth
+            disableRipple
+            disableElevation
+            disableTouchRipple
             sx={{
               p: isEnter && isSubmitting ? 2 : 3,
               borderWidth: 2,
@@ -235,6 +238,9 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                   unselectable="on"
                   variant="outlined"
                   fullWidth
+                  disableRipple
+                  disableElevation
+                  disableTouchRipple
                   sx={{ ...defaultButtonStyle }}
                   disabled={isSubmitting}
                   onMouseDown={(event) => {
@@ -258,6 +264,9 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                   unselectable="on"
                   variant="outlined"
                   fullWidth
+                  disableRipple
+                  disableElevation
+                  disableTouchRipple
                   sx={{ ...defaultButtonStyle }}
                   disabled={isSubmitting}
                   onMouseDown={(event) => {
@@ -278,6 +287,9 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                 unselectable="on"
                 variant="outlined"
                 fullWidth
+                disableRipple
+                disableElevation
+                disableTouchRipple
                 disabled={isSubmitting}
                 sx={{
                   ...defaultButtonStyle,
@@ -303,6 +315,9 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                   unselectable="on"
                   variant="outlined"
                   fullWidth
+                  disableRipple
+                  disableElevation
+                  disableTouchRipple
                   sx={{
                     ...defaultButtonStyle,
                     width: isBackspace ? (openNumber ? 94 * 2 : 94 * 1.5) : 94,
@@ -341,6 +356,9 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                   unselectable="on"
                   variant="outlined"
                   fullWidth
+                  disableRipple
+                  disableElevation
+                  disableTouchRipple
                   sx={{
                     ...defaultButtonStyle,
                     width: index === (openNumber ? (inputType === "email" ? 2 : 1) : 2) ? 94 * (openNumber ? (inputType === "email" ? 6.4 : 8.6) : 6.3) : 94,
