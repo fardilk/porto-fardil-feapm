@@ -7,9 +7,13 @@ import { typography } from "src/theme/core";
 import { Iconify } from "../iconify";
 import type { KeyboardType, KeyboardWrapperProps } from "./types";
 import { keyNumber, keyNumberFirstLine, keyNumberFourthLine, keyNumberSecondLine, keyNumberThirdLine, keyTextFirstLine, keyTextFourthLineEmail, keyTextFourthLineText, keyTextSecondLine, keyTextThirdLine } from "./variables";
+import { useSelector } from "src/store/store";
 
 
 const KeyboardWrapper = React.forwardRef((props: KeyboardWrapperProps, inputRef: any) => {
+
+  const { useKeyboard } = useSelector((root) => root.config)
+
   const { elementName, withDialog, inputType, onClose, open } = props
 
   const dialogInputRef = useRef<HTMLInputElement | null>(null)
@@ -45,6 +49,8 @@ const KeyboardWrapper = React.forwardRef((props: KeyboardWrapperProps, inputRef:
   }
 
   const inputLabel = inputRef[elementName]?.placeholder || (inputRef[elementName]?.label || "")
+
+  if (!useKeyboard) { return null }
 
   if (withDialog) {
     return (
@@ -182,6 +188,9 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
             unselectable="on"
             variant="outlined"
             fullWidth
+            disableRipple
+            disableElevation
+            disableTouchRipple
             sx={{
               p: isEnter && isSubmitting ? 2 : 3,
               borderWidth: 2,
@@ -235,6 +244,9 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                   unselectable="on"
                   variant="outlined"
                   fullWidth
+                  disableRipple
+                  disableElevation
+                  disableTouchRipple
                   sx={{ ...defaultButtonStyle }}
                   disabled={isSubmitting}
                   onMouseDown={(event) => {
@@ -258,6 +270,9 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                   unselectable="on"
                   variant="outlined"
                   fullWidth
+                  disableRipple
+                  disableElevation
+                  disableTouchRipple
                   sx={{ ...defaultButtonStyle }}
                   disabled={isSubmitting}
                   onMouseDown={(event) => {
@@ -278,6 +293,9 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                 unselectable="on"
                 variant="outlined"
                 fullWidth
+                disableRipple
+                disableElevation
+                disableTouchRipple
                 disabled={isSubmitting}
                 sx={{
                   ...defaultButtonStyle,
@@ -303,6 +321,9 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                   unselectable="on"
                   variant="outlined"
                   fullWidth
+                  disableRipple
+                  disableElevation
+                  disableTouchRipple
                   sx={{
                     ...defaultButtonStyle,
                     width: isBackspace ? (openNumber ? 94 * 2 : 94 * 1.5) : 94,
@@ -341,6 +362,9 @@ const Keyboard = React.forwardRef((props: KeyboardType, inputRef: any) => {
                   unselectable="on"
                   variant="outlined"
                   fullWidth
+                  disableRipple
+                  disableElevation
+                  disableTouchRipple
                   sx={{
                     ...defaultButtonStyle,
                     width: index === (openNumber ? (inputType === "email" ? 2 : 1) : 2) ? 94 * (openNumber ? (inputType === "email" ? 6.4 : 8.6) : 6.3) : 94,
