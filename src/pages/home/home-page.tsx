@@ -57,7 +57,7 @@ const HomePage = () => {
   }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Stack sx={{ px: 8, gap: 2, height: `calc(100vh - ${Header_Height}px)`, pb: 2, placeContent: 'center' }}>
+    <Stack sx={{ px: 8, gap: 2, height: `calc(100vh - ${Header_Height}px)`, pb: 2, placeContent: 'center', }}>
       {/* <Image
         src="/assets/app/Banner-Medical-Check-Up-Primaya-Hospital.png"
         sx={{
