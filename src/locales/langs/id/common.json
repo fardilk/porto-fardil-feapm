@@ -425,7 +425,8 @@
     "mode": "Mode Tampilan Menu",
     "save": "Simpan",
     "success": "Berhasil Disimpan",
-    "active_label": "Aktif"
+    "active_label": "Aktif",
+    "use_keyboard": "Gunakan Keyboard Aplikasi"
   },
 
   "validation": {

@@ -1,5 +1,8 @@
 import { LoadingButton } from '@mui/lab';
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Button,
   Divider,
@@ -19,6 +22,7 @@ import { dispatch, useSelector } from 'src/store/store';
 import { timeout } from 'src/utils/timeout';
 import type { ConfigIForm } from './model/types';
 import { useTranslate } from 'src/locales';
+import { GridExpandMoreIcon } from '@mui/x-data-grid';
 
 const ConfigPage = () => {
   const config = useSelector((root) => root.config);
@@ -32,6 +36,7 @@ const ConfigPage = () => {
     reservation: config.reservation,
     simplify: config.simplify,
     mode: config.mode,
+    useKeyboard: config.useKeyboard
   };
 
   const navigate = useNavigate();
@@ -80,122 +85,147 @@ const ConfigPage = () => {
                 {t('config.save')}
               </LoadingButton>
             </Box>
-            <Divider />
-            <Box>
-              <Grid container rowSpacing={2} my={2} columnSpacing={3}>
-                <Grid item xs={3} display={'flex'} alignItems={'center'}>
-                  <Typography variant="subtitle1" color="grey.600">
-                    {t('config.checkin')}
-                  </Typography>
-                </Grid>
-                <Grid item xs={3} display={'flex'} alignItems={'center'}>
-                  <RHFSwitch name="checkin" label={t('config.active_label')} />
-                </Grid>
-                <Grid item xs={3} display={'flex'} alignItems={'center'}>
-                  <Typography variant="subtitle1" color="grey.600">
-                    {t('config.encounter')}
-                  </Typography>
-                </Grid>
-                <Grid item xs={3} display={'flex'} alignItems={'center'}>
-                  <RHFSwitch name="encounter" label={t('config.active_label')} />
-                </Grid>
-                <Grid item xs={3} display={'flex'} alignItems={'center'}>
-                  <Typography variant="subtitle1" color="grey.600">
-                    {t('config.reservation')}
-                  </Typography>
-                </Grid>
-                <Grid item xs={3} display={'flex'} alignItems={'center'}>
-                  <RHFSwitch name="reservation" label={t('config.active_label')} />
-                </Grid>
-                <Grid item xs={3} display={'flex'} alignItems={'center'}>
-                  <Typography variant="subtitle1" color="grey.600">
-                    {t('config.registration')}
-                  </Typography>
-                </Grid>
-                <Grid item xs={3} display={'flex'} alignItems={'center'}>
-                  <RHFSwitch name="registration" label={t('config.active_label')} />
-                </Grid>
-                <Grid item xs={3} display={'flex'} alignItems={'center'}>
-                  <Typography variant="subtitle1" color="grey.600">
-                    {t('config.simplify')}
-                  </Typography>
-                </Grid>
-                <Grid item xs={3} display={'flex'} alignItems={'center'}>
-                  <RHFSwitch name="simplify" label={t('config.active_label')} />
-                </Grid>
-              </Grid>
-            </Box>
-            <Divider />
-            <Box>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <Typography variant="subtitle2">{t('config.mode')} : </Typography>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <RHFRadioGroup
-                    row
-                    name="mode"
-                    options={[
-                      { label: 'Fluid', value: 'fluid' },
-                      { label: 'Fixed', value: 'fixed' },
-                    ]}
-                  />
-                </Grid>
+            <Accordion defaultExpanded>
+              <AccordionSummary
+                expandIcon={<GridExpandMoreIcon />}
 
-                <Grid item xs={12} md={12}>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      placeItems: 'center',
-                      placeContent: 'center',
-                      height: '100%',
-                      gap: 1,
-                    }}
-                  >
-                    {values.checkin && (
-                      <Button
-                        sx={{ width: !isFluid ? '20%' : undefined }}
-                        variant="soft"
-                        color="primary"
-                        fullWidth={isFluid}
-                      >
+              >
+                <Typography variant='h5'>Pengaturan Umum</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Box>
+                  <Grid container rowSpacing={2} my={2} columnSpacing={3}>
+                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                      <Typography variant="subtitle1" color="grey.600">
                         {t('config.checkin')}
-                      </Button>
-                    )}
-                    {values.encounter && (
-                      <Button
-                        sx={{ width: !isFluid ? '20%' : undefined }}
-                        variant="soft"
-                        color="primary"
-                        fullWidth={isFluid}
-                      >
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                      <RHFSwitch name="checkin" label={t('config.active_label')} />
+                    </Grid>
+                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                      <Typography variant="subtitle1" color="grey.600">
                         {t('config.encounter')}
-                      </Button>
-                    )}
-                    {values.reservation && (
-                      <Button
-                        sx={{ width: !isFluid ? '20%' : undefined }}
-                        variant="soft"
-                        color="primary"
-                        fullWidth={isFluid}
-                      >
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                      <RHFSwitch name="encounter" label={t('config.active_label')} />
+                    </Grid>
+                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                      <Typography variant="subtitle1" color="grey.600">
                         {t('config.reservation')}
-                      </Button>
-                    )}
-                    {values.registration && (
-                      <Button
-                        sx={{ width: !isFluid ? '20%' : undefined }}
-                        variant="soft"
-                        color="primary"
-                        fullWidth={isFluid}
-                      >
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                      <RHFSwitch name="reservation" label={t('config.active_label')} />
+                    </Grid>
+                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                      <Typography variant="subtitle1" color="grey.600">
                         {t('config.registration')}
-                      </Button>
-                    )}
-                  </Box>
-                </Grid>
-              </Grid>
-            </Box>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                      <RHFSwitch name="registration" label={t('config.active_label')} />
+                    </Grid>
+                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                      <Typography variant="subtitle1" color="grey.600">
+                        {t('config.simplify')}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                      <RHFSwitch name="simplify" label={t('config.active_label')} />
+                    </Grid>
+                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                      <Typography variant="subtitle1" color="grey.600">
+                        {t('config.use_keyboard')}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                      <RHFSwitch name="useKeyboard" label={t('config.active_label')} />
+                    </Grid>
+                  </Grid>
+                </Box>
+              </AccordionDetails>
+            </Accordion>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<GridExpandMoreIcon />}
+              >
+                <Typography variant='h5'>Tata Letak Beranda</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Box>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <Typography variant="subtitle2">{t('config.mode')} : </Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <RHFRadioGroup
+                        row
+                        name="mode"
+                        options={[
+                          { label: 'Fluid', value: 'fluid' },
+                          { label: 'Fixed', value: 'fixed' },
+                        ]}
+                      />
+                    </Grid>
+
+                    <Grid item xs={12} md={12}>
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          placeItems: 'center',
+                          placeContent: 'center',
+                          height: '100%',
+                          gap: 1,
+                        }}
+                      >
+                        {values.checkin && (
+                          <Button
+                            sx={{ width: !isFluid ? '20%' : undefined }}
+                            variant="soft"
+                            color="primary"
+                            fullWidth={isFluid}
+                          >
+                            {t('config.checkin')}
+                          </Button>
+                        )}
+                        {values.encounter && (
+                          <Button
+                            sx={{ width: !isFluid ? '20%' : undefined }}
+                            variant="soft"
+                            color="primary"
+                            fullWidth={isFluid}
+                          >
+                            {t('config.encounter')}
+                          </Button>
+                        )}
+                        {values.reservation && (
+                          <Button
+                            sx={{ width: !isFluid ? '20%' : undefined }}
+                            variant="soft"
+                            color="primary"
+                            fullWidth={isFluid}
+                          >
+                            {t('config.reservation')}
+                          </Button>
+                        )}
+                        {values.registration && (
+                          <Button
+                            sx={{ width: !isFluid ? '20%' : undefined }}
+                            variant="soft"
+                            color="primary"
+                            fullWidth={isFluid}
+                          >
+                            {t('config.registration')}
+                          </Button>
+                        )}
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Box>
+              </AccordionDetails>
+            </Accordion>
           </Stack>
         </Form>
       </WindowContainer>

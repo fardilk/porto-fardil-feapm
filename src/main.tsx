@@ -8,6 +8,13 @@ import { CONFIG } from './config-global';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 
+/**
+ * Reload Window When Updated Chunk
+ */
+window.addEventListener('vite:preloadError', () => {
+  window.location.reload()
+})
+
 // ----------------------------------------------------------------------
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);

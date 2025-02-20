@@ -7,6 +7,7 @@ export type ConfigType = {
   registration: boolean;
   simplify: boolean;
   mode: 'fluid' | 'fixed';
+  useKeyboard: boolean;
 };
 
 export const initialState: ConfigType = {
@@ -16,6 +17,7 @@ export const initialState: ConfigType = {
   registration: true,
   simplify: false,
   mode: 'fixed',
+  useKeyboard: true,
 };
 
 export const slice = createSlice({
@@ -29,6 +31,7 @@ export const slice = createSlice({
       state.reservation = actions.payload.reservation;
       state.simplify = actions.payload.simplify;
       state.mode = actions.payload.mode;
+      state.useKeyboard = actions.payload.useKeyboard;
     },
   },
 });
