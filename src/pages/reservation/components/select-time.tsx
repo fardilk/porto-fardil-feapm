@@ -84,7 +84,7 @@ const SelectTime = (props: SelectTimeProps) => {
                   />
                 </Box>
                 <Typography>{doctorInfo?.polyName}</Typography>
-                <Label color='success'>{doctorInfo?.person?.experienceYears}</Label>
+                <Label color='success'>{data?.data?.experienceYears}</Label>
               </Box>
             </Box>
             <Box>
@@ -94,7 +94,7 @@ const SelectTime = (props: SelectTimeProps) => {
                     <Typography variant='h6'>Publikasi / Seminar Kerja</Typography>
                     <List>
                       {
-                        doctorInfo?.person?.doctorProfile?.doctorDocument?.map((row, index) => {
+                        data?.data?.doctorProfile?.doctorDocument?.map((row, index) => {
 
                           return (
                             <ListItem sx={{ mb: 1 }} disablePadding key={index}>
@@ -116,7 +116,7 @@ const SelectTime = (props: SelectTimeProps) => {
                   <Typography variant='h6'>Informasi Keilmuan</Typography>
                   <List>
                     {
-                      doctorInfo?.person?.doctorProfile?.doctorEducation?.map((row, index) => {
+                      data?.data?.doctorProfile?.doctorEducation?.map((row, index) => {
 
                         return (
                           <ListItem sx={{ mb: 1 }} disablePadding key={index}>
@@ -134,7 +134,7 @@ const SelectTime = (props: SelectTimeProps) => {
                   <Typography variant='h6'>Pengalaman Kerja</Typography>
                   <List>
                     {
-                      doctorInfo?.person?.doctorProfile?.doctorExperience?.map((row, index) => {
+                      data?.data?.doctorProfile?.doctorExperience?.map((row, index) => {
 
                         return (
                           <ListItem sx={{ mb: 1 }} disablePadding key={index}>
@@ -158,7 +158,7 @@ const SelectTime = (props: SelectTimeProps) => {
               <Typography variant='h6'>Publikasi / Seminar Kerja</Typography>
               <List>
                 {
-                  doctorInfo?.person?.doctorProfile?.doctorPublication?.map((row, index) => {
+                  data?.data?.doctorProfile?.doctorPublication?.map((row, index) => {
 
                     return (
                       <ListItem sx={{ mb: 1 }} disablePadding key={index}>

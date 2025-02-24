@@ -60,7 +60,7 @@ function getPath() {
 export const CONFIG: ConfigValue = {
   app: {
     graphqlPath: getPath(),
-    birtHost: import.meta.env.VITE_APP_API_HOST_REST || '',
+    birtHost: import.meta.env.VITE_APP_API_BIRT || import.meta.env.VITE_APP_API_HOST_REST || '',
     urlName: import.meta.env.VITE_APP_URL_NAME ?? '',
     platformName: import.meta.env.VITE_APP_PLATFORM_NAME ?? '',
     hospitalName: import.meta.env.VITE_APP_HOSPITAL_NAME ?? '',

@@ -41,9 +41,9 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
       const page = (action === 'prev' ? prev - 1 : prev + 1)
 
       if (isPractitioner) {
-        refetch({ keyword: searchPractioner, page, take: 9 });
+        refetch({ keyword: searchPractioner || '', page, take: 9 });
       } else {
-        refetchPoly({ keyword: searchPractioner, page, take: 9 })
+        refetchPoly({ keyword: searchPractioner || '', page, take: 9 })
       }
 
       return page === 0 ? prev : page
@@ -91,9 +91,9 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
 
   const handleResetSearch = () => {
     if (isPractitioner) {
-      refetch({ keyword: searchPractioner, page: 1, take: 9 });
+      refetch({ keyword: searchPractioner || '', page: 1, take: 9 });
     } else {
-      refetchPoly({ keyword: searchPractioner, page: 1, take: 9 });
+      refetchPoly({ keyword: searchPractioner || '', page: 1, take: 9 });
     }
   }
 
