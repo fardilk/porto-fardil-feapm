@@ -35,14 +35,16 @@ const SelectPractitioner = ({
 
   const { data: dataPoly, isLoading: loadingPoly, refetch: refetchPoly } = useFetch({ keyword: '', page: 1, take: 9 }, departmentList)
 
+  const searchPractioner = useWatch({ name: 'searchPractioner' });
+
   const handleChangePagination = ({ action }: { action: 'prev' | 'next' }) => {
     setCurrentIndex((prev) => {
       const page = (action === 'prev' ? prev - 1 : prev + 1)
 
       if (isPractitioner) {
-        refetch({ keyword: searchPractioner, page, take: 9 });
+        refetch({ keyword: searchPractioner || '', page, take: 9 });
       } else {
-        refetchPoly({ keyword: searchPractioner, page, take: 9 })
+        refetchPoly({ keyword: searchPractioner || '', page, take: 9 })
       }
 
       return page === 0 ? prev : page
@@ -87,13 +89,11 @@ const SelectPractitioner = ({
     onCardSelect();
   }
 
-  const searchPractioner = useWatch({ name: 'searchPractioner' });
-
   const handleResetSearch = () => {
     if (isPractitioner) {
-      refetch({ keyword: searchPractioner, page: 1, take: 9 });
+      refetch({ keyword: searchPractioner || '', page: 1, take: 9 });
     } else {
-      refetchPoly({ keyword: searchPractioner, page: 1, take: 9 });
+      refetchPoly({ keyword: searchPractioner || '', page: 1, take: 9 });
     }
   }
 
@@ -128,6 +128,12 @@ const SelectPractitioner = ({
               }}
               onClick={() => {
                 setElementName('searchPractioner');
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  handleResetSearch()
+                  setCurrentIndex(0); setElementName('')
+                }
               }}
             />
           </Grid>
