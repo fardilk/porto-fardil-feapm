@@ -151,7 +151,7 @@ const ReservationPage = () => {
 
   const methods = useForm({ defaultValues: { nik: '' } as any });
 
-  const { handleSubmit, watch, setValue, control } = methods;
+  const { handleSubmit, setValue, control } = methods;
 
   const [watchDate, watchBookTime, watchUnable] = useWatch({ control, name: ["date", "bookTime", "unable"] })
 
