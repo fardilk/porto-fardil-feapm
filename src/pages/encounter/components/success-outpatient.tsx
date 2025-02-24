@@ -168,7 +168,7 @@ const SuccessOutpatient = ({
       label: t('global.reprint'),
       buttonProps: { ...buttonStyle, variant: 'outlined', disabled: counting15 },
       action: () => {
-        printIt(birtUrlBuilder('struk-kunjungan-apm', [values?.resBookingID || "-"]))
+        printIt(birtUrlBuilder('struk-kunjungan', [values?.resBookingID || "-"]))
         startCountdown15();
       },
     },
