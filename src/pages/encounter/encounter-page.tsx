@@ -68,6 +68,7 @@ import {
 } from './model/variables';
 import { fDate, formatStr } from 'src/utils/format-time';
 import dayjs from 'dayjs';
+import nProgress from 'nprogress';
 
 const EncounterPage = () => {
   const { t } = useTranslate();
@@ -455,6 +456,7 @@ const EncounterPage = () => {
         timeout(2000).then(() => { setErrors({ errorIdentifier: "" }) })
       } else {
         try {
+          nProgress.start()
           await handleGetPatientByNIK(nik)
           handleChangePage({ toSpecificPage: "information_outpatient_general" });
         } catch (e) {
@@ -465,6 +467,8 @@ const EncounterPage = () => {
           if (e?.message === "NOT_FOUND") {
             toast.info("Anda Belum Terdaftar. Silahkan Daftar Terlebih Dahulu")
           }
+        } finally {
+          nProgress.done()
         }
       }
     } else {
