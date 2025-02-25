@@ -229,7 +229,7 @@ const SuccessOutpatient = ({
           fullWidth
           color="secondary"
           onClick={() => {
-            printIt(birtUrlBuilder('struk-kunjungan-apm', [values?.resBookingID || "-"]))
+            printIt(birtUrlBuilder('struk-kunjungan', [values?.resBookingID || "-"]))
             setOpenPrint(true);
             startCountdown15();
             startCountdown2min();
