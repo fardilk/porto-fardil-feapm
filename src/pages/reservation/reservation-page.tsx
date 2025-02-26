@@ -55,6 +55,7 @@ import {
   formStepsRadCompany,
   formStepsRadInsurance,
 } from './model/variables';
+import nProgress from 'nprogress';
 
 const ReservationPage = () => {
   const navigate = useNavigate();
@@ -151,7 +152,7 @@ const ReservationPage = () => {
 
   const methods = useForm({ defaultValues: { nik: '' } as any });
 
-  const { handleSubmit, watch, setValue, control } = methods;
+  const { handleSubmit, setValue, control } = methods;
 
   const [watchDate, watchBookTime, watchUnable] = useWatch({ control, name: ["date", "bookTime", "unable"] })
 
@@ -307,6 +308,7 @@ const ReservationPage = () => {
         timeout(2000).then(() => { setErrors({ errorIdentifier: "" }) })
       } else {
         try {
+          nProgress.start()
           await handleGetPatientByNIK(nik)
           handleChangePage({ toSpecificPage: "information_outpatient_general" });
         } catch (e) {
@@ -317,6 +319,8 @@ const ReservationPage = () => {
           if (e?.message === "NOT_FOUND") {
             toast.info("Anda Belum Terdaftar. Silahkan Daftar Terlebih Dahulu")
           }
+        } finally {
+          nProgress.done()
         }
       }
 

@@ -15,7 +15,7 @@ const InsertIdentifier = ({ errorMessage }: InsertIdentifierProps) => {
 
   const valCitizenship = useWatch({ name: "citizenship" })
 
-  const isForeign = valCitizenship === "WNA"
+  const isForeign = valCitizenship
 
   const { t, onChangeLang } = useTranslate()
 
@@ -56,7 +56,6 @@ const InsertIdentifier = ({ errorMessage }: InsertIdentifierProps) => {
           }}
         />
       </Box>
-
       <Typography variant="h4" textAlign="center">{isForeign ? t('appointment.input_your_passport') : t('appointment.input_your_nik')}</Typography>
       {errorMessage && <ErrorAlert message={errorMessage} />}
       <RHFTextField

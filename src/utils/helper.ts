@@ -1,6 +1,7 @@
 import { Buffer } from 'buffer';
 import lodash from 'lodash';
 import { CONFIG } from 'src/config-global';
+import axiosInstance from './axios';
 
 /**
  * https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore?tab=readme-ov-file#_flatten
@@ -206,10 +207,14 @@ export function capitalizeFirstLetter(string: string) {
   return lodash.startCase(lodash.toLower(string));
 }
 
-export function birtUrlBuilder(prefix: string, param: string[]) {
+export function printUrlBuilder(prefix: string, param: string[]) {
   return `${prefix}/${param.reduce((acc, row) => `${acc}/${row}`)}`;
 }
 
 export function openPrint(url: string) {
   return window.open(`${CONFIG.app.birtHost}/${url}`, '_blank');
+}
+
+export async function openDirectPrint(url: string) {
+  return await axiosInstance.get(url);
 }

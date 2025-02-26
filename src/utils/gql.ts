@@ -1,8 +1,8 @@
 /* eslint-disable */
 
 import { GraphQLClient } from 'graphql-request';
-import { GetAccessToken, isValidToken, setSession } from './auth';
 import { CONFIG } from 'src/config-global';
+import { GetAccessToken, isValidToken, setSession } from './auth';
 
 class GqlClient extends GraphQLClient {
   auth: boolean;
@@ -17,15 +17,18 @@ class GqlClient extends GraphQLClient {
     };
 
     super(`${CONFIG.app.graphqlPath}${mod()}query`);
+
     this.auth = props?.auth ?? true;
 
     if (props?.auth ?? true) {
       const token = GetAccessToken();
+
       if (token === null) {
         return;
       }
+
       if (isValidToken(token)) {
-        this.setHeader('Authorization', `Bearer ${token}`);
+        this.attachAuth();
       } else {
         this.handleLogout();
       }

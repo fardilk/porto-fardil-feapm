@@ -104,3 +104,8 @@ export const AppointmentCreateResultOneQuery = `
   message
   data { ${AppointmentQuery} }
 `;
+
+export const PrintBarcodeResultMutationQuery = `
+  status
+  message
+`;
