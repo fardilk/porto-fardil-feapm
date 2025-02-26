@@ -10,7 +10,7 @@ import { useCountdownSeconds } from 'src/hooks';
 import { useTranslate } from 'src/locales';
 import { fCurrency } from 'src/utils/format-number';
 import { fDate } from 'src/utils/format-time';
-import { birtUrlBuilder, fAsterisk, openPrint as printIt } from 'src/utils/helper';
+import { fAsterisk, openPrint as printIt, printUrlBuilder } from 'src/utils/helper';
 import type { SuccessOutpatientType } from '../model/types';
 import { buttonStyle, getPaymentType } from '../model/variables';
 
@@ -164,7 +164,7 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
       label: t("global.reprint"),
       buttonProps: { ...buttonStyle, variant: 'outlined', disabled: counting15 },
       action: () => {
-        printIt(birtUrlBuilder('struk-kunjungan-apm', [values?.resBookingID || "-"]))
+        printIt(printUrlBuilder('struk-kunjungan-apm', [values?.resBookingID || "-"]))
         startCountdown15();
       },
     },
@@ -221,7 +221,7 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
           color="secondary"
           onClick={() => {
             // axiosInstance({ url: `/struk-kunjungan-apm/${values?.resBookingID || "-"}` })
-            printIt(birtUrlBuilder('struk-kunjungan-apm', [values?.resBookingID || "-"]))
+            printIt(printUrlBuilder('struk-kunjungan-apm', [values?.resBookingID || "-"]))
             setOpenPrint(true);
             startCountdown15();
             startCountdown2min();
