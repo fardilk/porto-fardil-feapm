@@ -1,17 +1,17 @@
 import { Box } from '@mui/material';
+import nProgress from 'nprogress';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 import { AppPage } from 'src/components/app-page';
 import { Form } from 'src/components/hook-form';
+import { toast } from 'src/components/snackbar';
 import { WindowContainer } from 'src/components/window-container';
 import { useStepper } from 'src/hooks';
-import { InformationBooking, InsertBookingNumber } from './components';
-import { useNavigate } from 'react-router';
-import { toast } from 'src/components/snackbar';
-import { useEffect, useMemo, useState } from 'react';
 import { useTranslate } from 'src/locales';
+import { InformationBooking, InsertBookingNumber } from './components';
 import { getCheckin } from './model/functions';
 import { BookingType } from './model/types';
-import nProgress from 'nprogress';
 
 const CheckinPage = () => {
   const navigate = useNavigate();
@@ -33,9 +33,8 @@ const CheckinPage = () => {
   const onSubmit = async (data: { booking_number?: string }): Promise<void> => {
     const bookingNumber = data.booking_number?.replaceAll('\n', '');
 
-    if (!bookingNumber) {
-      toast.error(t('checkin.error.empty_booking_number'));
-    } else {
+    // toast.error(t('checkin.error.empty_booking_number'));
+    if (bookingNumber) {
       try {
         nProgress.start();
         const response = await getCheckin({
@@ -45,12 +44,13 @@ const CheckinPage = () => {
         if (!response.status) {
           throw Error(response.message)
         }
+
         toast.success('Berhasil Lapor Kehadiran');
         setDataCheckin(response.data.booking);
 
         handleChangePage({ action: 'next' });
       } catch (e) {
-        toast.error(e?.message);
+        toast.error(e?.message === "EOF" ? "Nomor Booking Tidak Ditemukan" : e?.message);
       } finally {
         nProgress.done();
       }

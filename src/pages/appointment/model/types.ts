@@ -131,3 +131,8 @@ export type BookingCreateResultOne = {
   message: string;
   data: Booking;
 };
+
+export type PrintBarcodeResultMutation = {
+  status: boolean;
+  message: string;
+};

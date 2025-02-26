@@ -1,11 +1,16 @@
 import { gql } from 'graphql-request';
 import GqlClient from 'src/utils/gql';
-import { AppointmentCreateResultOneQuery, BookingCreateResultOneQuery } from './query';
+import {
+  AppointmentCreateResultOneQuery,
+  BookingCreateResultOneQuery,
+  PrintBarcodeResultMutationQuery,
+} from './query';
 import {
   AppointmentCreateResultOne,
   AppointmentInput,
   BookingCreateResultOne,
   BookingInput,
+  PrintBarcodeResultMutation,
 } from './types';
 
 export const bookingCreate = async (param: {
@@ -70,4 +75,29 @@ export const appointmentCreate = async (param: {
   );
 
   return res.appointmentCreate;
+};
+
+export const printBarcode = async (param: {
+  encounterID: string;
+  dataType: string;
+}): Promise<PrintBarcodeResultMutation> => {
+  const client = new GqlClient({ module: 'appointment' });
+  const res = await client.request(
+    gql`
+      mutation printBarcode(
+        $encounterID: ID!
+        $dataType: String!
+      ) {
+        printBarcode(
+          encounterID: $encounterID
+          dataType: $dataType
+        ) {
+          ${PrintBarcodeResultMutationQuery}
+        }
+      }
+    `,
+    param
+  );
+
+  return res.printBarcode;
 };

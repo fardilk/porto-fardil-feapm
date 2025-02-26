@@ -8,8 +8,9 @@ import type { LabelTextProps } from 'src/components/label-text/types';
 import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
 import { useCountdownSeconds } from 'src/hooks';
 import { useTranslate } from 'src/locales';
+import { printBarcode } from 'src/pages/appointment/model/functions';
 import { fDate } from 'src/utils/format-time';
-import { birtUrlBuilder, fAsterisk, openPrint as printIt } from 'src/utils/helper';
+import { fAsterisk } from 'src/utils/helper';
 import { BookingType } from '../model/types';
 import { buttonStyle } from '../model/variables';
 
@@ -125,8 +126,9 @@ const InformationBooking = ({ data }: { data: BookingType }) => {
     {
       label: t('global.reprint'),
       buttonProps: { ...buttonStyle, variant: 'outlined', disabled: counting15 },
-      action: () => {
-        printIt(birtUrlBuilder('struk-kunjungan-apm', [data?.bookingID || "-"]))
+      action: async () => {
+        // openDirectPrint(printUrlBuilder('encounters', ['apm-print-barcode', data?.bookingID || "-", 'QUEUE']))
+        printBarcode({ dataType: 'QUEUE', encounterID: data?.bookingID || '' })
         startCountdown15();
       },
     },
