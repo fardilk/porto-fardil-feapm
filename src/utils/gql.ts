@@ -3,6 +3,7 @@
 import { GraphQLClient } from 'graphql-request';
 import { CONFIG } from 'src/config-global';
 import { GetAccessToken, isValidToken, setSession } from './auth';
+import { uuidv4 } from './uuidv4';
 
 class GqlClient extends GraphQLClient {
   auth: boolean;
@@ -19,6 +20,8 @@ class GqlClient extends GraphQLClient {
     super(`${CONFIG.app.graphqlPath}${mod()}query`);
 
     this.auth = props?.auth ?? true;
+
+    this.setHeader('X-Request-Id', uuidv4());
 
     if (props?.auth ?? true) {
       const token = GetAccessToken();
