@@ -282,7 +282,7 @@
 
   "registration": {
     "title": {
-      "enter_nik": "Enter NIK",
+      "enter_nik": "Enter Passport",
       "select_registration_type": "Select Registration Type",
       "patient_data_info": "Patient Data Information",
       "enter_phone_number": "Enter Phone Number",
