@@ -190,6 +190,7 @@ const InformationBooking = ({ data }: { data: BookingType }) => {
         fullWidth
         color="secondary"
         onClick={() => {
+          printBarcode({ dataType: 'QUEUE', encounterID: data?.bookingID || '' })
           setOpenPrint(true);
           startCountdown15();
           startCountdown2min();
