@@ -36,6 +36,7 @@ export function RHFTimePils<T>(props: RHFTimePilsProps<T>) {
   return (
     <Box>
       <Typography>{label}</Typography>
+      {options.length === 0 && <Typography variant="caption">No data</Typography>}
       <TimePilsContainer
         getIsSelected={(opt) => Boolean(isSelected(opt))}
         getOptionLabel={getOptionLabel}
