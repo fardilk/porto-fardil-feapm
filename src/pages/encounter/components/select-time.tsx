@@ -33,7 +33,7 @@ const SelectTime = (props: SelectTimeProps) => {
 
   const { data, isLoading, refetch } = useFetch({ practitionerHealthcareServiceID: values?.practitionerHealthcareServiceID || '', date: fDate(dayjs(), formatStr.paramCase.mysqlDate), isBpjs: false }, doctorOne)
 
-  const timeOpt = data?.data.slot.map((it) => ({
+  const timeOpt = data?.data?.slot?.map((it) => ({
     label: it.slotTime,
     value: it.slotId,
     disabled: it.isDisabled
