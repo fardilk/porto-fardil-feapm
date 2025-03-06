@@ -31,7 +31,7 @@ const SelectTime = (props: SelectTimeProps) => {
 
   const values = watch()
 
-  const { data, isLoading, refetch } = useFetch({ practitionerHealthcareServiceID: values?.practitionerHealthcareServiceID || '', date: fDate(dayjs().add(1, 'day'), formatStr.paramCase.mysqlDate) }, doctorOne)
+  const { data, isLoading, refetch } = useFetch({ practitionerHealthcareServiceID: values?.practitionerHealthcareServiceID || '', date: fDate(dayjs().add(1, 'day'), formatStr.paramCase.mysqlDate), isBpjs: false }, doctorOne)
 
   const timeOpt = data?.data.slot.map((it) => ({
     label: it.slotTime,
@@ -185,7 +185,7 @@ const SelectTime = (props: SelectTimeProps) => {
                 name="date"
                 format="DD/MM/YYYY"
                 onSelect={(val) => {
-                  refetch({ practitionerHealthcareServiceID: values?.practitionerHealthcareServiceID || '', date: fDate(val, formatStr.paramCase.mysqlDate) })
+                  refetch({ practitionerHealthcareServiceID: values?.practitionerHealthcareServiceID || '', date: fDate(val, formatStr.paramCase.mysqlDate), isBpjs: false })
                 }}
                 disablePast
                 slotProps={{
