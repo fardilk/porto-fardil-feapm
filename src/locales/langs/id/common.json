@@ -87,6 +87,9 @@
     "service_destination": "Tujuan Layanan",
     "examining_doctor": "Dokter Pemeriksa",
     "alert_info_poly": "Setelah memilih poli, dokter akan dipilihkan secara otomatis",
+    "title_success": "Reservasi Berhasil",
+    "accepted": "Reservasi Anda telah kami terima.",
+    "accepted_body": "Silahkan cetak bukti daftar dan simpan nomor booking Anda.",
     "patient": {
       "title": "Detail Pasien",
       "nik": "NIK",
@@ -165,7 +168,7 @@
       "confirmation_patient_registration_mcu": "Konfirmasi Pendaftaran Pasien",
       "select_lab_package": "Pilih Paket Laboratorium yang Anda Inginkan",
       "select_rad_service": "Pilih Layanan Radiologi yang Anda Inginkan",
-      "registration_success": "Pendaftaran Berhasil",
+      "registration_success": "Reservasi Berhasil",
       "select_insurance": "Pilih Asuransi",
       "insert_polis_number": "Masukkan Nomor Polis Asuransi",
       "information_data_patient_insurance": "Informasi Data Asuransi",
