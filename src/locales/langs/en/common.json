@@ -87,6 +87,9 @@
     "service_destination": "Service Destination",
     "examining_doctor": "Examining Doctor",
     "alert_info_poly": "After selecting a clinic, a doctor will be automatically selected",
+    "title_success": "Reservation Success",
+    "accepted": "Your reservation registration has been accepted.",
+    "accepted_body": "Please print the registration proof and keep your booking number.",
     "patient": {
       "title": "Patient Details",
       "nik": "NIK",
@@ -165,7 +168,7 @@
       "confirmation_patient_registration_mcu": "Confirm Patient Registration",
       "select_lab_package": "Select the Laboratory Package you want",
       "select_rad_service": "Select the Radiology Service you want",
-      "registration_success": "Registration Success",
+      "registration_success": "Reservation Success",
       "select_insurance": "Select Insurance",
       "insert_polis_number": "Enter Insurance Policy Number",
       "information_data_patient_insurance": "Patient Insurance Information",

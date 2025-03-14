@@ -181,8 +181,8 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
   return (
     <Stack gap={4}>
       <AlertInformation
-        title={t("checkin.title_success")}
-        body="Silakan menuju ke poli Anda. (note)"
+        title={t("appointment.accepted")}
+        body={t("appointment.accepted_body")}
       />
 
       <Box>
