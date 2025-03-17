@@ -46,8 +46,6 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
       title: t('appointment.patient.birthdateplace'),
       body: `${patientDetail?.birthPlace}, ${patientDetail?.birthDttm}`,
     },
-    { title: t('appointment.patient.blood_type'), body: patientDetail?.additional.bloodTypeDisplay || '' },
-    { title: t('appointment.patient.blood_rhesus'), body: patientDetail?.additional.bloodRhesusDisplay || '' },
     {
       title: t('appointment.patient.address'),
       body: patientDetail?.address,

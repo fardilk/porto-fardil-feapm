@@ -53,8 +53,6 @@ const SuccessOutpatient = ({
         body: `${patientData.birthPlace}, ${patientData.birthDttm}`,
       },
       { title: t('global.phone_number'), body: fAsterisk(patientData.phone) },
-      { title: t('global.blood_type'), body: patientData.additional.bloodTypeDisplay || '' },
-      { title: 'Rhesus', body: patientData.additional.bloodRhesusDisplay || '' },
       { title: 'Email', body: patientData.email },
       {
         title: t('global.address'),
