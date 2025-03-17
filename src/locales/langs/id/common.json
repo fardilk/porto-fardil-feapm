@@ -280,7 +280,8 @@
     "if_doctor_can't_arrived": "Jika Dokter Berhalangan Hadir di Jam Tersebut",
     "change_schedule": "Pindah Jadwal",
     "cancel_visit": "Batal Kunjungan",
-    "examining_doctor": "Dokter Pemeriksa"
+    "examining_doctor": "Dokter Pemeriksa",
+    "serve_time": "Waktu Pelayanan"
   },
 
   "registration": {

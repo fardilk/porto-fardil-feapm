@@ -13,6 +13,7 @@ import { fCurrency } from 'src/utils/format-number';
 import { fAsterisk } from 'src/utils/helper';
 import type { SuccessOutpatientType } from '../model/types';
 import { buttonStyle, getPaymentType } from '../model/variables';
+import { fDate, formatStr, today } from 'src/utils/format-time';
 
 const SuccessOutpatient = ({
   type,
@@ -35,7 +36,7 @@ const SuccessOutpatient = ({
     countdown: countdown2min,
     counting: counting2min,
   } = useCountdownSeconds(2 * 60);
-  const { t } = useTranslate();
+  const { t, currentLang } = useTranslate();
 
   const { watch } = useFormContext()
 
@@ -132,6 +133,11 @@ const SuccessOutpatient = ({
           },
         ]
         : []),
+    {
+      title: t('reservation.serve_time'),
+      body: `${fDate(today(), formatStr.paramCase.dayDate, currentLang.value)} ${values?.serviceTime || values?.bookTime?.label}`,
+      localIcon: 'jadwal',
+    },
   ];
 
   const getCountdown15 = useMemo(() => {

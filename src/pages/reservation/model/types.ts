@@ -33,7 +33,7 @@ export type PaymentMethodProps = {
 };
 
 export type SelectPractitionerProps = {
-  onCardSelect: () => void;
+  onCardSelect: (method?: string) => void;
   setSelectedPractitioner: (data: Nullable<SelectedPractioner>) => void;
 };
 

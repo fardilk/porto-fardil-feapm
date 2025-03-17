@@ -1,6 +1,7 @@
 import type { Dayjs, OpUnitType } from 'dayjs';
 
 import dayjs from 'dayjs';
+import 'dayjs/locale/id';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import duration from 'dayjs/plugin/duration';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -58,12 +59,14 @@ export function fDateTime(date: DatePickerFormat, format?: string) {
 
 /** output: 17 Apr 2022
  */
-export function fDate(date: DatePickerFormat, format?: string) {
+export function fDate(date: DatePickerFormat, format?: string, locale?: string) {
   if (!date) {
     return '';
   }
 
   dayjs.extend(customParseFormat);
+
+  dayjs.locale(locale || 'id');
 
   dayjs.updateLocale('id', {
     weekdays: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'],

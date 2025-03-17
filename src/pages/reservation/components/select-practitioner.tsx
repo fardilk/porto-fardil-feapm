@@ -65,17 +65,20 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
       setSelectedPractitioner({
         doctor: response.doctorName,
         polyName: response.departmentName,
-        serviceTime: `${fDate(dayjs(), formatStr.paramCase.dayDate)}, ${response.scheduleStart} - ${response.scheduleEnd}`,
+        serviceTime: `${fDate(dayjs(), formatStr.paramCase.dayDate)}`,
         person: response
       });
 
-      onCardSelect();
+      setFormValue("serviceTime", `${response.scheduleStart} - ${response.scheduleEnd}`)
+
+      onCardSelect("healthcare");
     } catch (e) {
       toast.error(e?.message)
     }
   };
 
   const handleSelectedByPractitioner = (doctor: Doctor) => {
+    console.log(doctor)
     setFormValue('practionerId', doctor.doctorID);
     setFormValue('departmentId', doctor.departmentID);
     setFormValue('scheduleID', doctor.scheduleID)
@@ -86,6 +89,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
       serviceTime: `${doctor.scheduleStart} - ${doctor.scheduleEnd}`,
       person: doctor
     });
+
     onCardSelect();
   }
 
@@ -128,6 +132,12 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
               }}
               onClick={() => {
                 setElementName('searchPractioner');
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  handleResetSearch()
+                  setCurrentIndex(0); setElementName('')
+                }
               }}
             />
           </Grid>
