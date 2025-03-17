@@ -16,7 +16,8 @@ import type {
   SelectedRadiologyPackage
 } from '../model/types';
 import { getPaymentType } from '../model/variables';
-import { fDate, today } from 'src/utils/format-time';
+import { useWatch } from 'react-hook-form';
+import { fDate, formatStr, today } from 'src/utils/format-time';
 
 const ConfirmationOutpatient = ({
   handleBack,
@@ -37,12 +38,13 @@ const ConfirmationOutpatient = ({
   radPackage: Nullable<SelectedRadiologyPackage>
   encounterType: EncounterType;
 }) => {
-  const { t } = useTranslate();
-
+  const { t, currentLang } = useTranslate();
 
   const [loading, setLoading] = useState(false)
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [acceptedTerm, setAcceptedTerm] = useState(false);
+
+  const values = useWatch()
 
   const detailData: LabelTextProps[] = [
     {
@@ -119,15 +121,7 @@ const ConfirmationOutpatient = ({
           body: (
             <Box>
               <Typography>
-                {fDate(today(), "dddd")}
-              </Typography>
-
-              <Typography>
-                {fDate(today(), "DD-MM-YYYY")}
-              </Typography>
-
-              <Typography>
-                {doctorInfo.serviceTime}
+                {fDate(today(), formatStr.paramCase.dayDate, currentLang.value)} {values?.serviceTime || values?.bookTime?.label}
               </Typography>
             </Box>
           ),

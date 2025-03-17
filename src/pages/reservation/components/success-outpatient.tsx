@@ -9,7 +9,7 @@ import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
 import { useCountdownSeconds } from 'src/hooks';
 import { useTranslate } from 'src/locales';
 import { fCurrency } from 'src/utils/format-number';
-import { fDate } from 'src/utils/format-time';
+import { fDate, formatStr } from 'src/utils/format-time';
 import { fAsterisk, openPrint as printIt, printUrlBuilder } from 'src/utils/helper';
 import type { SuccessOutpatientType } from '../model/types';
 import { buttonStyle, getPaymentType } from '../model/variables';
@@ -18,7 +18,7 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
   const { type, reservationType, patientDetail, doctorInfo, labPackage, radPackage } = props;
 
   const navigate = useNavigate();
-  const { t } = useTranslate();
+  const { t, currentLang } = useTranslate();
   const { watch } = useFormContext()
 
   const values = watch()
@@ -111,15 +111,8 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
           body: (
             <Box>
               <Typography>
-                {fDate(values.date, "dddd")}
-              </Typography>
 
-              <Typography>
-                {fDate(values.date, "DD-MM-YYYY")}
-              </Typography>
-
-              <Typography>
-                {doctorInfo.serviceTime}
+                {fDate(values?.date, formatStr.paramCase.dayDate, currentLang.value)} - {values?.bookTime?.label}
               </Typography>
             </Box>
           ),

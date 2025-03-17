@@ -170,8 +170,12 @@ const ReservationPage = () => {
     setErrorMessage((prev) => ({ ...prev, unableErr: '' }));
   }, [watchUnable]);
 
-  const onPractitionerSelect = () => {
-    handleChangePage({ action: 'next' });
+  const onPractitionerSelect = (method?: string) => {
+    if (method === "healthcare") {
+      handleChangePage({ toSpecificPage: 'confirmation_patient_registration' })
+    } else {
+      handleChangePage({ action: 'next' });
+    }
   };
 
   const onLabPakckageSelect = () => {

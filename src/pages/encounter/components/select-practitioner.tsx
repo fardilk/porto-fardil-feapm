@@ -65,11 +65,13 @@ const SelectPractitioner = ({
       setSelectedPractitioner({
         doctor: response.doctorName,
         polyName: response.departmentName,
-        serviceTime: `${fDate(dayjs(), formatStr.paramCase.dayDate)}, ${response.scheduleStart} - ${response.scheduleEnd}`,
+        serviceTime: `${fDate(dayjs(), formatStr.paramCase.dayDate)}`,
         person: response
       });
 
-      onCardSelect();
+      setFormValue("serviceTime", `${response.scheduleStart} - ${response.scheduleEnd}`)
+
+      onCardSelect("healthcare");
     } catch (e) {
       toast.error(e?.message)
     }
@@ -83,7 +85,7 @@ const SelectPractitioner = ({
     setSelectedPractitioner({
       doctor: doctor.doctorName,
       polyName: doctor.departmentName,
-      serviceTime: `${fDate(dayjs(), formatStr.paramCase.dayDate)}, ${doctor.scheduleStart} - ${doctor.scheduleEnd}`,
+      serviceTime: `${fDate(dayjs(), formatStr.paramCase.dayDate)}`,
       person: doctor
     });
     onCardSelect();
