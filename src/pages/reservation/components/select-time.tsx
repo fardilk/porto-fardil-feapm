@@ -268,7 +268,7 @@ const SelectTime = (props: SelectTimeProps) => {
               variant="contained"
               size="large"
               type="submit"
-              onClick={() => handleConfirm()}
+              onClick={() => { handleConfirm() }}
             >
               {t("global.select_this_practitioner")}
             </Button>

@@ -280,7 +280,8 @@
     "if_doctor_can't_arrived": "If the doctor is unavailable during these hours",
     "change_schedule": "Change Schedule",
     "cancel_visit": "Cancel Visit",
-    "examining_doctor": "Examining Doctor"
+    "examining_doctor": "Examining Doctor",
+    "serve_time": "Serving Time"
   },
 
   "registration": {

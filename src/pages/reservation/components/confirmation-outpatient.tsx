@@ -37,7 +37,7 @@ const ConfirmationOutpatient = ({
   const [loadingCreate, setLoadingCreate] = useState(false)
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [acceptedTerm, setAcceptedTerm] = useState(false);
-  const { t } = useTranslate()
+  const { t, currentLang } = useTranslate()
 
   const { watch } = useFormContext()
 
@@ -53,8 +53,6 @@ const ConfirmationOutpatient = ({
       title: t('appointment.patient.birthdateplace'),
       body: `${patientDetail?.birthPlace}, ${patientDetail?.birthDttm}`,
     },
-    { title: t('appointment.patient.blood_type'), body: patientDetail?.additional.bloodTypeDisplay || '' },
-    { title: t('appointment.patient.blood_rhesus'), body: patientDetail?.additional.bloodRhesusDisplay || '' },
     {
       title: t('appointment.patient.address'),
       body: patientDetail?.address,
@@ -118,15 +116,8 @@ const ConfirmationOutpatient = ({
           body: (
             <Box>
               <Typography>
-                {fDate(values.date, "dddd")}
-              </Typography>
 
-              <Typography>
-                {fDate(values.date, "DD-MM-YYYY")}
-              </Typography>
-
-              <Typography>
-                {doctorInfo.serviceTime}
+                {fDate(values?.date, formatStr.paramCase.dayDate, currentLang.value)} - {values?.bookTime?.label}
               </Typography>
             </Box>
           ),
