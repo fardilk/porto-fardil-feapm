@@ -92,7 +92,7 @@ const SelectTime = (props: SelectTimeProps) => {
                 <Grid item xs={12} md={4}>
                   <Box>
                     <Typography variant='h6'>Dokumen Dokter</Typography>
-                    <List>
+                    {/* <List>
                       {
                         data?.data?.doctorProfile?.doctorDocument?.map((row, index) => {
 
@@ -109,12 +109,12 @@ const SelectTime = (props: SelectTimeProps) => {
                           )
                         }) || "-"
                       }
-                    </List>
+                    </List> */}
                   </Box>
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <Typography variant='h6'>Informasi Keilmuan</Typography>
-                  <List>
+                  {/* <List>
                     {
                       data?.data?.doctorProfile?.doctorEducation?.map((row, index) => {
 
@@ -128,11 +128,11 @@ const SelectTime = (props: SelectTimeProps) => {
                         )
                       }) || "-"
                     }
-                  </List>
+                  </List> */}
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <Typography variant='h6'>Pengalaman Kerja</Typography>
-                  <List>
+                  {/* <List>
                     {
                       data?.data?.doctorProfile?.doctorExperience?.map((row, index) => {
 
@@ -150,13 +150,13 @@ const SelectTime = (props: SelectTimeProps) => {
                         )
                       }) || "-"
                     }
-                  </List>
+                  </List> */}
                 </Grid>
               </Grid>
             </Box>
             <Box>
               <Typography variant='h6'>Publikasi / Seminar Kerja</Typography>
-              <List>
+              {/* <List>
                 {
                   data?.data?.doctorProfile?.doctorPublication?.map((row, index) => {
 
@@ -173,7 +173,7 @@ const SelectTime = (props: SelectTimeProps) => {
                     )
                   }) || "-"
                 }
-              </List>
+              </List> */}
             </Box>
           </Box>
         </Grid>
