@@ -16,6 +16,7 @@ import { defaultSettings, SettingsDrawer, SettingsProvider } from 'src/component
 import { Snackbar } from 'src/components/snackbar';
 
 import { CheckoutProvider } from 'src/sections/checkout/context';
+import { AppLoading } from './components/global-loading';
 
 export default function App() {
   useScrollToTop();
@@ -27,6 +28,7 @@ export default function App() {
           <ThemeProvider>
             <MotionLazy>
               <CheckoutProvider>
+                <AppLoading />
                 <Snackbar />
                 <ProgressBar />
                 <SettingsDrawer />

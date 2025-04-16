@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { AppPage } from 'src/components/app-page';
-import { Form, RHFRadioGroup, RHFSwitch } from 'src/components/hook-form';
+import { Form, RHFRadioGroup, RHFSwitch, RHFTextField } from 'src/components/hook-form';
 import { Iconify } from 'src/components/iconify';
 import { WindowContainer } from 'src/components/window-container';
 import { setConfig } from 'src/store/slices/config';
@@ -36,7 +36,8 @@ const ConfigPage = () => {
     reservation: config.reservation,
     simplify: config.simplify,
     mode: config.mode,
-    useKeyboard: config.useKeyboard
+    useKeyboard: config.useKeyboard,
+    apmID: config.apmID
   };
 
   const navigate = useNavigate();
@@ -94,53 +95,56 @@ const ConfigPage = () => {
               </AccordionSummary>
               <AccordionDetails>
                 <Box>
-                  <Grid container rowSpacing={2} my={2} columnSpacing={3}>
-                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                  <Grid container rowSpacing={2} columnSpacing={3}>
+                    <Grid item xs={12}>
+                      <RHFTextField name='apmID' label="APM ID" size='small' />
+                    </Grid>
+                    <Grid item xs={3}>
                       <Typography variant="subtitle1" color="grey.600">
                         {t('config.checkin')}
                       </Typography>
                     </Grid>
-                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                    <Grid item xs={3}>
                       <RHFSwitch name="checkin" label={t('config.active_label')} />
                     </Grid>
-                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                    <Grid item xs={3}>
                       <Typography variant="subtitle1" color="grey.600">
                         {t('config.encounter')}
                       </Typography>
                     </Grid>
-                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                    <Grid item xs={3}>
                       <RHFSwitch name="encounter" label={t('config.active_label')} />
                     </Grid>
-                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                    <Grid item xs={3}>
                       <Typography variant="subtitle1" color="grey.600">
                         {t('config.reservation')}
                       </Typography>
                     </Grid>
-                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                    <Grid item xs={3}>
                       <RHFSwitch name="reservation" label={t('config.active_label')} />
                     </Grid>
-                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                    <Grid item xs={3}>
                       <Typography variant="subtitle1" color="grey.600">
                         {t('config.registration')}
                       </Typography>
                     </Grid>
-                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                    <Grid item xs={3}>
                       <RHFSwitch name="registration" label={t('config.active_label')} />
                     </Grid>
-                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                    <Grid item xs={3}>
                       <Typography variant="subtitle1" color="grey.600">
                         {t('config.simplify')}
                       </Typography>
                     </Grid>
-                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                    <Grid item xs={3}>
                       <RHFSwitch name="simplify" label={t('config.active_label')} />
                     </Grid>
-                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                    <Grid item xs={3}>
                       <Typography variant="subtitle1" color="grey.600">
                         {t('config.use_keyboard')}
                       </Typography>
                     </Grid>
-                    <Grid item xs={3} display={'flex'} alignItems={'center'}>
+                    <Grid item xs={3}>
                       <RHFSwitch name="useKeyboard" label={t('config.active_label')} />
                     </Grid>
                   </Grid>

@@ -50,6 +50,19 @@ export type PatientOneSatuSehat = NonPaginationType & {
   data: Patient[];
 };
 
+export type AddressInput = {
+  addressUse: string;
+  addressLine1: string;
+  addressPostalcode: string;
+  country: string;
+  state: string;
+  city: string;
+  district: string;
+  subdistrict: string;
+  rt?: string;
+  rw?: string;
+};
+
 export type PatientCreateInput = {
   identifierTypeCode: string;
   identifierValue: string;
@@ -62,7 +75,8 @@ export type PatientCreateInput = {
   phone: string;
   email: string;
   nationality: string;
-  address: string;
+  // address: string;
+  addressidentity: AddressInput;
 
   additional: PatientCreateInputAdditionalData;
 };
