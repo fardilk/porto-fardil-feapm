@@ -26,6 +26,7 @@ module.exports = {
    */
   rules: {
     // '*': 'off',
+    '@typescript-eslint/no-shadow': 0,
     'new-cap': 0,
     'prefer-template': 'off',
     'arrow-body-style': 'off',

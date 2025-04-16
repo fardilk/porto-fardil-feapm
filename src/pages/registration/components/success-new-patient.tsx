@@ -20,7 +20,7 @@ const SuccessNewPatient = (props: SuccessNewPatientProps) => {
   const values = useWatch()
 
   const headerData = [
-    { title: values.citizenship ? 'Passport' : 'NIK/Medrec', body: fAsterisk(values.nik) },
+    { title: values.citizenship ? 'Passport' : 'NIK', body: fAsterisk(values.nik) },
     { title: t("registration.fullname"), body: values.name },
     { title: t("registration.born_place_date"), body: `${values.birthPlace} ${fDate(values.birthDate, "DD-MM-YYYY")}` },
     { title: t("registration.phone_number"), body: fAsterisk(values.phoneNumber) },

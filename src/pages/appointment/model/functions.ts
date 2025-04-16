@@ -80,16 +80,19 @@ export const appointmentCreate = async (param: {
 export const printBarcode = async (param: {
   encounterID: string;
   dataType: string;
+  apmID: string;
 }): Promise<PrintBarcodeResultMutation> => {
   const client = new GqlClient({ module: 'appointment' });
   const res = await client.request(
     gql`
       mutation printBarcode(
         $encounterID: ID!
+        $apmID: ID!
         $dataType: String!
       ) {
         printBarcode(
           encounterID: $encounterID
+          apmID: $apmID
           dataType: $dataType
         ) {
           ${PrintBarcodeResultMutationQuery}

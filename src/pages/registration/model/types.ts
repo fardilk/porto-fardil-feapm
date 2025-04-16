@@ -6,6 +6,7 @@ export type PatientInformationProps = {
   leftTextButton: string;
   rigthTextButton: string;
   leftButtonProps: ButtonProps;
+  showButtonRegist?: boolean;
 };
 
 export type NewPatientProps = {
@@ -26,6 +27,13 @@ export interface RegistrationIForm {
   nik: string;
   citizenship: boolean;
   name: string;
+  addressState?: string;
+  addressCity?: string;
+  addressDistrict?: string;
+  kelurahan?: string;
+  addressRegionalCode?: string;
+  rt?: string;
+  rw?: string;
   gender: {
     label: string;
     value: string;

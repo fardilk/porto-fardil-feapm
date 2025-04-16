@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { AppPage } from 'src/components/app-page';
 import { Form } from 'src/components/hook-form';
@@ -69,10 +69,14 @@ import {
 import { fDate, formatStr } from 'src/utils/format-time';
 import dayjs from 'dayjs';
 import nProgress from 'nprogress';
+import { setLoading } from 'src/store/slices/app';
 
 const EncounterPage = () => {
+
   const { t } = useTranslate();
+  const { state: locationState } = useLocation()
   const methods = useForm();
+
   const { handleSubmit, setValue, getValues, control } = methods;
 
   const values = useWatch({ control })
@@ -492,6 +496,29 @@ const EncounterPage = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (locationState && locationState?.fromRegistration) {
+      const load = async () => {
+        try {
+          setLoading(true)
+
+          setEncounterType('RJ');
+          setValue('serviceType', 'OUTPATIENT');
+          await handleGetPatientByNIK(locationState?.nik)
+          handleChangePage({ newFormSteps: formStepsOutpatientGeneral, toSpecificPage: 'payment_method' });
+
+
+        } catch (error) {
+          toast.error('Error')
+        } finally {
+          setLoading(false)
+        }
+      }
+
+      load()
+    }
+  }, [locationState])
 
   return (
     <AppPage>

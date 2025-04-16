@@ -14,6 +14,7 @@ import { fAsterisk } from 'src/utils/helper';
 import type { SuccessOutpatientType } from '../model/types';
 import { buttonStyle, getPaymentType } from '../model/variables';
 import { fDate, formatStr, today } from 'src/utils/format-time';
+import { useSelector } from 'src/store/store';
 
 const SuccessOutpatient = ({
   type,
@@ -24,7 +25,10 @@ const SuccessOutpatient = ({
   labPackage,
   radiologyPackage,
 }: SuccessOutpatientType) => {
+
+  const { apmID } = useSelector((root) => root.config)
   const navigate = useNavigate();
+
   const {
     startCountdown: startCountdown15,
     countdown: countdown15,
@@ -173,7 +177,7 @@ const SuccessOutpatient = ({
       label: t('global.reprint'),
       buttonProps: { ...buttonStyle, variant: 'outlined', disabled: counting15 },
       action: () => {
-        printBarcode({ dataType: 'BOOKING', encounterID: values?.resBookingID || '' })
+        printBarcode({ dataType: 'BOOKING', encounterID: values?.resBookingID || '', apmID })
         startCountdown15();
       },
     },
@@ -234,7 +238,7 @@ const SuccessOutpatient = ({
           fullWidth
           color="secondary"
           onClick={() => {
-            printBarcode({ dataType: 'BOOKING', encounterID: values?.resBookingID || '' })
+            printBarcode({ dataType: 'BOOKING', encounterID: values?.resBookingID || '', apmID })
             setOpenPrint(true);
             startCountdown15();
             startCountdown2min();
