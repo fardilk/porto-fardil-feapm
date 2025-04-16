@@ -25,7 +25,7 @@ export function DialogSearchAddress(props: DialogSearchAddressProps) {
 
   const values = watch()
 
-  const { data, isLoading, refetch } = useFetch({ keywords: '' }, async (keyword) => { return (await getDataWilayah(keyword.keywords, "ID")) })
+  const { data, isLoading, refetch } = useFetch({ keywords: '' }, async (keyword) => { return (await getDataWilayah(keyword.keywords, "")) })
 
   return (
     <Dialog

@@ -320,6 +320,7 @@ const NewPatient = (props: NewPatientProps) => {
                 setValue("addressDistrict", val.kecNm);
                 setValue("kelurahan", val.kelNm);
                 setValue("addressRegionalCode", val.regionalCd);
+                setValue("searchRegion", `${val.regionalNm}, ${val.kecNm}, ${val.kabNm}`)
               }
               setState({ openAddress: false })
             }}
