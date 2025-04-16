@@ -68,6 +68,23 @@ export function DialogSearchAddress(props: DialogSearchAddressProps) {
                 <List>
 
                   {
+                    data?.length === 0 && (
+                      <ListItem
+                        disablePadding
+                        sx={{
+                          border: ({ palette }) => `1.4px ${palette.secondary.main} solid`,
+                          borderRadius: 1,
+                          mb: 1
+                        }}
+                      >
+                        <ListItemButton>
+                          <ListItemText primary="Belum Ada Data" />
+                        </ListItemButton>
+                      </ListItem>
+                    )
+                  }
+
+                  {
                     data?.map((it, index) => {
                       return (
                         <ListItem
