@@ -13,8 +13,12 @@ import { fDate } from 'src/utils/format-time';
 import { fAsterisk } from 'src/utils/helper';
 import { BookingType } from '../model/types';
 import { buttonStyle } from '../model/variables';
+import { useSelector } from 'src/store/store';
 
 const InformationBooking = ({ data }: { data: BookingType }) => {
+
+  const { apmID } = useSelector((root) => root.config)
+
   const navigate = useNavigate();
   const { t } = useTranslate();
 
@@ -128,7 +132,7 @@ const InformationBooking = ({ data }: { data: BookingType }) => {
       buttonProps: { ...buttonStyle, variant: 'outlined', disabled: counting15 },
       action: async () => {
         // openDirectPrint(printUrlBuilder('encounters', ['apm-print-barcode', data?.bookingID || "-", 'QUEUE']))
-        printBarcode({ dataType: 'QUEUE', encounterID: data?.bookingID || '' })
+        printBarcode({ dataType: 'QUEUE', encounterID: data?.bookingID || '', apmID })
         startCountdown15();
       },
     },
@@ -190,7 +194,7 @@ const InformationBooking = ({ data }: { data: BookingType }) => {
         fullWidth
         color="secondary"
         onClick={() => {
-          printBarcode({ dataType: 'QUEUE', encounterID: data?.bookingID || '' })
+          printBarcode({ dataType: 'QUEUE', encounterID: data?.bookingID || '', apmID })
           setOpenPrint(true);
           startCountdown15();
           startCountdown2min();

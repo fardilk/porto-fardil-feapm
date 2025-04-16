@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import dayjs from 'dayjs';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { toast } from 'sonner';
 import { AppPage } from 'src/components/app-page';
 import type { CardBannerProps } from 'src/components/card-banner/types';
@@ -56,9 +56,13 @@ import {
   formStepsRadInsurance,
 } from './model/variables';
 import nProgress from 'nprogress';
+import { setLoading } from 'src/store/slices/app';
 
 const ReservationPage = () => {
+
+  const { state: locationState } = useLocation()
   const navigate = useNavigate();
+
   const { currentPage, currentPageIndex, handleChangePage } = useStepper({
     initialSteps: formStepsOutpatientGeneral,
   });
@@ -345,6 +349,28 @@ const ReservationPage = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (locationState && locationState?.fromRegistration) {
+      const load = async () => {
+        try {
+          setLoading(true)
+
+          setValue("serviceType", "OUTPATIENT")
+          SetReservationType('RJ');
+          await handleGetPatientByNIK(locationState?.nik)
+          handleChangePage({ newFormSteps: formStepsOutpatientGeneral, toSpecificPage: 'payment_method' });
+
+        } catch (error) {
+          toast.error('Error')
+        } finally {
+          setLoading(false)
+        }
+      }
+
+      load()
+    }
+  }, [locationState])
 
   return (
     <AppPage>

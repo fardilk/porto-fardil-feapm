@@ -8,6 +8,7 @@ export type ConfigType = {
   simplify: boolean;
   mode: 'fluid' | 'fixed';
   useKeyboard: boolean;
+  apmID: string;
 };
 
 export const initialState: ConfigType = {
@@ -18,6 +19,7 @@ export const initialState: ConfigType = {
   simplify: false,
   mode: 'fixed',
   useKeyboard: true,
+  apmID: '',
 };
 
 export const slice = createSlice({
@@ -32,6 +34,7 @@ export const slice = createSlice({
       state.simplify = actions.payload.simplify;
       state.mode = actions.payload.mode;
       state.useKeyboard = actions.payload.useKeyboard;
+      state.apmID = actions.payload.apmID;
     },
   },
 });

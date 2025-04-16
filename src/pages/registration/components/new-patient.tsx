@@ -1,11 +1,12 @@
 
 import { useRef, useState } from 'react';
-import { useWatch } from 'react-hook-form';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 import {
   Box,
   Button,
   Grid,
+  Stack,
   Typography
 } from '@mui/material';
 
@@ -22,9 +23,14 @@ import { useTranslate } from 'src/locales';
 import { terminologyGet } from 'src/pages/terminology/model/functions';
 import { terminologyArrayMapper } from 'src/utils/terminology';
 import type { NewPatientProps } from '../model/types';
+import { usePartialState } from 'src/hooks';
+import { DialogSearchAddress } from 'src/components/search-address';
+import { regionalsType } from 'src/pages/regional';
 
 const NewPatient = (props: NewPatientProps) => {
   const { handlePreviousPage } = props;
+
+  const [{ openAddress }, setState] = usePartialState({ openAddress: false })
 
   const [elementName, setElementName] = useState('');
   const [keyboardType, setKeyboardType] = useState('');
@@ -35,6 +41,8 @@ const NewPatient = (props: NewPatientProps) => {
   const isForeign = valCitizenship === "WNA"
 
   const { t } = useTranslate();
+
+  const { setValue } = useFormContext()
 
   const { data: dataGender } = useFetch({ attributePath: "", codeSystem: "", valueSet: "Patient.contact.gender" }, terminologyGet)
   const { data: dataNationality } = useFetch({ attributePath: "Address.country", codeSystem: "urn:iso:std:iso:3166" }, terminologyGet)
@@ -94,17 +102,17 @@ const NewPatient = (props: NewPatientProps) => {
 
   return (
     <>
-      <Grid container rowSpacing={2} mb={1} columnSpacing={3}>
+      <Grid container rowSpacing={1} mb={1} columnSpacing={3}>
         <Grid item xs={2} display={'flex'} alignItems={'center'}>
           <Typography variant="subtitle1" color="grey.600">
-            {isForeign ? 'Passport' : 'NIK/Medrec'}
+            {isForeign ? 'Passport' : 'NIK'}
           </Typography>
         </Grid>
         <Grid item xs={4}>
           <RHFTextField
             name="nik"
             disabled
-            placeholder={isForeign ? 'Passport' : 'NIK/Medrec'}
+            placeholder={isForeign ? 'Passport' : 'NIK'}
             inputRef={(ref) => {
               inputRef.current.nik = ref;
             }}
@@ -260,20 +268,23 @@ const NewPatient = (props: NewPatientProps) => {
           </Typography>
         </Grid>
         <Grid item xs={10}>
-          <RHFTextField
-            id="address"
-            name="address"
-            multiline
-            rows={4}
-            placeholder={t('registration.address_label')}
-            inputRef={(ref) => {
-              inputRef.current.address = ref;
-            }}
-            onClick={() => {
-              setElementName('address');
-              setKeyboardType('text');
-            }}
-          />
+          <Stack spacing={1}>
+            <RHFTextField
+              id="address"
+              name="address"
+              placeholder={t('registration.address_label')}
+              inputRef={(ref) => { inputRef.current.address = ref; }}
+              // onClick={() => { setState({ openAddress: true }) }}
+              onClick={() => { setElementName('address'); setKeyboardType('text'); }}
+            />
+            <RHFTextField
+              id="searchRegion"
+              name="searchRegion"
+              placeholder={t('global.searchRegion')}
+              inputRef={(ref) => { inputRef.current.searchRegion = ref; }}
+              onClick={() => { setState({ openAddress: true }) }}
+            />
+          </Stack>
         </Grid>
       </Grid>
 
@@ -298,6 +309,24 @@ const NewPatient = (props: NewPatientProps) => {
         </Button>
       </Box>
 
+      {
+        openAddress && (
+          <DialogSearchAddress
+            open
+            handleClose={(val?: regionalsType) => {
+              if (val) {
+                setValue("addressState", val.proNm);
+                setValue("addressCity", val.kabNm);
+                setValue("addressDistrict", val.kecNm);
+                setValue("kelurahan", val.kelNm);
+                setValue("addressRegionalCode", val.regionalCd);
+              }
+              setState({ openAddress: false })
+            }}
+          />
+        )
+      }
+
       {elementName && (
         <Keyboard
           withDialog
@@ -308,6 +337,8 @@ const NewPatient = (props: NewPatientProps) => {
           inputType={keyboardType}
         />
       )}
+
+
     </>
   );
 };
