@@ -9,7 +9,7 @@ import { InsertIdentifier } from 'src/components/insert-identifier';
 import { WindowContainer } from 'src/components/window-container';
 import { usePartialState, useStepper } from 'src/hooks';
 import { useTranslate } from 'src/locales';
-import { useSelector } from 'src/store/store';
+import { dispatch, useSelector } from 'src/store/store';
 import { deBase64 } from 'src/utils/helper';
 import { nikParser } from 'src/utils/nik-parser';
 import { timeout } from 'src/utils/timeout';
@@ -36,6 +36,7 @@ import {
 } from './model/variables';
 import { registrationSchema } from './model/schema';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { setLoading } from 'src/store/slices/app';
 
 const RegistrationPage = () => {
 
@@ -164,6 +165,8 @@ const RegistrationPage = () => {
 
         try {
 
+          dispatch(setLoading(true))
+
           const wni = !data.citizenship
 
           if (dataNIK.length === 0) {
@@ -192,6 +195,8 @@ const RegistrationPage = () => {
           handleChangePage({ action: 'next', newFormSteps: formStepsNotExistInternal });
           setValue("isRegistered", false)
           toast.info("Anda Belum Terdaftar, Silahkan mendaftar")
+        } finally {
+          dispatch(setLoading(false))
         }
 
       } else if (currentPageIndex !== 0) {
@@ -252,6 +257,7 @@ const RegistrationPage = () => {
               <PatientInformation
                 leftTextButton={t('registration.button.back_to_home')}
                 rigthTextButton={t('registration.button.edit_phone_email')}
+                showButtonRegist
                 leftButtonProps={{
                   onClick: () => {
                     reset(defaultValues)

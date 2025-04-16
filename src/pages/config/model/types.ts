@@ -6,4 +6,5 @@ export type ConfigIForm = {
   simplify: boolean;
   mode: 'fluid' | 'fixed';
   useKeyboard: boolean;
+  apmID: string;
 };
