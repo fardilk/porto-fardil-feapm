@@ -45,12 +45,14 @@ export const doctorOne = async (param: {
 
 export const doctorAvailable = async (param: {
   departmentID: string;
+  isBpjs?: boolean;
+  date?: string;
 }): Promise<DoctorResultOne> => {
   const client = new GqlClient({ module: 'doctor' });
   const res = await client.request(
     gql`
-    query doctorAvailable($departmentID: String!) {
-      doctorAvailable(departmentID: $departmentID) {
+    query doctorAvailable($departmentID: String!, $isBpjs: Boolean, $date: String) {
+      doctorAvailable(departmentID: $departmentID, isBpjs: $isBpjs, date: $date) {
         ${DoctorResultOneQuery}
       }
     }

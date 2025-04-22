@@ -53,7 +53,9 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
   const handleSelectedByPoly = async (id: string) => {
     try {
       const tempRes = await doctorAvailable({
-        departmentID: id
+        departmentID: id,
+        isBpjs: false,
+        date: fDate(dayjs().add(1, 'd'), formatStr.paramCase.mysqlDate)
       });
 
       const response = tempRes.data
