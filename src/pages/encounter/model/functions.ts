@@ -108,36 +108,6 @@ export const getPolyList = async ({
   return res.departmentList;
 };
 
-export const getAvailableDoctor = async ({
-  polyID,
-}: {
-  polyID: string;
-}): Promise<AvailableDoctorResponse> => {
-  const req = new GqlClient({
-    module: 'doctor',
-  });
-
-  const res = await req.request(
-    gql`
-      query doctorAvailable($departmentID: String!) {
-        doctorAvailable(departmentID: $departmentID) {
-          doctorID
-          doctorImage
-          doctorName
-          departmentName
-          scheduleStart
-          scheduleEnd
-        }
-      }
-    `,
-    {
-      departmentID: polyID,
-    }
-  );
-
-  return res.doctorAvailable;
-};
-
 export const createBooking = async ({
   serviceType,
   doctorId,
