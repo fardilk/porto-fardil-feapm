@@ -11,7 +11,7 @@ import { useFetch } from 'src/hooks/use-fetch';
 import { useTranslate } from 'src/locales';
 import { doctorAvailable, doctorList } from 'src/pages/doctor/model/functions';
 import { Doctor } from 'src/pages/doctor/model/types';
-import { fDate, formatStr } from 'src/utils/format-time';
+import { fDate, formatStr, today } from 'src/utils/format-time';
 import type { SelectPractitionerProps } from '../model/types';
 import { departmentList } from 'src/pages/department/model/functions';
 import { useFormContext, useWatch } from 'react-hook-form';
@@ -51,10 +51,15 @@ const SelectPractitioner = ({
     });
   };
 
+  /**
+   * @todo Implement isBpjs
+   */
   const handleSelectedByPoly = async (id: string) => {
     try {
       const tempRes = await doctorAvailable({
-        departmentID: id
+        departmentID: id,
+        isBpjs: false,
+        date: today(formatStr.paramCase.mysqlDate)
       });
 
       const response = tempRes.data
