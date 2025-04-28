@@ -176,7 +176,7 @@ const InformationBooking = ({ data }: { data: BookingType }) => {
         <Grid container spacing={1}>
           {detailData.map((it, index) => {
             return (
-              <Grid item xs={12} md={3} key={index}>
+              <Grid item xs={12} lg={3} key={index}>
                 <CardBanner
                   {...it}
                   cardProps={{ variant: 'outlined' }}

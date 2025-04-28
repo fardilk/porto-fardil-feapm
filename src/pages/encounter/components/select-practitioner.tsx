@@ -183,7 +183,7 @@ const SelectPractitioner = ({
 
           {isPractitioner &&
             data?.data.map((doctor) => (
-              <Grid item xs={12} md={4} key={doctor.doctorID}>
+              <Grid item xs={12} md={6} lg={4} key={doctor.doctorID}>
                 <CardBannerProfileReservation
                   heathcareServiceName={doctor.departmentName}
                   name={doctor.doctorName}
@@ -197,7 +197,7 @@ const SelectPractitioner = ({
           {!isPractitioner &&
             dataPoly?.data.map((poly) => {
               return (
-                <Grid item xs={12} md={4} key={poly.departmentID}>
+                <Grid item xs={12} md={6} lg={4} key={poly.departmentID}>
                   <CardBanner
                     title={poly.departmentName}
                     localIcon="stethoscope"
@@ -212,7 +212,7 @@ const SelectPractitioner = ({
         <Box sx={{ width: '100%', display: 'flex', placeContent: 'space-between', gap: '10%' }}>
           <Button
             size="large"
-            variant="outlined"
+            variant="contained"
             color="secondary"
             onClick={() => {
               handleChangePagination({ action: 'prev' });
@@ -241,11 +241,10 @@ const SelectPractitioner = ({
 
           <Button
             size="large"
-            variant="outlined"
+            variant="contained"
             color="secondary"
-            onClick={() => {
-              handleChangePagination({ action: 'next' });
-            }}
+            disabled={isPractitioner ? ((data?.pagination.totalPage || 0) === currentIndex) : ((dataPoly?.pagination.totalPage || 0) === currentIndex)}
+            onClick={() => { handleChangePagination({ action: 'next' }); }}
           >
             <Iconify icon="fluent:chevron-right-12-regular" />
           </Button>

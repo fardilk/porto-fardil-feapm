@@ -49,6 +49,7 @@ const CardBannerProfileReservation = (props: CardBannerProfileReservationProps) 
                   size="small"
                   color="secondary"
                   startIcon={<Iconify icon="material-symbols:info-outline-rounded" />}
+                  sx={{ textWrap: 'nowrap' }}
                   onClick={(event) => {
                     event.stopPropagation()
                     onClick?.()
