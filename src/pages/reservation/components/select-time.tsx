@@ -19,7 +19,7 @@ import { Image } from 'src/components/image';
 import { Label } from 'src/components/label';
 import { useFetch } from 'src/hooks/use-fetch';
 import { useTranslate } from 'src/locales';
-import { doctorOne } from 'src/pages/doctor/model/functions';
+import { doctorAvailable, doctorOne } from 'src/pages/doctor/model/functions';
 import { fDate, formatStr } from 'src/utils/format-time';
 import type { SelectTimeProps } from '../model/types';
 
@@ -31,7 +31,11 @@ const SelectTime = (props: SelectTimeProps) => {
 
   const values = watch()
 
-  const { data, isLoading, refetch } = useFetch({ practitionerHealthcareServiceID: values?.practitionerHealthcareServiceID || '', date: fDate(dayjs().add(1, 'day'), formatStr.paramCase.mysqlDate), isBpjs: false }, doctorOne)
+  const { data, isLoading, refetch } = useFetch({
+    departmentID: values?.departmentId || "",
+    isBpjs: false,
+    date: fDate(dayjs().add(1, 'day'), formatStr.paramCase.mysqlDate),
+  }, doctorAvailable)
 
   const timeOpt = data?.data?.slot?.map((it) => ({
     label: it.slotTime,
@@ -185,7 +189,7 @@ const SelectTime = (props: SelectTimeProps) => {
                 name="date"
                 format="DD/MM/YYYY"
                 onSelect={(val) => {
-                  refetch({ practitionerHealthcareServiceID: values?.practitionerHealthcareServiceID || '', date: fDate(val, formatStr.paramCase.mysqlDate), isBpjs: false })
+                  refetch({ departmentID: values?.departmentId || "", date: fDate(val, formatStr.paramCase.mysqlDate), isBpjs: false })
                 }}
                 disablePast
                 slotProps={{
