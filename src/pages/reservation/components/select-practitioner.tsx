@@ -11,7 +11,7 @@ import { Keyboard } from 'src/components/keyboard';
 import { useFetch } from 'src/hooks/use-fetch';
 import { useTranslate } from 'src/locales';
 import { departmentList } from 'src/pages/department/model/functions';
-import { doctorAvailable, doctorList } from 'src/pages/doctor/model/functions';
+import { doctorAvailable, doctorList, doctorOne } from 'src/pages/doctor/model/functions';
 import { Doctor } from 'src/pages/doctor/model/types';
 import { fDate, formatStr } from 'src/utils/format-time';
 import type { SelectPractitionerProps } from '../model/types';
@@ -80,7 +80,6 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
   };
 
   const handleSelectedByPractitioner = (doctor: Doctor) => {
-    console.log(doctor)
     setFormValue('practionerId', doctor.doctorID);
     setFormValue('departmentId', doctor.departmentID);
     setFormValue('scheduleID', doctor.scheduleID)
