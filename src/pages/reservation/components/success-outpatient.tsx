@@ -8,9 +8,11 @@ import { LabelTextContainer } from 'src/components/label-text';
 import { ModalInfoAndAction } from 'src/components/modal-info-and-action';
 import { useCountdownSeconds } from 'src/hooks';
 import { useTranslate } from 'src/locales';
+import { printBarcode } from 'src/pages/appointment/model/functions';
+import { useSelector } from 'src/store/store';
 import { fCurrency } from 'src/utils/format-number';
 import { fDate, formatStr } from 'src/utils/format-time';
-import { fAsterisk, openPrint as printIt, printUrlBuilder } from 'src/utils/helper';
+import { fAsterisk } from 'src/utils/helper';
 import type { SuccessOutpatientType } from '../model/types';
 import { buttonStyle, getPaymentType } from '../model/variables';
 
@@ -20,6 +22,7 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
   const navigate = useNavigate();
   const { t, currentLang } = useTranslate();
   const { watch } = useFormContext()
+  const { apmID } = useSelector((root) => root.config)
 
   const values = watch()
 
@@ -155,7 +158,8 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
       label: t("global.reprint"),
       buttonProps: { ...buttonStyle, variant: 'outlined', disabled: counting15 },
       action: () => {
-        printIt(printUrlBuilder('struk-kunjungan-apm', [values?.resBookingID || "-"]))
+        // printIt(printUrlBuilder('struk-kunjungan-apm', [values?.resBookingID || "-"]))
+        printBarcode({ dataType: 'BOOKING', encounterID: values?.resBookingID || '', apmID })
         startCountdown15();
       },
     },
@@ -212,7 +216,8 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
           color="secondary"
           onClick={() => {
             // axiosInstance({ url: `/struk-kunjungan-apm/${values?.resBookingID || "-"}` })
-            printIt(printUrlBuilder('struk-kunjungan-apm', [values?.resBookingID || "-"]))
+            // printIt(printUrlBuilder('struk-kunjungan-apm', [values?.resBookingID || "-"]))
+            printBarcode({ dataType: 'BOOKING', encounterID: values?.resBookingID || '', apmID })
             setOpenPrint(true);
             startCountdown15();
             startCountdown2min();

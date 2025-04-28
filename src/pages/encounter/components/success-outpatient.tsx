@@ -177,7 +177,7 @@ const SuccessOutpatient = ({
       label: t('global.reprint'),
       buttonProps: { ...buttonStyle, variant: 'outlined', disabled: counting15 },
       action: () => {
-        printBarcode({ dataType: 'BOOKING', encounterID: values?.resBookingID || '', apmID })
+        printBarcode({ dataType: 'QUEUE', encounterID: values?.resBookingID || '', apmID })
         startCountdown15();
       },
     },
@@ -238,7 +238,7 @@ const SuccessOutpatient = ({
           fullWidth
           color="secondary"
           onClick={() => {
-            printBarcode({ dataType: 'BOOKING', encounterID: values?.resBookingID || '', apmID })
+            printBarcode({ dataType: 'QUEUE', encounterID: values?.resBookingID || '', apmID })
             setOpenPrint(true);
             startCountdown15();
             startCountdown2min();
