@@ -162,10 +162,10 @@ const ConfirmationOutpatient = ({
           <Typography gutterBottom variant="h5" color="secondary.darker">
             {t('appointment.encounter.title')}
           </Typography>
-          <Grid container spacing={2}>
+          <Grid container spacing={1}>
             {listCard.map((row, index) => {
               return (
-                <Grid item xs={12} md={6} key={index}>
+                <Grid item xs={12} lg={6} key={index}>
                   <CardBanner
                     key={index}
                     {...row}
