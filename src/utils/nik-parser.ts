@@ -1,3 +1,4 @@
+import { fDate, formatStr } from './format-time';
 import { provinsi, kabkot, kecamatan } from './wilayah';
 
 export interface NikDetail {
@@ -56,7 +57,7 @@ export const nikParser = (nik: string): NikDetail => ({
     return ((nik.substring(6, 8) || 0) as number) < 40 ? 'pria' : 'wanita';
   },
 
-  lahir: (): Date => {
+  lahir: (): string => {
     /* v1 */
     // const year = Number(nik.substring(10, 12));
     // const month = Number(nik.substring(8, 10));
@@ -66,8 +67,12 @@ export const nikParser = (nik: string): NikDetail => ({
 
     /* v2 */
     const year = parseInt(nik.substring(10, 12), 10);
-    const month = parseInt(nik.substring(8, 10), 10) - 1;
-    const date = parseInt(nik.substring(6, 8), 10);
+    const month = parseInt(nik.substring(8, 10), 10);
+    let date = parseInt(nik.substring(6, 8), 10);
+
+    if (date > 40) {
+      date -= 40;
+    }
 
     const currentYear = new Date().getFullYear();
     const currentYearLastDigits = currentYear % 100;
@@ -79,7 +84,9 @@ export const nikParser = (nik: string): NikDetail => ({
       fullYear = 1900 + year;
     }
 
-    return new Date(fullYear, month, date);
+    const cDate = `${Number(date) < 10 ? `0${date}` : date}-${Number(month) < 10 ? `0${month}` : month}-${fullYear}`;
+
+    return cDate;
   },
 
   uniqcode: (): string => nik.substring(12, 16),
