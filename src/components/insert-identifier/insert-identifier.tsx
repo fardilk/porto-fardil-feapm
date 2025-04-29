@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { useWatch } from "react-hook-form"
+import { useFormContext, useWatch } from "react-hook-form"
 
 import { Box, Divider, Stack, Typography, useTheme } from "@mui/material"
 
@@ -12,6 +12,8 @@ import { ErrorAlert } from "../error-alert"
 import type { InsertIdentifierProps } from "./types"
 
 const InsertIdentifier = ({ errorMessage }: InsertIdentifierProps) => {
+
+  const { setValue } = useFormContext()
 
   const valCitizenship = useWatch({ name: "citizenship" })
 
@@ -45,6 +47,7 @@ const InsertIdentifier = ({ errorMessage }: InsertIdentifierProps) => {
           color="secondary.main"
           onClick={(event) => {
             const { checked } = (event.target as any)
+            setValue("nik", "")
             if (checked) {
               setKeyboardType("text")
               onChangeLang("en")
@@ -64,6 +67,14 @@ const InsertIdentifier = ({ errorMessage }: InsertIdentifierProps) => {
         placeholder={isForeign ? t("appointment.placeholder_input_passport") : t("appointment.placeholder_input_nik")}
         variant="filled"
         inputRef={(ref) => { inputRef.current.nik = ref }}
+        onChange={(event) => {
+          const regex = /^\d+$/;
+          if (!isForeign && regex.test(event.target.value)) {
+            setValue("nik", event.target.value)
+          } else if (isForeign) {
+            setValue("nik", event.target.value)
+          }
+        }}
         // type={keyboardType === "numberOnly" ? "number" : "text"}
         inputProps={{
           style: {

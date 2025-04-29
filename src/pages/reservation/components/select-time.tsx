@@ -3,10 +3,6 @@ import {
   Button,
   Divider,
   Grid,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Stack,
   Typography
 } from '@mui/material';
@@ -19,7 +15,7 @@ import { Image } from 'src/components/image';
 import { Label } from 'src/components/label';
 import { useFetch } from 'src/hooks/use-fetch';
 import { useTranslate } from 'src/locales';
-import { doctorAvailable, doctorOne } from 'src/pages/doctor/model/functions';
+import { doctorAvailable } from 'src/pages/doctor/model/functions';
 import { fDate, formatStr } from 'src/utils/format-time';
 import type { SelectTimeProps } from '../model/types';
 
@@ -27,7 +23,7 @@ const SelectTime = (props: SelectTimeProps) => {
   const { handleBack, handleConfirm, errorMessage, doctorInfo } = props;
 
   const { t } = useTranslate()
-  const { watch, setValue } = useFormContext()
+  const { watch, setValue, clearErrors } = useFormContext()
 
   const values = watch()
 
@@ -193,6 +189,7 @@ const SelectTime = (props: SelectTimeProps) => {
                 name="date"
                 format="DD/MM/YYYY"
                 onSelect={(val) => {
+                  clearErrors()
                   refetch({ departmentID: values?.departmentId || "", date: fDate(val, formatStr.paramCase.mysqlDate), isBpjs: false })
                 }}
                 disablePast
