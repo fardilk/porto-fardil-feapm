@@ -76,6 +76,7 @@ export const formStepsExistInSatuSehat = [
     properties: {
       hideBack: true,
       hideClose: true,
+      containerSize: 'superLarge',
       i18n: 'registration.title.registration_successful',
     },
   },
