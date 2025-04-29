@@ -206,10 +206,10 @@ const SuccessOutpatient = ({
         <Typography variant="h5" color="primary.darker" gutterBottom>
           {t('checkin.visit_detail')}
         </Typography>
-        <Grid container spacing={2}>
+        <Grid container spacing={1}>
           {listCard.map((row, index) => {
             return (
-              <Grid item xs={12} md={12 / listCard.length} key={index}>
+              <Grid item xs={12} md={12} key={index}>
                 <CardBanner
                   key={index}
                   {...row}

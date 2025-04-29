@@ -11,7 +11,7 @@ import { Keyboard } from 'src/components/keyboard';
 import { useFetch } from 'src/hooks/use-fetch';
 import { useTranslate } from 'src/locales';
 import { departmentList } from 'src/pages/department/model/functions';
-import { doctorAvailable, doctorList, doctorOne } from 'src/pages/doctor/model/functions';
+import { doctorAvailable, doctorList } from 'src/pages/doctor/model/functions';
 import { Doctor } from 'src/pages/doctor/model/types';
 import { fDate, formatStr } from 'src/utils/format-time';
 import type { SelectPractitionerProps } from '../model/types';
@@ -94,11 +94,15 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
     onCardSelect();
   }
 
-  const handleResetSearch = () => {
-    if (isPractitioner) {
-      refetch({ keyword: searchPractioner || '', page: 1, take: 9 });
+  const handleResetSearch = (param?: boolean, keyword?: string) => {
+    const current = param ?? isPractitioner
+    if (keyword) {
+      setFormValue("searchPractioner", keyword)
+    }
+    if (current) {
+      refetch({ keyword: keyword ?? (searchPractioner || ''), page: 1, take: 9 });
     } else {
-      refetchPoly({ keyword: searchPractioner || '', page: 1, take: 9 });
+      refetchPoly({ keyword: keyword ?? (searchPractioner || ''), page: 1, take: 9 });
     }
   }
 
@@ -137,7 +141,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
               onKeyDown={(event) => {
                 if (event.key === "Enter") {
                   handleResetSearch()
-                  setCurrentIndex(0); setElementName('')
+                  setCurrentIndex(1); setElementName('')
                 }
               }}
             />
@@ -181,7 +185,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
 
           {isPractitioner &&
             data?.data.map((doctor) => (
-              <Grid item xs={12} md={4} key={doctor.doctorID}>
+              <Grid item xs={12} md={6} lg={4} key={doctor.doctorID}>
                 <CardBannerProfileReservation
                   heathcareServiceName={doctor.departmentName}
                   name={doctor.doctorName}
@@ -193,7 +197,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
           {!isPractitioner &&
             dataPoly?.data.map((poly) => {
               return (
-                <Grid item xs={12} md={4} key={poly.departmentID}>
+                <Grid item xs={12} md={6} lg={4} key={poly.departmentID}>
                   <CardBanner
                     title={poly.departmentName}
                     localIcon="stethoscope"
@@ -208,7 +212,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
         <Box sx={{ width: '100%', display: 'flex', placeContent: 'space-between', gap: '10%' }}>
           <Button
             size="large"
-            variant="outlined"
+            variant="contained"
             color="secondary"
             onClick={() => {
               handleChangePagination({ action: 'prev' });
@@ -225,9 +229,9 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
             fullWidth
             onClick={() => {
               setIsPractitioner((prev) => !prev);
-              setCurrentIndex(0);
+              setCurrentIndex(1);
               setFormValue("searchPractioner", "")
-              handleResetSearch()
+              handleResetSearch(!isPractitioner, "")
             }}
           >
             {isPractitioner
@@ -237,8 +241,9 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
 
           <Button
             size="large"
-            variant="outlined"
+            variant="contained"
             color="secondary"
+            disabled={(isPractitioner ? ((data?.pagination.totalPage || 1) === currentIndex) : ((dataPoly?.pagination.totalPage || 1) === currentIndex))}
             onClick={() => {
               handleChangePagination({ action: 'next' });
             }}
@@ -254,7 +259,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
           open={Boolean(elementName)}
           onClose={() => {
             handleResetSearch()
-            setCurrentIndex(0); setElementName('')
+            setCurrentIndex(1); setElementName('')
           }}
           ref={searchRef.current}
           inputType="text"

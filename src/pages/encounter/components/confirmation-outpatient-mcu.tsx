@@ -103,7 +103,7 @@ const ConfirmationOutpatientMCU = ({
             </Grid>
             {listCard.map((row, index) => {
               return (
-                <Grid item xs={12} md={6} key={index}>
+                <Grid item xs={12} lg={6} key={index}>
                   <CardBanner
                     key={index}
                     {...row}

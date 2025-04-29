@@ -310,6 +310,7 @@ export const formStepsMCUAssurance = [
     value: 'confirmation_patient_registration_mcu',
     properties: {
       disableBlack: true,
+      containerSize: 'superLarge',
     },
   },
   {

@@ -1,12 +1,13 @@
-import { alpha, Box, Button, Card, CardContent, Stack, Typography, useTheme } from "@mui/material";
+import { alpha, Box, Button, Card, CardContent, Icon, Stack, Typography, useTheme } from "@mui/material";
 import { getIconsPath } from "src/utils/helper";
 import { Iconify } from "../iconify";
 import { Image } from "../image";
 import { ButtonBaseOverride } from "./card-banner";
 import type { CardBannerProfileReservationProps } from "./types";
+import { Label } from "../label";
 
 const CardBannerProfileReservation = (props: CardBannerProfileReservationProps) => {
-  const { heathcareServiceName, name, icon, cardProps, clickable, onClick } = props
+  const { heathcareServiceName, name, icon, cardProps, clickable, isFull, slot, onClick } = props
 
   const theme = useTheme()
 
@@ -44,11 +45,30 @@ const CardBannerProfileReservation = (props: CardBannerProfileReservationProps) 
                 </Box>
               </Box>
 
+              <Box sx={{ display: 'flex', placeItems: 'center', gap: 1 }}>
+                {
+                  slot && (
+                    <Label color={isFull ? "error" : "success"}>
+                      Slot: {slot}
+                    </Label>
+                  )
+                }
+
+                {
+                  isFull && (
+                    <Label color="error" startIcon={<Iconify icon="solar:danger-triangle-bold-duotone" />}>
+                      Jadwal Penuh
+                    </Label>
+                  )
+                }
+              </Box>
+
               <Box>
                 <Button variant="outlined"
                   size="small"
                   color="secondary"
                   startIcon={<Iconify icon="material-symbols:info-outline-rounded" />}
+                  sx={{ textWrap: 'nowrap' }}
                   onClick={(event) => {
                     event.stopPropagation()
                     onClick?.()

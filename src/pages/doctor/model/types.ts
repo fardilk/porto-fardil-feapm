@@ -64,3 +64,15 @@ export type DoctorResultOne = NonPaginationType & {
   message: string;
   data: Doctor;
 };
+
+export type DoctorSlotInfo = {
+  isSlotFull: boolean;
+  slotFilled: number;
+  slotCapacity: number;
+};
+
+export type DoctorSlotInfoResultOne = {
+  status: boolean;
+  message: string;
+  data: DoctorSlotInfo;
+};

@@ -96,6 +96,7 @@ const SelectTime = (props: SelectTimeProps) => {
                 <Grid item xs={12} md={4}>
                   <Box>
                     <Typography variant='h6'>Dokumen Dokter</Typography>
+                    -
                     {/* <List>
                       {
                         data?.data?.doctorProfile?.doctorDocument?.map((row, index) => {
@@ -118,6 +119,7 @@ const SelectTime = (props: SelectTimeProps) => {
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <Typography variant='h6'>Informasi Keilmuan</Typography>
+                  -
                   {/* <List>
                     {
                       data?.data?.doctorProfile?.doctorEducation?.map((row, index) => {
@@ -136,6 +138,7 @@ const SelectTime = (props: SelectTimeProps) => {
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <Typography variant='h6'>Pengalaman Kerja</Typography>
+                  -
                   {/* <List>
                     {
                       data?.data?.doctorProfile?.doctorExperience?.map((row, index) => {
@@ -160,6 +163,7 @@ const SelectTime = (props: SelectTimeProps) => {
             </Box>
             <Box>
               <Typography variant='h6'>Publikasi / Seminar Kerja</Typography>
+              -
               {/* <List>
                 {
                   data?.data?.doctorProfile?.doctorPublication?.map((row, index) => {
