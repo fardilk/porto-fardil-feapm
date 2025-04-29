@@ -239,7 +239,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
             size="large"
             variant="contained"
             color="secondary"
-            disabled={isPractitioner ? ((data?.pagination.totalPage || 0) === currentIndex) : ((dataPoly?.pagination.totalPage || 0) === currentIndex)}
+            disabled={(isPractitioner ? ((data?.pagination.totalPage || 0) === currentIndex) : ((dataPoly?.pagination.totalPage || 0) === currentIndex))}
             onClick={() => {
               handleChangePagination({ action: 'next' });
             }}

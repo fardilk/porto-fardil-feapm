@@ -9,8 +9,8 @@ import { Iconify } from 'src/components/iconify';
 import { Keyboard } from 'src/components/keyboard';
 import { useFetch } from 'src/hooks/use-fetch';
 import { useTranslate } from 'src/locales';
-import { doctorAvailable, doctorList } from 'src/pages/doctor/model/functions';
-import { Doctor } from 'src/pages/doctor/model/types';
+import { doctorAvailable, doctorList, doctorSlotInfoOne } from 'src/pages/doctor/model/functions';
+import { Doctor, DoctorSlotInfo } from 'src/pages/doctor/model/types';
 import { fDate, formatStr, today } from 'src/utils/format-time';
 import type { SelectPractitionerProps } from '../model/types';
 import { departmentList } from 'src/pages/department/model/functions';
@@ -26,12 +26,24 @@ const SelectPractitioner = ({
   const [isPractitioner, setIsPractitioner] = useState(true);
   const [elementName, setElementName] = useState('');
   const [currentIndex, setCurrentIndex] = useState(1);
+  const [slotInfoList, setSlotInfoList] = useState<DoctorSlotInfo[]>([])
 
   const { setValue: setFormValue } = useFormContext()
 
   const searchRef = useRef<any>({});
 
-  const { data, isLoading, refetch } = useFetch({ keyword: '', page: 1, take: 9 }, doctorList)
+  const { data, isLoading, refetch } = useFetch({ keyword: '', page: 1, take: 9, isBpjs: false, date: today(formatStr.paramCase.mysqlDate) }, doctorList, {
+    afterFetch: async (response) => {
+      setSlotInfoList([])
+
+      const list = response?.data.map((it) => doctorSlotInfoOne({ practitionerHealthcareServiceID: it.practitionerHealthcareServiceID, date: today(formatStr.paramCase.mysqlDate), isBpjs: false })) || []
+
+      const slotResponse = await Promise.all(list)
+
+      const allSlotData = slotResponse.map((row) => row.data)
+      setSlotInfoList(allSlotData)
+    }
+  })
 
   const { data: dataPoly, isLoading: loadingPoly, refetch: refetchPoly } = useFetch({ keyword: '', page: 1, take: 9 }, departmentList)
 
@@ -42,7 +54,7 @@ const SelectPractitioner = ({
       const page = (action === 'prev' ? prev - 1 : prev + 1)
 
       if (isPractitioner) {
-        refetch({ keyword: searchPractioner || '', page, take: 9 });
+        refetch({ keyword: searchPractioner || '', page, take: 9, date: today(formatStr.paramCase.mysqlDate), isBpjs: false });
       } else {
         refetchPoly({ keyword: searchPractioner || '', page, take: 9 })
       }
@@ -97,8 +109,8 @@ const SelectPractitioner = ({
   }
 
   const handleResetSearch = () => {
-    if (isPractitioner) {
-      refetch({ keyword: searchPractioner || '', page: 1, take: 9 });
+    if (!isPractitioner) {
+      refetch({ keyword: searchPractioner || '', page: 1, take: 9, isBpjs: false, date: today(formatStr.paramCase.mysqlDate) });
     } else {
       refetchPoly({ keyword: searchPractioner || '', page: 1, take: 9 });
     }
@@ -182,18 +194,24 @@ const SelectPractitioner = ({
           }
 
           {isPractitioner &&
-            data?.data.map((doctor) => (
-              <Grid item xs={12} md={6} lg={4} key={doctor.doctorID}>
-                <CardBannerProfileReservation
-                  heathcareServiceName={doctor.departmentName}
-                  name={doctor.doctorName}
-                  clickable
-                  onClick={() => {
-                    handleSelectByPractitioner(doctor)
-                  }}
-                />
-              </Grid>
-            ))}
+            data?.data.map((doctor, index) => {
+              const slotInfo = slotInfoList[index]
+
+              return (
+                <Grid item xs={12} md={6} lg={4} key={doctor.doctorID}>
+                  <CardBannerProfileReservation
+                    isFull={slotInfo?.isSlotFull || undefined}
+                    slot={`${slotInfo?.slotFilled} / ${slotInfo?.slotCapacity}`}
+                    heathcareServiceName={doctor.departmentName}
+                    name={doctor.doctorName}
+                    clickable
+                    onClick={() => {
+                      handleSelectByPractitioner(doctor)
+                    }}
+                  />
+                </Grid>
+              )
+            })}
           {!isPractitioner &&
             dataPoly?.data.map((poly) => {
               return (
