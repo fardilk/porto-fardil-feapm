@@ -391,7 +391,7 @@ const ReservationPage = () => {
             {currentPage.value === 'select_reservation_type' && (
               <SelectReservationType
                 items={listReservationType}
-                handleResetReservationType={() => SetReservationType(null)}
+                handleResetReservationType={() => { !locationState?.fromRegistration && SetReservationType(null) }}
               />
             )}
 
