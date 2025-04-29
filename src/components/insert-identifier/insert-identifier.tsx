@@ -64,6 +64,7 @@ const InsertIdentifier = ({ errorMessage }: InsertIdentifierProps) => {
         placeholder={isForeign ? t("appointment.placeholder_input_passport") : t("appointment.placeholder_input_nik")}
         variant="filled"
         inputRef={(ref) => { inputRef.current.nik = ref }}
+        type={keyboardType === "numberOnly" ? "number" : "text"}
         inputProps={{
           style: {
             textAlign: "center",
