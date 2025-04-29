@@ -57,10 +57,11 @@ const SuccessOutpatient = ({
         body: `${patientData.birthPlace}, ${patientData.birthDttm}`,
       },
       { title: t('global.phone_number'), body: fAsterisk(patientData.phone) },
-      { title: 'Email', body: patientData.email },
+      { title: 'Email', body: patientData.email, colSpan: 2 },
       {
         title: t('global.address'),
         body: patientData.address,
+        colSpan: 2
       },
     ],
     [t, patientData]

@@ -14,6 +14,7 @@ import { fAsterisk } from 'src/utils/helper';
 import { BookingType } from '../model/types';
 import { buttonStyle } from '../model/variables';
 import { useSelector } from 'src/store/store';
+import { LabelTextContainer } from 'src/components/label-text';
 
 const InformationBooking = ({ data }: { data: BookingType }) => {
 
@@ -35,6 +36,25 @@ const InformationBooking = ({ data }: { data: BookingType }) => {
   } = useCountdownSeconds(2 * 60);
 
   const [openPrint, setOpenPrint] = useState(false);
+
+  const detailDataPatient = useMemo(
+    () => [
+      { title: 'NIK', body: fAsterisk(data.patient.identifierValue ?? '-') },
+      { title: t('global.complete_name'), body: data.patient.name },
+      {
+        title: `${t('global.location')}, ${t('global.birthdate')}`,
+        body: `${data.patient.birthPlace}, ${data.patient.birthDttm}`,
+      },
+      { title: t('global.phone_number'), body: fAsterisk(data.patient.phone) },
+      { title: 'Email', body: data.patient.email, colSpan: 2 },
+      {
+        title: t('global.address'),
+        body: data.patient.address,
+        colSpan: 2
+      },
+    ],
+    [t, data]
+  );
 
   const detailData = useMemo(() => {
     return [
@@ -149,6 +169,14 @@ const InformationBooking = ({ data }: { data: BookingType }) => {
   return (
     <Stack gap={4}>
       <AlertInformation title={t('checkin.title_success')} body={data.notes} />
+
+      <Box>
+        <Typography variant="h5" color="primary.darker" gutterBottom>
+          {t('global.patient_detail')}
+        </Typography>
+        <LabelTextContainer listText={detailDataPatient} />
+      </Box>
+
       {/* <Grid container spacing={2}>
         {data.booking.payplanClass === 'BPJS' && (
           <Grid item xs={12} md={4}>
