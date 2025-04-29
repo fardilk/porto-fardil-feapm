@@ -34,6 +34,8 @@ export type CardBannerProfileProps = ButtonBaseOverrideProps & {
 };
 
 export type CardBannerProfileReservationProps = ButtonBaseOverrideProps & {
+  isFull?: boolean;
+  slot?: string;
   icon?: string;
   cardProps?: CardProps;
   name: string;

@@ -64,3 +64,15 @@ export const DoctorResultOneQuery = `
   message
   data { ${DoctorQuery} }
 `;
+
+export const DoctorSlotInfoQuery = `
+  isSlotFull
+  slotFilled
+  slotCapacity
+`;
+
+export const DoctorSlotInfoResultOneQuery = `
+  status
+  message
+  data { ${DoctorSlotInfoQuery} }
+`;
