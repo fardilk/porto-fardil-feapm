@@ -27,7 +27,7 @@ const SelectTime = (props: SelectTimeProps) => {
   const { handleConfirm, errorMessage, doctorInfo } = props;
 
   const { t } = useTranslate()
-  const { watch, setValue } = useFormContext()
+  const { watch, setValue, clearErrors } = useFormContext()
 
   const values = watch()
 
@@ -171,6 +171,7 @@ const SelectTime = (props: SelectTimeProps) => {
                 format="DD/MM/YYYY"
                 disableFuture
                 onSelect={(val) => {
+                  clearErrors()
                   refetch({ practitionerHealthcareServiceID: values?.practitionerHealthcareServiceID || '', date: fDate(val, formatStr.paramCase.mysqlDate), isBpjs: false })
                 }}
                 disablePast

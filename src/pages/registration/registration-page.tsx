@@ -81,8 +81,8 @@ const RegistrationPage = () => {
     mode: "onChange"
   });
 
-  const { handleSubmit, reset, resetField, setValue, } = methods;
-
+  const { handleSubmit, reset, resetField, setValue, watch } = methods;
+  console.log(watch())
   const { currentPage, currentPageIndex, handleChangePage, formSteps } = useStepper({
     initialSteps: formStepsExistInInternal,
     onChangeFormSteps: (param) => {
@@ -148,7 +148,10 @@ const RegistrationPage = () => {
     const day = fNik.lahir().toLocaleString('id-ID', { day: '2-digit' });
     const month = fNik.lahir().toLocaleString('id-ID', { month: '2-digit' });
     const year = fNik.lahir().toLocaleString('id-ID', { year: 'numeric' });
-    setValue('birthDate', `${month}-${day}-${year}`);
+
+    if (day !== "Invalid Date") {
+      setValue('birthDate', `${month}-${day}-${year}`);
+    }
 
     return ""
   }
