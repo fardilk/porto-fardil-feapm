@@ -108,11 +108,15 @@ const SelectPractitioner = ({
     onCardSelect();
   }
 
-  const handleResetSearch = () => {
-    if (!isPractitioner) {
-      refetch({ keyword: searchPractioner || '', page: 1, take: 9, isBpjs: false, date: today(formatStr.paramCase.mysqlDate) });
+  const handleResetSearch = (param?: boolean, keyword?: string) => {
+    const current = param ?? isPractitioner
+    if (keyword) {
+      setFormValue("searchPractioner", keyword)
+    }
+    if (current) {
+      refetch({ keyword: keyword ?? (searchPractioner || ''), page: 1, take: 9, isBpjs: false, date: today(formatStr.paramCase.mysqlDate) });
     } else {
-      refetchPoly({ keyword: searchPractioner || '', page: 1, take: 9 });
+      refetchPoly({ keyword: keyword ?? (searchPractioner || ''), page: 1, take: 9 });
     }
   }
 
@@ -151,7 +155,7 @@ const SelectPractitioner = ({
               onKeyDown={(event) => {
                 if (event.key === "Enter") {
                   handleResetSearch()
-                  setCurrentIndex(0); setElementName('')
+                  setCurrentIndex(1); setElementName('')
                 }
               }}
             />
@@ -247,9 +251,9 @@ const SelectPractitioner = ({
             fullWidth
             onClick={() => {
               setIsPractitioner((prev) => !prev);
-              setCurrentIndex(0);
+              setCurrentIndex(1);
               setFormValue("searchPractioner", "")
-              handleResetSearch()
+              handleResetSearch(!isPractitioner, "")
             }}
           >
             {isPractitioner
@@ -261,7 +265,7 @@ const SelectPractitioner = ({
             size="large"
             variant="contained"
             color="secondary"
-            disabled={isPractitioner ? ((data?.pagination.totalPage || 0) === currentIndex) : ((dataPoly?.pagination.totalPage || 0) === currentIndex)}
+            disabled={isPractitioner ? ((data?.pagination.totalPage || 1) === currentIndex) : ((dataPoly?.pagination.totalPage || 1) === currentIndex)}
             onClick={() => { handleChangePagination({ action: 'next' }); }}
           >
             <Iconify icon="fluent:chevron-right-12-regular" />
@@ -275,7 +279,7 @@ const SelectPractitioner = ({
           open={Boolean(elementName)}
           onClose={() => {
             handleResetSearch()
-            setCurrentIndex(0); setElementName('')
+            setCurrentIndex(1); setElementName('')
           }}
           ref={searchRef.current}
           inputType="text"

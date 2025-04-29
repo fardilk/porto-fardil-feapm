@@ -94,11 +94,15 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
     onCardSelect();
   }
 
-  const handleResetSearch = () => {
-    if (isPractitioner) {
-      refetch({ keyword: searchPractioner || '', page: 1, take: 9 });
+  const handleResetSearch = (param?: boolean, keyword?: string) => {
+    const current = param ?? isPractitioner
+    if (keyword) {
+      setFormValue("searchPractioner", keyword)
+    }
+    if (current) {
+      refetch({ keyword: keyword ?? (searchPractioner || ''), page: 1, take: 9 });
     } else {
-      refetchPoly({ keyword: searchPractioner || '', page: 1, take: 9 });
+      refetchPoly({ keyword: keyword ?? (searchPractioner || ''), page: 1, take: 9 });
     }
   }
 
@@ -137,7 +141,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
               onKeyDown={(event) => {
                 if (event.key === "Enter") {
                   handleResetSearch()
-                  setCurrentIndex(0); setElementName('')
+                  setCurrentIndex(1); setElementName('')
                 }
               }}
             />
@@ -225,9 +229,9 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
             fullWidth
             onClick={() => {
               setIsPractitioner((prev) => !prev);
-              setCurrentIndex(0);
+              setCurrentIndex(1);
               setFormValue("searchPractioner", "")
-              handleResetSearch()
+              handleResetSearch(!isPractitioner, "")
             }}
           >
             {isPractitioner
@@ -239,7 +243,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
             size="large"
             variant="contained"
             color="secondary"
-            disabled={(isPractitioner ? ((data?.pagination.totalPage || 0) === currentIndex) : ((dataPoly?.pagination.totalPage || 0) === currentIndex))}
+            disabled={(isPractitioner ? ((data?.pagination.totalPage || 1) === currentIndex) : ((dataPoly?.pagination.totalPage || 1) === currentIndex))}
             onClick={() => {
               handleChangePagination({ action: 'next' });
             }}
@@ -255,7 +259,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
           open={Boolean(elementName)}
           onClose={() => {
             handleResetSearch()
-            setCurrentIndex(0); setElementName('')
+            setCurrentIndex(1); setElementName('')
           }}
           ref={searchRef.current}
           inputType="text"
