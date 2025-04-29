@@ -539,7 +539,7 @@ const EncounterPage = () => {
             {currentPage.value === 'select_encounter_type' && (
               <SelectEncounterType
                 items={listEncounterType}
-                handleResetEncounterType={() => setEncounterType(null)}
+                handleResetEncounterType={() => { !locationState?.fromRegistration && setEncounterType(null) }}
               />
             )}
 
