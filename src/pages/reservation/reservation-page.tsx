@@ -163,7 +163,7 @@ const ReservationPage = () => {
   const values = useWatch({ control })
 
   useEffect(() => {
-    setErrorMessage((prev) => ({ ...prev, dateErr: '' }));
+    setErrorMessage((prev) => ({ ...prev, dateErr: '', bookTimeErr: '', unableErr: '' }));
   }, [watchDate]);
 
   useEffect(() => {

@@ -37,6 +37,8 @@ import {
 import { registrationSchema } from './model/schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { setLoading } from 'src/store/slices/app';
+import { fDate } from 'src/utils/format-time';
+import dayjs from 'dayjs';
 
 const RegistrationPage = () => {
 
@@ -81,7 +83,7 @@ const RegistrationPage = () => {
     mode: "onChange"
   });
 
-  const { handleSubmit, reset, resetField, setValue, } = methods;
+  const { handleSubmit, reset, resetField, setValue, watch } = methods;
 
   const { currentPage, currentPageIndex, handleChangePage, formSteps } = useStepper({
     initialSteps: formStepsExistInInternal,
@@ -145,10 +147,11 @@ const RegistrationPage = () => {
       { shouldValidate: true }
     );
 
-    const day = fNik.lahir().toLocaleString('id-ID', { day: '2-digit' });
-    const month = fNik.lahir().toLocaleString('id-ID', { month: '2-digit' });
-    const year = fNik.lahir().toLocaleString('id-ID', { year: 'numeric' });
-    setValue('birthDate', `${month}-${day}-${year}`);
+    // const day = fNik.lahir().toLocaleString('id-ID', { day: '2-digit' });
+    // const month = fNik.lahir().toLocaleString('id-ID', { month: '2-digit' });
+    // const year = fNik.lahir().toLocaleString('id-ID', { year: 'numeric' });
+
+    setValue('birthDate', dayjs(fNik.lahir(), 'DD-MM-YYYY', true) as any);
 
     return ""
   }
