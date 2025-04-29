@@ -49,12 +49,13 @@ const SuccessOutpatient = (props: SuccessOutpatientType) => {
       title: t('appointment.patient.birthdateplace'),
       body: `${patientDetail?.birthPlace}, ${patientDetail?.birthDttm}`,
     },
+    { title: t('appointment.patient.phone'), body: fAsterisk(patientDetail?.phone) },
+    { title: t('appointment.patient.email'), body: patientDetail?.email, colSpan: 2 },
     {
       title: t('appointment.patient.address'),
       body: patientDetail?.address,
+      colSpan: 2
     },
-    { title: t('appointment.patient.phone'), body: fAsterisk(patientDetail?.phone) },
-    { title: t('appointment.patient.email'), body: patientDetail?.email },
   ], [t])
 
   const listCard = [
