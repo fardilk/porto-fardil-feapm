@@ -45,7 +45,7 @@ const SelectPractitioner = ({
     }
   })
 
-  const { data: dataPoly, isLoading: loadingPoly, refetch: refetchPoly } = useFetch({ keyword: '', page: 1, take: 9 }, departmentList)
+  const { data: dataPoly, isLoading: loadingPoly, refetch: refetchPoly } = useFetch({ keyword: '', page: 1, take: 9, date: today(formatStr.paramCase.mysqlDate), isBpjs: false }, departmentList)
 
   const searchPractioner = useWatch({ name: 'searchPractioner' });
 
@@ -56,7 +56,7 @@ const SelectPractitioner = ({
       if (isPractitioner) {
         refetch({ keyword: searchPractioner || '', page, take: 9, date: today(formatStr.paramCase.mysqlDate), isBpjs: false });
       } else {
-        refetchPoly({ keyword: searchPractioner || '', page, take: 9 })
+        refetchPoly({ keyword: searchPractioner || '', page, take: 9, date: today(formatStr.paramCase.mysqlDate), isBpjs: false })
       }
 
       return page === 0 ? prev : page
@@ -116,7 +116,7 @@ const SelectPractitioner = ({
     if (current) {
       refetch({ keyword: keyword ?? (searchPractioner || ''), page: 1, take: 9, isBpjs: false, date: today(formatStr.paramCase.mysqlDate) });
     } else {
-      refetchPoly({ keyword: keyword ?? (searchPractioner || ''), page: 1, take: 9 });
+      refetchPoly({ keyword: keyword ?? (searchPractioner || ''), page: 1, take: 9, isBpjs: false, date: today(formatStr.paramCase.mysqlDate) });
     }
   }
 
