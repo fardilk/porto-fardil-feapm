@@ -2,8 +2,8 @@ import { Grid } from "@mui/material"
 import { useMemo, useState } from "react"
 import { CardBanner } from "src/components/card-banner"
 import type { CardBannerProps } from "src/components/card-banner/types"
-import type { PaymentMethodProps } from "../model/types"
 import { useTranslate } from "src/locales"
+import type { PaymentMethodProps } from "../model/types"
 
 const PaymentMethod = (props: PaymentMethodProps) => {
   const { handleAssurance, handleGeneral, reservationType } = props
@@ -22,6 +22,7 @@ const PaymentMethod = (props: PaymentMethodProps) => {
       title: t("appointment.payment.assurance.title"),
       body: t("appointment.payment.assurance.description"),
       localIcon: "jaminan",
+      disabled: true,
       onClick: () => { setOpenAssurance(true) },
     }
   ], [t, handleGeneral, setOpenAssurance])

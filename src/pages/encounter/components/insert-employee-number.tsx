@@ -9,7 +9,7 @@ const InsertEmployeeNumber = ({ onBack, onNext }: { onBack: () => void, onNext: 
   return (
     <Grid container spacing={1} sx={{ display: 'flex', alignItems: 'center' }}>
       <Grid item xs={2}>
-        <Typography variant="subtitle1" color="grey.600">{t('company.subtitle.insurance_name')}</Typography>
+        <Typography variant="subtitle1" color="grey.600">{t('company.subtitle.company_name')}</Typography>
       </Grid>
 
       <Grid item xs={10}>

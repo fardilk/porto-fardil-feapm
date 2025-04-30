@@ -43,8 +43,8 @@ const SelectCompany = (props: SelectCompanyProps) => {
   }
 
   return (
-    <Stack gap={4}>
-      <Grid container spacing={2}>
+    <Stack gap={1}>
+      <Grid container spacing={1}>
 
         {
           listCompanyAvailable.slice(currentIndex, currentIndex + 2).map((row, index) => {
@@ -65,14 +65,13 @@ const SelectCompany = (props: SelectCompanyProps) => {
           })
         }
 
-        <Grid item xs={12} md={4}>
-          <Card variant="outlined" sx={{ height: "100%" }}>
-            <ButtonBase sx={{ width: "100%", height: "100%" }} onClick={handleSelectNew}>
-              <Iconify icon="fluent:add-12-regular" color="secondary.dark" sx={{ width: 32 }} />
-            </ButtonBase>
-          </Card>
-        </Grid>
       </Grid>
+
+      <Box>
+        <Button onClick={handleSelectNew} variant="contained" color="secondary">
+          <Iconify icon="fluent:add-12-regular" sx={{ width: 32 }} />
+        </Button>
+      </Box>
 
       <Box sx={{ width: '100%', display: 'flex', placeContent: 'space-between', gap: '10%' }}>
         <Button
