@@ -78,6 +78,7 @@ export const formStepsOutpatientGeneral = [
     value: 'select_healthcare_practitioner',
     properties: {
       disableBack: true,
+      containerSize: 'superLarge',
     },
   },
   {

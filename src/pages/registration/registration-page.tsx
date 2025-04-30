@@ -1,4 +1,6 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Box } from '@mui/material';
+import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router';
@@ -9,6 +11,7 @@ import { InsertIdentifier } from 'src/components/insert-identifier';
 import { WindowContainer } from 'src/components/window-container';
 import { usePartialState, useStepper } from 'src/hooks';
 import { useTranslate } from 'src/locales';
+import { setLoading } from 'src/store/slices/app';
 import { dispatch, useSelector } from 'src/store/store';
 import { deBase64 } from 'src/utils/helper';
 import { nikParser } from 'src/utils/nik-parser';
@@ -26,6 +29,7 @@ import {
   SuccessNewPatient,
 } from './components';
 import { patientToIForm, regIFormToInput } from './model/helper';
+import { registrationSchema } from './model/schema';
 import { type RegistrationIForm } from './model/types';
 import {
   formStepsExistInInternal,
@@ -34,11 +38,6 @@ import {
   formStepsNotExistInternal,
   formStepsRegistrationMethodByPhone
 } from './model/variables';
-import { registrationSchema } from './model/schema';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { setLoading } from 'src/store/slices/app';
-import { fDate } from 'src/utils/format-time';
-import dayjs from 'dayjs';
 
 const RegistrationPage = () => {
 

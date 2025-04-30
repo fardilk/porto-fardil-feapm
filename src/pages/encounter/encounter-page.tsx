@@ -191,7 +191,7 @@ const EncounterPage = () => {
 
   const onPractitionerSelect = (method?: string) => {
     if (method === "healthcare") {
-      handleChangePage({ toSpecificPage: 'confirmation_patient_registration' })
+      handleChangePage({ action: 'next' })
     } else {
       handleChangePage({ action: 'next' });
     }
