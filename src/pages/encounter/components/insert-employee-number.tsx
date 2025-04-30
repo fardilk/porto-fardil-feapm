@@ -1,48 +1,82 @@
-import { Divider, Stack, Typography, useTheme } from "@mui/material"
-import { useRef } from "react"
-import { RHFTextField } from "src/components/hook-form"
-import { Keyboard } from "src/components/keyboard"
-import { usePartialState } from "src/hooks"
+import { Box, Button, Grid, Typography } from "@mui/material"
+import { RHFAutocomplete, RHFTextField } from "src/components/hook-form"
 import { useTranslate } from "src/locales"
-import { typography } from "src/theme/core"
 
-const InsertEmployeeNumber = () => {
+const InsertEmployeeNumber = ({ onBack, onNext }: { onBack: () => void, onNext: () => void }) => {
 
-  const theme = useTheme()
-  const inputRef = useRef<any>({})
   const { t } = useTranslate();
 
-  const [{ elementName, keyboardType }, setPartialState] = usePartialState({ elementName: "employeeNumber", keyboardType: "numberOnly" })
-
   return (
-    <Stack gap={2}>
-      <Typography variant="h4" textAlign="center" gutterBottom>{t('assurance.subtitle.enter_employee_number')}</Typography>
+    <Grid container spacing={1} sx={{ display: 'flex', alignItems: 'center' }}>
+      <Grid item xs={2}>
+        <Typography variant="subtitle1" color="grey.600">{t('company.subtitle.insurance_name')}</Typography>
+      </Grid>
 
-      <RHFTextField
-        name="employeeNumber"
-        placeholder={t('assurance.subtitle.enter_employee_number')}
-        variant="filled"
-        inputRef={(ref) => { inputRef.current.employeeNumber = ref }}
-        inputProps={{
-          style: {
-            textAlign: "center",
-            backgroundColor: theme.palette.background.paper,
-            ...typography.h3
-          }
-        }}
-      />
-      <Divider />
+      <Grid item xs={10}>
+        <RHFTextField name="createCompanyName" disabled />
+      </Grid>
+
+      <Grid item xs={2}>
+        <Typography variant="subtitle1" color="grey.600">{t('company.subtitle.payment_schema')}</Typography>
+      </Grid>
+
+      <Grid item xs={10}>
+        <RHFAutocomplete name="createPaymentScheme" label={t('company.subtitle.search_your_schema')} options={[]} />
+        <Typography variant="body2">{t('company.subtitle.payment_valid')} :</Typography>
+      </Grid>
+
+      <Grid item xs={2}>
+        <Typography variant="subtitle1" color="grey.600">{t('company.subtitle.polis_number')}</Typography>
+      </Grid>
+
+      <Grid item xs={10}>
+        <RHFTextField name="createPolisNumber" />
+      </Grid>
+
+      <Grid item xs={2}>
+        <Typography variant="subtitle1" color="grey.600">{t('company.subtitle.polis_holder')}</Typography>
+      </Grid>
+
+      <Grid item xs={10}>
+        <RHFTextField name="createPolisHolder" />
+      </Grid>
+
+      <Grid item xs={12}>
+        <Box sx={{ display: 'flex', placeContent: 'space-between', gap: 2 }}>
+          <Button
+            size="large"
+            variant="outlined"
+            fullWidth
+            color="secondary"
+            onClick={onBack}
+          >
+            {t('global.back')}
+          </Button>
+          <Button
+            size="large"
+            variant="contained"
+            fullWidth
+            color="secondary"
+            onClick={onNext}
+          >
+            {t('global.next')}
+          </Button>
+        </Box>
+      </Grid>
 
       {
-        elementName && (
-          <Keyboard
-            ref={inputRef.current}
-            elementName={elementName}
-            inputType={keyboardType}
-          />
-        )
+        /**
+         * @todo Implement Keyboard Later...
+         */
+        // elementName && (
+        //   <Keyboard
+        //     ref={inputRef.current}
+        //     elementName={elementName}
+        //     inputType={keyboardType}
+        //   />
+        // )
       }
-    </Stack>
+    </Grid>
   )
 }
 

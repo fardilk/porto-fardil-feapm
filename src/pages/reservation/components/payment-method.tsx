@@ -23,17 +23,16 @@ const PaymentMethod = (props: PaymentMethodProps) => {
       body: t("appointment.payment.assurance.description"),
       localIcon: "jaminan",
       onClick: () => { setOpenAssurance(true) },
-      disabled: true
     }
   ], [t, handleGeneral, setOpenAssurance])
 
   const assurancePaymentMethod: CardBannerProps[] = useMemo(() => [
-    ...reservationType === "RJ" ? [{
-      title: t("appointment.payment.assurance.bpjs.title"),
-      body: t("appointment.payment.assurance.bpjs.description"),
-      localIcon: "bpjs",
-      onClick: () => { handleAssurance("bpjs") }
-    }] : [],
+    // ...reservationType === "RJ" ? [{
+    //   title: t("appointment.payment.assurance.bpjs.title"),
+    //   body: t("appointment.payment.assurance.bpjs.description"),
+    //   localIcon: "bpjs",
+    //   onClick: () => { handleAssurance("bpjs") }
+    // }] : [],
     {
       title: t("appointment.payment.assurance.insurance.title"),
       body: t("appointment.payment.assurance.insurance.description"),

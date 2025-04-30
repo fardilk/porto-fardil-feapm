@@ -28,12 +28,12 @@ const PaymentMethod = (props: PaymentMethodProps) => {
   ]
 
   const assurancePaymentMethod: CardBannerProps[] = [
-    ...encounterType === "RJ" ? [{
-      title: t("appointment.payment.assurance.bpjs.title"),
-      body: t("appointment.payment.assurance.bpjs.description"),
-      localIcon: "bpjs",
-      onClick: () => { handleAssurance("bpjs") }
-    }] : [],
+    // ...encounterType === "RJ" ? [{
+    //   title: t("appointment.payment.assurance.bpjs.title"),
+    //   body: t("appointment.payment.assurance.bpjs.description"),
+    //   localIcon: "bpjs",
+    //   onClick: () => { handleAssurance("bpjs") }
+    // }] : [],
     {
       title: t("appointment.payment.assurance.insurance.title"),
       body: t("appointment.payment.assurance.insurance.description"),
@@ -55,7 +55,7 @@ const PaymentMethod = (props: PaymentMethodProps) => {
 
           return (
             <Grid item xs={12} md={6} key={index}>
-              <CardBanner {...row} cardProps={{ sx: { py: 4 }, variant: "outlined" }} clickable disabled={row.localIcon === "jaminan"} onClick={row.onClick} />
+              <CardBanner {...row} cardProps={{ sx: { py: 4 }, variant: "outlined" }} clickable onClick={row.onClick} />
             </Grid>
           )
         })

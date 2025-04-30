@@ -3,6 +3,10 @@ import {
   Button,
   Divider,
   Grid,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   Stack,
   Typography
 } from '@mui/material';
@@ -15,7 +19,7 @@ import { Image } from 'src/components/image';
 import { Label } from 'src/components/label';
 import { useFetch } from 'src/hooks/use-fetch';
 import { useTranslate } from 'src/locales';
-import { doctorAvailable } from 'src/pages/doctor/model/functions';
+import { doctorAvailable, doctorOne } from 'src/pages/doctor/model/functions';
 import { fDate, formatStr } from 'src/utils/format-time';
 import type { SelectTimeProps } from '../model/types';
 
@@ -27,11 +31,17 @@ const SelectTime = (props: SelectTimeProps) => {
 
   const values = watch()
 
+  const isFromPractitioner = values?.selectType === "practitioner"
+
+  const currentID = isFromPractitioner ? values?.practitionerHealthcareServiceID : (values?.departmentId || '')
+
+  const currentDate = (val?: string) => fDate(val || dayjs().add(1, 'day'), formatStr.paramCase.mysqlDate)
+
   const { data, isLoading, refetch } = useFetch({
-    departmentID: values?.departmentId || "",
+    currentID,
     isBpjs: false,
     date: fDate(dayjs().add(1, 'day'), formatStr.paramCase.mysqlDate),
-  }, doctorAvailable)
+  }, (param) => isFromPractitioner ? doctorOne({ practitionerHealthcareServiceID: param.currentID, date: param.date, isBpjs: param.isBpjs }) : doctorAvailable({ departmentID: param.currentID, date: param.date, isBpjs: param.isBpjs }))
 
   const timeOpt = data?.data?.slot?.map((it) => ({
     label: it.slotTime,
@@ -92,8 +102,8 @@ const SelectTime = (props: SelectTimeProps) => {
                 <Grid item xs={12} md={4}>
                   <Box>
                     <Typography variant='h6'>Dokumen Dokter</Typography>
-                    -
-                    {/* <List>
+                    <List>
+                      {(data?.data?.doctorProfile?.doctorDocument?.length || 0) === 0 && "-"}
                       {
                         data?.data?.doctorProfile?.doctorDocument?.map((row, index) => {
 
@@ -110,13 +120,13 @@ const SelectTime = (props: SelectTimeProps) => {
                           )
                         }) || "-"
                       }
-                    </List> */}
+                    </List>
                   </Box>
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <Typography variant='h6'>Informasi Keilmuan</Typography>
-                  -
-                  {/* <List>
+                  {(data?.data?.doctorProfile?.doctorEducation?.length || 0) === 0 && "-"}
+                  <List>
                     {
                       data?.data?.doctorProfile?.doctorEducation?.map((row, index) => {
 
@@ -130,12 +140,12 @@ const SelectTime = (props: SelectTimeProps) => {
                         )
                       }) || "-"
                     }
-                  </List> */}
+                  </List>
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <Typography variant='h6'>Pengalaman Kerja</Typography>
-                  -
-                  {/* <List>
+                  {(data?.data?.doctorProfile?.doctorExperience?.length || 0) === 0 && "-"}
+                  <List>
                     {
                       data?.data?.doctorProfile?.doctorExperience?.map((row, index) => {
 
@@ -153,14 +163,14 @@ const SelectTime = (props: SelectTimeProps) => {
                         )
                       }) || "-"
                     }
-                  </List> */}
+                  </List>
                 </Grid>
               </Grid>
             </Box>
             <Box>
               <Typography variant='h6'>Publikasi / Seminar Kerja</Typography>
-              -
-              {/* <List>
+              {(data?.data?.doctorProfile?.doctorPublication?.length || 0) === 0 && "-"}
+              <List>
                 {
                   data?.data?.doctorProfile?.doctorPublication?.map((row, index) => {
 
@@ -177,7 +187,7 @@ const SelectTime = (props: SelectTimeProps) => {
                     )
                   }) || "-"
                 }
-              </List> */}
+              </List>
             </Box>
           </Box>
         </Grid>
@@ -190,7 +200,7 @@ const SelectTime = (props: SelectTimeProps) => {
                 format="DD/MM/YYYY"
                 onSelect={(val) => {
                   clearErrors()
-                  refetch({ departmentID: values?.departmentId || "", date: fDate(val, formatStr.paramCase.mysqlDate), isBpjs: false })
+                  refetch({ currentID, date: fDate(val, formatStr.paramCase.mysqlDate), isBpjs: false })
                 }}
                 disablePast
                 slotProps={{

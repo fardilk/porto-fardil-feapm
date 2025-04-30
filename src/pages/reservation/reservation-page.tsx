@@ -496,7 +496,7 @@ const ReservationPage = () => {
                     throw Error("...")
                   }
                 }}
-                type="general"
+                type={values?.payplan || "general"}
               />
             )}
 
