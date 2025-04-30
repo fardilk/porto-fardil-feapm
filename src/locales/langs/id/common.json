@@ -389,12 +389,32 @@
     "address_label": "Alamat"
   },
 
+  "company": {
+    "subtitle": {
+      "detail_data_employee": "Detail Data Karyawan",
+      "input_new_company": "Isi Data Perusahaan Baru",
+      "company_name": "Perusahaan Penanggung",
+      "payment_schema": "Skema Pembayaran",
+      "search_your_schema": "Cari Skema Pembayaran Anda",
+      "payment_valid": "Masa Berlaku",
+      "polis_number": "No Polis",
+      "polis_holder": "Nama Pemegang Polis"
+    }
+  },
+
   "assurance": {
     "subtitle": {
       "enter_policy_number": "Masukkan Nomor Polis Anda",
       "enter_employee_number": "Masukkan Nomor Karyawan Anda",
       "detail_data": "Detail Data Asuransi Pasien",
-      "detail_data_employee": "Detail Data Karyawan"
+      "detail_data_employee": "Detail Data Karyawan",
+      "input_new_insurance": "Isi Data Asuransi Baru",
+      "insurance_name": "Asuransi Penanggung",
+      "payment_schema": "Skema Pembayaran",
+      "search_your_schema": "Cari Skema Pembayaran Anda",
+      "payment_valid": "Masa Berlaku",
+      "polis_number": "No Polis",
+      "polis_holder": "Nama Pemegang Polis"
     },
     "button": {
       "incorrect_data": "Data salah, isi ulang nomor polis",

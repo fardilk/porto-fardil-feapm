@@ -76,6 +76,7 @@ const SelectPractitioner = ({
 
       const response = tempRes.data
 
+      setFormValue('selectType', "healthcare");
       setFormValue('practionerId', response.doctorID);
       setFormValue('departmentId', id);
       setFormValue('practitionerHealthcareServiceID', response.practitionerHealthcareServiceID)
@@ -95,6 +96,7 @@ const SelectPractitioner = ({
   };
 
   const handleSelectByPractitioner = (doctor: Doctor) => {
+    setFormValue('selectType', "practitioner");
     setFormValue('practionerId', doctor.doctorID);
     setFormValue('departmentId', doctor.departmentID);
     setFormValue('scheduleID', doctor.scheduleID)

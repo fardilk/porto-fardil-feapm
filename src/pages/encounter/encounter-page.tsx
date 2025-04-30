@@ -202,6 +202,9 @@ const EncounterPage = () => {
   };
 
   const onAssuranceSelect = (type: Insurancetype) => {
+
+    setValue("payplan", type)
+
     if (encounterType === 'RJ' && type === 'bpjs') {
       handleChangePage({
         newFormSteps: formStepsOutpatientBPJS,
@@ -621,7 +624,7 @@ const EncounterPage = () => {
                   handleChangePage({ action: 'previous' });
                 }}
                 handleConfirm={handleCreateBooking}
-                type="general"
+                type={values?.payplan || "general"}
               />
             )}
 
@@ -720,7 +723,12 @@ const EncounterPage = () => {
               />
             )}
 
-            {currentPage.value === 'insert_polis_number' && <InsertPolisNumber />}
+            {currentPage.value === 'insert_polis_number' && (
+              <InsertPolisNumber
+                onBack={() => { handleChangePage({ action: "previous" }) }}
+                onNext={() => { handleChangePage({ action: "next" }) }}
+              />
+            )}
 
             {currentPage.value === 'information_data_patient_insurance' && (
               <InformationPatient
@@ -779,7 +787,12 @@ const EncounterPage = () => {
               />
             )}
 
-            {currentPage.value === 'insert_employee_number' && <InsertEmployeeNumber />}
+            {currentPage.value === 'insert_employee_number' && (
+              <InsertEmployeeNumber
+                onNext={() => { handleChangePage({ action: "next" }) }}
+                onBack={() => { handleChangePage({ action: "previous" }) }}
+              />
+            )}
 
             {currentPage.value === 'information_data_employee' && (
               <InformationPatient

@@ -10,7 +10,7 @@ import { useTranslate } from "src/locales"
 const SelectCompany = (props: SelectCompanyProps) => {
   const { handleSelect, handleSelectNew } = props
 
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(1)
   const { t } = useTranslate();
 
   const listInsuranceToCard = (param: typeof listCompanyAvailable[0]): LabelTextProps[] => {
@@ -43,8 +43,8 @@ const SelectCompany = (props: SelectCompanyProps) => {
   }
 
   return (
-    <Stack gap={4}>
-      <Grid container spacing={2}>
+    <Stack gap={1}>
+      <Grid container spacing={1}>
 
         {
           listCompanyAvailable.slice(currentIndex, currentIndex + 2).map((row, index) => {
@@ -64,22 +64,20 @@ const SelectCompany = (props: SelectCompanyProps) => {
             )
           })
         }
-
-        <Grid item xs={12} md={4}>
-          <Card variant="outlined" sx={{ height: "100%" }}>
-            <ButtonBase sx={{ width: "100%", height: "100%" }} onClick={handleSelectNew}>
-              <Iconify icon="fluent:add-12-regular" color="secondary.dark" sx={{ width: 32 }} />
-            </ButtonBase>
-          </Card>
-        </Grid>
       </Grid>
+
+      <Box>
+        <Button onClick={handleSelectNew} variant="contained" color="secondary">
+          <Iconify icon="fluent:add-12-regular" sx={{ width: 32 }} />
+        </Button>
+      </Box>
 
       <Box sx={{ width: '100%', display: 'flex', placeContent: 'space-between', gap: '10%' }}>
         <Button
           size="large"
-          variant="outlined"
+          variant="contained"
           color="secondary"
-          disabled={currentIndex === 0}
+          disabled={currentIndex === 1}
           onClick={() => { handleChangePagination({ action: "prev" }) }}
         >
           <Iconify icon="fluent:chevron-left-12-regular" />
@@ -87,7 +85,7 @@ const SelectCompany = (props: SelectCompanyProps) => {
 
         <Button
           size="large"
-          variant="outlined"
+          variant="contained"
           color="secondary"
           disabled={(currentIndex + 3) >= listCompanyAvailable.length}
           onClick={() => { handleChangePagination({ action: "next" }) }}

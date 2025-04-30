@@ -46,15 +46,15 @@ const SelectInsurance = (props: SelectInsuranceProps) => {
   }
 
   return (
-    <Stack gap={4}>
-      <Grid container spacing={2}>
+    <Stack spacing={1}>
+      <Grid container spacing={1}>
 
         {
           listInsuranceAvailable.slice(currentIndex, currentIndex + 3).map((row, index) => {
             const textData = listInsuranceToCard(row)
 
             return (
-              <Grid item xs={12} md={3} key={index}>
+              <Grid item xs={12} md={4} key={index}>
                 <LabelTextCard
                   listText={textData}
                   clickable
@@ -68,19 +68,18 @@ const SelectInsurance = (props: SelectInsuranceProps) => {
           })
         }
 
-        <Grid item xs={12} md={3}>
-          <Card variant="outlined" sx={{ height: "100%" }}>
-            <ButtonBase sx={{ width: "100%", height: "100%" }} onClick={handleSelectNew}>
-              <Iconify icon="fluent:add-12-regular" color="secondary.dark" sx={{ width: 32 }} />
-            </ButtonBase>
-          </Card>
-        </Grid>
       </Grid>
+
+      <Box>
+        <Button color="secondary" onClick={handleSelectNew} variant="contained">
+          <Iconify icon="fluent:add-12-regular" sx={{ width: 32 }} />
+        </Button>
+      </Box>
 
       <Box sx={{ width: '100%', display: 'flex', placeContent: 'space-between', gap: '10%' }}>
         <Button
           size="large"
-          variant="outlined"
+          variant="contained"
           color="secondary"
           disabled={currentIndex === 0}
           onClick={() => { handleChangePagination({ action: "prev" }) }}
@@ -90,7 +89,7 @@ const SelectInsurance = (props: SelectInsuranceProps) => {
 
         <Button
           size="large"
-          variant="outlined"
+          variant="contained"
           color="secondary"
           disabled={(currentIndex + 3) >= listInsuranceAvailable.length}
           onClick={() => { handleChangePagination({ action: "next" }) }}

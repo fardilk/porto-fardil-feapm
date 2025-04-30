@@ -128,12 +128,13 @@ const ReservationPage = () => {
       { title: t('assurance.policy_holder_name'), body: 'Anisa Redina' },
       { title: t('assurance.guarantor_type'), body: 'Asuransi Kesehatan' },
       { title: t('assurance.insurance_company'), body: 'Allianz Life Insurance' },
+      { title: t('assurance.place_date_of_birth'), body: 'Malaysia, 11-04-2000' },
+      { title: t('assurance.phone_number'), body: fAsterisk('085157902550') },
       {
         title: t('assurance.address'),
         body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
+        colSpan: 2
       },
-      { title: t('assurance.place_date_of_birth'), body: 'Malaysia, 11-04-2000' },
-      { title: t('assurance.phone_number'), body: fAsterisk('085157902550') },
     ],
     [t]
   );
@@ -144,12 +145,13 @@ const ReservationPage = () => {
       { title: t('assurance.policy_holder_name'), body: 'Anisa Redina' },
       { title: t('assurance.guarantor_type'), body: 'Asuransi Kesehatan' },
       { title: t('assurance.insurance_company'), body: 'Allianz Life Insurance' },
+      { title: t('assurance.place_date_of_birth'), body: 'Malaysia, 11-04-2000' },
+      { title: t('assurance.phone_number'), body: fAsterisk('085157902550') },
       {
         title: t('assurance.address'),
         body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
+        colSpan: 2
       },
-      { title: t('assurance.place_date_of_birth'), body: 'Malaysia, 11-04-2000' },
-      { title: t('assurance.phone_number'), body: fAsterisk('085157902550') },
     ],
     [t]
   );
@@ -496,7 +498,7 @@ const ReservationPage = () => {
                     throw Error("...")
                   }
                 }}
-                type="general"
+                type={values?.payplan || "general"}
               />
             )}
 
@@ -581,7 +583,12 @@ const ReservationPage = () => {
               />
             )}
 
-            {currentPage.value === 'insert_polis_number' && <InsertPolisNumber />}
+            {currentPage.value === 'insert_polis_number' && (
+              <InsertPolisNumber
+                onBack={() => { handleChangePage({ action: "previous" }) }}
+                onNext={() => { handleChangePage({ action: "next" }) }}
+              />
+            )}
 
             {currentPage.value === 'information_data_patient_insurance' && (
               <InformationPatient
@@ -640,7 +647,12 @@ const ReservationPage = () => {
               />
             )}
 
-            {currentPage.value === 'insert_employee_number' && <InsertEmployeeNumber />}
+            {currentPage.value === 'insert_employee_number' && (
+              <InsertEmployeeNumber
+                onBack={() => { handleChangePage({ action: "previous" }) }}
+                onNext={() => { handleChangePage({ action: "next" }) }}
+              />
+            )}
 
             {currentPage.value === 'information_data_employee' && (
               <InformationPatient

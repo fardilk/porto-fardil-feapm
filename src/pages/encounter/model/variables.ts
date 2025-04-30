@@ -44,7 +44,6 @@ export const initialStep = [
     value: 'select_encounter_type',
     properties: {
       disableBack: true,
-      containerSize: 'medium',
     },
   },
   {
@@ -135,6 +134,13 @@ export const formStepsOutpatientInsurance = [
     },
   },
   {
+    label: 'appointment.steps.select_time',
+    value: 'select_time',
+    properties: {
+      containerSize: 'superLarge',
+    },
+  },
+  {
     label: 'appointment.steps.confirmation_patient_registration',
     value: 'confirmation_patient_registration',
     properties: {
@@ -181,6 +187,13 @@ export const formStepsOutpatientCompany = [
     },
   },
   {
+    label: 'appointment.steps.select_time',
+    value: 'select_time',
+    properties: {
+      containerSize: 'superLarge',
+    },
+  },
+  {
     label: 'appointment.steps.confirmation_patient_registration',
     value: 'confirmation_patient_registration',
     properties: {
@@ -211,6 +224,13 @@ export const formStepsOutpatientBPJS = [
     value: 'select_healthcare_practitioner',
     properties: {
       disableBack: true,
+    },
+  },
+  {
+    label: 'appointment.steps.select_time',
+    value: 'select_time',
+    properties: {
+      containerSize: 'superLarge',
     },
   },
   {
