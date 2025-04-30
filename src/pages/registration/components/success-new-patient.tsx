@@ -29,7 +29,7 @@ const SuccessNewPatient = (props: SuccessNewPatientProps) => {
     { title: t("registration.born_place_date"), body: `${values.birthPlace} ${fDate(values.birthDate, "DD-MM-YYYY")}` },
     { title: t("registration.phone_number"), body: fAsterisk(values.phoneNumber) },
     { title: t("registration.email"), body: values.email },
-    { title: t("registration.address_label"), body: values.address },
+    { title: t("registration.address_label"), body: values.address, },
   ]
 
   return (
@@ -42,7 +42,7 @@ const SuccessNewPatient = (props: SuccessNewPatientProps) => {
       <Typography variant="h5" gutterBottom>{(t("registration.patient_details"))}</Typography>
 
       <Box sx={{ display: 'flex', gap: 1 }}>
-        <LabelTextContainer col={3} listText={headerData} />
+        <LabelTextContainer col={3} listText={headerData} orientation="horizontal" />
         <OutlineCard sx={{ width: 1 }} cardContentProps={{ sx: { height: 1 } }}>
           <Stack spacing={1} sx={{ height: 1 }}>
             <Typography variant='subtitle1'>{t('registration.select_service')}</Typography>
