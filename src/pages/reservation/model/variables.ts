@@ -44,7 +44,6 @@ export const initialStep = [
     value: 'select_reservation_type',
     properties: {
       disableBack: true,
-      containerSize: 'medium',
     },
   },
   {

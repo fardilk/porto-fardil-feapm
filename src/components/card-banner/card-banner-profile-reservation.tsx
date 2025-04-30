@@ -1,10 +1,10 @@
-import { alpha, Box, Button, Card, CardContent, Icon, Stack, Typography, useTheme } from "@mui/material";
+import { alpha, Box, Button, Card, CardContent, Stack, Typography, useTheme } from "@mui/material";
 import { getIconsPath } from "src/utils/helper";
 import { Iconify } from "../iconify";
 import { Image } from "../image";
+import { Label } from "../label";
 import { ButtonBaseOverride } from "./card-banner";
 import type { CardBannerProfileReservationProps } from "./types";
-import { Label } from "../label";
 
 const CardBannerProfileReservation = (props: CardBannerProfileReservationProps) => {
   const { heathcareServiceName, name, icon, cardProps, clickable, isFull, slot, onClick } = props

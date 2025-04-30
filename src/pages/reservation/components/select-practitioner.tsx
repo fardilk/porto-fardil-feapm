@@ -60,6 +60,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
 
       const response = tempRes.data
 
+      setFormValue('selectType', "healthcare");
       setFormValue('practionerId', response.doctorID);
       setFormValue('departmentId', id);
       setFormValue('scheduleID', response.scheduleID)
@@ -80,6 +81,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
   };
 
   const handleSelectedByPractitioner = (doctor: Doctor) => {
+    setFormValue('selectType', "practitioner");
     setFormValue('practionerId', doctor.doctorID);
     setFormValue('departmentId', doctor.departmentID);
     setFormValue('scheduleID', doctor.scheduleID)

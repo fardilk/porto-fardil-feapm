@@ -13,7 +13,7 @@ type WindowContainerProps = {
 }
 
 const WindowContainer = (props: WindowContainerProps) => {
-  const { title, children, size = "medium", hideBackNavigation, hideCloseNavigation, handleBackNavigation, handleCloseNavigation } = props
+  const { title, children, size = "superLarge", hideBackNavigation, hideCloseNavigation, handleBackNavigation, handleCloseNavigation } = props
   const { t } = useTranslate()
 
   const containerWidth = useMemo(() => {

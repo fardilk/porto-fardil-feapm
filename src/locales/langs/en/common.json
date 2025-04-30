@@ -389,12 +389,32 @@
     "address_label": "Address"
   },
 
+  "company": {
+    "subtitle": {
+      "detail_data_employee": "Employee Data Detail",
+      "input_new_company": "Enter New Company Data",
+      "company_name": "Underwriter's Company",
+      "payment_schema": "Payment Schema",
+      "search_your_schema": "Search Your Payment Schema",
+      "payment_valid": "Validity period",
+      "polis_number": "No Polis",
+      "polis_holder": "Polis Holder"
+    }
+  },
+
   "assurance": {
     "subtitle": {
       "enter_policy_number": "Enter Your Policy Number",
       "enter_employee_number": "Enter Your Employee Number",
       "detail_data": "Patient Insurance Data Details",
-      "detail_data_employee": "Employee Data Detail"
+      "detail_data_employee": "Employee Data Detail",
+      "input_new_insurance": "Enter New Insurance Data",
+      "insurance_name": "Underwriter's Insurance",
+      "payment_schema": "Payment Schema",
+      "search_your_schema": "Search Your Payment Schema",
+      "payment_valid": "Validity period",
+      "polis_number": "No Polis",
+      "polis_holder": "Polis Holder"
     },
     "button": {
       "incorrect_data": "Incorrect data, refill the policy number",
