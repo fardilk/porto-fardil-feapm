@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import dayjs from 'dayjs';
+import nProgress from 'nprogress';
 import { useEffect, useMemo, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router';
@@ -11,6 +12,7 @@ import { InsertIdentifier } from 'src/components/insert-identifier';
 import { WindowContainer } from 'src/components/window-container';
 import { usePartialState, useStepper } from 'src/hooks';
 import { useTranslate } from 'src/locales';
+import { setLoading } from 'src/store/slices/app';
 import { Nullable } from 'src/types/common';
 import { fDate, formatStr } from 'src/utils/format-time';
 import { enBase64, fAsterisk } from 'src/utils/helper';
@@ -55,8 +57,6 @@ import {
   formStepsRadCompany,
   formStepsRadInsurance,
 } from './model/variables';
-import nProgress from 'nprogress';
-import { setLoading } from 'src/store/slices/app';
 
 const ReservationPage = () => {
 
