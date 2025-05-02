@@ -1,14 +1,22 @@
-import { Box, Button, Grid, Typography, useTheme } from "@mui/material"
+import { Box, Button, Grid, Typography } from "@mui/material";
+import { useWatch } from "react-hook-form";
 import { RHFAutocomplete, RHFTextField } from "src/components/hook-form";
-import { useTranslate } from "src/locales"
+import { useFetch } from "src/hooks/use-fetch";
+import { useTranslate } from "src/locales";
+import { payplanDropdown } from "src/modules/payorapm/functions";
+import { Insurance, Payplan } from "src/modules/payorapm/types";
 
 const InsertPolisNumber = ({ onBack, onNext }: { onBack: () => void, onNext: () => void }) => {
 
   const { t } = useTranslate();
-  const theme = useTheme()
+
+  const [valInsurance]: [valInsurance: Insurance] = useWatch({ name: ["insurance"] })
+
   // const inputRef = useRef<any>({})
 
   // const [{ elementName, keyboardType }, setPartialState] = usePartialState({ elementName: "polis", keyboardType: "numberOnly" })
+
+  const { data, isLoading } = useFetch({ payorID: valInsurance?.insuranceId || '' }, payplanDropdown)
 
   return (
     <Grid container spacing={1} sx={{ display: 'flex', alignItems: 'center' }}>
@@ -25,8 +33,16 @@ const InsertPolisNumber = ({ onBack, onNext }: { onBack: () => void, onNext: () 
       </Grid>
 
       <Grid item xs={10}>
-        <RHFAutocomplete name="createPaymentScheme" label={t('assurance.subtitle.search_your_schema')} options={[]} />
-        <Typography variant="body2">{t('assurance.subtitle.payment_valid')} :</Typography>
+        <RHFAutocomplete
+          name="createPaymentScheme"
+          options={data?.data || []}
+          getOptionLabel={(opt: Payplan) => opt.payplanName}
+          getOptionKey={(opt: Payplan) => opt.payplanID}
+          loading={isLoading}
+          isOptionEqualToValue={(opt: Payplan, val: Payplan) => opt.payplanID === val.payplanID}
+          label={t('assurance.subtitle.search_your_schema')}
+        />
+        <Typography variant="body2">{t('assurance.subtitle.payment_valid')} : -</Typography>
       </Grid>
 
       <Grid item xs={2}>
@@ -46,7 +62,7 @@ const InsertPolisNumber = ({ onBack, onNext }: { onBack: () => void, onNext: () 
       </Grid>
 
       <Grid item xs={12}>
-        <Box sx={{ display: 'flex', placeContent: 'space-between', gap: 2 }}>
+        <Box sx={{ display: 'flex', placeContent: 'space-between', gap: 2, mt: 2 }}>
           <Button
             size="large"
             variant="outlined"

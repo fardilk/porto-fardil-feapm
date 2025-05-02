@@ -1,11 +1,14 @@
-import { Box, Button, ButtonBase, Card, Grid, Stack } from "@mui/material"
+import { Box, Button, CircularProgress, Grid, Stack, Typography } from "@mui/material"
 import { useState } from "react"
+import { useFormContext, useWatch } from "react-hook-form"
 import { Iconify } from "src/components/iconify"
 import { LabelTextCard } from "src/components/label-text"
 import type { LabelTextProps } from "src/components/label-text/types"
-import { fDate } from "src/utils/format-time"
-import type { SelectInsuranceProps } from "../model/types"
+import { useFetch } from "src/hooks/use-fetch"
 import { useTranslate } from "src/locales"
+import { insuranceList } from "src/modules/payorapm/functions"
+import { Insurance } from "src/modules/payorapm/types"
+import type { SelectInsuranceProps } from "../model/types"
 
 const SelectInsurance = (props: SelectInsuranceProps) => {
   const { handleSelect, handleSelectNew } = props
@@ -13,63 +16,88 @@ const SelectInsurance = (props: SelectInsuranceProps) => {
   const { t } = useTranslate();
   const [currentIndex, setCurrentIndex] = useState(1)
 
-  const listInsuranceToCard = (param: typeof listInsuranceAvailable[0]): LabelTextProps[] => {
-    const { namaAsuransi, ...rest } = param
+  const { setValue } = useFormContext()
+  const values = useWatch()
 
-    function getLabel<K extends keyof typeof rest>(key: K) {
-      const mapFromKeyToLabel = {
-        nama: t('assurance.name'),
-        namaBenefit: t('assurance.benefit_name'),
-        masaBerlaku: t('assurance.validity_period'),
-        noPolis: t('assurance.policy_no'),
-        noJaminan: t('assurance.guarantee_number'),
-        noInhealth: t('assurance.inhealth_number'),
-        hakKelasInhealth: t('assurance.inhealth_class_rights')
+  const { data: listInsurance, isLoading: loadingList, refetch: executeGet } = useFetch({ display: 3, page: 1, patientID: values?.patientId || '', keywords: '' }, insuranceList)
+
+  const listInsuranceToCard = (param: Insurance): LabelTextProps[] => {
+    const { insuranceName, insuranceId, ...rest } = param
+
+    function getLabel<K extends keyof typeof rest.patient>(key: K) {
+      const mapFromKeyToLabel: Partial<Insurance['patient']> = {
+        name: t('assurance.info.name'),
+        dateStart: t('assurance.info.date_start'),
+        dateExpire: t('assurance.info.date_end'),
+        policyNo: t('assurance.info.policy_no'),
+        warrantyNo: t('assurance.info.warranty_no'),
+        inhealthNo: t('assurance.info.inhealth_no'),
+        inhealthClass: t('assurance.info.inhealth_class'),
       }
 
       return mapFromKeyToLabel[key]
     }
 
-    return Object.keys(rest).map((key) => {
+    const tempPatient = { ...rest.patient }
+
+    delete tempPatient.patientCoverageID
+
+    return Object.keys(tempPatient || {}).map((key) => {
+
       return {
         titleProps: { color: "secondary.dark", },
         bodyProps: { color: "secondary.dark", variant: "body2" },
-        title: getLabel(key as any),
-        body: `${(rest as any)[key]}`
+        title: getLabel(key as never) || '-',
+        body: `${(tempPatient as any)[key]}` || '-'
       }
     })
   }
 
-  const handleChangePagination = ({ action }: { action: "prev" | "next" }) => {
+  const handleChangePagination = async ({ action }: { action: "prev" | "next" }) => {
+    const index = currentIndex + 1
 
-    setCurrentIndex(prev => action === "prev" ? prev - 3 : prev + 3)
+    const response = await executeGet({ display: 3, keywords: '', page: index, patientID: values?.patientID })
+
+    if (response?.status) {
+      setCurrentIndex(prev => action === "prev" ? prev - 1 : prev + 1)
+    }
   }
 
   return (
     <Stack spacing={1}>
       <Grid container spacing={1}>
         {
-          listInsuranceAvailable.slice(currentIndex, currentIndex + 3).map((row, index) => {
+          listInsurance?.data.map((row, index) => {
             const textData = listInsuranceToCard(row)
-
             return (
               <Grid item xs={12} md={4} key={index}>
                 <LabelTextCard
                   listText={textData}
                   clickable
                   orientation="horizontal"
-                  onClick={handleSelect}
+                  onClick={() => { setValue("selectedInsurance", row); handleSelect() }}
                   headerLocalIcon="asuransi"
-                  headerText={row.namaAsuransi}
+                  headerText={row.insuranceName}
                 />
               </Grid>
             )
           })
         }
+
       </Grid>
 
+      {
+        loadingList && <Box sx={{ display: 'flex', placeContent: 'center' }}> <CircularProgress color="secondary" /> </Box>
+      }
+
+      {
+        !loadingList && (listInsurance?.data.length === 0) && (
+          <Typography variant="h5" sx={{ textAlign: 'center' }}>{t('encounter.outpatient.insurance.no_patient_data')}</Typography>
+        )
+      }
+
       <Box>
-        <Button color="secondary" onClick={handleSelectNew} variant="contained">
+        <Button color="secondary" onClick={() => { setValue("createNewInsurance", true); handleSelectNew() }} variant="contained">
           <Iconify icon="fluent:add-12-regular" sx={{ width: 32 }} />
         </Button>
       </Box>
@@ -89,8 +117,8 @@ const SelectInsurance = (props: SelectInsuranceProps) => {
           size="large"
           variant="contained"
           color="secondary"
-          disabled={(currentIndex + 3) >= listInsuranceAvailable.length}
-          onClick={() => { handleChangePagination({ action: "next" }) }}
+          disabled={currentIndex === (listInsurance?.pagination.totalPage || 1)}
+          onClick={() => { handleChangePagination({ action: "next" }); }}
         >
           <Iconify icon="fluent:chevron-right-12-regular" />
         </Button>
@@ -103,47 +131,47 @@ const SelectInsurance = (props: SelectInsuranceProps) => {
 export default SelectInsurance
 
 
-const listInsuranceAvailable = [
-  {
-    namaAsuransi: "Mandiri Inhealth",
-    nama: "Anisa Redina",
-    namaBenefit: "Mandiri Inhealth Gold",
-    masaBerlaku: fDate(new Date(), "DD-MM-YYYY"),
-    noPolis: "-",
-    noJaminan: "-",
-    noInhealth: "10020011",
-    hakKelasInhealth: "Gold"
-  },
-  {
-    namaAsuransi: "Allianz Life Insurance",
-    nama: "Anisa Redina",
-    namaBenefit: "AlliSya Hospital and Surgical Care +",
-    masaBerlaku: fDate(new Date(), "DD-MM-YYYY"),
-    noPolis: "100200",
-    noJaminan: "1002001",
-    noInhealth: "-",
-    hakKelasInhealth: "-"
-  },
-  {
-    namaAsuransi: "Mandiri Inhealth",
-    nama: "Anisa Redina",
-    namaBenefit: "Mandiri Inhealth Gold",
-    masaBerlaku: fDate(new Date(), "DD-MM-YYYY"),
-    noPolis: "100200",
-    noJaminan: "1002001",
-    noInhealth: "10020011",
-    hakKelasInhealth: "Gold"
-  },
-  {
-    namaAsuransi: "Mandiri Inhealth II",
-    nama: "Anisa Redina",
-    namaBenefit: "Mandiri Inhealth Gold",
-    masaBerlaku: fDate(new Date(), "DD-MM-YYYY"),
-    noPolis: "-",
-    noJaminan: "-",
-    noInhealth: "10020011",
-    hakKelasInhealth: "Gold"
-  },
+// const listInsuranceAvailable = [
+//   {
+//     namaAsuransi: "Mandiri Inhealth",
+//     nama: "Anisa Redina",
+//     namaBenefit: "Mandiri Inhealth Gold",
+//     masaBerlaku: fDate(new Date(), "DD-MM-YYYY"),
+//     noPolis: "-",
+//     noJaminan: "-",
+//     noInhealth: "10020011",
+//     hakKelasInhealth: "Gold"
+//   },
+//   {
+//     namaAsuransi: "Allianz Life Insurance",
+//     nama: "Anisa Redina",
+//     namaBenefit: "AlliSya Hospital and Surgical Care +",
+//     masaBerlaku: fDate(new Date(), "DD-MM-YYYY"),
+//     noPolis: "100200",
+//     noJaminan: "1002001",
+//     noInhealth: "-",
+//     hakKelasInhealth: "-"
+//   },
+//   {
+//     namaAsuransi: "Mandiri Inhealth",
+//     nama: "Anisa Redina",
+//     namaBenefit: "Mandiri Inhealth Gold",
+//     masaBerlaku: fDate(new Date(), "DD-MM-YYYY"),
+//     noPolis: "100200",
+//     noJaminan: "1002001",
+//     noInhealth: "10020011",
+//     hakKelasInhealth: "Gold"
+//   },
+//   {
+//     namaAsuransi: "Mandiri Inhealth II",
+//     nama: "Anisa Redina",
+//     namaBenefit: "Mandiri Inhealth Gold",
+//     masaBerlaku: fDate(new Date(), "DD-MM-YYYY"),
+//     noPolis: "-",
+//     noJaminan: "-",
+//     noInhealth: "10020011",
+//     hakKelasInhealth: "Gold"
+//   },
 
 
-]
+// ]

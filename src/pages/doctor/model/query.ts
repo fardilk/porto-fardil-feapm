@@ -69,6 +69,7 @@ export const DoctorSlotInfoQuery = `
   isSlotFull
   slotFilled
   slotCapacity
+  slotDynamicCapacity
 `;
 
 export const DoctorSlotInfoResultOneQuery = `

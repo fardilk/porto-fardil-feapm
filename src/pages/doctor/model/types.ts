@@ -69,6 +69,7 @@ export type DoctorSlotInfo = {
   isSlotFull: boolean;
   slotFilled: number;
   slotCapacity: number;
+  slotDynamicCapacity: number;
 };
 
 export type DoctorSlotInfoResultOne = {

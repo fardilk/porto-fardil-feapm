@@ -16,6 +16,7 @@ export type Patient = {
   email: string;
   nationality: string;
   address: string;
+  statusAdmission: string;
 
   additional: PatientAdditionalData;
 };
