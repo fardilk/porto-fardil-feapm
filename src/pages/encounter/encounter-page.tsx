@@ -1,4 +1,6 @@
 import { Box } from '@mui/material';
+import dayjs from 'dayjs';
+import nProgress from 'nprogress';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router';
@@ -9,10 +11,12 @@ import { InsertIdentifier } from 'src/components/insert-identifier';
 import { WindowContainer } from 'src/components/window-container';
 import { usePartialState, useStepper } from 'src/hooks';
 import { useTranslate } from 'src/locales';
+import { setLoading } from 'src/store/slices/app';
 import type { Nullable } from 'src/types/common';
+import { fDate, formatStr } from 'src/utils/format-time';
 import { enBase64, fAsterisk } from 'src/utils/helper';
 import { timeout } from 'src/utils/timeout';
-import { appointmentCreate, bookingCreateNoQuery } from '../appointment/model/functions';
+import { appointmentCreate } from '../appointment/model/functions';
 import { BookingInput } from '../appointment/model/types';
 import { patientGet } from '../patient/model/functions';
 import { Patient } from '../patient/model/types';
@@ -66,18 +70,18 @@ import {
   formStepsRadCompany,
   formStepsRadInsurance
 } from './model/variables';
-import { fDate, formatStr } from 'src/utils/format-time';
-import dayjs from 'dayjs';
-import nProgress from 'nprogress';
-import { setLoading } from 'src/store/slices/app';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { encounterSchema } from './model/schema';
+import { createPatientCoverageAPM } from 'src/modules/payorapm/functions';
+import { Insurance, Payplan } from 'src/modules/payorapm/types';
 
 const EncounterPage = () => {
 
   const { t } = useTranslate();
   const { state: locationState } = useLocation()
-  const methods = useForm();
+  const methods = useForm({ resolver: yupResolver(encounterSchema) as any });
 
-  const { handleSubmit, setValue, getValues, control } = methods;
+  const { handleSubmit, setValue, getValues, trigger, control } = methods;
 
   const values = useWatch({ control })
 
@@ -175,18 +179,19 @@ const EncounterPage = () => {
 
   const getListDataInsurance = useMemo(
     () => [
-      { title: t('assurance.policy_number'), body: fAsterisk('100200300400') },
-      { title: t('assurance.policy_holder_name'), body: 'Anisa Redina' },
-      { title: t('assurance.guarantor_type'), body: 'Asuransi Kesehatan' },
-      { title: t('assurance.insurance_company'), body: 'Allianz Life Insurance' },
+      { title: t('assurance.policy_number'), body: fAsterisk(values?.createPolisNumber || '-'), colSpan: 2 },
+      { title: t('assurance.policy_holder_name'), body: values?.createPolisHolder || '-', colSpan: 2 },
+      // { title: t('assurance.guarantor_type'), body: 'Asuransi Kesehatan' },
+      { title: t('assurance.insurance_company'), body: values?.createInsuranceName || '-', colSpan: 2 },
+      { title: t('assurance.place_date_of_birth'), body: `${patientData?.birthPlace || '-'}, ${patientData?.birthDttm || '-'}`, colSpan: 2 },
+      { title: t('assurance.phone_number'), body: fAsterisk(patientData?.phone || '-'), colSpan: 2 },
       {
         title: t('assurance.address'),
-        body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
+        body: patientData?.address || '-',
+        colSpan: 4
       },
-      { title: t('assurance.place_date_of_birth'), body: 'Malaysia, 11-04-2000' },
-      { title: t('assurance.phone_number'), body: fAsterisk('085157902550') },
     ],
-    [t]
+    [t, values, patientData]
   );
 
   const onPractitionerSelect = (method?: string) => {
@@ -343,11 +348,16 @@ const EncounterPage = () => {
       }
 
       // const resp = await bookingCreateNoQuery({ data: newData, patientID })
+
+      const payplanClass = ((values.payplan || '') as string).toLowerCase()
+      const selectedInsurance = values?.selectedInsurance as Insurance | undefined
+
       const resp = await appointmentCreate({
         data: {
           booking: {
             payorParam: {
-              payplanClass: ((values.payplan || '') as string).toLowerCase(),
+              payplanClass,
+              payplanParamInsurance: payplanClass === "insurance" ? { payorIDpatientCoverageID: selectedInsurance?.insuranceId || '', subscriberWarrantyNumber: selectedInsurance?.patient?.warrantyNo || '' } : undefined
             },
             serviceType: values.serviceType,
             serviceParamOutpatient: {
@@ -390,6 +400,7 @@ const EncounterPage = () => {
       setPatientData(newData);
 
       setValue('patientId', newData.patientID);
+      setValue('statusAdmission', newData.statusAdmission)
     } catch (e) {
       throw Error("INI_MAH_NORMAL")
     }
@@ -726,7 +737,9 @@ const EncounterPage = () => {
             {currentPage.value === 'insert_polis_number' && (
               <InsertPolisNumber
                 onBack={() => { handleChangePage({ action: "previous" }) }}
-                onNext={() => { handleChangePage({ action: "next" }) }}
+                onNext={() => {
+                  trigger(["createPaymentScheme", "createPolisNumber", "createPolisHolder"]).then((res) => { console.log(res); if (res) handleChangePage({ action: "next" }) })
+                }}
               />
             )}
 
@@ -737,8 +750,22 @@ const EncounterPage = () => {
                 handleBack={() => {
                   handleChangePage({ action: 'previous' });
                 }}
-                handleNext={() => {
-                  handleChangePage({ action: 'next' });
+                handleNext={async () => {
+                  const response = await createPatientCoverageAPM({
+                    data: {
+                      patientID: patientData?.patientID || '',
+                      payplanID: (values?.createPaymentScheme as Payplan)?.payplanID || '',
+                      subscibreNumber: values?.createPolisNumber || '',
+                      subscriberName: values?.createPolisHolder || ''
+                    }
+                  })
+
+                  if (response.status) {
+                    toast.success(response.message)
+                    handleChangePage({ action: 'next' });
+                  } else {
+                    toast.error(response.message)
+                  }
                 }}
               />
             )}
