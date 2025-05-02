@@ -18,7 +18,7 @@ export const initialState: ConfigType = {
   registration: true,
   simplify: false,
   mode: 'fixed',
-  useKeyboard: true,
+  useKeyboard: false,
   apmID: '',
 };
 

@@ -15,7 +15,7 @@ const InsertIdentifier = ({ errorMessage }: InsertIdentifierProps) => {
 
   const { setValue } = useFormContext()
 
-  const valCitizenship = useWatch({ name: "citizenship" })
+  const [valCitizenship, valNIK] = useWatch({ name: ["citizenship", "nik"] })
 
   const isForeign = valCitizenship
 
@@ -28,7 +28,7 @@ const InsertIdentifier = ({ errorMessage }: InsertIdentifierProps) => {
   const inputRef = useRef<any>({})
 
   return (
-    <Stack gap={2}>
+    <Stack spacing={2} py={2}>
       <Box
         sx={{
           display: "flex",
@@ -69,13 +69,15 @@ const InsertIdentifier = ({ errorMessage }: InsertIdentifierProps) => {
         inputRef={(ref) => { inputRef.current.nik = ref }}
         onChange={(event) => {
           const regex = /^\d+$/;
-          if (!isForeign && regex.test(event.target.value)) {
+          if (!isForeign && (regex.test(event.target.value) || event.target.value === "")) {
+            if (event.target.value.length > 16) {
+              event.target.value = valNIK
+            }
             setValue("nik", event.target.value)
           } else if (isForeign) {
             setValue("nik", event.target.value)
           }
         }}
-        // type={keyboardType === "numberOnly" ? "number" : "text"}
         inputProps={{
           style: {
             textAlign: "center",
@@ -84,7 +86,7 @@ const InsertIdentifier = ({ errorMessage }: InsertIdentifierProps) => {
           }
         }}
       />
-      <Divider />
+      {/* <Divider /> */}
 
       <Keyboard
         ref={inputRef.current}
