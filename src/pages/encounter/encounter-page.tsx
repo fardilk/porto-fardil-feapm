@@ -624,7 +624,7 @@ const EncounterPage = () => {
                   handleChangePage({ action: 'previous' });
                 }}
                 handleConfirm={handleCreateBooking}
-                type={values?.payplan || "general"}
+                type={(values?.payplan || "general").toLowerCase()}
               />
             )}
 
