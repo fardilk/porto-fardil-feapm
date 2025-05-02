@@ -150,7 +150,12 @@ const RegistrationPage = () => {
     // const month = fNik.lahir().toLocaleString('id-ID', { month: '2-digit' });
     // const year = fNik.lahir().toLocaleString('id-ID', { year: 'numeric' });
 
-    setValue('birthDate', dayjs(fNik.lahir(), 'DD-MM-YYYY', true) as any);
+    const wni = !watch().citizenship
+
+    if (wni) {
+      setValue('birthDate', dayjs(fNik.lahir(), 'DD-MM-YYYY', true) as any);
+    }
+
 
     return ""
   }
