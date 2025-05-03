@@ -24,6 +24,7 @@ export const PatientQuery = `
   email
   nationality
   address
+  statusAdmission
 
   additional { ${PatientAdditionalDataQuery} }
 `;

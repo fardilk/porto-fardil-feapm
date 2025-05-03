@@ -2,6 +2,7 @@
   "global": {
     "back": "Kembali",
     "next": "Selanjutnya",
+    "submit": "Submit",
     "cancel": "Batal",
     "doctor": "Dokter",
     "MCU": "MCU",
@@ -198,7 +199,8 @@
       "insurance": {
         "select_insurance": "Pilih Asuransi",
         "insert_polis_number": "Masukkan Nomor Polis Asuransi",
-        "information_data_patient_insurance": "Informasi Data Asuransi Pasien"
+        "information_data_patient_insurance": "Informasi Data Asuransi Pasien",
+        "no_patient_data": "Tidak Ada Data Asuransi. Harap Tambahkan Terlebih Dahulu"
       },
       "company": {
         "select_company": "Pilih Perusahaan",
@@ -384,6 +386,7 @@
     "unregistered_patient": "Pastikan Data Dibawah Sudah Benar :",
     "registration_received": "Pendaftaran Anda telah kami terima.",
     "activate_medical_record": "Silakan menuju ke bagian administrasi untuk mengaktifkan rekam medis Anda.",
+    "success_go_to_healthcare": "Silakan menuju ke poli Anda.",
     "patient_details": "Detail Pasien",
     "address": "Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan",
     "address_label": "Alamat"
@@ -403,6 +406,15 @@
   },
 
   "assurance": {
+    "info": {
+      "name": "Nama",
+      "date_start": "Tanggal Berlaku Awal",
+      "date_end": "Tanggal Berlaku Akhir",
+      "policy_no": "No Polis",
+      "warranty_no": "No Jaminan",
+      "inhealth_no": "No Inhealth",
+      "inhealth_class": "Kelas Inhealth"
+    },
     "subtitle": {
       "enter_policy_number": "Masukkan Nomor Polis Anda",
       "enter_employee_number": "Masukkan Nomor Karyawan Anda",

@@ -207,7 +207,7 @@ const SelectPractitioner = ({
                 <Grid item xs={12} md={6} lg={4} key={doctor.doctorID}>
                   <CardBannerProfileReservation
                     isFull={slotInfo?.isSlotFull || undefined}
-                    slot={`${slotInfo?.slotFilled} / ${slotInfo?.slotCapacity}`}
+                    slot={`${slotInfo?.slotFilled} / ${slotInfo?.slotDynamicCapacity}`}
                     heathcareServiceName={doctor.departmentName}
                     name={doctor.doctorName}
                     clickable

@@ -194,7 +194,10 @@ const SuccessOutpatient = ({
 
   return (
     <Stack gap={4}>
-      <AlertInformation title={t('checkin.title_success')} body="Silakan menuju ke poli Anda." />
+      <AlertInformation
+        title={t('checkin.title_success')}
+        body={values?.statusAdmission === "newPatientWithConfirmation" ? t("registration.activate_medical_record") : t('success_go_to_healthcare')}
+      />
 
       <Box>
         <Typography variant="h5" color="primary.darker" gutterBottom>
