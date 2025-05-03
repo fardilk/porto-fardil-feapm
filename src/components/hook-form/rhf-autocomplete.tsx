@@ -2,7 +2,7 @@ import type { AutocompleteProps } from '@mui/material/Autocomplete';
 
 import { Controller, useFormContext } from 'react-hook-form';
 
-import TextField from '@mui/material/TextField';
+import TextField, { TextFieldProps } from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
 // ----------------------------------------------------------------------
@@ -18,6 +18,7 @@ export type RHFAutocompleteProps = AutocompleteBaseProps & {
   placeholder?: string;
   hiddenLabel?: boolean;
   helperText?: React.ReactNode;
+  textfieldProps?: TextFieldProps
 };
 
 export function RHFAutocomplete({
@@ -26,6 +27,7 @@ export function RHFAutocomplete({
   helperText,
   hiddenLabel,
   placeholder,
+  textfieldProps,
   ...other
 }: RHFAutocompleteProps) {
   const { control, setValue } = useFormContext();
@@ -41,6 +43,7 @@ export function RHFAutocomplete({
           onChange={(event, newValue) => setValue(name, newValue, { shouldValidate: true })}
           renderInput={(params) => (
             <TextField
+              {...textfieldProps}
               {...params}
               label={label}
               placeholder={placeholder}

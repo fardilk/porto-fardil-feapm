@@ -2,6 +2,7 @@
   "global": {
     "back": "back",
     "next": "next",
+    "submit": "Submit",
     "cancel": "cancel",
     "doctor": "Doctor",
     "MCU": "MCU",
@@ -198,7 +199,8 @@
       "insurance": {
         "select_insurance": "Select Insurance",
         "insert_polis_number": "Enter Insurance Policy Number",
-        "information_data_patient_insurance": "Patient Insurance Information"
+        "information_data_patient_insurance": "Patient Insurance Information",
+        "no_patient_data": "No Insurance Data. Please Add Data First"
       },
       "company": {
         "select_company": "Select Company",
@@ -384,6 +386,7 @@
     "unregistered_patient": "Make sure your data is correct",
     "registration_received": "Your registration has been received.",
     "activate_medical_record": "Please go to the administration section to activate your medical record.",
+    "success_go_to_healthcare": "Please go to your healthcare service",
     "patient_details": "Patient Details",
     "address": "Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan",
     "address_label": "Address"
@@ -403,6 +406,15 @@
   },
 
   "assurance": {
+    "info": {
+      "name": "Name",
+      "date_start": "Start Valid Date",
+      "date_end": "Expired Date",
+      "policy_no": "No Polis",
+      "warranty_no": "No Warranty",
+      "inhealth_no": "No Inhealth",
+      "inhealth_class": "Kelas Inhealth"
+    },
     "subtitle": {
       "enter_policy_number": "Enter Your Policy Number",
       "enter_employee_number": "Enter Your Employee Number",

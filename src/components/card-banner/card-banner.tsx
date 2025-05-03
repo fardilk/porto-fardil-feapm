@@ -23,8 +23,8 @@ export const HorizontalItem = (props: CardBannerContentCardProps) => {
       <ListItem>
         <ListItemIcon><Iconify icon={icon} localIcon={localIcon} sxIcon={{ width: 52, ...iconProps?.sx }}  {...iconProps} /></ListItemIcon>
         <ListItemText
-          primary={<Typography variant="h5" color="secondary.dark" {...titleProps}>{title}</Typography>}
-          secondary={<Typography color="grey" {...bodyProps}>{body}</Typography>}
+          primary={<Typography variant="h2" color="secondary.dark" {...titleProps}>{title}</Typography>}
+          secondary={<Typography variant="h4" {...bodyProps}>{body}</Typography>}
         />
       </ListItem>
     </List>
@@ -39,8 +39,8 @@ export const VerticalItem = (props: CardBannerContentCardProps) => {
       <Box sx={{ display: "flex", placeContent: "center", mb: 2 }} >
         <Iconify icon={icon} localIcon={localIcon} sxIcon={{ width: 52, ...iconProps?.sx }} {...iconProps} />
       </Box>
-      <Typography variant="h5" color="secondary.dark" textAlign="center" {...titleProps}>{title}</Typography>
-      <Typography color="grey" textAlign="center" {...bodyProps}>{body}</Typography>
+      <Typography variant="h2" color="secondary.dark" textAlign="center" {...titleProps}>{title}</Typography>
+      <Typography variant="h4" textAlign="center" {...bodyProps}>{body}</Typography>
     </CardContent>
   )
 }

@@ -33,3 +33,5 @@ export * from './rhf-autocomplete';
 export * from './rhf-country-select';
 
 export * from './rhf-time-pils';
+
+export * from './rhf-autocomplete-on-enter';
