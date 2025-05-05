@@ -57,6 +57,10 @@ import {
   formStepsRadCompany,
   formStepsRadInsurance,
 } from './model/variables';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { reservationSchema } from './model/schema';
+import { createPatientCoverageAPM } from 'src/modules/payorapm/functions';
+import { Company, Insurance, Payplan } from 'src/modules/payorapm/types';
 
 const ReservationPage = () => {
 
@@ -122,43 +126,9 @@ const ReservationPage = () => {
     // },
   ], [t, SetReservationType, handleChangePage])
 
-  const getListDataEmployee = useMemo(
-    () => [
-      { title: t('assurance.employee_number'), body: fAsterisk('100200300400') },
-      { title: t('assurance.policy_holder_name'), body: 'Anisa Redina' },
-      { title: t('assurance.guarantor_type'), body: 'Asuransi Kesehatan' },
-      { title: t('assurance.insurance_company'), body: 'Allianz Life Insurance' },
-      { title: t('assurance.place_date_of_birth'), body: 'Malaysia, 11-04-2000' },
-      { title: t('assurance.phone_number'), body: fAsterisk('085157902550') },
-      {
-        title: t('assurance.address'),
-        body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
-        colSpan: 2
-      },
-    ],
-    [t]
-  );
+  const methods = useForm({ defaultValues: { nik: '' } as any, resolver: yupResolver(reservationSchema as any) as any });
 
-  const getListDataInsurance = useMemo(
-    () => [
-      { title: t('assurance.policy_number'), body: fAsterisk('100200300400') },
-      { title: t('assurance.policy_holder_name'), body: 'Anisa Redina' },
-      { title: t('assurance.guarantor_type'), body: 'Asuransi Kesehatan' },
-      { title: t('assurance.insurance_company'), body: 'Allianz Life Insurance' },
-      { title: t('assurance.place_date_of_birth'), body: 'Malaysia, 11-04-2000' },
-      { title: t('assurance.phone_number'), body: fAsterisk('085157902550') },
-      {
-        title: t('assurance.address'),
-        body: 'Jl. Nusa Loka No 24, Kelurahan Rawa Mekar Jaya, Serpong, Tangerang Selatan',
-        colSpan: 2
-      },
-    ],
-    [t]
-  );
-
-  const methods = useForm({ defaultValues: { nik: '' } as any });
-
-  const { handleSubmit, setValue, control } = methods;
+  const { handleSubmit, setValue, trigger, control } = methods;
 
   const [watchDate, watchBookTime, watchUnable] = useWatch({ control, name: ["date", "bookTime", "unable"] })
 
@@ -175,6 +145,39 @@ const ReservationPage = () => {
   useEffect(() => {
     setErrorMessage((prev) => ({ ...prev, unableErr: '' }));
   }, [watchUnable]);
+
+
+  const getListDataEmployee = useMemo(
+    () => [
+      { title: t('assurance.employee_number'), body: fAsterisk(values?.createPolisNumber || '-'), colSpan: 2 },
+      { title: t('assurance.policy_holder_name'), body: values?.createPolisHolder || '-', colSpan: 2 },
+      { title: t('assurance.insurance_company'), body: values?.createCompanyName || '-', colSpan: 2 },
+      { title: t('assurance.place_date_of_birth'), body: `${patientData?.birthPlace || '-'}, ${patientData?.birthDttm || '-'}`, colSpan: 2 },
+      { title: t('assurance.phone_number'), body: fAsterisk(patientData?.phone || '-'), colSpan: 2 },
+      {
+        title: t('assurance.address'),
+        body: patientData?.address || '-',
+        colSpan: 4
+      },
+    ],
+    [t, values, patientData]
+  );
+
+  const getListDataInsurance = useMemo(
+    () => [
+      { title: t('assurance.policy_number'), body: fAsterisk(values?.createPolisNumber || '-'), colSpan: 2 },
+      { title: t('assurance.policy_holder_name'), body: values?.createPolisHolder || '-', colSpan: 2 },
+      { title: t('assurance.insurance_company'), body: values?.createInsuranceName || '-', colSpan: 2 },
+      { title: t('assurance.place_date_of_birth'), body: `${patientData?.birthPlace || '-'}, ${patientData?.birthDttm || '-'}`, colSpan: 2 },
+      { title: t('assurance.phone_number'), body: fAsterisk(patientData?.phone || '-'), colSpan: 2 },
+      {
+        title: t('assurance.address'),
+        body: patientData?.address || '-',
+        colSpan: 4
+      },
+    ],
+    [t, values, patientData]
+  );
 
   const onPractitionerSelect = (method?: string) => {
     if (method === "healthcare") {
@@ -193,6 +196,9 @@ const ReservationPage = () => {
   };
 
   const onAssuranceSelect = (type: Insurancetype) => {
+
+    setValue("payplan", type)
+
     if (reservationType === 'RJ' && type === 'bpjs') {
       handleChangePage({
         newFormSteps: formStepsOutpatientBPJS,
@@ -272,11 +278,18 @@ const ReservationPage = () => {
 
   const handleCreate = async () => {
     try {
+
+      const payplanClass = ((values.payplan || '') as string).toLowerCase()
+      const selectedInsurance = values?.selectedInsurance as Insurance | undefined
+      const selectedCompany = values?.selectedCompany as Company | undefined
+
       const resp = await appointmentCreate({
         data: {
           booking: {
             payorParam: {
               payplanClass: ((values.payplan || '') as string).toLowerCase(),
+              payplanParamInsurance: payplanClass === "insurance" ? { patientCoverageID: selectedInsurance?.patient?.patientCoverageID || selectedInsurance?.insuranceId || '', subscriberWarrantyNumber: selectedInsurance?.patient?.warrantyNo || '' } : undefined,
+              payplanParamCompany: payplanClass === "company" ? { patientCoverageID: selectedCompany?.patient?.patientCoverageID || selectedCompany?.companyId || '', subscriberWarrantyNumber: selectedCompany?.patient?.subscribeWarrantyNumber || '' } : undefined
             },
             serviceType: values.serviceType,
             serviceParamOutpatient: {
@@ -379,7 +392,7 @@ const ReservationPage = () => {
       <Form methods={methods} onSubmit={handleSubmit(onSubmit)}>
         <WindowContainer
           title={t(currentPage.label)}
-          size={currentPage.properties?.containerSize || 'large'}
+          size={currentPage.properties?.containerSize || 'superLarge'}
           handleBackNavigation={() => {
             handleChangePage({ action: 'previous' });
           }}
@@ -524,7 +537,14 @@ const ReservationPage = () => {
                   handleChangePage({ action: 'previous' });
                 }}
                 handleConfirm={async () => {
-                  handleChangePage({ action: 'next' });
+                  try {
+                    await handleCreate()
+
+                    handleChangePage({ action: 'next' });
+                  } catch (error) {
+                    console.log(error)
+                    throw Error("...")
+                  }
                 }}
                 type="insurance"
               />
@@ -586,7 +606,9 @@ const ReservationPage = () => {
             {currentPage.value === 'insert_polis_number' && (
               <InsertPolisNumber
                 onBack={() => { handleChangePage({ action: "previous" }) }}
-                onNext={() => { handleChangePage({ action: "next" }) }}
+                onNext={() => {
+                  trigger(["createPaymentScheme", "createPolisNumber", "createPolisHolder"]).then((res) => { console.log(res); if (res) handleChangePage({ action: "next" }) })
+                }}
               />
             )}
 
@@ -597,8 +619,24 @@ const ReservationPage = () => {
                 handleBack={() => {
                   handleChangePage({ action: 'previous' });
                 }}
-                handleNext={() => {
-                  handleChangePage({ action: 'next' });
+                handleNext={async () => {
+                  const response = await createPatientCoverageAPM({
+                    data: {
+                      patientID: patientData?.patientID || '',
+                      payplanID: (values?.createPaymentScheme as Payplan)?.payplanID || '',
+                      subscibreNumber: values?.createPolisNumber || '',
+                      subscriberName: values?.createPolisHolder || ''
+                    }
+                  })
+
+                  if (response.status) {
+                    toast.success(response.message)
+
+                    setValue("selectedInsurance", { insuranceId: response.data.patientCoverageID, patient: { warrantyNo: response.data.subscriberWarrantyNumber } })
+                    handleChangePage({ action: 'next' });
+                  } else {
+                    toast.error(response.message)
+                  }
                 }}
               />
             )}
@@ -641,7 +679,14 @@ const ReservationPage = () => {
                   handleChangePage({ action: 'previous' });
                 }}
                 handleConfirm={async () => {
-                  handleChangePage({ action: 'next' });
+                  try {
+                    await handleCreate()
+
+                    handleChangePage({ action: 'next' });
+                  } catch (error) {
+                    console.log(error)
+                    throw Error("...")
+                  }
                 }}
                 type="company"
               />
@@ -650,7 +695,9 @@ const ReservationPage = () => {
             {currentPage.value === 'insert_employee_number' && (
               <InsertEmployeeNumber
                 onBack={() => { handleChangePage({ action: "previous" }) }}
-                onNext={() => { handleChangePage({ action: "next" }) }}
+                onNext={() => {
+                  trigger(["createPaymentScheme", "createPolisNumber", "createPolisHolder"]).then((res) => { console.log(res); if (res) handleChangePage({ action: "next" }) })
+                }}
               />
             )}
 
@@ -661,8 +708,23 @@ const ReservationPage = () => {
                 handleBack={() => {
                   handleChangePage({ action: 'previous' });
                 }}
-                handleNext={() => {
-                  handleChangePage({ action: 'next' });
+                handleNext={async () => {
+                  const response = await createPatientCoverageAPM({
+                    data: {
+                      patientID: patientData?.patientID || '',
+                      payplanID: (values?.createPaymentScheme as Payplan)?.payplanID || '',
+                      subscibreNumber: values?.createPolisNumber || '',
+                      subscriberName: values?.createPolisHolder || ''
+                    }
+                  })
+
+                  if (response.status) {
+                    toast.success(response.message)
+                    setValue("selectedCompany", { patient: { subscribeWarrantyNumber: response.data.subscriberWarrantyNumber }, companyId: response.data.patientCoverageID })
+                    handleChangePage({ action: 'next' });
+                  } else {
+                    toast.error(response.message)
+                  }
                 }}
               />
             )}
