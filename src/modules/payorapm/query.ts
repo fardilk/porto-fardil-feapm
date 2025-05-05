@@ -80,9 +80,15 @@ export const InsuranceListAllResponseQuery = `
   data { ${InsuranceQuery} }
 `;
 
+export const CreatePatientCoverageAPMResultOneQuery = `
+  patientCoverageID
+  subscriberWarrantyNumber
+`;
+
 export const CreatePatientCoverageAPMResultQuery = `
   status
   message
+  data { ${CreatePatientCoverageAPMResultOneQuery} }
 `;
 
 export const PayplanQuery = `

@@ -87,9 +87,15 @@ export type PatientCoverageInput = {
   subscibreNumber: string;
 };
 
+export type CreatePatientCoverageAPMResultOne = {
+  patientCoverageID: string;
+  subscriberWarrantyNumber: string;
+};
+
 export type CreatePatientCoverageAPMResult = {
   status: boolean;
   message: string;
+  data: CreatePatientCoverageAPMResultOne;
 };
 
 export type Payplan = {

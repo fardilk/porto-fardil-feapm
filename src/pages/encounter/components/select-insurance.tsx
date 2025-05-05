@@ -17,6 +17,7 @@ const SelectInsurance = (props: SelectInsuranceProps) => {
   const [currentIndex, setCurrentIndex] = useState(1)
 
   const { setValue } = useFormContext()
+
   const values = useWatch()
 
   const { data: listInsurance, isLoading: loadingList, refetch: executeGet } = useFetch({ display: 3, page: 1, patientID: values?.patientId || '', keywords: '' }, insuranceList)
@@ -54,9 +55,9 @@ const SelectInsurance = (props: SelectInsuranceProps) => {
   }
 
   const handleChangePagination = async ({ action }: { action: "prev" | "next" }) => {
-    const index = currentIndex + 1
+    const index = action === "next" ? currentIndex + 1 : currentIndex - 1
 
-    const response = await executeGet({ display: 3, keywords: '', page: index, patientID: values?.patientID })
+    const response = await executeGet({ display: 3, keywords: '', page: index, patientID: values?.patientId })
 
     if (response?.status) {
       setCurrentIndex(prev => action === "prev" ? prev - 1 : prev + 1)
