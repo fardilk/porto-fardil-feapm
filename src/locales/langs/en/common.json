@@ -393,6 +393,14 @@
   },
 
   "company": {
+    "info": {
+      "name": "Nama",
+      "date_start": "Tanggal Berlaku Awal",
+      "date_end": "Tanggal Berlaku Akhir",
+      "policy_no": "No Polis",
+      "warranty_no": "No Jaminan",
+      "scheme": "Skema"
+    },
     "subtitle": {
       "detail_data_employee": "Employee Data Detail",
       "input_new_company": "Enter New Company Data",

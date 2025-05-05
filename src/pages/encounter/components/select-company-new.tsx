@@ -1,19 +1,32 @@
-import { Grid, InputAdornment, Stack } from '@mui/material';
-import { CardBanner } from 'src/components/card-banner';
-import type { SelectCompanyNewProps } from '../model/types';
+import { Box, CircularProgress, Grid, InputAdornment, Stack, Typography } from '@mui/material';
 import { useRef, useState } from 'react';
+import { useFormContext } from 'react-hook-form';
+import { CardBanner } from 'src/components/card-banner';
 import { RHFTextField } from 'src/components/hook-form';
 import { Iconify } from 'src/components/iconify';
 import { Keyboard } from 'src/components/keyboard';
+import { useFetch } from 'src/hooks/use-fetch';
 import { useTranslate } from 'src/locales';
+import { companyListAll } from 'src/modules/payorapm/functions';
+import { Company } from 'src/modules/payorapm/types';
+import type { SelectCompanyNewProps } from '../model/types';
 
 const SelectCompanyNew = (props: SelectCompanyNewProps) => {
+  const { handleSelect } = props;
+
   const [elementName, setElementName] = useState('');
 
   const searchRef = useRef<any>({});
   const { t } = useTranslate();
+  const { setValue } = useFormContext()
 
-  const { handleSelect } = props;
+  const { data: insuranceList, refetch: executeList, isLoading: loadingList } = useFetch({ display: 9, keywords: '', page: 1 }, companyListAll)
+
+  const onSelect = (param: Company) => {
+    setValue("company", param)
+    setValue("createCompanyName", param.companyName)
+    handleSelect()
+  }
 
   return (
     <Stack>
@@ -37,22 +50,37 @@ const SelectCompanyNew = (props: SelectCompanyNewProps) => {
             onClick={() => {
               setElementName('searchCompany');
             }}
+            onKeyDown={async (event) => {
+              if (event.key === "Enter") {
+                await executeList({ display: 6, keywords: (event.target as any).value, page: 1 })
+              }
+            }}
           />
         </Grid>
-        {listInsurance.map((row, index) => {
+        {insuranceList?.data?.map((row, index) => {
           return (
-            <Grid item xs={12} md={4} key={index}>
+            <Grid item xs={12} md={6} key={index}>
               <CardBanner
                 clickable
-                localIcon="asuransi"
-                title={row.label}
+                localIcon="perusahaan"
+                title={row.companyName}
                 cardProps={{ variant: 'outlined' }}
-                onClick={handleSelect}
+                onClick={() => { onSelect(row) }}
               />
             </Grid>
           );
         })}
       </Grid>
+
+      {
+        loadingList && <Box sx={{ display: 'flex', placeContent: 'center', my: 2 }}> <CircularProgress /> </Box>
+      }
+      {
+        !loadingList && insuranceList?.data.length === 0 && (
+          <Typography variant="h5" sx={{ textAlign: 'center' }}>No Data</Typography>
+        )
+      }
+
       {elementName && (
         <Keyboard
           withDialog
@@ -68,15 +96,3 @@ const SelectCompanyNew = (props: SelectCompanyNewProps) => {
 };
 
 export default SelectCompanyNew;
-
-const listInsurance = [
-  { label: 'PT PLN' },
-  { label: 'PT Pertamina' },
-  { label: 'PT Sismedika' },
-  { label: 'PT AXA Insurance Indonesia' },
-  { label: 'PT Asuransi Jiwa Astra' },
-  { label: 'PT Chubb Life Insurance' },
-  { label: 'PT Manulife Indonesia' },
-  { label: 'PT Prudential Life Assurance' },
-  { label: 'PT Asuransi Sinar Mas' },
-];
