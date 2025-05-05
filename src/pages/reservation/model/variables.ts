@@ -135,9 +135,6 @@ export const formStepsOutpatientInsurance = [
   {
     label: 'appointment.steps.select_time',
     value: 'select_time',
-    properties: {
-      disableBack: true,
-    },
   },
   {
     label: 'appointment.steps.confirmation_patient_registration',
@@ -187,9 +184,6 @@ export const formStepsOutpatientCompany = [
   {
     label: 'appointment.steps.select_time',
     value: 'select_time',
-    properties: {
-      disableBack: true,
-    },
   },
   {
     label: 'appointment.steps.confirmation_patient_registration',
@@ -223,9 +217,6 @@ export const formStepsOutpatientBPJS = [
   {
     label: 'appointment.steps.select_time',
     value: 'select_time',
-    properties: {
-      disableBack: true,
-    },
   },
   {
     label: 'appointment.steps.confirmation_patient_registration',
@@ -256,9 +247,6 @@ export const formStepsMCUGeneral = [
   {
     label: 'appointment.steps.select_time',
     value: 'select_time',
-    properties: {
-      disableBack: true,
-    },
   },
   {
     label: 'appointment.steps.confirmation_patient_registration_mcu',
@@ -301,9 +289,6 @@ export const formStepsMCUAssurance = [
   {
     label: 'appointment.steps.select_time',
     value: 'select_time',
-    properties: {
-      disableBack: true,
-    },
   },
   {
     label: 'appointment.steps.confirmation_patient_registration_mcu',
@@ -347,9 +332,6 @@ export const formStepsMCUCompany = [
   {
     label: 'appointment.steps.select_time',
     value: 'select_time',
-    properties: {
-      disableBack: true,
-    },
   },
   {
     label: 'appointment.steps.confirmation_patient_registration_mcu',
@@ -379,9 +361,6 @@ export const formStepsLabGeneral = [
   {
     label: 'appointment.steps.select_time',
     value: 'select_time',
-    properties: {
-      disableBack: true,
-    },
   },
   {
     label: 'appointment.steps.confirmation_patient_registration',
@@ -431,9 +410,6 @@ export const formStepsLabInsurance = [
   {
     label: 'appointment.steps.select_time',
     value: 'select_time',
-    properties: {
-      disableBack: true,
-    },
   },
   {
     label: 'appointment.steps.confirmation_patient_registration',
@@ -483,9 +459,6 @@ export const formStepsLabCompany = [
   {
     label: 'appointment.steps.select_time',
     value: 'select_time',
-    properties: {
-      disableBack: true,
-    },
   },
   {
     label: 'appointment.steps.confirmation_patient_registration',
@@ -515,9 +488,6 @@ export const formStepsRadGeneral = [
   {
     label: 'appointment.steps.select_time',
     value: 'select_time',
-    properties: {
-      disableBack: true,
-    },
   },
   {
     label: 'appointment.steps.confirmation_patient_registration',
@@ -567,9 +537,6 @@ export const formStepsRadInsurance = [
   {
     label: 'appointment.steps.select_time',
     value: 'select_time',
-    properties: {
-      disableBack: true,
-    },
   },
   {
     label: 'appointment.steps.confirmation_patient_registration',
@@ -619,9 +586,6 @@ export const formStepsRadCompany = [
   {
     label: 'appointment.steps.select_time',
     value: 'select_time',
-    properties: {
-      disableBack: true,
-    },
   },
   {
     label: 'appointment.steps.confirmation_patient_registration',

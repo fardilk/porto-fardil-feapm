@@ -103,12 +103,13 @@ export type BookingInputPayplanParamBpjs = {
 };
 
 export type BookingInputPayplanParamInsurance = {
-  payorIDpatientCoverageID: string;
+  patientCoverageID: string;
   subscriberWarrantyNumber: string;
 };
 
 export type BookingInputPayplanParamCompany = {
-  payorID: string;
+  patientCoverageID: string;
+  subscriberWarrantyNumber: string;
 };
 
 export type BookingInputPayorParam = {

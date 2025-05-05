@@ -11,7 +11,7 @@ export type ButtonBaseOverrideProps = {
 export type CardBannerContentCardProps = {
   icon?: string;
   localIcon?: string;
-  title?: string;
+  title?: string | ReactNode;
   body?: string | ReactNode;
   titleProps?: TypographyProps;
   bodyProps?: TypographyProps;

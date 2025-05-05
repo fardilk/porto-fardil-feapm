@@ -1,10 +1,18 @@
 import { Box, Button, Grid, Typography } from "@mui/material"
+import { useWatch } from "react-hook-form";
 import { RHFAutocomplete, RHFTextField } from "src/components/hook-form"
+import { useFetch } from "src/hooks/use-fetch";
 import { useTranslate } from "src/locales"
+import { payplanDropdown } from "src/modules/payorapm/functions";
+import { Company, Payplan } from "src/modules/payorapm/types";
 
 const InsertEmployeeNumber = ({ onBack, onNext }: { onBack: () => void, onNext: () => void }) => {
 
   const { t } = useTranslate();
+
+  const [valCompany]: [valCompany: Company] = useWatch({ name: ["company"] })
+
+  const { data, isLoading } = useFetch({ payorID: valCompany?.companyId || '' }, payplanDropdown)
 
   return (
     <Grid container spacing={1} sx={{ display: 'flex', alignItems: 'center' }}>
@@ -21,7 +29,15 @@ const InsertEmployeeNumber = ({ onBack, onNext }: { onBack: () => void, onNext: 
       </Grid>
 
       <Grid item xs={10}>
-        <RHFAutocomplete name="createPaymentScheme" label={t('company.subtitle.search_your_schema')} options={[]} />
+        <RHFAutocomplete
+          name="createPaymentScheme"
+          options={data?.data || []}
+          getOptionLabel={(opt: Payplan) => opt.payplanName}
+          getOptionKey={(opt: Payplan) => opt.payplanID}
+          loading={isLoading}
+          isOptionEqualToValue={(opt: Payplan, val: Payplan) => opt.payplanID === val.payplanID}
+          label={t('company.subtitle.search_your_schema')}
+        />
         <Typography variant="body2">{t('company.subtitle.payment_valid')} :</Typography>
       </Grid>
 
