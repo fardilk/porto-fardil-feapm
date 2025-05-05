@@ -391,8 +391,10 @@ const EncounterPage = () => {
 
   const handleGetPatientByNIK = async (identifierValue: string) => {
     try {
+      const dataNIK = identifierValue.replace('\n', '');
+
       const { data: newData } = await patientGet({
-        identifier: identifierValue, identifierType: 'Identifier'
+        identifier: dataNIK, identifierType: 'Identifier'
       })
 
       if (!newData) {
