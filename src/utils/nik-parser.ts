@@ -13,6 +13,8 @@ export interface NikDetail {
   kelamin: Function;
   lahir: Function;
   uniqcode: Function;
+  sanitizedKabkot: Function;
+  tempatLahir: Function;
 }
 
 export const nikParser = (nik: string): NikDetail => ({
@@ -23,6 +25,22 @@ export const nikParser = (nik: string): NikDetail => ({
     const isValidKecamatan = (): boolean => !!this.kecamatan();
 
     return isValidLength() && isValidProvinsi() && isValidKabupatenKota() && isValidKecamatan();
+  },
+
+  sanitizedKabkot(): Record<string, string> {
+    return Object.fromEntries(
+      Object.entries(kabkot).map(([code, name]) => {
+        const sanitizedName = name.replace(/^KAB\. |^KOTA /, '').trim();
+        const capitalizedSanitizedName = sanitizedName
+          .toLowerCase()
+          .replace(/\b\w/g, (char) => char.toUpperCase());
+        return [code, capitalizedSanitizedName];
+      })
+    );
+  },
+
+  tempatLahir(): string {
+    return this.sanitizedKabkot()[this.kabupatenKotaId()];
   },
 
   provinceId: (): string => nik.substring(0, 2),
