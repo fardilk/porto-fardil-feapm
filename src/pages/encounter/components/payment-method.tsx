@@ -24,7 +24,6 @@ const PaymentMethod = (props: PaymentMethodProps) => {
       body: t("appointment.payment.assurance.description"),
       localIcon: "jaminan",
       onClick: () => { setOpenAssurance(true) },
-      disabled: true
     }
   ]
 
