@@ -64,9 +64,6 @@ export const initialStep = [
   {
     label: 'appointment.steps.payment_method',
     value: 'payment_method',
-    properties: {
-      disableBack: true,
-    },
   },
 ];
 
@@ -75,10 +72,6 @@ export const formStepsOutpatientGeneral = [
   {
     label: 'appointment.steps.select_healthcare_practitioner',
     value: 'select_healthcare_practitioner',
-    properties: {
-      disableBack: true,
-      containerSize: 'superLarge',
-    },
   },
   {
     label: 'appointment.steps.select_time',
@@ -109,10 +102,6 @@ export const formStepsOutpatientInsurance = [
   {
     label: 'appointment.steps.select_insurance',
     value: 'select_insurance',
-    properties: {
-      disableBack: true,
-      containerSize: 'superLarge',
-    },
   },
   {
     label: 'appointment.steps.select_insurance',
@@ -129,9 +118,6 @@ export const formStepsOutpatientInsurance = [
   {
     label: 'appointment.steps.select_healthcare_practitioner',
     value: 'select_healthcare_practitioner',
-    properties: {
-      disableBack: true,
-    },
   },
   {
     label: 'appointment.steps.select_time',
@@ -162,10 +148,6 @@ export const formStepsOutpatientCompany = [
   {
     label: 'appointment.steps.select_company',
     value: 'select_company',
-    properties: {
-      disableBack: true,
-      containerSize: 'superLarge',
-    },
   },
   {
     label: 'appointment.steps.select_company_new',
@@ -182,9 +164,6 @@ export const formStepsOutpatientCompany = [
   {
     label: 'appointment.steps.select_healthcare_practitioner',
     value: 'select_healthcare_practitioner',
-    properties: {
-      disableBack: true,
-    },
   },
   {
     label: 'appointment.steps.select_time',
@@ -222,9 +201,6 @@ export const formStepsOutpatientBPJS = [
   {
     label: 'appointment.steps.select_healthcare_practitioner',
     value: 'select_healthcare_practitioner',
-    properties: {
-      disableBack: true,
-    },
   },
   {
     label: 'appointment.steps.select_time',
@@ -319,10 +295,6 @@ export const formStepsMCUCompany = [
   {
     label: 'appointment.steps.company.select_company',
     value: 'select_company',
-    properties: {
-      disableBack: true,
-      containerSize: 'superLarge',
-    },
   },
   {
     label: 'appointment.steps.company.select_company_new',
@@ -429,10 +401,6 @@ export const formStepsLabCompany = [
   {
     label: 'appointment.steps.select_company',
     value: 'select_company',
-    properties: {
-      disableBack: true,
-      containerSize: 'superLarge',
-    },
   },
   {
     label: 'appointment.steps.select_company_new',
@@ -547,10 +515,6 @@ export const formStepsRadCompany = [
   {
     label: 'appointment.steps.select_company',
     value: 'select_company',
-    properties: {
-      disableBack: true,
-      containerSize: 'superLarge',
-    },
   },
   {
     label: 'appointment.steps.select_company_new',
