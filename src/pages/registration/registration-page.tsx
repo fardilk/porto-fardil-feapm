@@ -188,6 +188,12 @@ const RegistrationPage = () => {
             return
           }
 
+          if (wni && !(nikParser(dataNIK).isValid())) {
+            setState({ errorNIK: "Kombinasi NIK Tidak Valid" })
+            timeout(2000).then(() => { setState({ errorNIK: "" }) })
+            return
+          }
+
           const res = await patientGet({ identifier: dataNIK, identifierType: 'Identifier' })
 
           const newData = res.data
