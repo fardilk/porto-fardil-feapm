@@ -94,6 +94,8 @@ export const CreatePatientCoverageAPMResultQuery = `
 export const PayplanQuery = `
   payplanID
   payplanName
+  payplanPeriodStart
+  payplanPeriodEnd
 `;
 
 export const PayplanResultDropdownQuery = `

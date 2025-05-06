@@ -101,6 +101,8 @@ export type CreatePatientCoverageAPMResult = {
 export type Payplan = {
   payplanID: string;
   payplanName: string;
+  payplanPeriodStart: string;
+  payplanPeriodEnd: string;
 };
 
 export type PayplanResultDropdown = {

@@ -11,7 +11,7 @@ const InsertPolisNumber = ({ onBack, onNext }: { onBack: () => void, onNext: () 
 
   const { t } = useTranslate();
 
-  const [valInsurance]: [valInsurance: Insurance] = useWatch({ name: ["insurance"] })
+  const [valInsurance, valPayplan]: [valInsurance: Insurance, valPayplan: Payplan] = useWatch({ name: ["insurance", "createPaymentScheme"] })
 
   // const inputRef = useRef<any>({})
 
@@ -43,7 +43,7 @@ const InsertPolisNumber = ({ onBack, onNext }: { onBack: () => void, onNext: () 
           isOptionEqualToValue={(opt: Payplan, val: Payplan) => opt.payplanID === val.payplanID}
           label={t('assurance.subtitle.search_your_schema')}
         />
-        <Typography variant="body2">{t('assurance.subtitle.payment_valid')} : -</Typography>
+        <Typography variant="body2">{t('assurance.subtitle.payment_valid')} : {valPayplan?.payplanPeriodStart || '-'} - {valPayplan?.payplanPeriodEnd || '-'}</Typography>
       </Grid>
 
       <Grid item xs={2}>
