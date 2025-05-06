@@ -426,7 +426,14 @@ const EncounterPage = () => {
       handleGetListPackageRadiology('', 1);
     }
 
-    handleChangePage({ action: 'next' });
+    if (encounterType === 'RJ') {
+      handleChangePage({
+        newFormSteps: formStepsOutpatientGeneral,
+        action: 'next'
+      });
+    }
+
+    // handleChangePage({  });
   };
 
   const handleSelectMCUPackage = useCallback(
