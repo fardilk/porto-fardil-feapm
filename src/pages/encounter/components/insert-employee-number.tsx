@@ -10,7 +10,7 @@ const InsertEmployeeNumber = ({ onBack, onNext }: { onBack: () => void, onNext: 
 
   const { t } = useTranslate();
 
-  const [valCompany]: [valCompany: Company] = useWatch({ name: ["company"] })
+  const [valCompany, valPayplan]: [valCompany: Company, valPayplan: Payplan] = useWatch({ name: ["company", "createPaymentScheme"] })
 
   const { data, isLoading } = useFetch({ payorID: valCompany?.companyId || '' }, payplanDropdown)
 
@@ -38,7 +38,7 @@ const InsertEmployeeNumber = ({ onBack, onNext }: { onBack: () => void, onNext: 
           isOptionEqualToValue={(opt: Payplan, val: Payplan) => opt.payplanID === val.payplanID}
           label={t('company.subtitle.search_your_schema')}
         />
-        <Typography variant="body2">{t('company.subtitle.payment_valid')} :</Typography>
+        <Typography variant="body2">{t('company.subtitle.payment_valid')} : {valPayplan?.payplanPeriodStart || '-'} - {valPayplan?.payplanPeriodEnd || '-'}</Typography>
       </Grid>
 
       <Grid item xs={2}>
