@@ -72,10 +72,6 @@ export const formStepsOutpatientGeneral = [
   {
     label: 'appointment.steps.select_healthcare_practitioner',
     value: 'select_healthcare_practitioner',
-    properties: {
-      disableBack: true,
-      containerSize: 'superLarge',
-    },
   },
   {
     label: 'appointment.steps.select_time',
@@ -121,9 +117,6 @@ export const formStepsOutpatientInsurance = [
   {
     label: 'appointment.steps.select_healthcare_practitioner',
     value: 'select_healthcare_practitioner',
-    properties: {
-      disableBack: true,
-    },
   },
   {
     label: 'appointment.steps.select_time',
@@ -166,9 +159,6 @@ export const formStepsOutpatientCompany = [
   {
     label: 'appointment.steps.select_healthcare_practitioner',
     value: 'select_healthcare_practitioner',
-    properties: {
-      disableBack: true,
-    },
   },
   {
     label: 'appointment.steps.select_time',
