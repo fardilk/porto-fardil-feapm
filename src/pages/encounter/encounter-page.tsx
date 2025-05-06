@@ -546,6 +546,17 @@ const EncounterPage = () => {
     }
   }, [locationState])
 
+  function resetFormCreateCoverage() {
+    setValue("createNewInsurance", false)
+    setValue("insurance", null)
+    setValue("company", null)
+    setValue("createPaymentScheme", null)
+    setValue("createInsuranceName", "")
+    setValue("createCompanyName", "")
+    setValue("createPolisNumber", "")
+    setValue("createPolisHolder", "")
+  }
+
   return (
     <AppPage>
       <Form methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -555,17 +566,17 @@ const EncounterPage = () => {
           handleBackNavigation={() => {
             switch (currentPage.value) {
               case "select_healthcare_practitioner":
-                setValue("createNewInsurance", false)
-                setValue("insurance", null)
-                setValue("company", null)
-                setValue("createPaymentScheme", null)
-                setValue("createInsuranceName", "")
-                setValue("createCompanyName", "")
-                setValue("createPolisNumber", "")
-                setValue("createPolisHolder", "")
+                resetFormCreateCoverage()
                 handleChangePage({ toSpecificPage: "payment_method" })
                 break;
-
+              case "insert_polis_number":
+                resetFormCreateCoverage()
+                handleChangePage({ action: 'previous' });
+                break;
+              case "insert_employee_number":
+                resetFormCreateCoverage()
+                handleChangePage({ action: 'previous' });
+                break;
               default:
                 handleChangePage({ action: 'previous' });
                 break;
