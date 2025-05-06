@@ -553,7 +553,23 @@ const EncounterPage = () => {
           title={t(currentPage.label)}
           size={currentPage.properties?.containerSize}
           handleBackNavigation={() => {
-            handleChangePage({ action: 'previous' });
+            switch (currentPage.value) {
+              case "select_healthcare_practitioner":
+                setValue("createNewInsurance", false)
+                setValue("insurance", null)
+                setValue("company", null)
+                setValue("createPaymentScheme", null)
+                setValue("createInsuranceName", "")
+                setValue("createCompanyName", "")
+                setValue("createPolisNumber", "")
+                setValue("createPolisHolder", "")
+                handleChangePage({ toSpecificPage: "payment_method" })
+                break;
+
+              default:
+                handleChangePage({ action: 'previous' });
+                break;
+            }
           }}
           handleCloseNavigation={() => {
             navigate('/', { replace: true });
