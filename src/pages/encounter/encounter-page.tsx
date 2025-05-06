@@ -426,7 +426,14 @@ const EncounterPage = () => {
       handleGetListPackageRadiology('', 1);
     }
 
-    handleChangePage({ action: 'next' });
+    if (encounterType === 'RJ') {
+      handleChangePage({
+        newFormSteps: formStepsOutpatientGeneral,
+        action: 'next'
+      });
+    }
+
+    // handleChangePage({  });
   };
 
   const handleSelectMCUPackage = useCallback(
@@ -682,7 +689,7 @@ const EncounterPage = () => {
                 practitioner={selectedPractioner}
                 labPackage={selectedPackageLab}
                 MCUPackageName={selectedPackageMCUName}
-                type="general"
+                type={(values?.payplan || "general").toLowerCase()}
               />
             )}
 
@@ -694,7 +701,7 @@ const EncounterPage = () => {
                 practitioner={selectedPractioner}
                 labPackage={selectedPackageLab}
                 MCUPackageName={selectedPackageMCUName}
-                type="insurance"
+                type={(values?.payplan || "general").toLowerCase()}
               />
             )}
 
@@ -706,7 +713,7 @@ const EncounterPage = () => {
                 practitioner={selectedPractioner}
                 labPackage={selectedPackageLab}
                 MCUPackageName={selectedPackageMCUName}
-                type="company"
+                type={(values?.payplan || "general").toLowerCase()}
               />
             )}
 
@@ -896,7 +903,7 @@ const EncounterPage = () => {
                 practitioner={selectedPractioner}
                 labPackage={selectedPackageLab}
                 MCUPackageName={selectedPackageMCUName}
-                type="bpjs"
+                type={(values?.payplan || "general").toLowerCase()}
               />
             )}
 

@@ -1,3 +1,4 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Box } from '@mui/material';
 import dayjs from 'dayjs';
 import nProgress from 'nprogress';
@@ -12,6 +13,8 @@ import { InsertIdentifier } from 'src/components/insert-identifier';
 import { WindowContainer } from 'src/components/window-container';
 import { usePartialState, useStepper } from 'src/hooks';
 import { useTranslate } from 'src/locales';
+import { createPatientCoverageAPM } from 'src/modules/payorapm/functions';
+import { Company, Insurance, Payplan } from 'src/modules/payorapm/types';
 import { setLoading } from 'src/store/slices/app';
 import { Nullable } from 'src/types/common';
 import { fDate, formatStr } from 'src/utils/format-time';
@@ -44,6 +47,7 @@ import InsertEmployeeNumber from './components/insert-employee-number';
 import SelectLabPackage from './components/select-lab-package';
 import SelectRadService from './components/select-rad-service';
 import SelectTime from './components/select-time';
+import { reservationSchema } from './model/schema';
 import type { Insurancetype, ReservationType } from './model/types';
 import {
   formStepsLabCompany,
@@ -57,10 +61,6 @@ import {
   formStepsRadCompany,
   formStepsRadInsurance,
 } from './model/variables';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { reservationSchema } from './model/schema';
-import { createPatientCoverageAPM } from 'src/modules/payorapm/functions';
-import { Company, Insurance, Payplan } from 'src/modules/payorapm/types';
 
 const ReservationPage = () => {
 
@@ -446,8 +446,13 @@ const ReservationPage = () => {
             {currentPage.value === 'payment_method' && (
               <PaymentMethod
                 handleGeneral={() => {
-                  setValue('payplan', 'GENERAL');
-                  handleChangePage({ action: 'next' });
+                  if (reservationType === 'RJ') {
+                    setValue('payplan', 'GENERAL');
+                    handleChangePage({
+                      newFormSteps: formStepsOutpatientGeneral,
+                      action: 'next'
+                    });
+                  }
                 }}
                 reservationType={reservationType}
                 handleAssurance={onAssuranceSelect}
@@ -557,7 +562,10 @@ const ReservationPage = () => {
                 radPackage={selectedPackageRadiology}
                 labPackage={selectedPackageLab}
                 doctorInfo={selectedPractioner}
-                patientDetail={patientData} reservationType={reservationType} type="general" />
+                patientDetail={patientData}
+                reservationType={reservationType}
+                type={(values?.payplan || "general").toLowerCase()}
+              />
             )}
 
             {currentPage.value === 'registration_success_insurance' && (
@@ -565,7 +573,10 @@ const ReservationPage = () => {
                 radPackage={selectedPackageRadiology}
                 labPackage={selectedPackageLab}
                 doctorInfo={selectedPractioner}
-                patientDetail={patientData} reservationType={reservationType} type="insurance" />
+                patientDetail={patientData}
+                reservationType={reservationType}
+                type={(values?.payplan || "general").toLowerCase()}
+              />
             )}
 
             {currentPage.value === 'registration_success_company' && (
@@ -573,7 +584,10 @@ const ReservationPage = () => {
                 radPackage={selectedPackageRadiology}
                 labPackage={selectedPackageLab}
                 doctorInfo={selectedPractioner}
-                patientDetail={patientData} reservationType={reservationType} type="company" />
+                patientDetail={patientData}
+                reservationType={reservationType}
+                type={(values?.payplan || "general").toLowerCase()}
+              />
             )}
 
             {currentPage.value === 'select_insurance' && (
@@ -754,7 +768,7 @@ const ReservationPage = () => {
                 handleBack={() => {
                   handleChangePage({ action: 'previous' });
                 }}
-                type="bpjs"
+                type={(values?.payplan || "general").toLowerCase()}
                 handleConfirm={async () => {
                   handleChangePage({ action: 'next' });
                 }}
@@ -767,7 +781,9 @@ const ReservationPage = () => {
                 labPackage={selectedPackageLab}
                 doctorInfo={selectedPractioner}
                 patientDetail={patientData}
-                reservationType={reservationType} type="bpjs" />
+                reservationType={reservationType}
+                type={(values?.payplan || "general").toLowerCase()}
+              />
             )}
 
             {currentPage.value === 'select_mcu_package' && (
