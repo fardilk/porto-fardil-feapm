@@ -557,7 +557,10 @@ const ReservationPage = () => {
                 radPackage={selectedPackageRadiology}
                 labPackage={selectedPackageLab}
                 doctorInfo={selectedPractioner}
-                patientDetail={patientData} reservationType={reservationType} type="general" />
+                patientDetail={patientData}
+                reservationType={reservationType}
+                type={(values?.payplan || "general").toLowerCase()}
+              />
             )}
 
             {currentPage.value === 'registration_success_insurance' && (
@@ -565,7 +568,10 @@ const ReservationPage = () => {
                 radPackage={selectedPackageRadiology}
                 labPackage={selectedPackageLab}
                 doctorInfo={selectedPractioner}
-                patientDetail={patientData} reservationType={reservationType} type="insurance" />
+                patientDetail={patientData}
+                reservationType={reservationType}
+                type={(values?.payplan || "general").toLowerCase()}
+              />
             )}
 
             {currentPage.value === 'registration_success_company' && (
@@ -573,7 +579,10 @@ const ReservationPage = () => {
                 radPackage={selectedPackageRadiology}
                 labPackage={selectedPackageLab}
                 doctorInfo={selectedPractioner}
-                patientDetail={patientData} reservationType={reservationType} type="company" />
+                patientDetail={patientData}
+                reservationType={reservationType}
+                type={(values?.payplan || "general").toLowerCase()}
+              />
             )}
 
             {currentPage.value === 'select_insurance' && (
@@ -754,7 +763,7 @@ const ReservationPage = () => {
                 handleBack={() => {
                   handleChangePage({ action: 'previous' });
                 }}
-                type="bpjs"
+                type={(values?.payplan || "general").toLowerCase()}
                 handleConfirm={async () => {
                   handleChangePage({ action: 'next' });
                 }}
@@ -767,7 +776,9 @@ const ReservationPage = () => {
                 labPackage={selectedPackageLab}
                 doctorInfo={selectedPractioner}
                 patientDetail={patientData}
-                reservationType={reservationType} type="bpjs" />
+                reservationType={reservationType}
+                type={(values?.payplan || "general").toLowerCase()}
+              />
             )}
 
             {currentPage.value === 'select_mcu_package' && (
