@@ -32,7 +32,7 @@ const SelectCompany = (props: SelectCompanyProps) => {
         dateExpired: t('company.info.date_end'),
         policyNo: t('company.info.policy_no'),
         subscribeWarrantyNumber: t('company.info.warranty_no'),
-        scheme: t('company.info.scheme'),
+        // scheme: t('company.info.scheme'),
       }
 
       return mapFromKeyToLabel[key]
@@ -41,6 +41,7 @@ const SelectCompany = (props: SelectCompanyProps) => {
     const tempPatient = { ...rest.patient }
 
     delete tempPatient.patientCoverageID
+    delete tempPatient.scheme
 
     return Object.keys(tempPatient || {}).map((key) => {
 

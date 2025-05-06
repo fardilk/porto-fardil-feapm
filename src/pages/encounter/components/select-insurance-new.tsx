@@ -99,15 +99,3 @@ const SelectInsuranceNew = (props: SelectInsuranceNewProps) => {
 };
 
 export default SelectInsuranceNew;
-
-const listInsurance = [
-  { label: 'Allianz Life Insurance' },
-  { label: 'AIA Insurance' },
-  { label: 'BRI Insurance' },
-  { label: 'AXA Insurance Indonesia' },
-  { label: 'Asuransi Jiwa Astra' },
-  { label: 'Chubb Life Insurance' },
-  { label: 'Manulife Indonesia' },
-  { label: 'Prudential Life Assurance' },
-  { label: 'Asuransi Sinar Mas' },
-];
