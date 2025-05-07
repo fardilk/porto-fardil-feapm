@@ -775,7 +775,10 @@ const EncounterPage = () => {
 
             {currentPage.value === 'insert_polis_number' && (
               <InsertPolisNumber
-                onBack={() => { handleChangePage({ action: "previous" }) }}
+                onBack={() => {
+                  resetFormCreateCoverage()
+                  handleChangePage({ action: "previous" })
+                }}
                 onNext={() => {
                   trigger(["createPaymentScheme", "createPolisNumber", "createPolisHolder"]).then((res) => { console.log(res); if (res) handleChangePage({ action: "next" }) })
                 }}
@@ -860,7 +863,10 @@ const EncounterPage = () => {
                 onNext={() => {
                   trigger(["createPaymentScheme", "createPolisNumber", "createPolisHolder"]).then((res) => { console.log(res); if (res) handleChangePage({ action: "next" }) })
                 }}
-                onBack={() => { handleChangePage({ action: "previous" }) }}
+                onBack={() => {
+                  resetFormCreateCoverage()
+                  handleChangePage({ action: "previous" })
+                }}
               />
             )}
 

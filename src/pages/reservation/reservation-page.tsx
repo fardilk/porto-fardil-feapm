@@ -655,7 +655,10 @@ const ReservationPage = () => {
 
             {currentPage.value === 'insert_polis_number' && (
               <InsertPolisNumber
-                onBack={() => { handleChangePage({ action: "previous" }) }}
+                onBack={() => {
+                  resetFormCreateCoverage()
+                  handleChangePage({ action: "previous" })
+                }}
                 onNext={() => {
                   trigger(["createPaymentScheme", "createPolisNumber", "createPolisHolder"]).then((res) => { console.log(res); if (res) handleChangePage({ action: "next" }) })
                 }}
@@ -744,7 +747,10 @@ const ReservationPage = () => {
 
             {currentPage.value === 'insert_employee_number' && (
               <InsertEmployeeNumber
-                onBack={() => { handleChangePage({ action: "previous" }) }}
+                onBack={() => {
+                  resetFormCreateCoverage()
+                  handleChangePage({ action: "previous" })
+                }}
                 onNext={() => {
                   trigger(["createPaymentScheme", "createPolisNumber", "createPolisHolder"]).then((res) => { console.log(res); if (res) handleChangePage({ action: "next" }) })
                 }}
