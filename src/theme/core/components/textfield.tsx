@@ -1,7 +1,7 @@
-import type { Theme, Components } from '@mui/material/styles';
+import type { Components, Theme } from '@mui/material/styles';
 
-import { inputBaseClasses } from '@mui/material/InputBase';
 import { filledInputClasses } from '@mui/material/FilledInput';
+import { inputBaseClasses } from '@mui/material/InputBase';
 import { outlinedInputClasses } from '@mui/material/OutlinedInput';
 
 import { varAlpha } from '../../styles';
@@ -16,6 +16,10 @@ const MuiInputBase: Components<Theme>['MuiInputBase'] = {
     root: ({ theme }) => ({
       [`&.${inputBaseClasses.disabled}`]: {
         '& svg': { color: theme.vars.palette.text.disabled },
+        background: theme.palette.mode === "dark" ? theme.palette.grey[900] : theme.palette.grey[300],
+      },
+      "& .MuiInputBase-input.Mui-disabled": {
+        WebkitTextFillColor: theme.palette.text.primary,
       },
     }),
     input: ({ theme }) => ({

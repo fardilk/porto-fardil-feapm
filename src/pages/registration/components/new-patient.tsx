@@ -18,14 +18,15 @@ import {
 } from 'src/components/hook-form';
 import { Keyboard } from 'src/components/keyboard';
 
+import { Iconify } from 'src/components/iconify';
+import { DialogSearchAddress } from 'src/components/search-address';
+import { usePartialState } from 'src/hooks';
 import { useFetch } from 'src/hooks/use-fetch';
 import { useTranslate } from 'src/locales';
+import { regionalsType } from 'src/pages/regional';
 import { terminologyGet } from 'src/pages/terminology/model/functions';
 import { terminologyArrayMapper } from 'src/utils/terminology';
 import type { NewPatientProps } from '../model/types';
-import { usePartialState } from 'src/hooks';
-import { DialogSearchAddress } from 'src/components/search-address';
-import { regionalsType } from 'src/pages/regional';
 
 const NewPatient = (props: NewPatientProps) => {
   const { handlePreviousPage } = props;
@@ -277,13 +278,27 @@ const NewPatient = (props: NewPatientProps) => {
               // onClick={() => { setState({ openAddress: true }) }}
               onClick={() => { setElementName('address'); setKeyboardType('text'); }}
             />
-            <RHFTextField
-              id="searchRegion"
-              name="searchRegion"
-              placeholder={t('global.searchRegion')}
-              inputRef={(ref) => { inputRef.current.searchRegion = ref; }}
-              onClick={() => { setState({ openAddress: true }) }}
-            />
+            <Box sx={{ display: 'flex', placeItems: 'center', gap: 1 }}>
+              <RHFTextField
+                id="searchRegion"
+                name="searchRegion"
+                disabled
+                placeholder={t('global.searchRegion')}
+                inputRef={(ref) => { inputRef.current.searchRegion = ref; }}
+                onClick={() => { setState({ openAddress: true }) }}
+              />
+              <Box>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  startIcon={<Iconify icon='tabler:world-search' />}
+                  sx={{ textWrap: 'nowrap', width: 'fit-content' }}
+                  onClick={() => { setState({ openAddress: true }) }}
+                >
+                  Cari Wilayah Disini
+                </Button>
+              </Box>
+            </Box>
           </Stack>
         </Grid>
       </Grid>
