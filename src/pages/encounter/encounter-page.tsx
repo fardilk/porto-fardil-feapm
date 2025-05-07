@@ -87,6 +87,8 @@ const EncounterPage = () => {
 
   const watchBookTime = values.bookTime
 
+  console.log(methods.formState.errors)
+
   const navigate = useNavigate();
   const { currentPage, currentPageIndex, handleChangePage } = useStepper({
     initialSteps: formStepsOutpatientGeneral,
