@@ -28,6 +28,7 @@ const SelectInsuranceNew = (props: SelectInsuranceNewProps) => {
   const { data: insuranceList, refetch: executeList, isLoading: loadingList } = useFetch({ display: 9, keywords: '', page: 1 }, insuranceListAll)
 
   const onSelect = (param: Insurance) => {
+    setValue("createNewInsurance", true);
     setValue("insurance", param)
     setValue("createInsuranceName", param.insuranceName)
     handleSelect()

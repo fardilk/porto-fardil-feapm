@@ -1,6 +1,5 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { useEffect } from "react";
-import { useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { RHFAutocomplete, RHFTextField } from "src/components/hook-form";
 import { useFetch } from "src/hooks/use-fetch";
 import { useTranslate } from "src/locales";
@@ -9,15 +8,18 @@ import { Insurance, Payplan } from "src/modules/payorapm/types";
 
 const InsertPolisNumber = ({ onBack, onNext }: { onBack: () => void, onNext: () => void }) => {
 
+  const { setValue } = useFormContext()
   const { t } = useTranslate();
 
   const [valInsurance, valPayplan]: [valInsurance: Insurance, valPayplan: Payplan] = useWatch({ name: ["insurance", "createPaymentScheme"] })
 
-  // const inputRef = useRef<any>({})
-
-  // const [{ elementName, keyboardType }, setPartialState] = usePartialState({ elementName: "polis", keyboardType: "numberOnly" })
-
-  const { data, isLoading } = useFetch({ payorID: valInsurance?.insuranceId || '' }, payplanDropdown)
+  const { data, isLoading } = useFetch({ payorID: valInsurance?.insuranceId || '' }, payplanDropdown, {
+    afterFetch: async (response) => {
+      if (response?.data.length === 1) {
+        setValue("createPaymentScheme", response.data[0])
+      }
+    }
+  })
 
   return (
     <Grid container spacing={1} sx={{ display: 'flex', alignItems: 'center' }}>

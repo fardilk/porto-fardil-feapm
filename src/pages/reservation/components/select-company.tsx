@@ -100,7 +100,7 @@ const SelectCompany = (props: SelectCompanyProps) => {
       }
 
       <Box>
-        <Button color="secondary" onClick={() => { setValue("createNewInsurance", true); handleSelectNew() }} variant="contained">
+        <Button color="secondary" onClick={() => { handleSelectNew() }} variant="contained">
           <Iconify icon="fluent:add-12-regular" sx={{ width: 32 }} />
         </Button>
       </Box>
