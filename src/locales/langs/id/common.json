@@ -206,7 +206,8 @@
         "select_company": "Pilih Perusahaan",
         "select_company_new": "Pilih Perusahaan",
         "insert_employee_number": "Masukkan Nomor Karyawan",
-        "information_data_employee": "Informasi Data Karyawan"
+        "information_data_employee": "Informasi Data Karyawan",
+        "no_patient_data": "Tidak Ada Data Perusahaan. Harap Tambahkan Terlebih Dahulu"
       },
       "bpjs": {
         "insert_bpjs_number": "Masukan / Scan Nomor Kartu BPJS",

@@ -95,7 +95,7 @@ const SelectCompany = (props: SelectCompanyProps) => {
 
       {
         !loadingList && (listInsurance?.data.length === 0) && (
-          <Typography variant="h5" sx={{ textAlign: 'center' }}>{t('encounter.outpatient.insurance.no_patient_data')}</Typography>
+          <Typography variant="h5" sx={{ textAlign: 'center' }}>{t('encounter.outpatient.company.no_patient_data')}</Typography>
         )
       }
 
