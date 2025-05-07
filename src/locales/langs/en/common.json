@@ -206,7 +206,8 @@
         "select_company": "Select Company",
         "select_company_new": "Select Company",
         "insert_employee_number": "Enter Employee Number",
-        "information_data_employee": "Employee Information"
+        "information_data_employee": "Employee Information",
+        "no_patient_data": "No Company Data. Please Add Data First"
       },
       "bpjs": {
         "insert_bpjs_number": "Enter / Scan BPJS Card Number",
