@@ -1,5 +1,5 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { RHFAutocomplete, RHFTextField } from "src/components/hook-form";
 import { useFetch } from "src/hooks/use-fetch";
 import { useTranslate } from "src/locales";
@@ -8,11 +8,18 @@ import { Company, Payplan } from "src/modules/payorapm/types";
 
 const InsertEmployeeNumber = ({ onBack, onNext }: { onBack: () => void, onNext: () => void }) => {
 
+  const { setValue } = useFormContext()
   const { t } = useTranslate();
 
   const [valCompany, valPayplan]: [valCompany: Company, valPayplan: Payplan] = useWatch({ name: ["company", "createPaymentScheme"] })
 
-  const { data, isLoading } = useFetch({ payorID: valCompany?.companyId || '' }, payplanDropdown)
+  const { data, isLoading } = useFetch({ payorID: valCompany?.companyId || '' }, payplanDropdown, {
+    afterFetch: async (response) => {
+      if (response?.data.length === 1) {
+        setValue("createPaymentScheme", response.data[0])
+      }
+    }
+  })
 
   return (
     <Grid container spacing={1} sx={{ display: 'flex', alignItems: 'center' }}>
