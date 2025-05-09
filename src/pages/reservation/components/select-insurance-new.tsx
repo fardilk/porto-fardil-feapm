@@ -25,7 +25,7 @@ const SelectInsuranceNew = (props: SelectInsuranceNewProps) => {
   const { t } = useTranslate();
   const searchRef = useRef<any>({});
 
-  const { data: insuranceList, refetch: executeList, isLoading: loadingList } = useFetch({ display: 9, keywords: '', page: 1 }, insuranceListAll)
+  const { data: insuranceList, refetch: executeList, isLoading: loadingList } = useFetch({ display: 9, keywords: '', page: 1, isHavingActiveContract: true }, insuranceListAll)
 
   const onSelect = (param: Insurance) => {
     setValue("createNewInsurance", true);
@@ -58,7 +58,7 @@ const SelectInsuranceNew = (props: SelectInsuranceNewProps) => {
             }}
             onKeyDown={async (event) => {
               if (event.key === "Enter") {
-                await executeList({ display: 6, keywords: (event.target as any).value, page: 1 })
+                await executeList({ display: 6, keywords: (event.target as any).value, page: 1, isHavingActiveContract: true })
               }
             }}
           />

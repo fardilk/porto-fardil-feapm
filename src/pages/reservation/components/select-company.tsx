@@ -20,7 +20,7 @@ const SelectCompany = (props: SelectCompanyProps) => {
   const { setValue } = useFormContext()
   const values = useWatch()
 
-  const { data: listInsurance, isLoading: loadingList, refetch: executeGet } = useFetch({ display: 3, page: 1, patientID: values?.patientId || '', keywords: '' }, companyList)
+  const { data: listInsurance, isLoading: loadingList, refetch: executeGet } = useFetch({ display: 3, page: 1, patientID: values?.patientId || '', keywords: '', isHavingActiveContract: true }, companyList)
 
   const listInsuranceToCard = (param: Company): LabelTextProps[] => {
     const { companyName, companyId, ...rest } = param
@@ -57,7 +57,7 @@ const SelectCompany = (props: SelectCompanyProps) => {
   const handleChangePagination = async ({ action }: { action: "prev" | "next" }) => {
     const index = action === "next" ? currentIndex + 1 : currentIndex - 1
 
-    const response = await executeGet({ display: 3, keywords: '', page: index, patientID: values?.patientId })
+    const response = await executeGet({ display: 3, keywords: '', page: index, patientID: values?.patientId, isHavingActiveContract: true })
 
     if (response?.status) {
       setCurrentIndex(prev => action === "prev" ? prev - 1 : prev + 1)

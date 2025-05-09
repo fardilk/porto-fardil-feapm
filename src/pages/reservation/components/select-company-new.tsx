@@ -20,7 +20,7 @@ const SelectCompanyNew = (props: SelectCompanyNewProps) => {
   const { t } = useTranslate();
   const { setValue } = useFormContext()
 
-  const { data: insuranceList, refetch: executeList, isLoading: loadingList } = useFetch({ display: 9, keywords: '', page: 1 }, companyListAll)
+  const { data: insuranceList, refetch: executeList, isLoading: loadingList } = useFetch({ display: 9, keywords: '', page: 1, isHavingActiveContract: true }, companyListAll)
 
   const onSelect = (param: Company) => {
     setValue("createNewInsurance", true);
@@ -53,7 +53,7 @@ const SelectCompanyNew = (props: SelectCompanyNewProps) => {
             }}
             onKeyDown={async (event) => {
               if (event.key === "Enter") {
-                await executeList({ display: 6, keywords: (event.target as any).value, page: 1 })
+                await executeList({ display: 6, keywords: (event.target as any).value, page: 1, isHavingActiveContract: true })
               }
             }}
           />
