@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 export const encounterSchema = yup.object().shape({
-  createNewInsurance: yup.string(),
+  createNewInsurance: yup.boolean(),
   createPaymentScheme: yup
     .object()
     .nullable()

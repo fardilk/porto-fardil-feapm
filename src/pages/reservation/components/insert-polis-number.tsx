@@ -1,5 +1,5 @@
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { useWatch } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { RHFAutocomplete, RHFTextField } from "src/components/hook-form";
 import { useFetch } from "src/hooks/use-fetch";
 import { useTranslate } from "src/locales";
@@ -16,7 +16,12 @@ const InsertPolisNumber = ({ onBack, onNext }: { onBack: () => void, onNext: () 
 
   // const [{ elementName, keyboardType }, setPartialState] = usePartialState({ elementName: "polis", keyboardType: "numberOnly" })
 
-  const { data, isLoading } = useFetch({ payorID: valInsurance?.insuranceId || '' }, payplanDropdown)
+  const { setValue } = useFormContext()
+  const { data, isLoading } = useFetch({ payorID: valInsurance?.insuranceId || '' }, payplanDropdown, {afterFetch: async (response) => {
+    if (response?.data.length === 1) {
+      setValue("createPaymentScheme", response.data[0])
+    }}
+  })
 
   return (
     <Grid container spacing={1} sx={{ display: 'flex', alignItems: 'center' }}>
