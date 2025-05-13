@@ -23,17 +23,19 @@ export const insuranceList = async (param: {
   page: number;
   display: number;
   keywords: string;
+  isHavingActiveContract?: boolean
 }): Promise<InsuranceListResponse> => {
   const client = new GqlClient({ module: 'payor' });
 
   const response = await client.request(
     gql`
-      query insuranceList($patientID: ID!, $page: Int!, $display: Int!, $keywords: String!) {
+      query insuranceList($patientID: ID!, $page: Int!, $display: Int!, $keywords: String!, $isHavingActiveContract: Boolean) {
         insuranceList(
           patientID: $patientID
           page: $page
           display: $display
           keywords: $keywords
+          isHavingActiveContract: $isHavingActiveContract
         ) {
           ${InsuranceListResponseQuery}
         }
@@ -49,16 +51,18 @@ export const insuranceListAll = async (param: {
   page: number;
   display: number;
   keywords: string;
+  isHavingActiveContract?: boolean;
 }): Promise<InsuranceListAllResponse> => {
   const client = new GqlClient({ module: 'payor' });
 
   const response = await client.request(
     gql`
-      query insuranceListAll($page: Int!, $display: Int!, $keywords: String!) {
+      query insuranceListAll($page: Int!, $display: Int!, $keywords: String!, $isHavingActiveContract: Boolean) {
         insuranceListAll(
           page: $page
           display: $display
           keywords: $keywords
+          isHavingActiveContract: $isHavingActiveContract
         ) {
           ${InsuranceListAllResponseQuery}
         }
@@ -75,17 +79,19 @@ export const companyList = async (param: {
   page: number;
   display: number;
   keywords: string;
+  isHavingActiveContract?: boolean
 }): Promise<CompanyListResponse> => {
   const client = new GqlClient({ module: 'payor' });
 
   const response = await client.request(
     gql`
-      query companyList($patientID: ID!, $page: Int!, $display: Int!, $keywords: String!) {
+      query companyList($patientID: ID!, $page: Int!, $display: Int!, $keywords: String!, $isHavingActiveContract: Boolean) {
         companyList(
           patientID: $patientID
           page: $page
           display: $display
           keywords: $keywords
+          isHavingActiveContract: $isHavingActiveContract
         ) {
           ${CompanyListResponseQuery}
         }
@@ -101,16 +107,18 @@ export const companyListAll = async (param: {
   page: number;
   display: number;
   keywords: string;
+  isHavingActiveContract?: boolean;
 }): Promise<CompanyListAllResponse> => {
   const client = new GqlClient({ module: 'payor' });
 
   const response = await client.request(
     gql`
-      query companyListAll($page: Int!, $display: Int!, $keywords: String!) {
+      query companyListAll($page: Int!, $display: Int!, $keywords: String!, $isHavingActiveContract: Boolean) {
         companyListAll(
           page: $page
           display: $display
           keywords: $keywords
+          isHavingActiveContract: $isHavingActiveContract
         ) {
           ${CompanyListAllResponseQuery}
         }

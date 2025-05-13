@@ -20,7 +20,7 @@ const SelectInsurance = (props: SelectInsuranceProps) => {
 
   const values = useWatch()
 
-  const { data: listInsurance, isLoading: loadingList, refetch: executeGet } = useFetch({ display: 3, page: 1, patientID: values?.patientId || '', keywords: '' }, insuranceList)
+  const { data: listInsurance, isLoading: loadingList, refetch: executeGet } = useFetch({ display: 3, page: 1, patientID: values?.patientId || '', keywords: '', isHavingActiveContract: true }, insuranceList)
 
   const listInsuranceToCard = (param: Insurance): LabelTextProps[] => {
     const { insuranceName, insuranceId, ...rest } = param
@@ -57,7 +57,7 @@ const SelectInsurance = (props: SelectInsuranceProps) => {
   const handleChangePagination = async ({ action }: { action: "prev" | "next" }) => {
     const index = action === "next" ? currentIndex + 1 : currentIndex - 1
 
-    const response = await executeGet({ display: 3, keywords: '', page: index, patientID: values?.patientId })
+    const response = await executeGet({ display: 3, keywords: '', page: index, patientID: values?.patientId, isHavingActiveContract: true })
 
     if (response?.status) {
       setCurrentIndex(prev => action === "prev" ? prev - 1 : prev + 1)

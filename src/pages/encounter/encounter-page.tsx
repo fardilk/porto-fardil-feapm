@@ -79,7 +79,7 @@ const EncounterPage = () => {
 
   const { t } = useTranslate();
   const { state: locationState } = useLocation()
-  const methods = useForm({ resolver: yupResolver(encounterSchema) as any });
+  const methods = useForm({ defaultValues: { createPaymentScheme: null as any } as any, resolver: yupResolver(encounterSchema) as any });
 
   const { handleSubmit, setValue, getValues, trigger, control } = methods;
 

@@ -126,7 +126,7 @@ const ReservationPage = () => {
     // },
   ], [t, SetReservationType, handleChangePage])
 
-  const methods = useForm({ defaultValues: { nik: '' } as any, resolver: yupResolver(reservationSchema as any) as any });
+  const methods = useForm({ defaultValues: { nik: '', createPaymentScheme: null as any } as any, resolver: yupResolver(reservationSchema as any) as any });
 
   const { handleSubmit, setValue, trigger, control } = methods;
 
