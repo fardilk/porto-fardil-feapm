@@ -1,7 +1,7 @@
 import { useRef, useState } from "react"
 import { useFormContext, useWatch } from "react-hook-form"
 
-import { Box, Divider, Stack, Typography, useTheme } from "@mui/material"
+import { Box, Stack, Typography, useTheme } from "@mui/material"
 
 import { typography } from "src/theme/core"
 

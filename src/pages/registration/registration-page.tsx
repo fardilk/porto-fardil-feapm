@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 import dayjs from 'dayjs';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { toast } from 'sonner';
 import { AppPage } from 'src/components/app-page';
 import { Form } from 'src/components/hook-form';
@@ -82,6 +82,8 @@ const RegistrationPage = () => {
     mode: "onChange"
   });
 
+  const { state: stateLocation } = useLocation()
+
   const { handleSubmit, reset, resetField, setValue, watch } = methods;
 
   const { currentPage, currentPageIndex, handleChangePage, formSteps } = useStepper({
@@ -117,8 +119,13 @@ const RegistrationPage = () => {
 
   useEffect(() => {
     const enc = Boolean(encryptedNIK)
+
+    if (stateLocation?.citizenship) {
+      setValue("citizenship", true)
+    }
+
     if (enc) {
-      parseNIK(deBase64(encryptedNIK))
+      parseNIK(deBase64(encryptedNIK), stateLocation?.citizenship || true)
       setValue("isRegistered", false)
       handleChangePage({
         action: 'next',
@@ -126,9 +133,9 @@ const RegistrationPage = () => {
         toSpecificPage: "create_new_patient"
       });
     }
-  }, [encryptedNIK])
+  }, [encryptedNIK, stateLocation])
 
-  const parseNIK = (nik?: string) => {
+  const parseNIK = (nik?: string, isWNI?: boolean) => {
     if (nik === undefined) {
       return ""
     }
@@ -152,14 +159,14 @@ const RegistrationPage = () => {
 
     const wni = !watch().citizenship
 
-    if (wni) {
+    if (isWNI ? !isWNI : wni) {
       setValue('birthDate', dayjs(fNik.lahir(), 'DD-MM-YYYY', true) as any);
     }
 
 
     return ""
   }
-
+  console.log(watch())
   const onSubmit = async (data: RegistrationIForm) => {
 
     try {
