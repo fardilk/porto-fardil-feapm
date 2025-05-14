@@ -51,8 +51,7 @@ const PatientInformation = (props: PatientInformationProps) => {
   }, [values, isForeign, isSimplify, t])
 
   return (
-    <>
-      <Stack spacing={1}>
+    <Stack spacing={1}>
         <Alert color="warning" severity="warning">
           {values.isRegistered ? t('registration.registered_patient') : t('registration.unregistered_patient')}
         </Alert>
@@ -97,7 +96,6 @@ const PatientInformation = (props: PatientInformationProps) => {
           </Box>
         </Box>
       </Stack>
-    </>
   );
 };
 

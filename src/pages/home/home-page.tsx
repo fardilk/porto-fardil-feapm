@@ -5,7 +5,6 @@ import { Box, Grid, Stack } from "@mui/material"
 import { Header_Height } from "src/utils/variables"
 
 import { CardBanner } from "src/components/card-banner"
-import { Image } from "src/components/image"
 import { useSelector } from "src/store/store"
 import { useTranslate } from "src/locales"
 import { useEffect } from "react"

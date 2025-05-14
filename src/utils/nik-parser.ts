@@ -1,4 +1,3 @@
-import { fDate, formatStr } from './format-time';
 import { provinsi, kabkot, kecamatan } from './wilayah';
 
 export interface NikDetail {
