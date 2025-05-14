@@ -607,7 +607,7 @@ const EncounterPage = () => {
                 identifier={values.nik}
                 handleClick={(param) => {
                   if (param === "search") handleChangePage({ action: "previous" });
-                  if (param === "anjungan") navigate(`/registration/${enBase64(values.nik)}`)
+                  if (param === "anjungan") navigate(`/registration/${enBase64(values.nik)}`, { state: { citizenship: values.citizenship } })
                 }}
               />
             )}

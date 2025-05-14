@@ -2,11 +2,9 @@ import { Box, useTheme } from "@mui/material";
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { AppPage } from "src/components/app-page";
-import { Form, RHFTextField } from "src/components/hook-form";
+import { Form } from "src/components/hook-form";
 import { InsertIdentifier } from "src/components/insert-identifier";
-import { Keyboard } from "src/components/keyboard";
 import { WindowContainer } from "src/components/window-container";
-import { typography } from "src/theme/core";
 
 const PlaygroundPage = () => {
 
