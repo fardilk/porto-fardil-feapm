@@ -1,5 +1,4 @@
 import type { ButtonProps } from '@mui/material';
-import type { FieldValues, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 import type { CardBannerProps } from 'src/components/card-banner/types';
 import { Doctor } from 'src/pages/doctor/model/types';
 import { Patient } from 'src/pages/patient/model/types';
