@@ -125,7 +125,7 @@ const RegistrationPage = () => {
     }
 
     if (enc) {
-      parseNIK(deBase64(encryptedNIK), stateLocation?.citizenship || true)
+      parseNIK(deBase64(encryptedNIK), stateLocation?.citizenship)
       setValue("isRegistered", false)
       handleChangePage({
         action: 'next',
