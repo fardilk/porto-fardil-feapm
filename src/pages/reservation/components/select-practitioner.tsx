@@ -32,7 +32,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
 
   const searchRef = useRef<any>({});
 
-  const { data, isLoading, refetch } = useFetch({ keyword: '', page: 1, take: 9, }, doctorList)
+  const { data, isLoading, refetch } = useFetch({ keyword: '', page: 1, take: 9, isReservasi: true }, doctorList)
 
   const { data: dataPoly, isLoading: loadingPoly, refetch: refetchPoly } = useFetch({ keyword: '', page: 1, take: 9 }, departmentList)
 
@@ -41,7 +41,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
       const page = (action === 'prev' ? prev - 1 : prev + 1)
 
       if (isPractitioner) {
-        refetch({ keyword: searchPractioner || '', page, take: 9 });
+        refetch({ keyword: searchPractioner || '', page, take: 9, isReservasi: true });
       } else {
         refetchPoly({ keyword: searchPractioner || '', page, take: 9 })
       }
@@ -102,7 +102,7 @@ const SelectPractitioner = (props: SelectPractitionerProps) => {
       setFormValue("searchPractioner", keyword)
     }
     if (current) {
-      refetch({ keyword: keyword ?? (searchPractioner || ''), page: 1, take: 9 });
+      refetch({ keyword: keyword ?? (searchPractioner || ''), page: 1, take: 9, isReservasi: true });
     } else {
       refetchPoly({ keyword: keyword ?? (searchPractioner || ''), page: 1, take: 9 });
     }
