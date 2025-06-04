@@ -9,12 +9,13 @@ export const doctorList = async (param: {
   date?: string;
   page: number;
   take: number;
+  isReservasi?: boolean;
 }): Promise<DoctorResultList> => {
   const client = new GqlClient({ module: 'doctor' });
   const res = await client.request(
     gql`
-    query doctorList($keyword: String!, $page: Int!, $take: Int!, $isBpjs: Boolean, $date: String) {
-      doctorList(keyword: $keyword, page: $page, take: $take, isBpjs: $isBpjs, date: $date) {
+    query doctorList($keyword: String!, $page: Int!, $isReservasi: Boolean, $take: Int!, $isBpjs: Boolean, $date: String) {
+      doctorList(keyword: $keyword, page: $page, take: $take, isReservasi: $isReservasi, isBpjs: $isBpjs, date: $date) {
         ${DoctorResultListQuery}
       }
     }
