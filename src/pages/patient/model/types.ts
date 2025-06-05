@@ -28,6 +28,7 @@ export type PatientAdditionalData = {
   bloodRhesusDisplay?: string;
   education?: string;
   occupation?: string;
+  occupationDisplay?: string;
   dailyLanguage?: string;
 };
 
