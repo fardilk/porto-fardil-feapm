@@ -62,7 +62,7 @@ export const patientToIForm = ({ data: newData }: { data: Patient }): Registrati
     citizenship: newData.identifierTypeCode === 'NNIDN',
     name: newData.name,
     gender: {
-      label: newData.gender,
+      label: newData.genderDisplay,
       value: newData.gender,
     },
     birthPlace: newData.birthPlace,
@@ -71,7 +71,7 @@ export const patientToIForm = ({ data: newData }: { data: Patient }): Registrati
     email: newData.email,
     address: newData.address,
     bloodType: {
-      label: newData.additional.bloodType || '-',
+      label: newData.additional.bloodTypeDisplay || '-',
       value: newData.additional.bloodType || '-',
     },
     religion: {
@@ -87,7 +87,7 @@ export const patientToIForm = ({ data: newData }: { data: Patient }): Registrati
       value: newData.maritalStatus,
     },
     job: {
-      label: newData.additional.occupation || '',
+      label: newData.additional.occupationDisplay || '',
       value: newData.additional.occupation || '',
     },
     language: {

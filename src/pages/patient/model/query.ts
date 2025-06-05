@@ -5,6 +5,7 @@ export const PatientAdditionalDataQuery = `
   bloodRhesusDisplay
   education
   occupation
+  occupationDisplay
   dailyLanguage
 `;
 
