@@ -388,6 +388,7 @@
     "registered_patient": "Anda sudah terdaftar dengan data sebagai berikut :",
     "unregistered_patient": "Pastikan Data Dibawah Sudah Benar :",
     "registration_received": "Pendaftaran Anda telah kami terima.",
+    "activation_number_queue": "Nomor Antrian Aktivasi Pasien Anda Adalah : ",
     "activate_medical_record": "Silakan menuju ke bagian administrasi untuk mengaktifkan rekam medis Anda.",
     "success_go_to_healthcare": "Silakan menuju ke poli Anda.",
     "patient_details": "Detail Pasien",
