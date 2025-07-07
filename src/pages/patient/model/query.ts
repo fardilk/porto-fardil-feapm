@@ -28,4 +28,6 @@ export const PatientQuery = `
   statusAdmission
 
   additional { ${PatientAdditionalDataQuery} }
+
+  queueNo
 `;
