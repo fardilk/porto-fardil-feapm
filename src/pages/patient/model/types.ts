@@ -19,6 +19,7 @@ export type Patient = {
   statusAdmission: string;
 
   additional: PatientAdditionalData;
+  queueNo: string;
 };
 
 export type PatientAdditionalData = {

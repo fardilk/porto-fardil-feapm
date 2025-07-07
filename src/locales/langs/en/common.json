@@ -388,6 +388,7 @@
     "registered_patient": "You are already registered with the following data:",
     "unregistered_patient": "Make sure your data is correct",
     "registration_received": "Your registration has been received.",
+    "activation_number_queue": "Your Queue Number Activation is : ",
     "activate_medical_record": "Please go to the administration section to activate your medical record.",
     "success_go_to_healthcare": "Please go to your healthcare service",
     "patient_details": "Patient Details",

@@ -15,7 +15,7 @@ import type { SuccessNewPatientProps } from "../model/types"
 
 const SuccessNewPatient = (props: SuccessNewPatientProps) => {
 
-  const { handleFinish } = props
+  const { handleFinish, data } = props
 
   const { t } = useTranslate()
 
@@ -36,10 +36,10 @@ const SuccessNewPatient = (props: SuccessNewPatientProps) => {
     <Stack spacing={2}>
       <AlertInformation
         title={(t("registration.registration_received"))}
-      // body={(t("registration.activate_medical_record"))}
+        body={`${(t("registration.activation_number_queue"))} ${data?.queueNo || '-'}`}
       />
 
-      <Typography variant="h5" gutterBottom>{(t("registration.patient_details"))}</Typography>
+      <Typography variant="h5">{(t("registration.patient_details"))}</Typography>
 
       <Box sx={{ display: 'flex', gap: 1 }}>
         <LabelTextContainer col={3} listText={headerData} orientation="horizontal" />
